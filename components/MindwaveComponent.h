@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include "network/socketClient/TCPSocketClient.h"
+#include "components/BaseComponent.h"
 
-class MindwaveComponent : public QObject
+class MindwaveComponent : public BaseComponent
 {    
     Q_OBJECT
 
@@ -21,6 +22,8 @@ public:
     Q_INVOKABLE QString poorSignalColor() const;
     Q_INVOKABLE int getMeditationDelta() const;
     Q_INVOKABLE int getAttentionDelta() const;
+
+    virtual void setQmlContext(QQmlContext* value) override;
 
     void setAttention(int value);
     int attention() const;
@@ -46,13 +49,10 @@ private:
     int _meditation = 0;
     int _poorSignalLevel = 0;
     bool _connected = false;
+    QString _poorSignalColor = "black";
 
     int _lastAttention = 0;
     int _lastMeditation = 0;
-
-
-
-    QString _poorSignalColor = "black";
 
     QScopedPointer<TCPSocketClient> client;
     QTimer* senderTimer;
@@ -68,9 +68,6 @@ private slots:
     void onItemDataRecieve(const QString& data);
     void onConnectionSuccess();
     void onDisconnectionSuccess();
-
-
-    void senderTimerHandler();
 
 };
 

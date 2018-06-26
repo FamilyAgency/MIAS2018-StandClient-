@@ -18,9 +18,10 @@ public:
     virtual void stop() override;
     virtual void setQmlContext(QQmlContext* value) override;
     void setGameSession(GameSession* gameSession);
+    void setMindwave(MindwaveComponent* value);
 
 private:
-    QScopedPointer<MindwaveComponent>  mindWave;
+    MindwaveComponent* mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
     GameSession* gameSession;
 

@@ -25,9 +25,9 @@ AppController::AppController(QObject *parent) : QObject(parent)
     modules.append(instructionModule);
 
     gameModule = new GameModule();
-    connect(gameModule, SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
-
+    gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
+    connect(gameModule, SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
     resultModule = new ResultModule();
@@ -71,13 +71,18 @@ void AppController::startResult()
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
 {
-    for (auto module : modules)
-    {
-        module->setQmlContext(qmlContext);
-    }
+    mindWaveComponent->setQmlContext(qmlContext);
+    arduinoComponent->setQmlContext(qmlContext);
+
+    gameSession->setQmlContext(qmlContext);
 
     userData->setQmlContext(qmlContext);
     standData->setQmlContext(qmlContext);
+
+    for (auto module : modules)
+    {
+        module->setQmlContext(qmlContext);
+    }      
 }
 
 void AppController::setAppState(AppState value)
@@ -110,6 +115,9 @@ BaseModule* AppController::getModuleByAppState(AppState value)
 
 void AppController::onConfigLoaded(Config* config)
 {
+    mindWaveComponent->setConfig(config->mindwaveConfig);
+    arduinoComponent->setConfig(config->arduinoConfig);
+
     for (auto module : modules)
     {
         module->setConfig(config);

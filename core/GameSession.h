@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QQmlContext>
 
 class GameSession : public QObject
 {
@@ -12,6 +13,7 @@ public:
     Q_PROPERTY(float cleanTime READ cleanTime WRITE setCleanTime NOTIFY cleanTimeChanged)
 
     explicit GameSession(QObject *parent = nullptr);
+    void setQmlContext(QQmlContext* value);
 
     void start();
     void stop();

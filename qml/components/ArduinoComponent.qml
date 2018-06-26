@@ -4,6 +4,11 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item {
+    Component.onCompleted:
+    {
+        console.log("arduino component  ", arduino.config)
+    }
+
     ColumnLayout
     {
         spacing: 10;
@@ -18,7 +23,7 @@ Item {
         Text
         {
             id:com;
-            text: "COM: ";
+            text: "COM: " + arduino.config.serialPort;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -27,17 +32,16 @@ Item {
         Text
         {
             id:baudRate;
-            text: "Baud rate: ";
+            text: "Baud rate: " + arduino.config.baudRate;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
         }
 
-
         Text
         {
             id:conStatus;
-            text: "Connection status: ";
+            text: "Serial connection status: " + arduino.connected;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

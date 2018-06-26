@@ -41,14 +41,14 @@ Item {
     {
         x:marginLeft + 300;
         y:marginTop;
-        id:mindWave;
+        id:mindWaveComp;
     }
 
     ArduinoComponent
     {
         x:marginLeft + 300;
         y:marginTop + 280;
-        id:arduino;
+        id:arduinoComp;
     }
 
     MainServer

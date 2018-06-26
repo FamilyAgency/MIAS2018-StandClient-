@@ -9,6 +9,11 @@ GameSession::GameSession(QObject *parent) : QObject(parent)
     connect(sessionTimer, SIGNAL(timeout()), this, SLOT(onSessionTimerUpdate()));
 }
 
+void GameSession::setQmlContext(QQmlContext* qmlContext)
+{
+   qmlContext->setContextProperty("gameSession", this);
+}
+
 void GameSession::start()
 {
     setCleanTime(0.);

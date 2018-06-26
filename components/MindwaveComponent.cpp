@@ -4,7 +4,7 @@
 #include <QJsonObject.h>
 #include "tools/MathTools.h"
 
-MindwaveComponent::MindwaveComponent(QObject *parent) : QObject(parent)
+MindwaveComponent::MindwaveComponent(QObject *parent) : BaseComponent(parent)
 {
     client.reset(new TCPSocketClient);
     connect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
@@ -17,16 +17,6 @@ void MindwaveComponent::onConnectionSuccess()
     setConnected(true);
     qDebug()<<"MindwaveComponent : connected............";
     client->sendData(mindwaveConfig.initialCommand);
-
-//    senderTimer = new QTimer(this);
-//    senderTimer->setSingleShot(true);
-//    senderTimer->setInterval(2000);
-//    connect(senderTimer, SIGNAL(timeout()), this, SLOT(senderTimerHandler()));
-//    senderTimer->start();
-}
-
-void MindwaveComponent::senderTimerHandler()
-{
     //client->sendData(config.autchCommand);
 }
 
@@ -42,6 +32,8 @@ void MindwaveComponent::setConfig(const MindwaveConfig& config)
     mindwaveConfig = config;
     client->setConfig(mindwaveConfig.getTCPConfig());
     client->init();
+    emit configChanged();
+
 }
 
 void MindwaveComponent::onItemDataRecieve(const QString& data)
@@ -95,6 +87,12 @@ void MindwaveComponent::parse(const QString& data)
     setPoorSignalLevel(signalRemappedValue);
 
     qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
+}
+
+void MindwaveComponent::setQmlContext(QQmlContext* value)
+{
+   BaseComponent::setQmlContext(value);
+   qmlContext->setContextProperty("mind", this);
 }
 
 void MindwaveComponent::setPoorSignalLevel(int value)

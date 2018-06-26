@@ -55,6 +55,7 @@ private:
     Q_GADGET
     Q_PROPERTY(QString serialPort MEMBER serialPort)
     Q_PROPERTY(int baudRate MEMBER baudRate)
+
 public:
     QString serialPort = "COM1";
     int baudRate = 9600;

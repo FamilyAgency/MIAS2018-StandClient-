@@ -79,7 +79,7 @@ Item {
         Text
         {
             id:conStatus;
-            text: "Connection status: " + mind.connected;
+            text: "Connection to ThinGear: " + mind.connected;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
