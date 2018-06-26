@@ -1,8 +1,8 @@
 #include "ServerComponent.h"
 
-ServerComponent::ServerComponent(QObject *parent) : BaseComponent(parent)
+ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
-
+    name = "Server";
 }
 
 void ServerComponent::setConfig(const ServerConfig& config)
@@ -21,4 +21,9 @@ void ServerComponent::setQmlContext(QQmlContext* value)
 {
    BaseComponent::setQmlContext(value);
    qmlContext->setContextProperty("server", this);
+}
+
+bool ServerComponent::isHealthy()
+{
+    return true;
 }

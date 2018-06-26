@@ -10,9 +10,11 @@ class BaseComponent : public QObject
 public:
     explicit BaseComponent(QObject *parent = nullptr);
     virtual void setQmlContext(QQmlContext* value);
+    virtual QString getName() const;
 
 protected:
     QQmlContext* qmlContext;
+    QString name = "";
 
 signals:
 

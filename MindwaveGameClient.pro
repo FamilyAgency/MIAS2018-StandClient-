@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     core/UserData.cpp \
     core/StandData.cpp \
     components/BaseComponent.cpp \
-    components/ServerComponent.cpp
+    components/ServerComponent.cpp \
+    components/ExternalSystemComponent.cpp
 
 RESOURCES += qml.qrc
 
@@ -90,6 +91,7 @@ HEADERS += \
     core/UserData.h \
     core/StandData.h \
     components/BaseComponent.h \
-    components/ServerComponent.h
+    components/ServerComponent.h \
+    components/ExternalSystemComponent.h
 
 DISTFILES +=

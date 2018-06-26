@@ -4,8 +4,10 @@
 #include <QJsonObject.h>
 #include "tools/MathTools.h"
 
-MindwaveComponent::MindwaveComponent(QObject *parent) : BaseComponent(parent)
+MindwaveComponent::MindwaveComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
+    name = "Mindwave";
+
     client.reset(new TCPSocketClient);
     connect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
     connect(client.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
@@ -172,4 +174,9 @@ void MindwaveComponent::setConnected(bool value)
 bool MindwaveComponent::connected() const
 {
     return _connected;
+}
+
+bool MindwaveComponent::isHealthy()
+{
+    return true;
 }

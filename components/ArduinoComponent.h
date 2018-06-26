@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include "config/Config.h"
-#include "components/BaseComponent.h"
+#include "components/ExternalSystemComponent.h"
 
-class ArduinoComponent : public BaseComponent
+class ArduinoComponent : public ExternalSystemComponent
 {
     Q_OBJECT
     Q_PROPERTY(ArduinoConfig config READ config WRITE setConfig NOTIFY configChanged)
@@ -21,6 +21,8 @@ public:
 
     void setConnected(bool value);
     bool connected() const;
+
+    virtual bool isHealthy() override;
 
 private:
      ArduinoConfig arduinoConfig;

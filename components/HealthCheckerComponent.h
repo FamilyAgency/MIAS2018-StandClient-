@@ -10,10 +10,14 @@ class HealthCheckerComponent : public BaseComponent
     Q_OBJECT
 public:
     explicit HealthCheckerComponent(QObject *parent = nullptr);
-    void addComponent(BaseComponent* component);
+    virtual void setQmlContext(QQmlContext* value) override;
+
+    void addComponent(ExternalSystemComponent* component);
+
+    Q_INVOKABLE QVariantList getInfo() const;
 
 private:
-     QList<BaseComponent*> components;
+     QList<ExternalSystemComponent*> components;
 
 signals:
 

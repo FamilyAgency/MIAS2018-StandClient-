@@ -3,9 +3,9 @@
 
 #include <QObject>
 #include "network/socketClient/TCPSocketClient.h"
-#include "components/BaseComponent.h"
+#include "components/ExternalSystemComponent.h"
 
-class MindwaveComponent : public BaseComponent
+class MindwaveComponent : public ExternalSystemComponent
 {    
     Q_OBJECT
 
@@ -41,6 +41,8 @@ public:
     bool connected() const;
 
     void parse(const QString& data);
+
+    virtual bool isHealthy() override;
 
 private:
     MindwaveConfig mindwaveConfig;

@@ -5,6 +5,11 @@ import QtQuick.Controls.Styles 1.4
 
 Item {
 
+    Component.onCompleted:
+    {
+        console.log(healthChecker.getNames())
+    }
+
     ColumnLayout
     {
         spacing: 10;
@@ -15,42 +20,19 @@ Item {
             font.pixelSize: 17
             color: "#008800"
         }
-       // RowLayout
-       // {
-        Text
-        {
-            id:conStatus;
-            text: "Arduino health: ";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
 
-        Text
-        {
-            id:cleanTimeText;
-            text: "Mindwave health: ";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
+        ListView {
+            width: 180; height: 200
 
-        Text
-        {
-            id:timeText;
-            text: "Server health: ";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            model: healthChecker.getInfo()
+            spacing: 10;
+            delegate: Text
+            {
+                text: modelData
+                font.family: "Helvetica"
+                font.pixelSize: 15
+                color: "#999999"
+            }
         }
-        Text
-        {
-            id:memoryText;
-            text: "Memory health: ";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
-     //   }
     }
 }

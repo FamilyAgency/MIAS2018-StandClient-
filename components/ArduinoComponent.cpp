@@ -1,8 +1,8 @@
 #include "ArduinoComponent.h"
 
-ArduinoComponent::ArduinoComponent(QObject *parent) : BaseComponent(parent)
+ArduinoComponent::ArduinoComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
-
+    name = "Arduino";
 }
 
 void ArduinoComponent::setConfig(const ArduinoConfig& config)
@@ -33,3 +33,8 @@ bool ArduinoComponent::connected() const
 {
     return _connected;
 }
+
+ bool ArduinoComponent::isHealthy()
+ {
+     return true;
+ }
