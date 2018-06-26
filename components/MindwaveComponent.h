@@ -8,7 +8,8 @@ class MindwaveComponent : public QObject
 {    
     Q_OBJECT
 
-    Q_PROPERTY(MindwaveConfig config READ config)
+    Q_PROPERTY(MindwaveConfig config READ config WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
 
 public:
     explicit MindwaveComponent(QObject *parent = nullptr);
@@ -21,51 +22,55 @@ public:
     Q_INVOKABLE int getMeditationDelta() const;
     Q_INVOKABLE int getAttentionDelta() const;
 
-     int attention() const;
-     int meditation() const;
-     int poorSignalLevel() const;
+    void setAttention(int value);
+    int attention() const;
 
-     void setAttention(int value);
-     void setMeditation(int value);
-     void setPoorSignalLevel(int value);
+    void setMeditation(int value);
+    int meditation() const;
 
-     void parse(const QString& data);
-     void setConfig(const MindwaveConfig& config);   
+    void setPoorSignalLevel(int value);
+    int poorSignalLevel() const;
 
-     MindwaveConfig config() const
-     {
-         return mindwaveConfig;
-     }
+    void setConfig(const MindwaveConfig& value);
+    MindwaveConfig config() const;
+
+    void setConnected(bool value);
+    bool connected() const;
+
+    void parse(const QString& data);
 
 private:
-     MindwaveConfig mindwaveConfig;
+    MindwaveConfig mindwaveConfig;
 
-     int _attention = 0;
-     int _meditation = 0;
+    int _attention = 0;
+    int _meditation = 0;
+    int _poorSignalLevel = 0;
+    bool _connected = false;
 
-     int _lastAttention = 0;
-     int _lastMeditation = 0;
-
-     int _poorSignalLevel = 0;
-
-     QString _poorSignalColor = "black";
+    int _lastAttention = 0;
+    int _lastMeditation = 0;
 
 
-     QScopedPointer<TCPSocketClient> client;
-     QTimer* senderTimer;
+
+    QString _poorSignalColor = "black";
+
+    QScopedPointer<TCPSocketClient> client;
+    QTimer* senderTimer;
 
 signals:
-     void attentionChanged();
-     void meditationChanged();
-     void poorSignalLevelChanged();
+    void attentionChanged();
+    void meditationChanged();
+    void poorSignalLevelChanged();
+    void configChanged();
+    void connectedChanged();
 
 private slots:
-     void onItemDataRecieve(const QString& data);
-     void onConnectionSuccess();
-     void onDisconnectionSuccess();
+    void onItemDataRecieve(const QString& data);
+    void onConnectionSuccess();
+    void onDisconnectionSuccess();
 
 
-     void senderTimerHandler();
+    void senderTimerHandler();
 
 };
 

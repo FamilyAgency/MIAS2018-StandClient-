@@ -14,7 +14,8 @@ MindwaveComponent::MindwaveComponent(QObject *parent) : QObject(parent)
 
 void MindwaveComponent::onConnectionSuccess()
 {
-    qDebug()<<"MindwaveComponent : connected";
+    setConnected(true);
+    qDebug()<<"MindwaveComponent : connected............";
     client->sendData(mindwaveConfig.initialCommand);
 
 //    senderTimer = new QTimer(this);
@@ -31,11 +32,13 @@ void MindwaveComponent::senderTimerHandler()
 
 void MindwaveComponent::onDisconnectionSuccess()
 {
+    setConnected(false);
     qDebug()<<"MindwaveComponent : disconnected............";
 }
 
 void MindwaveComponent::setConfig(const MindwaveConfig& config)
 {
+    //TODO
     mindwaveConfig = config;
     client->setConfig(mindwaveConfig.getTCPConfig());
     client->init();
@@ -57,68 +60,6 @@ void MindwaveComponent::onItemDataRecieve(const QString& data)
             break;
         }
     }
-}
-
-int MindwaveComponent::attention() const
-{
-    return _attention;
-}
-
-int MindwaveComponent::meditation() const
-{
-    return _meditation;
-}
-
-int MindwaveComponent::poorSignalLevel() const
-{
-    return _poorSignalLevel;
-}
-
-void MindwaveComponent::setAttention(int value)
-{
-    _attention = value;
-    emit attentionChanged();
-}
-
-void MindwaveComponent::setMeditation(int value)
-{
-    _meditation = value;
-    emit meditationChanged();
-}
-
-void MindwaveComponent::setPoorSignalLevel(int value)
-{
-    _poorSignalLevel = value;
-
-    if(value >= 66 && value <= 100)
-    {
-        _poorSignalColor = "#009900";
-    }
-    else if(value >= 30 && value <= 66)
-    {
-        _poorSignalColor = "#999900";
-    }
-    else if(value >= 0 && value <= 30)
-    {
-        _poorSignalColor = "#999999";
-    }
-
-    emit poorSignalLevelChanged();
-}
-
-QString MindwaveComponent::poorSignalColor() const
-{
-    return _poorSignalColor;
-}
-
-int MindwaveComponent::getAttentionDelta() const
-{
-    return _attention - _lastAttention;
-}
-
-int MindwaveComponent::getMeditationDelta() const
-{
-    return _meditation - _lastMeditation;
 }
 
 void MindwaveComponent::parse(const QString& data)
@@ -154,4 +95,83 @@ void MindwaveComponent::parse(const QString& data)
     setPoorSignalLevel(signalRemappedValue);
 
     qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
+}
+
+void MindwaveComponent::setPoorSignalLevel(int value)
+{
+    _poorSignalLevel = value;
+
+    if(value >= 66 && value <= 100)
+    {
+        _poorSignalColor = "#009900";
+    }
+    else if(value >= 30 && value <= 66)
+    {
+        _poorSignalColor = "#999900";
+    }
+    else if(value >= 0 && value <= 30)
+    {
+        _poorSignalColor = "#999999";
+    }
+
+    emit poorSignalLevelChanged();
+}
+
+int MindwaveComponent::poorSignalLevel() const
+{
+    return _poorSignalLevel;
+}
+
+void MindwaveComponent::setAttention(int value)
+{
+    _attention = value;
+    emit attentionChanged();
+}
+
+int MindwaveComponent::attention() const
+{
+    return _attention;
+}
+
+void MindwaveComponent::setMeditation(int value)
+{
+    _meditation = value;
+    emit meditationChanged();
+}
+
+int MindwaveComponent::meditation() const
+{
+    return _meditation;
+}
+
+
+int MindwaveComponent::getAttentionDelta() const
+{
+    return _attention - _lastAttention;
+}
+
+int MindwaveComponent::getMeditationDelta() const
+{
+    return _meditation - _lastMeditation;
+}
+
+QString MindwaveComponent::poorSignalColor() const
+{
+    return _poorSignalColor;
+}
+
+MindwaveConfig MindwaveComponent::config() const
+{
+    return mindwaveConfig;
+}
+
+void MindwaveComponent::setConnected(bool value)
+{
+    _connected = value;
+    emit connectedChanged();
+}
+
+bool MindwaveComponent::connected() const
+{
+    return _connected;
 }

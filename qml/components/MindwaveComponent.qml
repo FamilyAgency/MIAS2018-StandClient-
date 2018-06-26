@@ -31,7 +31,6 @@ Item {
 
         onPoorSignalLevelChanged:
         {
-            console.log("mind.poorSignalColor()  ", mind.poorSignalColor());
             signalLevel.color = mind.poorSignalColor();
         }
     }
@@ -80,7 +79,7 @@ Item {
         Text
         {
             id:conStatus;
-            text: "Connection status: ";
+            text: "Connection status: " + mind.connected;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
