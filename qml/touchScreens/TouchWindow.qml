@@ -4,14 +4,13 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
 import "../components"
-
 import com.app 1.0
 
 Window {
     objectName: "touchWindow"
+    title: "Touch Window"
     visible: true
-    id: touchCore
-    title: "Splash Window"
+    id: touchCore    
     flags: Qt.SplashScreen
     x: 1920
     width: 820
@@ -22,34 +21,8 @@ Window {
         target:appController;
         onAppStateChanged:
         {
-            console.log("app state changes :::::::::::::", appState);
+            console.log("touch app state changes :::::::::::::", appState);
             setState(appState);
-        }
-    }
-
-
-    Connections
-    {
-        target: gameTaskManager
-
-        onAllTaskComleteEvent:
-        {
-            setState(AppState.Result);
-        }
-    }
-
-    Connections
-    {
-        target:loginModule;
-        onLoginStateChanged:
-        {
-            switch(loginState)
-            {
-                case LoginState.Logout:
-                     hideAll();
-                     loginScreen.visible = true;
-                break;
-            }
         }
     }
 
@@ -102,7 +75,7 @@ Window {
     HealthCheckerComponent
     {
         id:health
-        y: 1000
+        y: 900
         x: 50
     }
 

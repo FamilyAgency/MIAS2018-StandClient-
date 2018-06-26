@@ -11,6 +11,7 @@ Item {
     {
         swipeView.currentIndex = 0;
     }
+
     SwipeView {
         id: swipeView;
 

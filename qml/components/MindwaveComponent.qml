@@ -38,6 +38,7 @@ Item {
 
     ColumnLayout
     {
+
         spacing: 10;
         RowLayout {
             spacing: 6;
@@ -52,7 +53,7 @@ Item {
         Text
         {
             id:conServer;
-            text: "Server: ";
+            text: "Server: " + mind.config.ip;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -61,7 +62,16 @@ Item {
         Text
         {
             id:conPort;
-            text: "Port: ";
+            text: "Port: " + mind.config.port;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
+            id:auto;
+            text: "Auto connection: " + mind.config.autoConnect;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

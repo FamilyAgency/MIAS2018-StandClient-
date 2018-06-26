@@ -47,14 +47,14 @@ Item {
     ArduinoComponent
     {
         x:marginLeft + 300;
-        y:marginTop + 250;
+        y:marginTop + 280;
         id:arduino;
     }
 
     MainServer
     {
         x:marginLeft + 300;
-        y:marginTop + 450;
+        y:marginTop + 470;
         id:server;
     }
 

@@ -3,10 +3,12 @@ import QtQuick.Controls 2.2
 
 Item {
     anchors.fill: parent
+
     function reset()
     {
 
     }
+
     Rectangle
     {
         anchors.fill: parent
@@ -25,7 +27,7 @@ Item {
 
         Button
         {
-            text: "Fin"
+            text: "Finish game"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: mainText.bottom
             onClicked:
