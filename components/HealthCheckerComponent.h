@@ -9,7 +9,11 @@ class HealthCheckerComponent : public BaseComponent
 {
     Q_OBJECT
 public:
-    explicit HealthCheckerComponent(ArduinoComponent* arduinoComponent, MindwaveComponent* mindWaveComponent);
+    explicit HealthCheckerComponent(QObject *parent = nullptr);
+    void addComponent(BaseComponent* component);
+
+private:
+     QList<BaseComponent*> components;
 
 signals:
 
