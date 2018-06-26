@@ -16,7 +16,7 @@ void GamePreTask::init()
 void GamePreTask::run()
 {
     startTime = QDateTime::currentMSecsSinceEpoch();
-    timer->start(10);
+    timer->start(preTaskTimerMills);
 }
 
 void GamePreTask::stop()
@@ -30,7 +30,7 @@ void GamePreTask::onUpdate()
 
     if(newTime < preTaskMills)
     {
-        emit update((preTaskMills - newTime) / 1000.0f);
+        emit update((preTaskMills - newTime) * toSeconds);
     }
     else
     {

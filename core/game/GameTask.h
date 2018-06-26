@@ -32,12 +32,13 @@ public:
 
     float getMindwaveLimit() const;
 
-private:      
+private:
+    const int taskTimerMills = 10;
+
     QVector<QPointF> path;
     QPointF curPoint, startPoint, endPoint, position;
     int currentPointIndex = 0;   
     bool taskComplete = false;
-    //QVector<QPointF> completedPath, fullPath;
     QVariantList completedPathList, fullPathList;
     QVector2D velocityDirection;
 

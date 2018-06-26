@@ -23,6 +23,8 @@ private:
     QTimer* timer;
     int startTime = 0;
     const int preTaskMills = 3 * 1000;
+    const int preTaskTimerMills = 10;
+    const float toSeconds = 1/1000.0;
 };
 
 #endif // PRETASK_H

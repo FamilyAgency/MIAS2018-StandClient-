@@ -40,7 +40,7 @@ void GameTask::init()
 void GameTask::start()
 {
     startTime = QDateTime::currentMSecsSinceEpoch();
-    timer->start(10);
+    timer->start(taskTimerMills);
 }
 
 void GameTask::addCompletedPoint(const QPointF& point)
@@ -73,9 +73,7 @@ void GameTask::onUpdate()
 }
 
 void GameTask::update(int humanValue)
-{
-    qDebug()<<this<<"-------------------------------GameTask-------------------------------";
-
+{  
     if(taskComplete)
     {
         return;
@@ -99,8 +97,7 @@ void GameTask::update(int humanValue)
         }
         else
         {
-            taskComplete = true;
-            stop();
+            taskComplete = true;           
             emit completeEvent();
         }
     }
@@ -133,7 +130,6 @@ QVariantList GameTask::getFullPath() const
 
 void GameTask::stop()
 {
-    qDebug()<<"---------------------stop----------stop---------------stop----------------";
     timer->stop();
     completedPathList.clear();
 }

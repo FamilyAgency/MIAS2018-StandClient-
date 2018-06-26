@@ -30,15 +30,17 @@ void GameTaskManager::stop()
     setAllTaskCount(gameTasks.length());
     setCurrentGameTaskIndex(0);
     setTaskState(TaskState::None);
-    for(auto task : gameTasks)
-    {
-        task->stop();
-    }
+
     emit taskReset();
 }
 
 void GameTaskManager::setCurrentGameTaskIndex(int index)
 {
+    if(gameTask)
+    {
+        gameTask->stop();
+    }
+
     gameTask = gameTasks[index];
     setCurrentTaskIndex(index);
 
@@ -50,6 +52,11 @@ void GameTaskManager::setCurrentGameTaskIndex(int index)
 
     connect(gameTask, SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
     connect(gameTask, SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+
+    if(gamePreTask)
+    {
+        gamePreTask->stop();
+    }
 
     if(gamePreTask)
     {
@@ -68,8 +75,6 @@ void GameTaskManager::setTaskState(TaskState taskState)
     switch(taskState)
     {
         case TaskState::None:
-            gameTask->stop();
-            gamePreTask->stop();
             emit updateCanvas();
         break;
 
@@ -81,7 +86,6 @@ void GameTaskManager::setTaskState(TaskState taskState)
         break;
 
         case TaskState::Game:
-            gamePreTask->stop();
             gameTask->start();
             emit taskStartEvent();
         break;
@@ -109,12 +113,11 @@ void GameTaskManager::onTaskUpdateEvent()
 
 void GameTaskManager::onTaskCompleteEvent()
 {
-   // qDebug()<<"-------------------------------onTaskCompleteEvent-------------------------------";
-
     auto completionTime = gameTask->getCompletionTime();
 
     if(!isAllTaskCompleted())
     {
+        qDebug()<<this<<"-------------------------------onTaskCompleteEvent-------------------------------";
         setCurrentGameTaskIndex(currentTaskIndex() + 1);
         emit taskComleteEvent(completionTime);
         setTaskState(TaskState::PreGame);
@@ -122,9 +125,8 @@ void GameTaskManager::onTaskCompleteEvent()
     else
     {
         emit taskComleteEvent(completionTime);
-        emit allTaskComleteEvent();
-        //stop();
-      //  qDebug()<<"------------------------------- Game Finished -------------------------------";
+        emit allTaskComleteEvent();       
+        qDebug()<<this<<"------------------------------- Game Finished -------------------------------";
     }
 }
 
