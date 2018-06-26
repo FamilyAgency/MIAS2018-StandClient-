@@ -70,6 +70,9 @@ private:
     void setAppState(AppState appState);
     BaseModule* getModuleByAppState(AppState value);
 
+    void testConstruct();
+    void releaseConstruct();
+
 signals:
     void appStateChanged(AppState appState);
 

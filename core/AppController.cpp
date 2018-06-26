@@ -2,6 +2,12 @@
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
+    testConstruct();
+    //releaseConstruct();
+}
+
+void AppController::testConstruct()
+{
     userData = new UserData();
     standData = new StandData();
     gameSession = new GameSession();
@@ -15,14 +21,54 @@ AppController::AppController(QObject *parent) : QObject(parent)
     serverComponent = new ServerComponent();
     components.append(serverComponent);
 
-    healthCheckerComponent = new HealthCheckerComponent(arduinoComponent, mindWaveComponent);
+    healthCheckerComponent = new HealthCheckerComponent();
+    healthCheckerComponent->addComponent(arduinoComponent);
+    healthCheckerComponent->addComponent(mindWaveComponent);
+    healthCheckerComponent->addComponent(serverComponent);
     components.append(healthCheckerComponent);
 
-    // loginModule = new LoginModule(arduinoComponent);
-    // loginModule->setArduino(arduinoComponent);
-    // modules.append(loginModule);
-
     loginModule = new LoginModuleTest();
+    connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
+
+    loginModule->setArduino(arduinoComponent);
+    loginModule->setUserData(userData);
+    modules.append(loginModule);
+
+    instructionModule = new InstructionModule();
+    modules.append(instructionModule);
+
+    gameModule = new GameModule();
+    gameModule->setMindwave(mindWaveComponent);
+    gameModule->setGameSession(gameSession);
+    connect(gameModule, SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+    modules.append(gameModule);
+
+    resultModule = new ResultModule();
+    modules.append(resultModule);
+}
+
+void AppController::releaseConstruct()
+{
+    userData = new UserData();
+    standData = new StandData();
+    gameSession = new GameSession();
+
+    arduinoComponent = new ArduinoComponent();
+    components.append(arduinoComponent);
+
+    mindWaveComponent = new MindwaveComponent();
+    components.append(mindWaveComponent);
+
+    serverComponent = new ServerComponent();
+    components.append(serverComponent);
+
+    healthCheckerComponent = new HealthCheckerComponent();
+    healthCheckerComponent->addComponent(arduinoComponent);
+    healthCheckerComponent->addComponent(mindWaveComponent);
+    healthCheckerComponent->addComponent(serverComponent);
+    components.append(healthCheckerComponent);
+
+    loginModule = new LoginModule();
     connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
 
     loginModule->setArduino(arduinoComponent);
@@ -86,6 +132,7 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
 
     userData->setQmlContext(qmlContext);
     standData->setQmlContext(qmlContext);
+    gameSession->setQmlContext(qmlContext);
 
     for (auto module : modules)
     {
