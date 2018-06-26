@@ -1,4 +1,5 @@
 #include "ArduinoComponent.h"
+#include <QSerialPortInfo>
 
 ArduinoComponent::ArduinoComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
@@ -16,6 +17,15 @@ void ArduinoComponent::start()
     //TODO
     serialPort = new QSerialPort();
 
+    QSerialPortInfo serialPortInfo;
+
+    qDebug()<<"port names ======================";
+    auto ports = serialPortInfo.availablePorts();
+    for(auto port: ports)
+    {
+        qDebug()<<port.portName()<<port.description();
+    }
+    qDebug()<<"======================";
     //findComPortByDeviceName();
 
     serialPort->setPortName(arduinoConfig.serialPort);
