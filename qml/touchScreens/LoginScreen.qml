@@ -15,7 +15,7 @@ Item {
         target:loginModule;
         onLoginStateChanged:
         {
-            console.log("onLoginSuccess :::::::::::::", loginState);
+            //console.log("onLoginSuccess :::::::::::::", loginState);
             switch(loginState)
             {
                 case LoginState.Login:

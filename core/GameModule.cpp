@@ -20,7 +20,7 @@ void GameModule::setGameSession(GameSession* value)
 void GameModule::setQmlContext(QQmlContext* value)
 {
     BaseModule::setQmlContext(value);
-    qmlContext->setContextProperty("gameTaskManager", gameTaskManager.data());
+    gameTaskManager->setQmlContext(value);
 }
 
 void GameModule::setConfig(Config* config)
@@ -29,13 +29,13 @@ void GameModule::setConfig(Config* config)
 }
 
 void GameModule::start()
-{
+{ 
     gameTaskManager->start();
 }
 
 void GameModule::stop()
-{
-    gameTaskManager->stop();
+{ 
+   gameTaskManager->stop();
 }
 
 void GameModule::onTaskComleteEvent(int completionTime)

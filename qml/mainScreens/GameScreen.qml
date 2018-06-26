@@ -190,6 +190,7 @@ Item {
 
     function gameStop()
     {
+        console.log("=================== game stop ===================")
         car.visible = false;
         shadow.visible = false;
         finishBullet.visible = false;
@@ -202,6 +203,7 @@ Item {
     {
         //car.visible = true;
        // shadow.visible = true;
+        console.log("=================== game start ===================")
         finishBullet.visible = true;
         circProgress.visible = true;
         startBullet.visible = true;

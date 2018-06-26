@@ -60,9 +60,7 @@ void GameTask::setPoints()
 }
 
 void GameTask::onUpdate()
-{
-    //int newTime = QDateTime::currentMSecsSinceEpoch() - startTime;
-
+{  
     int humanValue = 0;
     //    if(mindWave)
     //    {
@@ -76,6 +74,8 @@ void GameTask::onUpdate()
 
 void GameTask::update(int humanValue)
 {
+    qDebug()<<this<<"-------------------------------GameTask-------------------------------";
+
     if(taskComplete)
     {
         return;
@@ -133,7 +133,7 @@ QVariantList GameTask::getFullPath() const
 
 void GameTask::stop()
 {
-    // completedPath.clear();
+    qDebug()<<"---------------------stop----------stop---------------stop----------------";
     timer->stop();
     completedPathList.clear();
 }

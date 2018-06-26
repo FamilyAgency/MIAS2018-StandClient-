@@ -19,7 +19,7 @@ Item {
         {
             id:mainText;
             anchors.centerIn: parent
-            text: "Game 1";
+            text: "Game " + (gameTaskManager.currentTaskIndex + 1);
             font.family: "Helvetica"
             font.pixelSize: 25
             color: "#999999"

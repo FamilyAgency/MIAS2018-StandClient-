@@ -20,22 +20,19 @@ public:
     void start();
     void stop();
 
-    void update(int humanValue);    
-
     QPointF getStartPoint() const;    
     QPointF getCurPoint() const;
     QPointF getEndPoint() const;
     int getCompletionTime() const;
 
     void getCurrentPoint();
-    //QVector<QPointF> getCompletedPath() const;
     QVariantList getCompletedPath() const;
     QVariantList getFullPath() const;
-   // QVector<QPointF> getFullPath() const;
     float getForwardVectorRotation() const;
 
     float getMindwaveLimit() const;
-private:
+
+private:      
     QVector<QPointF> path;
     QPointF curPoint, startPoint, endPoint, position;
     int currentPointIndex = 0;   
@@ -46,6 +43,7 @@ private:
 
     VelocityCalculator velocityCalculator;
 
+    void update(int humanValue);
     void setPoints();
     void addCompletedPoint(const QPointF& point);
 

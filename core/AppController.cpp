@@ -98,7 +98,6 @@ void AppController::onLoginStateChanged(LoginModule::LoginState loginState)
     else if(loginState == LoginModule::LoginState::Logout)
     {
         gameSession->stop();
-        currentModule->stop();
         setAppState(AppState::Login);
     }
 }

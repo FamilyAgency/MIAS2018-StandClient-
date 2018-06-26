@@ -9,10 +9,10 @@ import com.app 1.0
 
 
 Window {
-    objectName: "wnd2"
+    objectName: "mainGameWindow"
+    title: "Main Game Window"
     visible: true
-    id: mainGameWindow
-    title: "Splash Window"
+    id: mainGameWindow    
     flags: Qt.SplashScreen
     x: 2820
     width: 1920
@@ -33,16 +33,15 @@ Window {
     }
 
     function setState(appState)
-    {
-        mainGameScreen.gameStop();
+    {       
         switch(appState)
         {
         case AppState.Login:
-
+             mainGameScreen.gameStop();
             break;
 
         case AppState.Instruction:
-
+             mainGameScreen.gameStop();
             break;
 
         case AppState.Game:
@@ -50,7 +49,7 @@ Window {
             break;
 
         case AppState.Result:
-
+            mainGameScreen.gameStop();
             break;
         }
     }

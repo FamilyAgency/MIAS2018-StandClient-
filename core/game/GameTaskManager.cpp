@@ -20,11 +20,20 @@ void GameTaskManager::start()
    setTaskState(TaskState::PreGame);
 }
 
+void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
+{
+   qmlContext->setContextProperty("gameTaskManager", this);
+}
+
 void GameTaskManager::stop()
 {
     setAllTaskCount(gameTasks.length());
     setCurrentGameTaskIndex(0);
     setTaskState(TaskState::None);
+    for(auto task : gameTasks)
+    {
+        task->stop();
+    }
     emit taskReset();
 }
 
@@ -54,7 +63,7 @@ void GameTaskManager::setCurrentGameTaskIndex(int index)
 }
 
 void GameTaskManager::setTaskState(TaskState taskState)
-{
+{  
     currentTaskState = taskState;
     switch(taskState)
     {
@@ -100,7 +109,7 @@ void GameTaskManager::onTaskUpdateEvent()
 
 void GameTaskManager::onTaskCompleteEvent()
 {
-    qDebug()<<"-------------------------------onTaskCompleteEvent-------------------------------";
+   // qDebug()<<"-------------------------------onTaskCompleteEvent-------------------------------";
 
     auto completionTime = gameTask->getCompletionTime();
 
@@ -115,7 +124,7 @@ void GameTaskManager::onTaskCompleteEvent()
         emit taskComleteEvent(completionTime);
         emit allTaskComleteEvent();
         //stop();
-        qDebug()<<"------------------------------- Game Finished -------------------------------";
+      //  qDebug()<<"------------------------------- Game Finished -------------------------------";
     }
 }
 

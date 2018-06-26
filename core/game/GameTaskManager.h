@@ -51,6 +51,7 @@ public:
     void stop();
     void setMindWaveClient(MindwaveComponent* mindWave);
     void setTaskState(TaskState taskState);
+    void setQmlContext(QQmlContext* value);
 
 private:
     TaskState currentTaskState;
