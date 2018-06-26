@@ -11,6 +11,7 @@ public:
     explicit BaseComponent(QObject *parent = nullptr);
     virtual void setQmlContext(QQmlContext* value);
     virtual QString getName() const;
+    virtual void start(){}
 
 protected:
     QQmlContext* qmlContext;

@@ -7,9 +7,58 @@ ArduinoComponent::ArduinoComponent(QObject *parent) : ExternalSystemComponent(pa
 
 void ArduinoComponent::setConfig(const ArduinoConfig& config)
 {
-    //TODO
     arduinoConfig = config;
     emit configChanged();
+}
+
+void ArduinoComponent::start()
+{
+    //TODO
+    serialPort = new QSerialPort();
+
+    //findComPortByDeviceName();
+
+    serialPort->setPortName(arduinoConfig.serialPort);
+    auto serialPortBaudRate = QSerialPort::Baud9600;
+    serialPort->setBaudRate(serialPortBaudRate);
+
+    if (!serialPort->open(QIODevice::ReadOnly))
+    {
+        qDebug()<<"serialPort opening error";
+    }
+    else
+    {
+        connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+        connect(serialPort, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(onReadError(QSerialPort::SerialPortErro)));
+
+        timer = new QTimer(this);
+        connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+        timer->start(taskTimerMills);
+    }
+}
+
+void ArduinoComponent::onReadyRead()
+{
+    readData.append(serialPort->readAll());
+}
+
+void ArduinoComponent::onReadError(QSerialPort::SerialPortError serialPortError)
+{
+    if (serialPortError == QSerialPort::ReadError)
+    {
+
+    }
+}
+void ArduinoComponent::onUpdate()
+{
+    if (!readData.isEmpty())
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
 ArduinoConfig ArduinoComponent::config() const
@@ -19,8 +68,8 @@ ArduinoConfig ArduinoComponent::config() const
 
 void ArduinoComponent::setQmlContext(QQmlContext* value)
 {
-   BaseComponent::setQmlContext(value);
-   qmlContext->setContextProperty("arduino", this);
+    BaseComponent::setQmlContext(value);
+    qmlContext->setContextProperty("arduino", this);
 }
 
 void ArduinoComponent::setConnected(bool value)
@@ -34,7 +83,7 @@ bool ArduinoComponent::connected() const
     return _connected;
 }
 
- bool ArduinoComponent::isHealthy()
- {
-     return true;
- }
+bool ArduinoComponent::isHealthy()
+{
+    return true;
+}

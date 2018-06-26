@@ -15,8 +15,8 @@ public:
     void setConfig(const ServerConfig& config);
     ServerConfig config() const;
 
+    virtual void start() override;
     virtual void setQmlContext(QQmlContext* value) override;
-
     virtual bool isHealthy() override;
 private:
      ServerConfig serverConfig;

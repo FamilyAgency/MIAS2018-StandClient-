@@ -10,6 +10,7 @@ class MindwaveComponentTest : public MindwaveComponent
 public:
     explicit MindwaveComponentTest(QObject *parent = nullptr);
     virtual void setConfig(const MindwaveConfig& config) override;
+    virtual void start() override;
 
 private:
     QTimer* timer;

@@ -9,11 +9,14 @@ MindwaveComponentTest::MindwaveComponentTest(QObject *parent) : MindwaveComponen
 
 void MindwaveComponentTest::setConfig(const MindwaveConfig& config)
 {
-    //TODO
     mindwaveConfig = config;
     client->setConfig(mindwaveConfig.getTCPConfig());
-    timer->start(taskTimerMills);
     emit configChanged();
+}
+
+void MindwaveComponentTest::start()
+{
+     timer->start(taskTimerMills);
 }
 
 void MindwaveComponentTest::simulateMindwaveRead()

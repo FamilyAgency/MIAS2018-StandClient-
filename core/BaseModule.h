@@ -18,7 +18,6 @@ public:
     virtual void stop() = 0;
     virtual void setQmlContext(QQmlContext* qmlContext);
 
-
 protected:
     Config* config;
     Logger* logger;

@@ -16,9 +16,9 @@ void ConfigParser::parse(const QString& configData)
 {
     try
     {
-        qDebug()<<"configData................"<<endl;
-        qDebug()<<configData <<endl;
-        qDebug()<<"configData................"<<endl;
+//        qDebug()<<"configData................"<<endl;
+//        qDebug()<<configData <<endl;
+//        qDebug()<<"configData................"<<endl;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(configData.toUtf8());
         QJsonObject jsonObj   = jsonDoc.object();
 

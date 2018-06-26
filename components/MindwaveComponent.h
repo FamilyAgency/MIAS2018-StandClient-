@@ -35,6 +35,7 @@ public:
     int poorSignalLevel() const;
 
     virtual void setConfig(const MindwaveConfig& value);
+    virtual void start() override;
     MindwaveConfig config() const;
 
     void setConnected(bool value);

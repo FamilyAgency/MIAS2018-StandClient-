@@ -30,11 +30,14 @@ void MindwaveComponent::onDisconnectionSuccess()
 
 void MindwaveComponent::setConfig(const MindwaveConfig& config)
 {
-    //TODO
     mindwaveConfig = config;
-    client->setConfig(mindwaveConfig.getTCPConfig());
-    client->init();
+    client->setConfig(mindwaveConfig.getTCPConfig());   
     emit configChanged();
+}
+
+void MindwaveComponent::start()
+{
+     client->init();
 }
 
 void MindwaveComponent::onItemDataRecieve(const QString& data)

@@ -197,6 +197,11 @@ void AppController::setLogger(Logger* logger)
 }
 
 void AppController::start()
-{
+{    
+    for (auto comp : components)
+    {
+        comp->start();
+    }
+
     setAppState(AppState::Login);
 }
