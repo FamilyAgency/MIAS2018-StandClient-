@@ -5,7 +5,7 @@
 #include "ArduinoComponent.h"
 #include "MindwaveComponent.h"
 
-class HealthCheckerComponent : public QObject
+class HealthCheckerComponent : public BaseComponent
 {
     Q_OBJECT
 public:

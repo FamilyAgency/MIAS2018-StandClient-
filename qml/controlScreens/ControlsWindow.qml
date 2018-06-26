@@ -51,11 +51,11 @@ Item {
         id:arduinoComp;
     }
 
-    MainServer
+    ServerComponent
     {
         x:marginLeft + 300;
         y:marginTop + 470;
-        id:server;
+        id:serverComp;
     }
 
     HealthCheckerComponent

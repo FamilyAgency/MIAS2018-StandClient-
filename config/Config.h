@@ -17,6 +17,7 @@ public:
     MainConfig configData;
     MindwaveConfig mindwaveConfig;
     ArduinoConfig arduinoConfig;
+    ServerConfig serverConfig;
 
     QString getRawData() const;
     void setRawData(const QString& value);

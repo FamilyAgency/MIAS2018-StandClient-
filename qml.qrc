@@ -28,9 +28,9 @@
         <file>qml/mainScreens/elements/StartBullet.qml</file>
         <file>qml/mainScreens/popups/PreTaskPopup.qml</file>
         <file>qml/controlScreens/StandData.qml</file>
-        <file>qml/controlScreens/MainServer.qml</file>
         <file>qml/controlScreens/AppState.qml</file>
         <file>qml/controlScreens/Logger.qml</file>
         <file>qml/tests/TestScreen.qml</file>
+        <file>qml/components/ServerComponent.qml</file>
     </qresource>
 </RCC>

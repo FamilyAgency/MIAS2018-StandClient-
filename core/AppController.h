@@ -7,6 +7,7 @@
 #include "components/HealthCheckerComponent.h"
 #include "components/ArduinoComponent.h"
 #include "components/MindwaveComponent.h"
+#include "components/ServerComponent.h"
 #include "StandData.h"
 #include "UserData.h"
 #include "tools/Logger.h"
@@ -54,6 +55,8 @@ private:
     HealthCheckerComponent* healthCheckerComponent;
     ArduinoComponent* arduinoComponent;
     MindwaveComponent* mindWaveComponent;
+    ServerComponent* serverComponent;
+    QList<BaseComponent*> components;
 
     StandData* standData;
     UserData* userData;

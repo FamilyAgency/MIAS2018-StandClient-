@@ -9,7 +9,7 @@ Item {
         spacing: 10;
         Text
         {
-            text: "Main server";
+            text: "Server component";
             font.family: "Helvetica"
             font.pixelSize: 17
             color: "#008800"
@@ -18,7 +18,7 @@ Item {
         Text
         {
             id:url;
-            text: "Url: ";
+            text: "Url: " + server.config.url;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

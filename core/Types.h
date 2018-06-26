@@ -72,8 +72,14 @@ struct MainConfig
 
 struct ServerConfig
 {
-    QString url = "http://";
+private:
+    Q_GADGET
+    Q_PROPERTY(QString url MEMBER url)
+
+public:
+    QString url = "http://mindwave.family.creative";
 };
+Q_DECLARE_METATYPE(ServerConfig)
 
 
 #endif // TYPES_H

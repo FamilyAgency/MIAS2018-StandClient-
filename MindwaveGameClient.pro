@@ -31,7 +31,9 @@ SOURCES += main.cpp \
     core/ResultModule.cpp \
     core/GameSession.cpp \
     core/UserData.cpp \
-    core/StandData.cpp
+    core/StandData.cpp \
+    components/BaseComponent.cpp \
+    components/ServerComponent.cpp
 
 RESOURCES += qml.qrc
 
@@ -86,6 +88,8 @@ HEADERS += \
     core/ResultModule.h \
     core/GameSession.h \
     core/UserData.h \
-    core/StandData.h
+    core/StandData.h \
+    components/BaseComponent.h \
+    components/ServerComponent.h
 
 DISTFILES +=

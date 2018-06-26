@@ -7,8 +7,16 @@ AppController::AppController(QObject *parent) : QObject(parent)
     gameSession = new GameSession();
 
     arduinoComponent = new ArduinoComponent();
+    components.append(arduinoComponent);
+
     mindWaveComponent = new MindwaveComponent();
+    components.append(mindWaveComponent);
+
+    serverComponent = new ServerComponent();
+    components.append(serverComponent);
+
     healthCheckerComponent = new HealthCheckerComponent(arduinoComponent, mindWaveComponent);
+    components.append(healthCheckerComponent);
 
     // loginModule = new LoginModule(arduinoComponent);
     // loginModule->setArduino(arduinoComponent);
@@ -70,11 +78,11 @@ void AppController::startResult()
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
-{
-    mindWaveComponent->setQmlContext(qmlContext);
-    arduinoComponent->setQmlContext(qmlContext);
-
-    gameSession->setQmlContext(qmlContext);
+{    
+    for (auto comp : components)
+    {
+        comp->setQmlContext(qmlContext);
+    }
 
     userData->setQmlContext(qmlContext);
     standData->setQmlContext(qmlContext);
@@ -117,6 +125,7 @@ void AppController::onConfigLoaded(Config* config)
 {
     mindWaveComponent->setConfig(config->mindwaveConfig);
     arduinoComponent->setConfig(config->arduinoConfig);
+    serverComponent->setConfig(config->serverConfig);
 
     for (auto module : modules)
     {

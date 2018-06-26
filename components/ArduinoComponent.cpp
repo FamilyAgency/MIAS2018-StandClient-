@@ -23,7 +23,6 @@ void ArduinoComponent::setQmlContext(QQmlContext* value)
    qmlContext->setContextProperty("arduino", this);
 }
 
-
 void ArduinoComponent::setConnected(bool value)
 {
     _connected = value;
