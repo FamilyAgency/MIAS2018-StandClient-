@@ -23,7 +23,9 @@ private:
     Config* config;
 
     MainConfig parseConfigData(const QJsonObject& jsonObj);
-
+    ArduinoConfig parseArduinoData(const QJsonObject& jsonObj);
+    MindwaveConfig parseMindwaveData(const QJsonObject& jsonObj);
+    ServerConfig parseServerData(const QJsonObject& jsonObj);
 };
 
 #endif // CONFIGPARSER_H

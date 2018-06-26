@@ -4,12 +4,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item {
-
-    Component.onCompleted:
-    {
-        console.log(healthChecker.getNames())
-    }
-
     ColumnLayout
     {
         spacing: 10;

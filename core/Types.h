@@ -8,9 +8,6 @@
 #include <QList>
 #include <QJsonObject>
 
-typedef int StandId;
-
-
 struct TCPConfig
 {
     QString ip = "127.0.0.1";
@@ -44,7 +41,7 @@ public:
     bool autoConnect = true;
     QString delimeter = "\r";
     QString initialCommand = "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r";
-    QString autchCommand = "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r";
+    QString authCommand = "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r";
 };
 Q_DECLARE_METATYPE(MindwaveConfig)
 
@@ -64,11 +61,22 @@ Q_DECLARE_METATYPE(ArduinoConfig)
 
 struct MainConfig
 {
+private:
+    Q_GADGET
+    Q_PROPERTY(QString version MEMBER version)
+    Q_PROPERTY(QString configUpdateUrl MEMBER configUpdateUrl)
+    Q_PROPERTY(bool needRemoteUpdate MEMBER needRemoteUpdate)
+    Q_PROPERTY(int standId MEMBER standId)
+    Q_PROPERTY(int appTypeId MEMBER appTypeId)
+
+ public:
     QString version;
     QString configUpdateUrl;
     bool needRemoteUpdate;
-    StandId standId;
+    int standId;
+    int appTypeId;
 };
+Q_DECLARE_METATYPE(MainConfig)
 
 struct ServerConfig
 {

@@ -169,9 +169,11 @@ BaseModule* AppController::getModuleByAppState(AppState value)
 
 void AppController::onConfigLoaded(Config* config)
 {
-    mindWaveComponent->setConfig(config->mindwaveConfig);
-    arduinoComponent->setConfig(config->arduinoConfig);
-    serverComponent->setConfig(config->serverConfig);
+    mindWaveComponent->setConfig(config->mindwaveData);
+    arduinoComponent->setConfig(config->arduinoData);
+    serverComponent->setConfig(config->serverData);
+
+    standData->setConfig(config->configData);
 
     for (auto module : modules)
     {

@@ -24,7 +24,7 @@ private:
     int startTime = 0;
     const int preTaskMills = 3 * 1000;
     const int preTaskTimerMills = 10;
-    const float toSeconds = 1/1000.0;
+    const float toSeconds = 1/1000.0f;
 };
 
 #endif // PRETASK_H

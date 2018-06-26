@@ -15,9 +15,9 @@ public:
     bool valid = true;
 
     MainConfig configData;
-    MindwaveConfig mindwaveConfig;
-    ArduinoConfig arduinoConfig;
-    ServerConfig serverConfig;
+    MindwaveConfig mindwaveData;
+    ArduinoConfig arduinoData;
+    ServerConfig serverData;
 
     QString getRawData() const;
     void setRawData(const QString& value);

@@ -26,7 +26,7 @@ public:
     void setCleanTime(float value);
 
     const int sessionTimerMills = 10;
-    const float toSeconds = 1/1000.0;
+    const float toSeconds = 1/1000.0f;
 
 private:
     float _sessionTime = 0.0;

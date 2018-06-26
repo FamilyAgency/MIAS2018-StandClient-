@@ -14,9 +14,34 @@ Item {
             font.pixelSize: 17
             color: "#000099"
         }
+
         Text
         {
-            text: "Stand Id: " + standData.getStandId();
+            text: "Version: " + standData.config.version;
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
+        }
+
+        Text
+        {
+            text: "Stand Id: " + standData.config.standId;
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
+        }
+
+        Text
+        {
+            text: "App Type Id: " + standData.config.appTypeId;
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
+        }
+
+        Text
+        {
+            text: "Need remote update: " + standData.config.needRemoteUpdate;
             font.family: "Helvetica";
             font.pixelSize: 15;
             color: "#999999";

@@ -1,127 +1,27 @@
 {
-    "version" : "1.10000",
+    "version" : "1.1",
     "configUpdateUrl" : "http://familyagency.ru/lab/synapse/digitalframes/config.json",
     "needRemoteUpdate": false,
-    "launchProcessOnStratup":false,
-    "launcherId": 1,
-    "appTypeId": 3,
-    "runInMiniimalSize":true,
-    "processes": [
-        {
-            "filePath": "installations/digitalframes/DigitalFrames_debug.exe",
-            "configPath": "installations/digitalframes/data/config.json",
-            "args": "",
-            "metaName": "DigitalFrames",
-            "config":
-            {
-                "appId": 1,
-                "appTypeId": 1,
-                "changeArtSeconds": 60,
-                "artRotateMode" : true,
-                "viewType" : 2,
-                "screen":
-                {
-                    "width": 1080,
-                    "height":1920,
-                    "largeWidth":3240
-                },
-                "fbo":
-                {
-                    "numSamples": 2,
-                    "fboNumSamplesThreeArts":2
-                },
-                "commands": [
-                    {
-                        "action": "{\"command\":{\"type\":\"clientAuth\"}}",
-                        "metaName": "clientAuth"
-                    },
-                    {
-                        "action": "{\"command\":{\"type\":\"keepAliveToggle\",\"enabled\":true,\"ms\":1000}}",
-                        "metaName": "keepAlive"
-                    },
-                    {
-                        "action": "{\"command\":{\"type\":\"nextArt\"}}",
-                        "metaName": "nextArt"
-                    },
-                    {
-                        "action": "{\"command\":{\"type\":\"randomArt\"}}",
-                        "metaName": "randomArt"
-                    },
-                    {
-                        "action": "{\"command\":{\"type\":\"getInfo\"}}",
-                        "metaName": "getInfo"
-                    }
-                ],
-                "fullscreen": true,
-                "logPath": "installations/digitalframes/data/",
-                "showCursor": false,
-                "socketClient": null,
-                "socketServer": {
-                    "autoConnect": true,
-                    "delimeter": "[/TCP]",
-                    "ip": "localhost",
-                    "port": 80
-                },
-                "yandexTrain":
-                {
-                    "protocol": "http",
-                    "host":"api.rasp.yandex.net/v1.0/schedule/",
-                    "format":"format=xml",
-                    "station":"station=s2000003",
-                    "lang": "lang=ru",
-                    "date":"date=",
-                    "apiKey": "apikey=35ac2f77-a751-4c21-8a39-12c64e6c4160"
-                },
-                "version": "1.0"
-            }
-        }
-    ],
+    "standId": 10,
+    "appTypeId": 30,
+    "arduino":
+    {
+        "serialPort": "COM333",
+        "baudRate": 9600
+    },
 
-    "socketServer":
+    "mindwave":
     {
         "ip" : "127.0.0.1",
         "port": 13854,
         "autoConnect": true,
-        "delimeter" :"[/TCP]",
-        "initialCommand": "{\"command\":{\"type\":\"clientAuth\"}}",
-        "connectionTypesAllow": [1,2]
+        "delimeter" : "\r",
+        "initialCommand" : "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r",
+        "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r"
     },
-    "socketClient":
+
+    "server":
     {
-        "ip" : "192.168.45.1",
-        "port": 8000,
-        "autoConnect": false,
-        "delimeter" :"[/TCP]"
-    },
-    "monitoring":
-    {
-        "enabled": true,
-        "http":
-        {
-            "enabled":true,
-            "url":"http://familyagency.ru",
-            "events": ["keepAlive", "systemstat", "commands"]
-        },
-        "remoteSocketServer":
-        {
-            "enabled":true,
-            "ip" : "192.168.45.1",
-            "port": 8000,
-            "autoConnect": false,
-            "delimeter" :"[/TCP]",
-            "connectionsTry": 10,
-            "connectionsTryDelay": 5000,
-            "events": ["keepAlive", "systemstat", "commands"]
-        }
-    },
-    "autoUpdate":
-    {
-        "provider": 1,
-        "enabled": true,
-        "remoteFolder":
-        {
-            "path":"\\share\\",
-            "checkUpdateMilliseconds": 10000
-        }
+        "url": "http://mindwave.family.creative"
     }
 }

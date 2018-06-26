@@ -9,11 +9,16 @@ void StandData::setQmlContext(QQmlContext* value)
 {
     qmlContext = value;
     qmlContext->setContextProperty("standData", this);
-
 }
 
-int StandData::getStandId() const
+void StandData::setConfig(const MainConfig& config)
 {
-   return standId;
+    //TODO
+    _mainConfig = config;
+    emit configChanged();
 }
 
+MainConfig StandData::config() const
+{
+    return _mainConfig;
+}
