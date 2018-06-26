@@ -15,14 +15,24 @@ GameTaskManager::GameTaskManager()
     setCurrentGameTaskIndex(0);
 }
 
-void GameTaskManager::start()
-{  
-   setTaskState(TaskState::PreGame);
-}
-
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
 {
    qmlContext->setContextProperty("gameTaskManager", this);
+}
+
+void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
+{
+    mindWave = value;
+
+    for(auto task: gameTasks)
+    {
+        task->setMindWaveClient(mindWave);
+    }
+}
+
+void GameTaskManager::start()
+{  
+   setTaskState(TaskState::PreGame);
 }
 
 void GameTaskManager::stop()
@@ -133,11 +143,6 @@ void GameTaskManager::onTaskCompleteEvent()
 bool GameTaskManager::isAllTaskCompleted() const
 {
     return currentTaskIndex() == gameTasks.length() - 1;
-}
-
-void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
-{
-    mindWave = value;
 }
 
 bool GameTaskManager::isRunning() const

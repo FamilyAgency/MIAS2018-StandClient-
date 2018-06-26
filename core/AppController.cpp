@@ -15,7 +15,7 @@ void AppController::testConstruct()
     arduinoComponent = new ArduinoComponent();
     components.append(arduinoComponent);
 
-    mindWaveComponent = new MindwaveComponent();
+    mindWaveComponent = new MindwaveComponentTest();
     components.append(mindWaveComponent);
 
     serverComponent = new ServerComponent();

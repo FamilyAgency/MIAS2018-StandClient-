@@ -6,6 +6,7 @@
 #include <QVector2D>
 #include <QTimer>
 #include "core/game/VelocityCalculator.h"
+#include "components/MindwaveComponent.h"
 
 class GameTask: public QObject
 {
@@ -31,9 +32,12 @@ public:
     float getForwardVectorRotation() const;
 
     float getMindwaveLimit() const;
+    void setMindWaveClient(MindwaveComponent* value);
 
 private:
     const int taskTimerMills = 10;
+
+    MindwaveComponent* mindWave;
 
     QVector<QPointF> path;
     QPointF curPoint, startPoint, endPoint, position;

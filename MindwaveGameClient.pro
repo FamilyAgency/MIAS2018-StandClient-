@@ -34,7 +34,8 @@ SOURCES += main.cpp \
     core/StandData.cpp \
     components/BaseComponent.cpp \
     components/ServerComponent.cpp \
-    components/ExternalSystemComponent.cpp
+    components/ExternalSystemComponent.cpp \
+    tests/MindwaveComponentTest.cpp
 
 RESOURCES += qml.qrc
 
@@ -92,6 +93,7 @@ HEADERS += \
     core/StandData.h \
     components/BaseComponent.h \
     components/ServerComponent.h \
-    components/ExternalSystemComponent.h
+    components/ExternalSystemComponent.h \
+    tests/MindwaveComponentTest.h
 
 DISTFILES +=

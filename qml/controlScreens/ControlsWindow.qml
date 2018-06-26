@@ -24,7 +24,6 @@ Item {
         y:marginTop + 170;
     }
 
-
     GameSession
     {
         x:marginLeft;

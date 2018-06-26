@@ -35,7 +35,6 @@ void MindwaveComponent::setConfig(const MindwaveConfig& config)
     client->setConfig(mindwaveConfig.getTCPConfig());
     client->init();
     emit configChanged();
-
 }
 
 void MindwaveComponent::onItemDataRecieve(const QString& data)

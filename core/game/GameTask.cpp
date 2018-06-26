@@ -59,13 +59,18 @@ void GameTask::setPoints()
     velocityDirection.normalize();
 }
 
+void GameTask::setMindWaveClient(MindwaveComponent* value)
+{
+    mindWave = value;
+}
+
 void GameTask::onUpdate()
 {  
     int humanValue = 0;
-    //    if(mindWave)
-    //    {
-    //        humanValue = mindWave->attention();
-    //    }
+    if(mindWave)
+    {
+        humanValue = mindWave->attention();
+    }
 
     update(humanValue);
 
@@ -80,7 +85,6 @@ void GameTask::update(int humanValue)
     }
 
     QVector2D vec(endPoint - curPoint);
-
     auto velocity = velocityCalculator.calculate(humanValue);
     const float epsilon = 1.1f * velocity;
 
@@ -97,7 +101,7 @@ void GameTask::update(int humanValue)
         }
         else
         {
-            taskComplete = true;           
+            taskComplete = true;
             emit completeEvent();
         }
     }

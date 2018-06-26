@@ -16,8 +16,10 @@
 #include "InstructionModule.h"
 #include "GameModule.h"
 #include "ResultModule.h"
-#include "tests/LoginModuleTest.h"
 #include "Types.h"
+
+#include "tests/LoginModuleTest.h"
+#include "tests/MindwaveComponentTest.h"
 
 class AppController : public QObject
 {

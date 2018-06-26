@@ -34,7 +34,7 @@ public:
     void setPoorSignalLevel(int value);
     int poorSignalLevel() const;
 
-    void setConfig(const MindwaveConfig& value);
+    virtual void setConfig(const MindwaveConfig& value);
     MindwaveConfig config() const;
 
     void setConnected(bool value);
@@ -43,6 +43,8 @@ public:
     void parse(const QString& data);
 
     virtual bool isHealthy() override;
+
+    friend class MindwaveComponentTest;
 
 private:
     MindwaveConfig mindwaveConfig;

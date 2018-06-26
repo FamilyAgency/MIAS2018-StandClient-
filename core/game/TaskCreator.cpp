@@ -47,13 +47,13 @@ QList<GameTask*> TaskCreator::create()
     //PATH1
     path.clear();
     path<<point4<<point6<<point10<<point7<<point16<<point17;
-    velocitycalculator.setLimits(0, 3.5, 40);
+    velocitycalculator.setLimits(0.0f, 3.5f, 40.0f);
     gameTasks.append(new GameTask(path, velocitycalculator));
 
     //PATH2
     path.clear();
     path<<point17<<point20<<point3<<point2;
-    velocitycalculator.setLimits(0, 3.3, 45);
+    velocitycalculator.setLimits(0.0f, 3.3f, 45.0f);
     gameTasks.append(new GameTask(path, velocitycalculator));
 
 //    //PATH3
