@@ -54,6 +54,7 @@ ArduinoConfig ConfigParser::parseArduinoData(const QJsonObject& jsonObj)
     ArduinoConfig arduino;
     arduino.serialPort = jsonObj["serialPort"].toString();
     arduino.baudRate = jsonObj["baudRate"].toInt();
+    arduino.autoConnect = jsonObj["autoConnect"].toBool();
     return arduino;
 }
 
@@ -66,7 +67,6 @@ MindwaveConfig ConfigParser::parseMindwaveData(const QJsonObject& jsonObj)
     mindwave.delimeter = jsonObj["delimeter"].toString();
     mindwave.initialCommand = jsonObj["initialCommand"].toString();
     mindwave.authCommand = jsonObj["authCommand"].toString();
-
     return mindwave;
 }
 

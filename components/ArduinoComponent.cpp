@@ -4,71 +4,42 @@
 ArduinoComponent::ArduinoComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Arduino";
+
+    arduinoDataReader = new ArduinoDataReader();
+    connect(arduinoDataReader, SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
+    connect(arduinoDataReader, SIGNAL(readError()), this, SLOT(onReadError()));
 }
 
 void ArduinoComponent::setConfig(const ArduinoConfig& config)
 {
     arduinoConfig = config;
+    arduinoDataReader->setConfig(config);
     emit configChanged();
 }
 
 void ArduinoComponent::start()
 {
-    //TODO
-    serialPort = new QSerialPort();
-
-    QSerialPortInfo serialPortInfo;
-
-    qDebug()<<"port names ======================";
-    auto ports = serialPortInfo.availablePorts();
-    for(auto port: ports)
-    {
-        qDebug()<<port.portName()<<port.description();
-    }
-    qDebug()<<"======================";
-    //findComPortByDeviceName();
-
-    serialPort->setPortName(arduinoConfig.serialPort);
-    auto serialPortBaudRate = QSerialPort::Baud9600;
-    serialPort->setBaudRate(serialPortBaudRate);
-
-    if (!serialPort->open(QIODevice::ReadOnly))
-    {
-        qDebug()<<"serialPort opening error";
-    }
-    else
-    {
-        connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-        connect(serialPort, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(onReadError(QSerialPort::SerialPortErro)));
-
-        timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-        timer->start(taskTimerMills);
-    }
+   //arduinoDataReader->start();
 }
 
-void ArduinoComponent::onReadyRead()
+void ArduinoComponent::startReading(int modelIndex)
 {
-    readData.append(serialPort->readAll());
+   arduinoDataReader->startReading(modelIndex);
 }
 
-void ArduinoComponent::onReadError(QSerialPort::SerialPortError serialPortError)
+QVariantList ArduinoComponent::getPortsAvailable() const
 {
-    if (serialPortError == QSerialPort::ReadError)
-    {
-
-    }
+    return arduinoDataReader->getPortsAvailable();
 }
-void ArduinoComponent::onUpdate()
+
+void ArduinoComponent::onDataReaded(const QString&)
 {
-    if (!readData.isEmpty())
-    {
 
-    }
-    else
-    {
+}
 
-    }
+void ArduinoComponent::onReadError()
+{
+
 }
 
 ArduinoConfig ArduinoComponent::config() const

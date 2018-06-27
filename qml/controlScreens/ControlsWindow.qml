@@ -53,7 +53,7 @@ Item {
     ServerComponent
     {
         x:marginLeft + 300;
-        y:marginTop + 470;
+        y:marginTop + 480;
         id:serverComp;
     }
 

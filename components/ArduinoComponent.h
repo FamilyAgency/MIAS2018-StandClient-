@@ -3,9 +3,10 @@
 
 #include <QObject>
 #include <QTimer>
-#include <QSerialPort>
+
 #include "config/Config.h"
 #include "components/ExternalSystemComponent.h"
+#include "arduino/ArduinoDataReader.h"
 
 class ArduinoComponent : public ExternalSystemComponent
 {
@@ -26,24 +27,21 @@ public:
     void setConnected(bool value);
     bool connected() const;
 
-private:
-     const int taskTimerMills = 1000;
+    Q_INVOKABLE QVariantList getPortsAvailable() const;
+    Q_INVOKABLE void startReading(int modelIndex);
 
+private:
      ArduinoConfig arduinoConfig;
      bool _connected = false;
-
-     QSerialPort* serialPort = nullptr;
-     QByteArray readData;
-     QTimer* timer;
+     ArduinoDataReader* arduinoDataReader;
 
 signals:
     void configChanged();
     void connectedChanged();
 
 public slots:
-    void onReadyRead();
-    void onReadError(QSerialPort::SerialPortError error);
-    void onUpdate();
+    void onDataReaded(const QString&);
+    void onReadError();
 };
 
 #endif // ARDUINOCOMPONENT_H

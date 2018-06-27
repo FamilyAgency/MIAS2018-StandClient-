@@ -75,7 +75,6 @@ public:
     void setDelimeter(const QString& value);
 
     virtual void init();
-
     virtual void setConfig(const TCPConfig& config);
 
 protected:

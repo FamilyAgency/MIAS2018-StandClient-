@@ -36,7 +36,8 @@ SOURCES += main.cpp \
     components/BaseComponent.cpp \
     components/ServerComponent.cpp \
     components/ExternalSystemComponent.cpp \
-    tests/MindwaveComponentTest.cpp
+    tests/MindwaveComponentTest.cpp \
+    components/arduino/ArduinoDataReader.cpp
 
 RESOURCES += qml.qrc
 
@@ -95,6 +96,7 @@ HEADERS += \
     components/BaseComponent.h \
     components/ServerComponent.h \
     components/ExternalSystemComponent.h \
-    tests/MindwaveComponentTest.h
+    tests/MindwaveComponentTest.h \
+    components/arduino/ArduinoDataReader.h
 
 DISTFILES +=

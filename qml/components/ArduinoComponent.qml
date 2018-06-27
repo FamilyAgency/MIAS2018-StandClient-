@@ -19,11 +19,50 @@ Item {
             font.pixelSize: 17
             color: "#008800"
         }
+        RowLayout
+        {
+
+            ComboBox
+            {
+                id:comComboBox;
+                Component.onCompleted:
+                {
+                    //com.text = "Selected: " + currentText;
+                }
+
+                width: 200
+                model: arduino.getPortsAvailable();
+                onCurrentIndexChanged: {
+                    //com.text = "Selected: " + currentText;
+                   }
+            }
+
+//            Text
+//            {
+//                id:com;
+//                text: "Selected : " + arduino.config.serialPort;
+//                font.family: "Helvetica"
+//                font.pixelSize: 15
+//                color: "#999999"
+//                wrapMode: Text.WordWrap
+//                clip: true
+//            }
+            Button
+            {
+                id:con;
+                text: "connect"
+                onClicked:
+                {
+                    arduino.startReading(comComboBox.currentIndex);
+                }
+            }
+
+        }
 
         Text
         {
-            id:com;
-            text: "COM: " + arduino.config.serialPort;
+            id:autoCon;
+            text: "Auto connect: " + arduino.config.autoConnect;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

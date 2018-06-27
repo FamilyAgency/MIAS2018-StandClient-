@@ -37,5 +37,5 @@ void MindwaveComponentTest::simulateMindwaveRead()
 
     setPoorSignalLevel(signalRemappedValue);
 
-    qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
+   // qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
 }

@@ -14,6 +14,7 @@ public:
 
     Q_INVOKABLE virtual void loginSuccessTest();
     Q_INVOKABLE virtual void logoutTest();
+
 signals:
 
 public slots:

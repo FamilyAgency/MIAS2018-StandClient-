@@ -52,10 +52,12 @@ private:
     Q_GADGET
     Q_PROPERTY(QString serialPort MEMBER serialPort)
     Q_PROPERTY(int baudRate MEMBER baudRate)
+    Q_PROPERTY(bool autoConnect MEMBER autoConnect)
 
 public:
     QString serialPort = "COM1";
     int baudRate = 9600;
+    bool autoConnect = true;
 };
 Q_DECLARE_METATYPE(ArduinoConfig)
 
