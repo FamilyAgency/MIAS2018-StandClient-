@@ -41,7 +41,8 @@ SOURCES += main.cpp \
     components/mindwave/MindwaveParser.cpp \
     components/SlackComponent.cpp \
     services/LoggerService.cpp \
-    services/BaseService.cpp
+    services/BaseService.cpp \
+    core/game/GameProgress.cpp
 
 RESOURCES += qml.qrc
 
@@ -105,6 +106,7 @@ HEADERS += \
     components/mindwave/MindwaveParser.h \
     components/SlackComponent.h \
     services/LoggerService.h \
-    services/BaseService.h
+    services/BaseService.h \
+    core/game/GameProgress.h
 
 DISTFILES +=
