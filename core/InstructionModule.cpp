@@ -25,3 +25,8 @@ void InstructionModule::stop()
 
 }
 
+QString InstructionModule::getName() const
+{
+    return "Instructions location";
+}
+

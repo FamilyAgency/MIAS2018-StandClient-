@@ -38,7 +38,7 @@ void MindwaveReader::onDisconnectionSuccess()
 
 void MindwaveReader::onItemDataRecieve(const QString& data)
 {
-    emit onDataRecieve(data);
+    emit dataRecieve(data);
 }
 
  void MindwaveReader::setConnected(bool value)

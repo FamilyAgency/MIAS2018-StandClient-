@@ -7,7 +7,7 @@ LoginModule::LoginModule(QObject *parent):BaseModule(parent)
 
 void LoginModule::setQmlContext(QQmlContext* qmlContext)
 {
-     qmlContext->setContextProperty("loginModule", this);
+    qmlContext->setContextProperty("loginModule", this);
 }
 
 void LoginModule::setConfig(Config* config)
@@ -17,7 +17,7 @@ void LoginModule::setConfig(Config* config)
 
 void LoginModule::setArduino(ArduinoComponent* arduinoComponentValue)
 {
-     arduinoComponent = arduinoComponentValue;
+    arduinoComponent = arduinoComponentValue;
 }
 
 void LoginModule::setUserData(UserData* value)
@@ -34,3 +34,25 @@ void LoginModule::stop()
 {
 
 }
+
+void LoginModule::setState(LoginState value)
+{
+    state = value;
+    emit loginStateChanged(state);
+}
+
+QString LoginModule::getStringState() const
+{
+    switch(state)
+    {
+        case LoginState::Login: return "user login";
+        case LoginState::Logout: return "user logout";
+    }
+    return "undefined";
+}
+
+QString LoginModule::getName() const
+{
+    return "Login location";
+}
+

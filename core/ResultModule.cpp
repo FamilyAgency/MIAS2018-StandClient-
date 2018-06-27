@@ -14,3 +14,8 @@ void ResultModule::stop()
 {
 
 }
+
+QString ResultModule::getName() const
+{
+    return "Result location";
+}

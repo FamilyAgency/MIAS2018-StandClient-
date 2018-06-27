@@ -21,6 +21,9 @@ void AppController::testConstruct()
     serverComponent = new ServerComponent();
     components.append(serverComponent);
 
+    slackComponent = new SlackComponent();
+    components.append(slackComponent);
+
     healthCheckerComponent = new HealthCheckerComponent();
     healthCheckerComponent->addComponent(arduinoComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
@@ -45,6 +48,10 @@ void AppController::testConstruct()
 
     resultModule = new ResultModule();
     modules.append(resultModule);
+
+    logger = new LoggerService();
+    logger->setSlackComponent(slackComponent);
+    services.append(logger);
 }
 
 void AppController::releaseConstruct()
@@ -61,6 +68,9 @@ void AppController::releaseConstruct()
 
     serverComponent = new ServerComponent();
     components.append(serverComponent);
+
+    slackComponent = new SlackComponent();
+    components.append(slackComponent);
 
     healthCheckerComponent = new HealthCheckerComponent();
     healthCheckerComponent->addComponent(arduinoComponent);
@@ -86,11 +96,17 @@ void AppController::releaseConstruct()
 
     resultModule = new ResultModule();
     modules.append(resultModule);
+
+    logger = new LoggerService();
+    logger->setSlackComponent(slackComponent);
+    services.append(logger);
 }
 
 void AppController::onLoginStateChanged(LoginModule::LoginState loginState)
 {
-    qDebug()<<"login state changed  "<< (int)loginState;
+    //QString loginMsg = "login state changed  " + loginModule->getStringState();
+    //logger->log(loginMsg);
+
     if(loginState == LoginModule::LoginState::Login)
     {
         gameSession->start();
@@ -136,7 +152,12 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
     for (auto module : modules)
     {
         module->setQmlContext(qmlContext);
-    }      
+    }
+
+    for (auto service : services)
+    {
+        service->setQmlContext(qmlContext);
+    }
 }
 
 void AppController::setAppState(AppState value)
@@ -152,6 +173,8 @@ void AppController::setAppState(AppState value)
 
     currentModule->start();
     emit appStateChanged(value);
+
+   logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
 }
 
 BaseModule* AppController::getModuleByAppState(AppState value)
@@ -172,12 +195,18 @@ void AppController::onConfigLoaded(Config* config)
     mindWaveComponent->setConfig(config->mindwaveData);
     arduinoComponent->setConfig(config->arduinoData);
     serverComponent->setConfig(config->serverData);
+    slackComponent->setConfig(config->slackData);
 
     standData->setConfig(config->configData);
 
     for (auto module : modules)
     {
         module->setConfig(config);
+    }
+
+    for (auto service : services)
+    {
+        service->setConfig(config);
     }
 
     start();
@@ -188,19 +217,19 @@ void AppController::onConfigError()
     qDebug() << "config Service Error";
 }
 
-void AppController::setLogger(Logger* logger)
-{
-    for (auto module : modules)
-    {
-        module->setLogger(logger);
-    }
-}
-
 void AppController::start()
 {    
+    QString initStatus = "Stand " + QString::number(standData->config().standId) + " started.........";
+    logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
+
     for (auto comp : components)
     {
         comp->start();
+    }
+
+    for (auto service : services)
+    {
+        service->start();
     }
 
     setAppState(AppState::Login);

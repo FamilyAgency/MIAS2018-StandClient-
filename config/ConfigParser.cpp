@@ -26,6 +26,7 @@ void ConfigParser::parse(const QString& configData)
         config->arduinoData  = parseArduinoData(jsonObj["arduino"].toObject());
         config->mindwaveData = parseMindwaveData(jsonObj["mindwave"].toObject());
         config->serverData   = parseServerData(jsonObj["server"].toObject());
+        config->slackData    = parseSlackData(jsonObj["slack"].toObject());
 
         config->setRawData(configData);
         config->valid = true;
@@ -76,3 +77,21 @@ ServerConfig ConfigParser::parseServerData(const QJsonObject& jsonObj)
     server.url = jsonObj["url"].toString();
     return server;
 }
+
+SlackConfig ConfigParser::parseSlackData(const QJsonObject& jsonObj)
+{
+    SlackConfig slack;
+
+    int id = 0; //config->configData.standId
+
+    QJsonArray logChannels = jsonObj["logChannels"].toArray();
+    slack.logChannel = logChannels[id].toString();
+
+    QJsonArray errChannels = jsonObj["errorChannels"].toArray();
+    slack.errChannel = errChannels[id].toString();
+
+    return slack;
+}
+
+
+

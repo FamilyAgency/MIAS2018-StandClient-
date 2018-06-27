@@ -1,15 +1,15 @@
-#ifndef BASEMODULE_H
-#define BASEMODULE_H
+#ifndef BASESERVICE_H
+#define BASESERVICE_H
 
 #include <QObject>
 #include <QQmlContext>
 #include "config/Config.h"
 
-class BaseModule : public QObject
+class BaseService : public QObject
 {
     Q_OBJECT
 public:
-    explicit BaseModule(QObject *parent = nullptr);
+    explicit BaseService(QObject *parent = nullptr);
 
     virtual void setConfig(Config* config);
     virtual void start() = 0;
@@ -26,4 +26,4 @@ signals:
 public slots:
 };
 
-#endif // BASEMODULE_H
+#endif // BASESERVICE_H

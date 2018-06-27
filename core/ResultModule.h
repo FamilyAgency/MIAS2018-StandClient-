@@ -12,6 +12,7 @@ public:
 
     virtual void start() override;
     virtual void stop() override;
+    virtual QString getName() const override;
 
 signals:
 

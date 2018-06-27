@@ -15,15 +15,11 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-    QScopedPointer<Logger> logger(new Logger);
-    engine.rootContext()->setContextProperty("logger", logger.data());
-
     QScopedPointer<ConfigController> configController(new ConfigController);
     engine.rootContext()->setContextProperty("configController", configController.data());
 
     QScopedPointer<AppController> appController(new AppController());
     engine.rootContext()->setContextProperty("appController", appController.data());
-    appController.data()->setLogger(logger.data());
     appController.data()->setQmlContext(engine.rootContext());
 
     QObject::connect(configController.data(), SIGNAL(configServiceReady(Config*)), appController.data(), SLOT(onConfigLoaded(Config*)));

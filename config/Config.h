@@ -18,6 +18,7 @@ public:
     MindwaveConfig mindwaveData;
     ArduinoConfig arduinoData;
     ServerConfig serverData;
+    SlackConfig slackData;
 
     QString getRawData() const;
     void setRawData(const QString& value);

@@ -8,6 +8,14 @@
 #include <QList>
 #include <QJsonObject>
 
+
+enum class LogType
+{
+    Verbose,
+    Warning,
+    Error
+};
+
 struct TCPConfig
 {
     QString ip = "127.0.0.1";
@@ -90,6 +98,12 @@ public:
     QString url = "http://mindwave.family.creative";
 };
 Q_DECLARE_METATYPE(ServerConfig)
+
+struct SlackConfig
+{
+    QString logChannel;
+    QString errChannel;
+};
 
 
 #endif // TYPES_H

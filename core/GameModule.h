@@ -2,6 +2,7 @@
 #define GAMEMODULE_H
 
 #include <QObject>
+#include <QString>
 #include "BaseModule.h"
 #include "components/MindwaveComponent.h"
 #include "core/game/GameTaskManager.h"
@@ -19,6 +20,7 @@ public:
     virtual void setQmlContext(QQmlContext* value) override;
     void setGameSession(GameSession* gameSession);
     void setMindwave(MindwaveComponent* value);
+    virtual QString getName() const override;
 
 private:
     MindwaveComponent* mindWaveComponent;

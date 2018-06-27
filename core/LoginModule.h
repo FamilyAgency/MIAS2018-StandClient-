@@ -21,7 +21,7 @@ public:
     Q_ENUMS(LoginError)
 
     enum class LoginState
-    {
+    {       
         Login,
         Logout,
         Error
@@ -36,12 +36,17 @@ public:
     virtual void start() override;
     virtual void stop() override;
     virtual void setUserData(UserData* userData);
+    virtual QString getName() const override;
+
+    QString getStringState() const;
 
     friend class LoginModuleTest;
 
 private:
     ArduinoComponent* arduinoComponent;
     UserData* userData;
+    LoginState state = LoginState::Logout;
+    void setState(LoginState state);
 
 signals:
     void loginStateChanged(LoginModule::LoginState loginState);

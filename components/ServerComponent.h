@@ -18,6 +18,21 @@ public:
     virtual void start() override;
     virtual void setQmlContext(QQmlContext* value) override;
     virtual bool isHealthy() override;
+
+
+    // REST API
+//    void findUser(name, surname, mobile, email);
+//    void saveUser();
+//    void sendPIN();
+//    void saveRFID();
+
+//    void getStandConfig();
+//    void getUserData();
+
+//    void setUserProgress(stand, userId, stage, time, mindwaveData);
+
+//    void healthCheck();
+    
 private:
      ServerConfig serverConfig;
 

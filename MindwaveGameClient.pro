@@ -11,7 +11,6 @@ SOURCES += main.cpp \
     config/ConfigWriter.cpp \
     core/Types.cpp \
     network/socketClient/TCPSocketClient.cpp \
-    tools/Logger.cpp \
     network/http/HTTPClient.cpp \
     tools/MathTools.cpp \
     components/ArduinoComponent.cpp \
@@ -39,7 +38,10 @@ SOURCES += main.cpp \
     tests/MindwaveComponentTest.cpp \
     components/arduino/ArduinoDataReader.cpp \
     components/mindwave/MindwaveReader.cpp \
-    components/mindwave/MindwaveParser.cpp
+    components/mindwave/MindwaveParser.cpp \
+    components/SlackComponent.cpp \
+    services/LoggerService.cpp \
+    services/BaseService.cpp
 
 RESOURCES += qml.qrc
 
@@ -73,7 +75,6 @@ HEADERS += \
     config/ConfigWriter.h \
     core/Types.h \
     network/socketClient/TCPSocketClient.h \
-    tools/Logger.h \
     network/http/HTTPClient.h \
     tools/MathTools.h \
     components/ArduinoComponent.h \
@@ -101,6 +102,9 @@ HEADERS += \
     tests/MindwaveComponentTest.h \
     components/arduino/ArduinoDataReader.h \
     components/mindwave/MindwaveReader.h \
-    components/mindwave/MindwaveParser.h
+    components/mindwave/MindwaveParser.h \
+    components/SlackComponent.h \
+    services/LoggerService.h \
+    services/BaseService.h
 
 DISTFILES +=

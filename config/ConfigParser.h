@@ -26,6 +26,7 @@ private:
     ArduinoConfig parseArduinoData(const QJsonObject& jsonObj);
     MindwaveConfig parseMindwaveData(const QJsonObject& jsonObj);
     ServerConfig parseServerData(const QJsonObject& jsonObj);
+    SlackConfig parseSlackData(const QJsonObject& jsonObj);
 };
 
 #endif // CONFIGPARSER_H

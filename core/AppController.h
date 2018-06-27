@@ -8,9 +8,12 @@
 #include "components/ArduinoComponent.h"
 #include "components/MindwaveComponent.h"
 #include "components/ServerComponent.h"
+#include "components/SlackComponent.h"
+
+#include "services/LoggerService.h"
+
 #include "StandData.h"
 #include "UserData.h"
-#include "tools/Logger.h"
 #include "config/Config.h"
 #include "LoginModule.h"
 #include "InstructionModule.h"
@@ -37,8 +40,7 @@ public:
 
     AppController(QObject *parent = nullptr);
 
-public:   
-    void setLogger(Logger* logger);    
+public:
     void setQmlContext(QQmlContext* qmlContext);
 
     Q_INVOKABLE void start();
@@ -51,18 +53,23 @@ private:
     LoginModuleTest* loginModuleTest;
     InstructionModule* instructionModule;
     GameModule* gameModule;
-    ResultModule* resultModule;
+    ResultModule* resultModule;   
     QList<BaseModule*> modules;
+
+    LoggerService* logger;
+    QList<BaseService*> services;
+
 
     HealthCheckerComponent* healthCheckerComponent;
     ArduinoComponent* arduinoComponent;
     MindwaveComponent* mindWaveComponent;
     ServerComponent* serverComponent;
+    SlackComponent* slackComponent;
     QList<BaseComponent*> components;
+
 
     StandData* standData;
     UserData* userData;
-    Logger logger;
     Config* config;
     GameSession* gameSession;
 

@@ -48,5 +48,10 @@ void GameModule::onAllTaskComleteEvent()
    emit allTaskComleteEvent();
 }
 
+QString GameModule::getName() const
+{
+    return "Game location";
+}
+
 
 

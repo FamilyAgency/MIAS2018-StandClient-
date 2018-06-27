@@ -14,6 +14,7 @@ public:
     void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
     virtual void stop() override;
+    virtual QString getName() const override;
 
 signals:
 

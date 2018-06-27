@@ -24,7 +24,7 @@ private:
 signals:
     void connectionSuccess();
     void disconnectionSuccess();
-    void onDataRecieve(const QString&);
+    void dataRecieve(const QString&);
 
 private slots:
     void onItemDataRecieve(const QString& data);
