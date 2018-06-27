@@ -78,6 +78,8 @@ private:
     Q_PROPERTY(bool needRemoteUpdate MEMBER needRemoteUpdate)
     Q_PROPERTY(int standId MEMBER standId)
     Q_PROPERTY(int appTypeId MEMBER appTypeId)
+    Q_PROPERTY(QRect touchScreen MEMBER touchScreen)
+    Q_PROPERTY(QRect gameScreen MEMBER gameScreen)
 
  public:
     QString version;
@@ -85,6 +87,8 @@ private:
     bool needRemoteUpdate;
     int standId;
     int appTypeId;
+    QRect touchScreen;
+    QRect gameScreen;
 };
 Q_DECLARE_METATYPE(MainConfig)
 

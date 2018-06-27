@@ -14,9 +14,10 @@ Window {
     visible: true
     id: mainGameWindow    
     flags: Qt.SplashScreen
-    x: 2820
-    width: 1920
-    height: 1080
+    width: standData.config.gameScreen.width
+    height: standData.config.gameScreen.height
+    x: standData.config.gameScreen.x
+    y: standData.config.gameScreen.y
 
     Connections
     {

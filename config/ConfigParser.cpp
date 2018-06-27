@@ -47,6 +47,19 @@ MainConfig ConfigParser::parseConfigData(const QJsonObject& jsonObj)
     configData.needRemoteUpdate = jsonObj["needRemoteUpdate"].toBool();
     configData.standId = jsonObj["standId"].toInt();
     configData.appTypeId = jsonObj["appTypeId"].toInt();
+
+    QJsonObject touchScreenData = jsonObj["screens"].toObject()["touch"].toObject();
+    configData.touchScreen.setX(touchScreenData["x"].toInt());
+    configData.touchScreen.setY(touchScreenData["y"].toInt());
+    configData.touchScreen.setWidth(touchScreenData["width"].toInt());
+    configData.touchScreen.setHeight(touchScreenData["height"].toInt());
+
+    QJsonObject gameScreenData = jsonObj["screens"].toObject()["game"].toObject();
+    configData.gameScreen.setX(gameScreenData["x"].toInt());
+    configData.gameScreen.setY(gameScreenData["y"].toInt());
+    configData.gameScreen.setWidth(gameScreenData["width"].toInt());
+    configData.gameScreen.setHeight(gameScreenData["height"].toInt());
+
     return configData;
 }
 
@@ -92,6 +105,3 @@ SlackConfig ConfigParser::parseSlackData(const QJsonObject& jsonObj)
 
     return slack;
 }
-
-
-
