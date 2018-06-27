@@ -46,5 +46,29 @@ Item {
             font.pixelSize: 15;
             color: "#999999";
         }
+
+        Text
+        {
+            text: "Screens";
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#000000";
+        }
+
+        ListView {
+            width: 180; height: 200
+
+            model: standData.getScreensInfo()
+            spacing: 2;
+            delegate: Text
+            {
+                text: modelData
+                font.family: "Helvetica"
+                font.pixelSize: 15
+                color: "#999999"
+            }
+        }
+
+
     }
 }

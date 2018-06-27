@@ -21,19 +21,19 @@ Item {
     UserData
     {
         x:marginLeft;
-        y:marginTop + 170;
+        y:marginTop + 240;
     }
 
     GameSession
     {
         x:marginLeft;
-        y:marginTop + 400;
+        y:marginTop + 480;
     }
 
     AppState
     {
         x:marginLeft;
-        y:marginTop + 540;
+        y:marginTop + 620;
     }
 
     MindwaveComponent
