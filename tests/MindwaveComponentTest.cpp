@@ -7,23 +7,13 @@ MindwaveComponentTest::MindwaveComponentTest(QObject *parent) : MindwaveComponen
     connect(timer, SIGNAL(timeout()), this, SLOT(simulateMindwaveRead()));
 }
 
-void MindwaveComponentTest::setConfig(const MindwaveConfig& config)
-{
-    mindwaveConfig = config;
-    client->setConfig(mindwaveConfig.getTCPConfig());
-    emit configChanged();
-}
-
 void MindwaveComponentTest::start()
 {
      timer->start(taskTimerMills);
 }
 
 void MindwaveComponentTest::simulateMindwaveRead()
-{
-    _lastAttention = _attention;
-    _lastMeditation = _meditation;
-
+{   
     int min = 50;
     int max = 100;
     int RandAtten = qrand() % ((max + 1) - min) + min;

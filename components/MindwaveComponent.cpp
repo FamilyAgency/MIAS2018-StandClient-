@@ -1,96 +1,49 @@
 #include "MindwaveComponent.h"
 #include <QDebug>
-#include <QJsonDocument.h>
-#include <QJsonObject.h>
-#include "tools/MathTools.h"
 
 MindwaveComponent::MindwaveComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Mindwave";
 
-    client.reset(new TCPSocketClient);
-    connect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
-    connect(client.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-    connect(client.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+    mindwaveReader = new MindwaveReader();
+    connect(mindwaveReader, SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
+    connect(mindwaveReader, SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+    connect(mindwaveReader, SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+
+    mindwaveParser = new MindwaveParser();
 }
 
 void MindwaveComponent::onConnectionSuccess()
 {
-    setConnected(true);
-    qDebug()<<"MindwaveComponent : connected............";
-    client->sendData(mindwaveConfig.initialCommand);
-    //client->sendData(config.autchCommand);
+    setConnected(true);   
 }
 
 void MindwaveComponent::onDisconnectionSuccess()
 {
     setConnected(false);
-    qDebug()<<"MindwaveComponent : disconnected............";
 }
 
 void MindwaveComponent::setConfig(const MindwaveConfig& config)
 {
     mindwaveConfig = config;
-    client->setConfig(mindwaveConfig.getTCPConfig());   
+    mindwaveReader->setConfig(mindwaveConfig);
+    mindwaveParser->setConfig(mindwaveConfig);
     emit configChanged();
 }
 
 void MindwaveComponent::start()
 {
-     client->init();
+     mindwaveReader->start();
 }
 
-void MindwaveComponent::onItemDataRecieve(const QString& data)
+void MindwaveComponent::onDataRecieve(const QString& data)
 {
-    auto delimeter = mindwaveConfig.delimeter;
+    MindwaveData mindwaveData = mindwaveParser->parse(data);
+    setMeditation(mindwaveData.meditation);
+    setAttention(mindwaveData.attention);
 
-    QStringList json = data.split(delimeter);
-    int count = 0;
-
-    for(int i = 0; i < json.length(); i++)
-    {
-        if(json[i].indexOf("eSense") != -1)
-        {
-            count++;
-            parse(json[i]);
-            break;
-        }
-    }
-}
-
-void MindwaveComponent::parse(const QString& data)
-{
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
-    QJsonObject jsonObj   = jsonDoc.object();
-    QJsonObject eSenseJson = jsonObj.value("eSense").toObject();
-    int _poorSignalLevel = jsonObj.value("poorSignalLevel").toInt();
-
-    const bool test = false;//true;
-
-    _lastAttention = _attention;
-    _lastMeditation = _meditation;
-
-    if(!test)
-    {
-        setAttention(eSenseJson.value("attention").toInt());
-        setMeditation(eSenseJson.value("meditation").toInt());
-    }
-    else
-    {
-        int min = 50;
-        int max = 100;
-        int RandAtten = qrand() % ((max + 1) - min) + min;
-        setAttention(RandAtten);
-        int  RandMed = qrand() % ((100 + 1) - 0) + 0;
-        setMeditation(RandMed);
-    }
-    // qDebug()<<data;
-    int signalValue = jsonObj.value("poorSignalLevel").toInt();
-    int signalRemappedValue = MathTools::map<float>(signalValue, 0,  200, 100,  0);
-
-    setPoorSignalLevel(signalRemappedValue);
-
-    qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
+     _poorSignalColor = mindwaveData.poorSignalColor;
+    setPoorSignalLevel(mindwaveData.poorSignalLevel);
 }
 
 void MindwaveComponent::setQmlContext(QQmlContext* value)
@@ -102,20 +55,6 @@ void MindwaveComponent::setQmlContext(QQmlContext* value)
 void MindwaveComponent::setPoorSignalLevel(int value)
 {
     _poorSignalLevel = value;
-
-    if(value >= 66 && value <= 100)
-    {
-        _poorSignalColor = "#009900";
-    }
-    else if(value >= 30 && value <= 66)
-    {
-        _poorSignalColor = "#999900";
-    }
-    else if(value >= 0 && value <= 30)
-    {
-        _poorSignalColor = "#999999";
-    }
-
     emit poorSignalLevelChanged();
 }
 
@@ -144,17 +83,6 @@ void MindwaveComponent::setMeditation(int value)
 int MindwaveComponent::meditation() const
 {
     return _meditation;
-}
-
-
-int MindwaveComponent::getAttentionDelta() const
-{
-    return _attention - _lastAttention;
-}
-
-int MindwaveComponent::getMeditationDelta() const
-{
-    return _meditation - _lastMeditation;
 }
 
 QString MindwaveComponent::poorSignalColor() const

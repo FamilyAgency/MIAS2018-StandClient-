@@ -2,8 +2,9 @@
 #define MINDWAVECOMPONENT_H
 
 #include <QObject>
-#include "network/socketClient/TCPSocketClient.h"
 #include "components/ExternalSystemComponent.h"
+#include "mindwave/MindwaveReader.h"
+#include "mindwave/MindwaveParser.h"
 
 class MindwaveComponent : public ExternalSystemComponent
 {    
@@ -20,10 +21,6 @@ public:
     Q_PROPERTY(int poorSignalLevel READ poorSignalLevel WRITE setPoorSignalLevel NOTIFY poorSignalLevelChanged)
 
     Q_INVOKABLE QString poorSignalColor() const;
-    Q_INVOKABLE int getMeditationDelta() const;
-    Q_INVOKABLE int getAttentionDelta() const;
-
-    virtual void setQmlContext(QQmlContext* value) override;
 
     void setAttention(int value);
     int attention() const;
@@ -34,21 +31,21 @@ public:
     void setPoorSignalLevel(int value);
     int poorSignalLevel() const;
 
-    virtual void setConfig(const MindwaveConfig& value);
-    virtual void start() override;
-    MindwaveConfig config() const;
-
     void setConnected(bool value);
     bool connected() const;
 
-    void parse(const QString& data);
-
+    virtual void setQmlContext(QQmlContext* value) override;
+    virtual void setConfig(const MindwaveConfig& value);
+    virtual void start() override;
+    MindwaveConfig config() const;
     virtual bool isHealthy() override;
 
-    friend class MindwaveComponentTest;
+    friend class MindwaveComponentTest;    
 
 private:
     MindwaveConfig mindwaveConfig;
+    MindwaveReader* mindwaveReader;
+    MindwaveParser* mindwaveParser;
 
     int _attention = 0;
     int _meditation = 0;
@@ -56,11 +53,7 @@ private:
     bool _connected = false;
     QString _poorSignalColor = "black";
 
-    int _lastAttention = 0;
-    int _lastMeditation = 0;
-
-    QScopedPointer<TCPSocketClient> client;
-    QTimer* senderTimer;
+    void parse(const QString& data);
 
 signals:
     void attentionChanged();
@@ -70,10 +63,9 @@ signals:
     void connectedChanged();
 
 private slots:
-    void onItemDataRecieve(const QString& data);
+    void onDataRecieve(const QString& data);
     void onConnectionSuccess();
     void onDisconnectionSuccess();
-
 };
 
 #endif // MINDWAVECOMPONENT_H

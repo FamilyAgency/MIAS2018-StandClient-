@@ -36,7 +36,7 @@ QVariantList StandData::getScreensInfo() const
     {
         auto geometry = screen->geometry();
         QString x0 = QString::number(geometry.x());
-        QString y0 =  QString::number(geometry.y());
+        QString y0  =  QString::number(geometry.y());
         QString width = QString::number(geometry.width());
         QString height =  QString::number(geometry.height());
         QString sizes = "(" + x0 + ", " + y0 + ", "  + width + ", " + height+ ")";
