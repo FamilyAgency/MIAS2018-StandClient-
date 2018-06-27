@@ -31,7 +31,7 @@ Item {
 
         onPoorSignalLevelChanged:
         {
-            signalLevel.color = mind.poorSignalColor();
+           // signalProgressBarColor.color = mind.poorSignalColor();
         }
     }
 
@@ -85,12 +85,47 @@ Item {
             color: "#999999"
         }
 
-        Text {
-            id:signalLevel
-            text: "Signal level: " + mind.poorSignalLevel;
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+        RowLayout {
+            spacing: 6;
+
+
+            Text {
+                text: "signalLevel";
+                font.family: "Helvetica"
+                font.pixelSize: 15
+                color: "#009900"
+            }
+            ProgressBar
+            {
+                id:signalProgressBar;
+                opacity:0.2
+                value: mind.poorSignalLevel / 100.;
+                style: ProgressBarStyle {
+                    background: Rectangle {
+                        radius: 2
+                        color: "lightgray"
+                        border.color: "gray"
+                        border.width: 1
+                        implicitWidth: 300
+                        implicitHeight: 24
+                    }
+                    progress: Rectangle
+                    {
+                      //id:signalProgressBarColor;
+                        color:  "#009900"
+                        border.color: "steelblue"
+                    }
+                }
+            }
+
+            PropertyAnimation
+            {
+                id: signalAnim;
+                target: signalProgressBar;
+                property: "value";
+                to: 100;
+                duration: 500
+            }
         }
 
         RowLayout {
