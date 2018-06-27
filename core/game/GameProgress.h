@@ -2,6 +2,8 @@
 #define GAMEPROGRESS_H
 
 #include <QObject>
+#include <QVector>
+#include "OneGameData.h"
 
 class GameProgress : public QObject
 {
@@ -9,7 +11,16 @@ class GameProgress : public QObject
 public:
     explicit GameProgress(QObject *parent = nullptr);
 
+    void setCurrentStage(int stage);
+    void setGames(const QVector<OneGameData>& data);
+    void setStageCompletionTime(float time);
+
+    QVector<OneGameData> getGames() const;
+
 private:
+    QVector<OneGameData> gamesData;
+    int currentStage;
+    float complitionTime;
 
 
 signals:

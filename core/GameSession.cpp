@@ -11,7 +11,7 @@ GameSession::GameSession(QObject *parent) : QObject(parent)
 
 void GameSession::setQmlContext(QQmlContext* qmlContext)
 {
-   qmlContext->setContextProperty("gameSession", this);
+    qmlContext->setContextProperty("gameSession", this);
 }
 
 void GameSession::start()
@@ -23,9 +23,9 @@ void GameSession::start()
 
 void GameSession::stop()
 {
-     sessionTimer->stop();
-     setSessionTime(0.);
-     setCleanTime(0.);
+    sessionTimer->stop();
+    setSessionTime(0.);
+    setCleanTime(0.);
 }
 
 void GameSession::addTaskTime(float time)

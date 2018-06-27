@@ -42,7 +42,8 @@ SOURCES += main.cpp \
     components/SlackComponent.cpp \
     services/LoggerService.cpp \
     services/BaseService.cpp \
-    core/game/GameProgress.cpp
+    core/game/GameProgress.cpp \
+    core/game/OneGameData.cpp
 
 RESOURCES += qml.qrc
 
@@ -107,6 +108,7 @@ HEADERS += \
     components/SlackComponent.h \
     services/LoggerService.h \
     services/BaseService.h \
-    core/game/GameProgress.h
+    core/game/GameProgress.h \
+    core/game/OneGameData.h
 
 DISTFILES +=

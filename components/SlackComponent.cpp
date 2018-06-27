@@ -36,7 +36,7 @@ void SlackComponent::sendMessage(const QString& msg, LogType type)
 
     request.setRawHeader("Content-Type", "application/json");
     request.setRawHeader("Content-Length", postDataSize);
-    QNetworkReply * reply = networkManager->post(request, jsonString);
+   // QNetworkReply * reply = networkManager->post(request, jsonString);
 }
 
 void SlackComponent::httpRequestSuccessHandler(QNetworkReply* reply)

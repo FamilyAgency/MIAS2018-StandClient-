@@ -109,10 +109,12 @@ void AppController::onLoginStateChanged(LoginModule::LoginState loginState)
 
     if(loginState == LoginModule::LoginState::Login)
     {
+        gameModule->setUser(userData);
         gameSession->start();
     }
     else if(loginState == LoginModule::LoginState::Logout)
     {
+        userData->clearData();
         gameSession->stop();
         setAppState(AppState::Login);
     }

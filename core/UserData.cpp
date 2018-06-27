@@ -100,6 +100,20 @@ void UserData::setGameProgess(GameProgress* value)
     gameProgress = value;
 }
 
+GameProgress* UserData::getGameProgess()
+{
+    return gameProgress;
+}
+
+void UserData::clearData()
+{
+
+}
+
+
+
+
+
 
 
 

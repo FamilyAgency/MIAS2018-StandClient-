@@ -12,6 +12,7 @@
 #include "core/game/GamePostTask.h"
 
 #include "core/game/TaskCreator.h"
+#include "core/UserData.h"
 
 class GameTaskManager: public QObject
 {
@@ -47,7 +48,7 @@ public:
         PostGame
     };
 
-    void start();
+    void start(UserData* value);
     void stop();
     void setMindWaveClient(MindwaveComponent* mindWave);
     void setTaskState(TaskState taskState);
@@ -65,9 +66,9 @@ private:
     bool isAllTaskCompleted() const;
 
     GamePreTask* gamePreTask = nullptr;
-    GameTask* gameTask = nullptr;
+    QSharedPointer<GameTask> gameTask = nullptr;
     GamePostTask* gamePostTask = nullptr;
-    QList<GameTask*> gameTasks;
+    QList<QSharedPointer<GameTask>> gameTasks;
 
     int _currentTaskIndex = 1;
     int _allTaskCount = 1;

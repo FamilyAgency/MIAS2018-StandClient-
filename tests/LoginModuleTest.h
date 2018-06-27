@@ -4,6 +4,7 @@
 #include <QObject>
 #include "core/LoginModule.h"
 #include "tests/LoginModuleTest.h"
+#include "core/game/VelocityCalculator.h"
 
 class LoginModuleTest : public LoginModule
 {
@@ -14,6 +15,10 @@ public:
 
     Q_INVOKABLE virtual void loginSuccessTest();
     Q_INVOKABLE virtual void logoutTest();
+
+private:
+    QVector<QPointF> createPath(int pathId);
+    VelocityCalculator createDifficult(int diff);
 
 signals:
 

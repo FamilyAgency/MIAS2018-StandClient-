@@ -13,8 +13,9 @@ class GameTask: public QObject
     Q_OBJECT
 
 public:
-    GameTask();
     GameTask(const QVector<QPointF>& value, const VelocityCalculator& velCalc);
+    virtual ~GameTask();
+
     void setPath(const QVector<QPointF>& value);
 
     void init();

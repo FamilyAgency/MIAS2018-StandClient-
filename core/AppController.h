@@ -46,7 +46,7 @@ public:
     Q_INVOKABLE void start();
     Q_INVOKABLE void startInstruction();
     Q_INVOKABLE void startGame();
-    Q_INVOKABLE void startResult();
+    Q_INVOKABLE void startResult();    
 
 private:
     LoginModule* loginModule;
@@ -59,14 +59,12 @@ private:
     LoggerService* logger;
     QList<BaseService*> services;
 
-
     HealthCheckerComponent* healthCheckerComponent;
     ArduinoComponent* arduinoComponent;
     MindwaveComponent* mindWaveComponent;
     ServerComponent* serverComponent;
     SlackComponent* slackComponent;
     QList<BaseComponent*> components;
-
 
     StandData* standData;
     UserData* userData;

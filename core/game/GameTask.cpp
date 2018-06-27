@@ -4,12 +4,6 @@
 #include <QtMath>
 #include <QDateTime>
 
-GameTask::GameTask()
-{
-    // timer = new QTimer(this);
-    //connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-}
-
 GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velCalc)
 {
     path = value;
@@ -21,6 +15,13 @@ GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velC
     velocityCalculator = velCalc;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+
+    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
+}
+
+GameTask::~GameTask()
+{
+    qDebug()<<"!!!!!!!!!!!!!destroyed game task!!!!!!!!!!!!!";
 }
 
 void GameTask::setPath(const QVector<QPointF>& value)
@@ -65,7 +66,7 @@ void GameTask::setMindWaveClient(MindwaveComponent* value)
 }
 
 void GameTask::onUpdate()
-{  
+{
     int humanValue = 0;
     if(mindWave)
     {
@@ -78,7 +79,7 @@ void GameTask::onUpdate()
 }
 
 void GameTask::update(int humanValue)
-{  
+{
     if(taskComplete)
     {
         return;

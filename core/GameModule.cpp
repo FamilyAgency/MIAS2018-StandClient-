@@ -30,7 +30,7 @@ void GameModule::setConfig(Config* config)
 
 void GameModule::start()
 { 
-    gameTaskManager->start();
+    gameTaskManager->start(currentUser);
 }
 
 void GameModule::stop()
@@ -51,6 +51,11 @@ void GameModule::onAllTaskComleteEvent()
 QString GameModule::getName() const
 {
     return "Game location";
+}
+
+void GameModule::setUser(UserData* value)
+{
+    currentUser = value;
 }
 
 

@@ -3,18 +3,14 @@
 
 #include <QObject>
 #include "core/game/GameTask.h"
+#include "core/UserData.h"
 
 class TaskCreator : public QObject
 {
     Q_OBJECT
 public:
     explicit TaskCreator(QObject *parent = nullptr);
-
-    virtual QList<GameTask*> create();
-
-signals:
-
-public slots:
+    QList<QSharedPointer<GameTask>> create(UserData* value);
 };
 
 #endif // TASKCREATOR_H

@@ -5,34 +5,31 @@
 GameTaskManager::GameTaskManager()
 {
     gamePreTask = new GamePreTask();
-
     taskCreator = new TaskCreator();
-    gameTasks = taskCreator->create();
-
     gamePostTask = new GamePostTask();
-
-    setAllTaskCount(gameTasks.length());
-    setCurrentGameTaskIndex(0);
 }
 
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
 {
-   qmlContext->setContextProperty("gameTaskManager", this);
+    qmlContext->setContextProperty("gameTaskManager", this);
 }
 
 void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
 {
     mindWave = value;
+}
 
+void GameTaskManager::start(UserData* user)
+{
+    gameTasks = taskCreator->create(user);
     for(auto task: gameTasks)
     {
         task->setMindWaveClient(mindWave);
     }
-}
 
-void GameTaskManager::start()
-{  
-   setTaskState(TaskState::PreGame);
+    setAllTaskCount(gameTasks.length());
+    setCurrentGameTaskIndex(0);
+    setTaskState(TaskState::PreGame);
 }
 
 void GameTaskManager::stop()
@@ -56,12 +53,12 @@ void GameTaskManager::setCurrentGameTaskIndex(int index)
 
     if(gameTask)
     {
-        disconnect(gameTask, SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
-        disconnect(gameTask, SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+        disconnect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+        disconnect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
     }
 
-    connect(gameTask, SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
-    connect(gameTask, SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+    connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+    connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
 
     if(gamePreTask)
     {
@@ -84,23 +81,23 @@ void GameTaskManager::setTaskState(TaskState taskState)
     currentTaskState = taskState;
     switch(taskState)
     {
-        case TaskState::None:
-            emit updateCanvas();
+    case TaskState::None:
+        emit updateCanvas();
         break;
 
-        case TaskState::PreGame:
-            gameTask->init();
-            gamePreTask->init();
-            gamePreTask->run();
-            emit preTaskStartEvent();
+    case TaskState::PreGame:
+        gameTask->init();
+        gamePreTask->init();
+        gamePreTask->run();
+        emit preTaskStartEvent();
         break;
 
-        case TaskState::Game:
-            gameTask->start();
-            emit taskStartEvent();
+    case TaskState::Game:
+        gameTask->start();
+        emit taskStartEvent();
         break;
 
-        case TaskState::PostGame:
+    case TaskState::PostGame:
         break;
     }
 }
@@ -130,12 +127,16 @@ void GameTaskManager::onTaskCompleteEvent()
         qDebug()<<this<<"-------------------------------onTaskCompleteEvent-------------------------------";
         setCurrentGameTaskIndex(currentTaskIndex() + 1);
         emit taskComleteEvent(completionTime);
+
+        //save data
+        //update data
+
         setTaskState(TaskState::PreGame);
     }
     else
     {
         emit taskComleteEvent(completionTime);
-        emit allTaskComleteEvent();       
+        emit allTaskComleteEvent();
         qDebug()<<this<<"------------------------------- Game Finished -------------------------------";
     }
 }
@@ -152,37 +153,37 @@ bool GameTaskManager::isRunning() const
 
 bool GameTaskManager::isPreTaskState() const
 {
-     return currentTaskState == TaskState::PreGame;
+    return currentTaskState == TaskState::PreGame;
 }
 
 QPointF GameTaskManager::getStartPoint() const
 {
-   return gameTask->getStartPoint();
+    return gameTask->getStartPoint();
 }
 
 QPointF GameTaskManager::getCurPoint() const
 {
-   return gameTask->getCurPoint();
+    return gameTask->getCurPoint();
 }
 
 QPointF GameTaskManager::getEndPoint() const
 {
-   return gameTask->getEndPoint();
+    return gameTask->getEndPoint();
 }
 
 float GameTaskManager::getForwardVectorRotation() const
 {
-   return gameTask->getForwardVectorRotation();
+    return gameTask->getForwardVectorRotation();
 }
 
 QVariantList GameTaskManager::getCompletedPath() const
 {
-   return gameTask->getCompletedPath();
+    return gameTask->getCompletedPath();
 }
 
 QVariantList GameTaskManager::getFullPath() const
 {
-   return gameTask->getFullPath();
+    return gameTask->getFullPath();
 }
 
 int GameTaskManager::getTaskCount() const

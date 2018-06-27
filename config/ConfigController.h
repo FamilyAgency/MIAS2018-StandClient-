@@ -22,7 +22,6 @@ public:
     QScopedPointer<ConfigParser> configParser;
     QScopedPointer<ConfigWriter> configWriter;
 
-
     QString getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD method) const;
     void serviceFinished(bool success);
     void setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD loadingMethod);

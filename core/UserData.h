@@ -34,6 +34,9 @@ public:
 
     void setQmlContext(QQmlContext* value);
     void setGameProgess(GameProgress* value);
+    void clearData();
+
+    GameProgress* getGameProgess();
 
 private:
     QString _name;

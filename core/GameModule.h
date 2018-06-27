@@ -6,6 +6,7 @@
 #include "BaseModule.h"
 #include "components/MindwaveComponent.h"
 #include "core/game/GameTaskManager.h"
+#include "core/UserData.h"
 #include "GameSession.h"
 
 class GameModule : public BaseModule
@@ -22,10 +23,13 @@ public:
     void setMindwave(MindwaveComponent* value);
     virtual QString getName() const override;
 
+    void setUser(UserData* value);
+
 private:
     MindwaveComponent* mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
     GameSession* gameSession;
+    UserData* currentUser;
 
 private slots:
     void onTaskComleteEvent(int completionTime);
