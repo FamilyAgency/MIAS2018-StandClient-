@@ -41,11 +41,6 @@ bool UserData::isFinished() const
     return _isFinished;
 }
 
-bool UserData::isGetPrize() const
-{
-    return _isGetPrize;
-}
-
 bool UserData::isWaitEnoughToPlay() const
 {
     return _isWaitEnoughToPlay;
@@ -84,9 +79,24 @@ void UserData::setFinished(bool value)
     _isFinished = value;
 }
 
-void UserData::setGetPrize(bool value)
+void UserData::setSuperPrizeRecieved(bool value)
 {
-    _isGetPrize = value;
+    _isSuperPrizeRecieved = value;
+}
+
+void UserData::setColaPrizeRecieved(bool value)
+{
+    _isColaPrizeRecieved = value;
+}
+
+bool UserData::isSuperPrizeRecieved() const
+{
+    return _isSuperPrizeRecieved;
+}
+
+bool UserData::isColaPrizeRecieved() const
+{
+    return _isColaPrizeRecieved;
 }
 
 void UserData::setWaitEnoughToPlay(bool value)

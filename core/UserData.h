@@ -20,7 +20,8 @@ public:
     bool isExists() const;
     bool isFirstTime() const;
     bool isFinished() const;
-    bool isGetPrize() const;
+    bool isSuperPrizeRecieved() const;
+    bool isColaPrizeRecieved() const;
     bool isWaitEnoughToPlay() const;
 
     void setName(const QString& value);
@@ -29,7 +30,8 @@ public:
     void setExists(bool value);
     void setFirstTime(bool value);
     void setFinished(bool value);
-    void setGetPrize(bool value);
+    void setSuperPrizeRecieved(bool value);
+    void setColaPrizeRecieved(bool value);
     void setWaitEnoughToPlay(bool value);
 
     void setQmlContext(QQmlContext* value);
@@ -46,7 +48,8 @@ private:
     bool _isExists;
     bool _isFirstTime;
     bool _isFinished;
-    bool _isGetPrize;
+    bool _isSuperPrizeRecieved;
+    bool _isColaPrizeRecieved;
     bool _isWaitEnoughToPlay;
 
     QQmlContext* qmlContext;
