@@ -15,7 +15,7 @@ MindwaveComponent::MindwaveComponent(QObject *parent) : ExternalSystemComponent(
 
 void MindwaveComponent::onConnectionSuccess()
 {
-    setConnected(true);   
+    setConnected(true);
 }
 
 void MindwaveComponent::onDisconnectionSuccess()
@@ -33,23 +33,26 @@ void MindwaveComponent::setConfig(const MindwaveConfig& config)
 
 void MindwaveComponent::start()
 {
-     mindwaveReader->start();
+    mindwaveReader->start();
 }
 
 void MindwaveComponent::onDataRecieve(const QString& data)
-{
+{   
     MindwaveData mindwaveData = mindwaveParser->parse(data);
-    setMeditation(mindwaveData.meditation);
-    setAttention(mindwaveData.attention);
+    if(mindwaveData.valid)
+    {
+        setMeditation(mindwaveData.meditation);
+        setAttention(mindwaveData.attention);
 
-     _poorSignalColor = mindwaveData.poorSignalColor;
-    setPoorSignalLevel(mindwaveData.poorSignalLevel);
+        _poorSignalColor = mindwaveData.poorSignalColor;
+        setPoorSignalLevel(mindwaveData.poorSignalLevel);
+     }
 }
 
 void MindwaveComponent::setQmlContext(QQmlContext* value)
 {
-   BaseComponent::setQmlContext(value);
-   qmlContext->setContextProperty("mind", this);
+    BaseComponent::setQmlContext(value);
+    qmlContext->setContextProperty("mind", this);
 }
 
 void MindwaveComponent::setPoorSignalLevel(int value)

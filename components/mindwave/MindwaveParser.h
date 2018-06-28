@@ -10,11 +10,11 @@ struct MindwaveData
     {
 
     }
-
-    int attention;
-    int meditation;
-    int poorSignalLevel;
-    QString poorSignalColor;
+    bool valid = false;
+    int attention = 0;
+    int meditation = 0;
+    int poorSignalLevel = 0;
+    QString poorSignalColor = "#999999";
 };
 
 class MindwaveParser : public QObject

@@ -48,7 +48,7 @@ MindwaveData MindwaveParser::parseOneDataChunck(const QString& data)
     mindwaveData.poorSignalLevel = MathTools::map<float>(signalValue, 0,  200, 100,  0);
 
     mindwaveData.poorSignalColor = getPoorSignalColor(signalValue);
-
+    mindwaveData.valid = true;
     return mindwaveData;
 }
 
