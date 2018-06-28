@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 Item {
     Component.onCompleted:
     {
-        console.log("arduino component  ", arduino.config)
+        console.log("arduino component  ", rfid.config)
     }
 
     ColumnLayout
