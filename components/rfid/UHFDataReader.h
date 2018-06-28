@@ -16,7 +16,12 @@ private:
     const int taskTimerMills = 100;
     QTimer* timer;
 
-    QByteArray beepOnCommand, beepOffCommand, readCommand;
+    QByteArray beepOnCommand;
+    QByteArray beepOffCommand;
+    QByteArray readCommand;
+    QByteArray inventoryCommand;
+    QByteArray clearCommand;
+    QByteArray resetCommand;
 
 signals:
 
