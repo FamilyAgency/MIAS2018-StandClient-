@@ -54,7 +54,7 @@ public:
 Q_DECLARE_METATYPE(MindwaveConfig)
 
 
-struct ArduinoConfig
+struct RFIDConfig
 {
 private:
     Q_GADGET
@@ -64,10 +64,12 @@ private:
 
 public:
     QString serialPort = "COM1";
+    QString portKeyWord = "Arduino";
     int baudRate = 9600;
+    bool useKeyword = true;
     bool autoConnect = true;
 };
-Q_DECLARE_METATYPE(ArduinoConfig)
+Q_DECLARE_METATYPE(RFIDConfig)
 
 struct MainConfig
 {

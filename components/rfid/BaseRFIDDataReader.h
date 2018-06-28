@@ -1,32 +1,28 @@
-#ifndef ARDUINODATAREADER_H
-#define ARDUINODATAREADER_H
+#ifndef BASERFIDDATAREADER_H
+#define BASERFIDDATAREADER_H
 
 #include <QSerialPort>
 #include <QObject>
 #include <QTimer>
 #include "config/Config.h"
 
-class ArduinoDataReader : public QObject
+class BaseRFIDDataReader : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit ArduinoDataReader(QObject *parent = nullptr);
+    explicit BaseRFIDDataReader(QObject *parent = nullptr);
 
-    void startReading(int modelIndex);
-    void setConfig(const ArduinoConfig& config);
+    virtual void startReading(int modelIndex);
+    void setConfig(const RFIDConfig& config);
     QVariantList getPortsAvailable() const;
 
-private:
-     const int taskTimerMills = 1000;
-
-     ArduinoConfig arduinoConfig;
+protected:
+     RFIDConfig rfidConfig;
      bool _connected = false;
 
      QSerialPort* serialPort = nullptr;
      QByteArray readData;
-     QTimer* timer;
-
      QString getPortNameByModelIndex(int modelIndex) const;
 
 signals:
@@ -34,8 +30,9 @@ signals:
      void readError();
 
 private slots:
-     void onReadyRead();
+     virtual void onReadyRead();
      void onReadError(QSerialPort::SerialPortError serialPortError);
+
 };
 
-#endif // ARDUINODATAREADER_H
+#endif // BASERFIDDATAREADER_H

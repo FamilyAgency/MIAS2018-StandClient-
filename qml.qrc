@@ -7,7 +7,6 @@
         <file>resources/shadow.png</file>
         <file>resources/finish.png</file>
         <file>resources/gameplay-new.jpg</file>
-        <file>qml/components/ArduinoComponent.qml</file>
         <file>qml/components/MindwaveComponent.qml</file>
         <file>qml/components/HealthCheckerComponent.qml</file>
         <file>qml/touchScreens/TouchWindow.qml</file>
@@ -32,5 +31,7 @@
         <file>qml/controlScreens/Logger.qml</file>
         <file>qml/tests/TestScreen.qml</file>
         <file>qml/components/ServerComponent.qml</file>
+        <file>resources/heart.png</file>
+        <file>qml/components/RFIDComponent.qml</file>
     </qresource>
 </RCC>

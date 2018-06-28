@@ -14,7 +14,7 @@ Item {
         spacing: 10;
         Text
         {
-            text: "Arduino component";
+            text: "RFID component";
             font.family: "Helvetica"
             font.pixelSize: 17
             color: "#008800"
@@ -31,7 +31,7 @@ Item {
                 }
 
                 width: 200
-                model: arduino.getPortsAvailable();
+                model: rfid.getPortsAvailable();
                 onCurrentIndexChanged: {
                     //com.text = "Selected: " + currentText;
                    }
@@ -40,7 +40,7 @@ Item {
 //            Text
 //            {
 //                id:com;
-//                text: "Selected : " + arduino.config.serialPort;
+//                text: "Selected : " + rfid.config.serialPort;
 //                font.family: "Helvetica"
 //                font.pixelSize: 15
 //                color: "#999999"
@@ -53,7 +53,7 @@ Item {
                 text: "connect"
                 onClicked:
                 {
-                    arduino.startReading(comComboBox.currentIndex);
+                    rfid.startReading(comComboBox.currentIndex);
                 }
             }
 
@@ -62,7 +62,7 @@ Item {
         Text
         {
             id:autoCon;
-            text: "Auto connect: " + arduino.config.autoConnect;
+            text: "Auto connect: " + rfid.config.autoConnect;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -71,7 +71,7 @@ Item {
         Text
         {
             id:baudRate;
-            text: "Baud rate: " + arduino.config.baudRate;
+            text: "Baud rate: " + rfid.config.baudRate;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -80,7 +80,7 @@ Item {
         Text
         {
             id:conStatus;
-            text: "Serial connection status: " + arduino.connected;
+            text: "Serial connection status: " + rfid.connected;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -89,7 +89,7 @@ Item {
         Text
         {
             id:cleanTimeText;
-            text: "Arduino data: 0";
+            text: "RFID data: 0";
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

@@ -5,7 +5,7 @@
 #include <QObject>
 #include <QList>
 #include "components/HealthCheckerComponent.h"
-#include "components/ArduinoComponent.h"
+#include "components/RFIDComponent.h"
 #include "components/MindwaveComponent.h"
 #include "components/ServerComponent.h"
 #include "components/SlackComponent.h"
@@ -46,7 +46,8 @@ public:
     Q_INVOKABLE void start();
     Q_INVOKABLE void startInstruction();
     Q_INVOKABLE void startGame();
-    Q_INVOKABLE void startResult();    
+    Q_INVOKABLE void startResult();
+    Q_INVOKABLE void backtoIntro();
 
 private:
     LoginModule* loginModule;
@@ -60,7 +61,7 @@ private:
     QList<BaseService*> services;
 
     HealthCheckerComponent* healthCheckerComponent;
-    ArduinoComponent* arduinoComponent;
+    RFIDComponent* rfidComponent;
     MindwaveComponent* mindWaveComponent;
     ServerComponent* serverComponent;
     SlackComponent* slackComponent;

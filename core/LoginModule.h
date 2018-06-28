@@ -4,7 +4,7 @@
 #include <QObject>
 #include "BaseModule.h"
 #include "UserData.h"
-#include "components/ArduinoComponent.h"
+#include "components/RFIDComponent.h"
 
 class LoginModule : public BaseModule
 {
@@ -30,7 +30,7 @@ public:
 
     LoginModule(QObject *parent = nullptr);
 
-    void setArduino(ArduinoComponent* arduinoComponent);
+    void setRFIDComponent(RFIDComponent* rfidComponent);
     virtual void setConfig(Config* config) override;
     void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
@@ -43,7 +43,7 @@ public:
     friend class LoginModuleTest;
 
 private:
-    ArduinoComponent* arduinoComponent;
+    RFIDComponent* rfidComponent;
     UserData* userData;
     LoginState state = LoginState::Logout;
     void setState(LoginState state);

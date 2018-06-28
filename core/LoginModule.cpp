@@ -15,9 +15,9 @@ void LoginModule::setConfig(Config* config)
     BaseModule::setConfig(config);
 }
 
-void LoginModule::setArduino(ArduinoComponent* arduinoComponentValue)
+void LoginModule::setRFIDComponent(RFIDComponent* value)
 {
-    arduinoComponent = arduinoComponentValue;
+    rfidComponent = value;
 }
 
 void LoginModule::setUserData(UserData* value)

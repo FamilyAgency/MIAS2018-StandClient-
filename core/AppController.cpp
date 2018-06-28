@@ -12,10 +12,10 @@ void AppController::testConstruct()
     standData = new StandData();
     gameSession = new GameSession();
 
-    arduinoComponent = new ArduinoComponent();
-    components.append(arduinoComponent);
+    rfidComponent = new RFIDComponent();
+    components.append(rfidComponent);
 
-    mindWaveComponent = new MindwaveComponentTest();
+    mindWaveComponent = new MindwaveComponent();
     components.append(mindWaveComponent);
 
     serverComponent = new ServerComponent();
@@ -25,7 +25,7 @@ void AppController::testConstruct()
     components.append(slackComponent);
 
     healthCheckerComponent = new HealthCheckerComponent();
-    healthCheckerComponent->addComponent(arduinoComponent);
+    healthCheckerComponent->addComponent(rfidComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
     healthCheckerComponent->addComponent(serverComponent);
     components.append(healthCheckerComponent);
@@ -33,7 +33,7 @@ void AppController::testConstruct()
     loginModule = new LoginModuleTest();
     connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
 
-    loginModule->setArduino(arduinoComponent);
+    loginModule->setRFIDComponent(rfidComponent);
     loginModule->setUserData(userData);
     modules.append(loginModule);
 
@@ -60,8 +60,8 @@ void AppController::releaseConstruct()
     standData = new StandData();
     gameSession = new GameSession();
 
-    arduinoComponent = new ArduinoComponent();
-    components.append(arduinoComponent);
+    rfidComponent = new RFIDComponent();
+    components.append(rfidComponent);
 
     mindWaveComponent = new MindwaveComponent();
     components.append(mindWaveComponent);
@@ -73,7 +73,7 @@ void AppController::releaseConstruct()
     components.append(slackComponent);
 
     healthCheckerComponent = new HealthCheckerComponent();
-    healthCheckerComponent->addComponent(arduinoComponent);
+    healthCheckerComponent->addComponent(rfidComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
     healthCheckerComponent->addComponent(serverComponent);
     components.append(healthCheckerComponent);
@@ -81,7 +81,7 @@ void AppController::releaseConstruct()
     loginModule = new LoginModule();
     connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
 
-    loginModule->setArduino(arduinoComponent);
+    loginModule->setRFIDComponent(rfidComponent);
     loginModule->setUserData(userData);
     modules.append(loginModule);
 
@@ -176,7 +176,7 @@ void AppController::setAppState(AppState value)
     currentModule->start();
     emit appStateChanged(value);
 
-   logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
+    logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
 }
 
 BaseModule* AppController::getModuleByAppState(AppState value)
@@ -195,7 +195,7 @@ BaseModule* AppController::getModuleByAppState(AppState value)
 void AppController::onConfigLoaded(Config* config)
 {
     mindWaveComponent->setConfig(config->mindwaveData);
-    arduinoComponent->setConfig(config->arduinoData);
+    rfidComponent->setConfig(config->arduinoData);
     serverComponent->setConfig(config->serverData);
     slackComponent->setConfig(config->slackData);
 
@@ -236,3 +236,10 @@ void AppController::start()
 
     setAppState(AppState::Login);
 }
+
+void AppController::backtoIntro()
+{
+    setAppState(AppState::Login);
+}
+
+

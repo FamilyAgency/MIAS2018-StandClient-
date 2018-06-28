@@ -23,7 +23,7 @@ void ConfigParser::parse(const QString& configData)
         QJsonObject jsonObj   = jsonDoc.object();
 
         config->configData   = parseConfigData(jsonObj);
-        config->arduinoData  = parseArduinoData(jsonObj["arduino"].toObject());
+        config->arduinoData  = parseRFIDData(jsonObj["rfid"].toObject());
         config->mindwaveData = parseMindwaveData(jsonObj["mindwave"].toObject());
         config->serverData   = parseServerData(jsonObj["server"].toObject());
         config->slackData    = parseSlackData(jsonObj["slack"].toObject());
@@ -63,13 +63,15 @@ MainConfig ConfigParser::parseConfigData(const QJsonObject& jsonObj)
     return configData;
 }
 
-ArduinoConfig ConfigParser::parseArduinoData(const QJsonObject& jsonObj)
+RFIDConfig ConfigParser::parseRFIDData(const QJsonObject& jsonObj)
 {
-    ArduinoConfig arduino;
-    arduino.serialPort = jsonObj["serialPort"].toString();
-    arduino.baudRate = jsonObj["baudRate"].toInt();
-    arduino.autoConnect = jsonObj["autoConnect"].toBool();
-    return arduino;
+    RFIDConfig rfid;
+    rfid.serialPort = jsonObj["serialPort"].toString();
+    rfid.baudRate = jsonObj["baudRate"].toInt();
+    rfid.autoConnect = jsonObj["autoConnect"].toBool();
+    rfid.portKeyWord = jsonObj["portKeyWord"].toString();
+    rfid.useKeyword = jsonObj["useKeyword"].toBool();
+    return rfid;
 }
 
 MindwaveConfig ConfigParser::parseMindwaveData(const QJsonObject& jsonObj)

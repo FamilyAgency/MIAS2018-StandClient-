@@ -43,7 +43,7 @@ Item {
         id:mindWaveComp;
     }
 
-    ArduinoComponent
+    RFIDComponent
     {
         x:marginLeft + 300;
         y:marginTop + 280;

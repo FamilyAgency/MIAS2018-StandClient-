@@ -1,24 +1,25 @@
-#ifndef ARDUINOCOMPONENT_H
-#define ARDUINOCOMPONENT_H
+#ifndef RFIDCOMPONENT_H
+#define RFIDCOMPONENT_H
 
 #include <QObject>
 #include <QTimer>
 
 #include "config/Config.h"
 #include "components/ExternalSystemComponent.h"
-#include "arduino/ArduinoDataReader.h"
+#include "rfid/BaseRFIDDataReader.h"
+#include "rfid/UHFDataReader.h"
 
-class ArduinoComponent : public ExternalSystemComponent
+class RFIDComponent : public ExternalSystemComponent
 {
     Q_OBJECT
-    Q_PROPERTY(ArduinoConfig config READ config WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(RFIDConfig config READ config WRITE setConfig NOTIFY configChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
 
 public:
-    explicit ArduinoComponent(QObject *parent = nullptr);
+    explicit RFIDComponent(QObject *parent = nullptr);
 
-    void setConfig(const ArduinoConfig& config);
-    ArduinoConfig config() const;
+    void setConfig(const RFIDConfig& config);
+    RFIDConfig config() const;
 
     virtual void start() override;
     virtual void setQmlContext(QQmlContext* value) override;
@@ -31,9 +32,9 @@ public:
     Q_INVOKABLE void startReading(int modelIndex);
 
 private:
-     ArduinoConfig arduinoConfig;
+     RFIDConfig rfidConfig;
      bool _connected = false;
-     ArduinoDataReader* arduinoDataReader;
+     BaseRFIDDataReader* rfidDataReader;
 
 signals:
     void configChanged();
@@ -44,4 +45,4 @@ public slots:
     void onReadError();
 };
 
-#endif // ARDUINOCOMPONENT_H
+#endif // RFIDCOMPONENT_H

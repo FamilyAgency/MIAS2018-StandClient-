@@ -15,6 +15,14 @@ Item {
         color: "white"
         width: 400;
         height: 400;
+
+        Image
+        {
+            id:heart;
+            anchors.centerIn: parent
+            source:"qrc:/resources/heart.png"
+        }
+
         Text
         {
             id:mainText;
@@ -22,7 +30,7 @@ Item {
             text: "Game " + (gameTaskManager.currentTaskIndex + 1);
             font.family: "Helvetica"
             font.pixelSize: 25
-            color: "#999999"
+            color: "#ffffff"
         }
 
         Button

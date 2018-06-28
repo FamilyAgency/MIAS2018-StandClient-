@@ -13,7 +13,6 @@ SOURCES += main.cpp \
     network/socketClient/TCPSocketClient.cpp \
     network/http/HTTPClient.cpp \
     tools/MathTools.cpp \
-    components/ArduinoComponent.cpp \
     components/HealthCheckerComponent.cpp \
     components/MindwaveComponent.cpp \
     core/game/GamePostTask.cpp \
@@ -36,14 +35,16 @@ SOURCES += main.cpp \
     components/ServerComponent.cpp \
     components/ExternalSystemComponent.cpp \
     tests/MindwaveComponentTest.cpp \
-    components/arduino/ArduinoDataReader.cpp \
     components/mindwave/MindwaveReader.cpp \
     components/mindwave/MindwaveParser.cpp \
     components/SlackComponent.cpp \
     services/LoggerService.cpp \
     services/BaseService.cpp \
     core/game/GameProgress.cpp \
-    core/game/OneGameData.cpp
+    core/game/OneGameData.cpp \
+    components/RFIDComponent.cpp \
+    components/rfid/BaseRFIDDataReader.cpp \
+    components/rfid/UHFDataReader.cpp
 
 RESOURCES += qml.qrc
 
@@ -79,7 +80,6 @@ HEADERS += \
     network/socketClient/TCPSocketClient.h \
     network/http/HTTPClient.h \
     tools/MathTools.h \
-    components/ArduinoComponent.h \
     components/HealthCheckerComponent.h \
     components/MindwaveComponent.h \
     core/game/GamePostTask.h \
@@ -102,13 +102,15 @@ HEADERS += \
     components/ServerComponent.h \
     components/ExternalSystemComponent.h \
     tests/MindwaveComponentTest.h \
-    components/arduino/ArduinoDataReader.h \
     components/mindwave/MindwaveReader.h \
     components/mindwave/MindwaveParser.h \
     components/SlackComponent.h \
     services/LoggerService.h \
     services/BaseService.h \
     core/game/GameProgress.h \
-    core/game/OneGameData.h
+    core/game/OneGameData.h \
+    components/RFIDComponent.h \
+    components/rfid/BaseRFIDDataReader.h \
+    components/rfid/UHFDataReader.h
 
 DISTFILES +=
