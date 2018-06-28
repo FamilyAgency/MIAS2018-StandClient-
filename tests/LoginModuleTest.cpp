@@ -17,10 +17,15 @@ void LoginModuleTest::loginSuccessTest()
     userData->setId(665);
 
     userData->setFirstTime(true);
-    userData->setFirstTime(true);
     userData->setFinished(false);
-    userData->setExists(true);
+    userData->setExist(true);
     userData->setWaitEnoughToPlay(true);
+
+    QVariantList prizes;
+    prizes.append(true);
+    prizes.append(false);
+    userData->setPrizes(prizes);
+
 
     GameProgress* gameProgress = new GameProgress();
     gameProgress->setCurrentStage(1);
@@ -30,21 +35,21 @@ void LoginModuleTest::loginSuccessTest()
     OneGameData gameData1;
     gameData1.setPath(createPath(1));
     gameData1.setDescription("test task");
-    gameData1.setDifficult(createDifficult(1));
+    gameData1.setDifficult(createDifficult(3));
     gameData1.clearUserData();
     gamesData.push_back(gameData1);
 
     OneGameData gameData2;
     gameData2.setPath(createPath(2));
     gameData2.setDescription("test task");
-    gameData2.setDifficult(createDifficult(2));
+    gameData2.setDifficult(createDifficult(4));
     gameData2.clearUserData();
     gamesData.push_back(gameData2);
 
     OneGameData gameData3;
     gameData3.setPath(createPath(3));
     gameData3.setDescription("test task");
-    gameData3.setDifficult(createDifficult(3));
+    gameData3.setDifficult(createDifficult(5));
     gameData3.clearUserData();
     gamesData.push_back(gameData3);
 
@@ -126,24 +131,28 @@ VelocityCalculator LoginModuleTest::createDifficult(int diff)
     VelocityCalculator velocitycalculator;
     switch(diff)
     {
+        case 0:
+           velocitycalculator.setLimits(2.0f, 2.5f, 30.0f);
+        break;
+
         case 1:
-           velocitycalculator.setLimits(0.0f, 3.5f, 40.0f);
+           velocitycalculator.setLimits(2.0f, 3.5f, 40.0f);
         break;
 
         case 2:
-            velocitycalculator.setLimits(0.0f, 3.3f, 45.0f);
+            velocitycalculator.setLimits(2.0f, 3.3f, 45.0f);
         break;
 
         case 3:
-           velocitycalculator.setLimits(0, 3, 60);
+           velocitycalculator.setLimits(2, 3, 60);
         break;
 
         case 4:
-            velocitycalculator.setLimits(0, 2, 65);
+            velocitycalculator.setLimits(2, 2, 70);
         break;
 
         case 5:
-           velocitycalculator.setLimits(0, 3, 70);
+           velocitycalculator.setLimits(2, 3, 75);
         break;
     }
 

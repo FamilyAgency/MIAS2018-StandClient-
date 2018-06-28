@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import "../components"
 import "../tests"
+import QtQuick.Window 2.2
 
 Item {
     property int marginLeft:50;
@@ -16,12 +17,6 @@ Item {
     {
         x:marginLeft;
         y:marginTop;
-    }
-
-    UserData
-    {
-        x:marginLeft;
-        y:marginTop + 240;
     }
 
     GameSession
@@ -76,5 +71,23 @@ Item {
         x:marginLeft + 800;
         y:marginTop + 300;
         id:testScreen;
+    }
+
+    Window {
+        objectName: "User window"
+        title: "User Window"
+        visible: true
+        id: user
+        flags: Qt.SplashScreen
+        width: 400
+        height: 800
+        x: 0
+        y:50
+        UserData
+        {
+            x:marginLeft;
+            y:marginLeft;// + 240;
+        }
+
     }
 }

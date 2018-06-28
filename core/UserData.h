@@ -13,25 +13,28 @@ public:
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString surname READ surname WRITE setSurname NOTIFY surnameChanged)
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(bool exist READ exist WRITE setExist NOTIFY existChanged)
+    Q_PROPERTY(bool firstTime READ firstTime WRITE setFirstTime NOTIFY firstTimeChanged)
+    Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
+    Q_PROPERTY(bool waitEnoughToPlay READ waitEnoughToPlay WRITE setWaitEnoughToPlay NOTIFY waitEnoughToPlayChanged)
+    Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
 
     QString name() const;
     QString surname() const;
     int id() const;
-    bool isExists() const;
-    bool isFirstTime() const;
-    bool isFinished() const;
-    bool isSuperPrizeRecieved() const;
-    bool isColaPrizeRecieved() const;
-    bool isWaitEnoughToPlay() const;
+    bool exist() const;
+    bool firstTime() const;
+    bool finished() const;
+    QVariantList prizes() const;
+    bool waitEnoughToPlay() const;
 
     void setName(const QString& value);
     void setSurname(const QString& value);
     void setId(int value);
-    void setExists(bool value);
+    void setExist(bool value);
     void setFirstTime(bool value);
     void setFinished(bool value);
-    void setSuperPrizeRecieved(bool value);
-    void setColaPrizeRecieved(bool value);
+    void setPrizes(const QVariantList& value);
     void setWaitEnoughToPlay(bool value);
 
     void setQmlContext(QQmlContext* value);
@@ -45,12 +48,11 @@ private:
     QString _surname;
     int _id = -1;
 
-    bool _isExists;
-    bool _isFirstTime;
-    bool _isFinished;
-    bool _isSuperPrizeRecieved;
-    bool _isColaPrizeRecieved;
-    bool _isWaitEnoughToPlay;
+    bool _exist;
+    bool _firstTime;
+    bool _finished;
+    QVariantList _prizes;
+    bool _waitEnoughToPlay;
 
     QQmlContext* qmlContext;
     GameProgress* gameProgress;
@@ -59,7 +61,11 @@ signals:
     void nameChanged();
     void surnameChanged();
     void idChanged();
-public slots:
+    void existChanged();
+    void firstTimeChanged();
+    void waitEnoughToPlayChanged();
+    void finishedChanged();
+    void prizesChanged();
 };
 
 #endif // USERDATA_H

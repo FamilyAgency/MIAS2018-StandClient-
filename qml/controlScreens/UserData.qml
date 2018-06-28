@@ -38,6 +38,68 @@ Item {
 
         Text
         {
+            text: "Exist: " + userData.exist;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
+            text: "First time: " + userData.firstTime;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
+            text: "Wait enough to play: " + userData.waitEnoughToPlay;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
+            text: "Finished: " + userData.finished;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
+            text: "Prizes: ";
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        ListView {
+            width: 180; height:50
+
+            model: userData.prizes
+            spacing: 1;
+            delegate: Text
+            {
+                text: modelData
+                font.family: "Helvetica"
+                font.pixelSize: 15
+                color: "#999999"
+            }
+        }
+
+        Text
+        {
+            text: "Id: " + userData.id;
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+        }
+
+        Text
+        {
             text: "Name: " + userData.name;
             font.family: "Helvetica"
             font.pixelSize: 15
@@ -47,14 +109,6 @@ Item {
         Text
         {
             text: "Surname: " + userData.surname;
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
-
-        Text
-        {
-            text: "Id: " + userData.id;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

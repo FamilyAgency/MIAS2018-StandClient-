@@ -11,6 +11,17 @@ void UserData::setQmlContext(QQmlContext* value)
     qmlContext->setContextProperty("userData", this);
 }
 
+QVariantList UserData::prizes() const
+{
+    return _prizes;
+}
+
+void UserData::setPrizes(const QVariantList& value)
+{
+    _prizes = value;
+    emit prizesChanged();
+}
+
 QString UserData::name() const
 {
     return _name;
@@ -26,24 +37,24 @@ int UserData::id() const
     return _id;
 }
 
-bool UserData::isExists() const
+bool UserData::exist() const
 {
-    return _isExists;
+    return _exist;
 }
 
-bool UserData::isFirstTime() const
+bool UserData::firstTime() const
 {
-    return _isFirstTime;
+    return _firstTime;
 }
 
-bool UserData::isFinished() const
+bool UserData::finished() const
 {
-    return _isFinished;
+    return _finished;
 }
 
-bool UserData::isWaitEnoughToPlay() const
+bool UserData::waitEnoughToPlay() const
 {
-    return _isWaitEnoughToPlay;
+    return _waitEnoughToPlay;
 }
 
 void UserData::setName(const QString& value)
@@ -64,46 +75,29 @@ void UserData::setId(int value)
     emit idChanged();
 }
 
-void UserData::setExists(bool value)
+void UserData::setExist(bool value)
 {
-    _isExists = value;
+    _exist = value;
+    emit existChanged();
 }
 
 void UserData::setFirstTime(bool value)
 {
-    _isFirstTime = value;
+    _firstTime = value;
+    emit firstTimeChanged();
 }
 
 void UserData::setFinished(bool value)
 {
-    _isFinished = value;
-}
-
-void UserData::setSuperPrizeRecieved(bool value)
-{
-    _isSuperPrizeRecieved = value;
-}
-
-void UserData::setColaPrizeRecieved(bool value)
-{
-    _isColaPrizeRecieved = value;
-}
-
-bool UserData::isSuperPrizeRecieved() const
-{
-    return _isSuperPrizeRecieved;
-}
-
-bool UserData::isColaPrizeRecieved() const
-{
-    return _isColaPrizeRecieved;
+    _finished = value;
+     emit finishedChanged();
 }
 
 void UserData::setWaitEnoughToPlay(bool value)
 {
-    _isWaitEnoughToPlay = value;
+    _waitEnoughToPlay = value;
+    emit waitEnoughToPlayChanged();
 }
-
 
 void UserData::setGameProgess(GameProgress* value)
 {
@@ -119,11 +113,4 @@ void UserData::clearData()
 {
 
 }
-
-
-
-
-
-
-
 
