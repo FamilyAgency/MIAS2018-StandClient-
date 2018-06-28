@@ -32,6 +32,7 @@ public:
 
 private:
     SlackComponent* slackComponent;
+    int standId;
 };
 
 #endif // LOGGERSERVICE_H

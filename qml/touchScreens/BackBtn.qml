@@ -12,7 +12,7 @@ Item {
         visible:true
         onClicked:
         {
-           appController.start();
+           appController.backtoIntro();
         }
     }
 }
