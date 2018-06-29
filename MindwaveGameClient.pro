@@ -44,7 +44,8 @@ SOURCES += main.cpp \
     core/game/OneGameData.cpp \
     components/RFIDComponent.cpp \
     components/rfid/BaseRFIDDataReader.cpp \
-    components/rfid/UHFDataReader.cpp
+    components/rfid/UHFDataReader.cpp \
+    components/rfid/UHFJsonDataReader.cpp
 
 RESOURCES += qml.qrc
 
@@ -111,6 +112,7 @@ HEADERS += \
     core/game/OneGameData.h \
     components/RFIDComponent.h \
     components/rfid/BaseRFIDDataReader.h \
-    components/rfid/UHFDataReader.h
+    components/rfid/UHFDataReader.h \
+    components/rfid/UHFJsonDataReader.h
 
 DISTFILES +=

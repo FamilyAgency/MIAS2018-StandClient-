@@ -27,7 +27,7 @@ signals:
 
 private slots:
     void onUpdate();
-     virtual void onReadyRead() override;
+    virtual void onReadyRead() override;
 };
 
 #endif // UHFDATAREADER_H

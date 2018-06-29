@@ -6,8 +6,7 @@
 
 #include "config/Config.h"
 #include "components/ExternalSystemComponent.h"
-#include "rfid/BaseRFIDDataReader.h"
-#include "rfid/UHFDataReader.h"
+#include "rfid/UHFJsonDataReader.h"
 
 class RFIDComponent : public ExternalSystemComponent
 {

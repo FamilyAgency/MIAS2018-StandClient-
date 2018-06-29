@@ -69,7 +69,7 @@ void UHFDataReader::startReading(int modelIndex)
 
     qDebug()<<"startReading "<<modelIndex<<portName;
 
-    auto serialPortBaudRate = QSerialPort::Baud115200;
+    auto serialPortBaudRate = QSerialPort::BaudRate(rfidConfig.baudRate);
     serialPort->setBaudRate(serialPortBaudRate);
 
     if (!serialPort->open(QIODevice::ReadWrite))
@@ -82,7 +82,7 @@ void UHFDataReader::startReading(int modelIndex)
         connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         connect(serialPort, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(onReadError(QSerialPort::SerialPortError)));
 
-        serialPort->write(beepOnCommand);
+        serialPort->write(beepOffCommand);
 
         timer = new QTimer(this);
         connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
@@ -103,30 +103,6 @@ void UHFDataReader::onReadyRead()
     {
         return;
     }
-
-    qDebug()<<"bytesReaded:: "<< bytesReaded;
-
-//    qDebug()<<"!!!!!!!!serialPort read"<<bytesReaded;
-//    std::string hex_string;
-//    create_hex_str(buff, hex_string);
-//    //	console() << "hex_string  :: "<<hex_string<<  endl;
-
-
-//    auto index1 = hex_string.rfind(idIdentificator);
-//    std::string id = "";
-//    if (index1 != string::npos)
-//    {
-//        auto cur = hex_string.substr(index1, hex_string.size() - 1);
-//        auto index2 = cur.find(semicolon);
-
-//        if (index2 != string::npos)
-//        {
-//            auto fin = cur.substr(0, index2);
-//            id = fin.substr(8, fin.size() - 1);
-//        }
-//    }
-
-//    auto _id = stringTools().fromHex(id);
 }
 
 void UHFDataReader::onUpdate()
