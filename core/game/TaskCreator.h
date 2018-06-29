@@ -10,7 +10,7 @@ class TaskCreator : public QObject
     Q_OBJECT
 public:
     explicit TaskCreator(QObject *parent = nullptr);
-    QList<QSharedPointer<GameTask>> create(UserData* value);
+     QMap<int, QSharedPointer<GameTask>> create(UserData* value);
 };
 
 #endif // TASKCREATOR_H

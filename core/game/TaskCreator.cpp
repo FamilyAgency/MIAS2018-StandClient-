@@ -7,16 +7,20 @@ TaskCreator::TaskCreator(QObject *parent) : QObject(parent)
 
 }
 
-QList<QSharedPointer<GameTask>> TaskCreator::create(UserData* user)
+ QMap<int, QSharedPointer<GameTask>> TaskCreator::create(UserData* user)
 {
    auto gameProgress = user->getGameProgess();
    auto games = gameProgress->getGames();
+   QMap<int, QSharedPointer<GameTask>> gameTasks;
 
-   QList<QSharedPointer<GameTask>> gameTasks;
-   for(auto game: games)
+   for(OneGameData oneGameData: gameProgress->getGames())
    {
-       QSharedPointer<GameTask> gameTask(new GameTask(game.getPath(), game.getDifficult()));
-       gameTasks.push_back(gameTask);
+       if(!oneGameData.complete())
+       {
+           auto id = oneGameData.getId();
+           QSharedPointer<GameTask> gameTask(new GameTask(oneGameData.getPath(), oneGameData.getDifficult()));
+           gameTasks.insert(id, gameTask);
+       }
    }
 
    return gameTasks;

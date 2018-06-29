@@ -35,5 +35,33 @@ void OneGameData::clearUserData()
 
 }
 
+void OneGameData::setId(int value)
+{
+    _id = value;
+}
+
+int OneGameData::getId() const
+{
+    return _id;
+}
+
+bool OneGameData::complete() const
+{
+    return _complete;
+}
+
+void OneGameData::setComplete(bool value)
+{
+    _complete = value;
+}
+
+void OneGameData::setTime(int value)
+{
+    _time = value;
+}
+
+
+
+
 
 

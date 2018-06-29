@@ -28,17 +28,7 @@ public:
     Q_INVOKABLE QVariantList getCompletedPath() const;
     Q_INVOKABLE QVariantList getFullPath() const;
     Q_INVOKABLE float getForwardVectorRotation() const;
-    Q_INVOKABLE int getTaskCount() const;
     Q_INVOKABLE float getMindwaveLimit() const;
-
-    Q_PROPERTY(int currentTaskIndex READ currentTaskIndex WRITE setCurrentTaskIndex NOTIFY currentTaskIndexChanged)
-    Q_PROPERTY(int allTaskCount READ allTaskCount WRITE setAllTaskCount NOTIFY allTaskCountChanged)
-
-    void setCurrentTaskIndex(int value);
-    int currentTaskIndex() const;
-
-    void setAllTaskCount(int value);
-    int allTaskCount() const;
 
     enum class TaskState
     {
@@ -61,31 +51,24 @@ private:
 
     void runTask();
     void preTaskTimerComplete();
-    void setCurrentGameTaskIndex(int index);
+    void setupCurrentGame(const OneGameData& gameData);
     void initCurrentTask();
-    bool isAllTaskCompleted() const;
 
     GamePreTask* gamePreTask = nullptr;
     QSharedPointer<GameTask> gameTask = nullptr;
     GamePostTask* gamePostTask = nullptr;
-    QList<QSharedPointer<GameTask>> gameTasks;
 
-    int _currentTaskIndex = 1;
-    int _allTaskCount = 1;
+    int currentGameId = 0;
+    UserData* currentUser;
 
 signals:
-    void updateCanvas();
-    void gameTimeChanged();
+    void updateCanvas();   
     void taskComleteEvent(int completionTime);
     void allTaskComleteEvent();
 
     void taskStartEvent();
-    void preTaskStartEvent();
-    void taskNumberChangedEvent(int taskNumber);
+    void preTaskStartEvent();  
     void preTaskCoundownUpdate(float time);
-
-    void currentTaskIndexChanged();
-    void allTaskCountChanged();
     void taskReset();
 
 private slots:

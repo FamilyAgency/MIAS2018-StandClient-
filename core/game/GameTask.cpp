@@ -21,6 +21,8 @@ GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velC
 
 GameTask::~GameTask()
 {
+    disconnect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+    delete timer;
     qDebug()<<"!!!!!!!!!!!!!destroyed game task!!!!!!!!!!!!!";
 }
 
@@ -67,6 +69,7 @@ void GameTask::setMindWaveClient(MindwaveComponent* value)
 
 void GameTask::onUpdate()
 {
+    qDebug()<<this<<"taskUpdated";
     int humanValue = 0;
     if(mindWave)
     {

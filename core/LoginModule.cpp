@@ -26,6 +26,8 @@ void LoginModule::setUserData(UserData* value)
     userData = value;
 }
 
+
+
 void LoginModule::start()
 {
 
@@ -33,7 +35,7 @@ void LoginModule::start()
 
 void LoginModule::stop()
 {
-
+    //userData->clearData();
 }
 
 void LoginModule::setState(LoginState value)

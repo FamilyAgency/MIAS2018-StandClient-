@@ -126,7 +126,7 @@ Item {
         Text
         {
             id:stageText;
-            text: "Current stage: " + gameProgress.currentStage;
+            text: "Current stage: " + gameProgress.currentGameId;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

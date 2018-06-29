@@ -27,7 +27,7 @@ Item {
         {
             id:mainText;
             anchors.centerIn: parent
-            text: "Game " + (gameTaskManager.currentTaskIndex + 1);
+            text: "Game " +  gameProgress.currentGameId
             font.family: "Helvetica"
             font.pixelSize: 25
             color: "#ffffff"

@@ -20,18 +20,30 @@ public:
     virtual bool isHealthy() override;
 
 
-    // REST API
-//    void findUser(name, surname, mobile, email);
-//    void saveUser();
-//    void sendPIN();
-//    void saveRFID();
+// REST API
+//   -----------------config-----------------
+//   void getStandConfig(int deviceId);
+//   void checkUpdates(int deviceId);
 
-//    void getStandConfig();
-//    void getUserData();
+//   rfid ?= id
+//   -----------------user-----------------
+//   void fetchUser(int deviceId, int rfid)
+//   void saveUserProgress(int deviceId, int userId, int stage, int cleanTime, data[] mindwaveData)
 
-//    void setUserProgress(stand, userId, stage, time, mindwaveData);
 
-//    void healthCheck();
+//   -----------------reg-----------------
+//    void findUser(int deviceId, name, surname, mobile, email);
+//    void sendUser(int deviceId, name, surname, mobile, email, pinNeeded);
+//    void sendPin(int deviceId,int)
+//    void writeRFID(int deviceId, userId);
+
+
+//   -----------------prize-----------------
+//   void fetchUser(int deviceId, int rfid)
+
+
+//   -----------------tools-----------------
+//    void healthCheck(deviceId);
     
 private:
      ServerConfig serverConfig;

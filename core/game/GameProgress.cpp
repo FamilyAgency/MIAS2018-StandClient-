@@ -1,4 +1,5 @@
 #include "GameProgress.h"
+#include <QDebug>
 
 GameProgress::GameProgress(QObject *parent) : QObject(parent)
 {
@@ -11,15 +12,15 @@ void GameProgress::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("gameProgress", this);
 }
 
-void GameProgress::setCurrentStage(int stage)
+void GameProgress::setCurrentGameId(int stage)
 {
-    _currentStage = stage;
-    emit currentStageChanged();
+    _currentGameId = stage;
+    emit currentGameIdChanged();
 }
 
-int GameProgress::currentStage() const
+int GameProgress::currentGameId() const
 {
-    return _currentStage;
+    return _currentGameId;
 }
 
 void GameProgress::setGamesCount(int count)
@@ -46,8 +47,23 @@ int GameProgress::gamesCompleteCount() const
 
 void GameProgress::setGames(const QVector<OneGameData>& data)
 {
-    gamesData = data;
-    setGamesCount(gamesData.length());
+    uncompleteGames.clear();
+    completeGames.clear();
+   
+    for(OneGameData game : data)
+    {
+        if(!game.complete())
+        {
+           uncompleteGames.push_back(game);
+        }
+        else
+        {
+            completeGames.push_back(game);
+        }
+    }
+
+    setGamesCompleteCount(completeGames.length());
+    setGamesCount(data.length());
 }
 
 void GameProgress::setStageCompletionTime(float time)
@@ -57,7 +73,26 @@ void GameProgress::setStageCompletionTime(float time)
 
 QVector<OneGameData> GameProgress::getGames() const
 {
-    return gamesData;
+    return uncompleteGames;
+}
+
+OneGameData GameProgress::getCurrentGameData() const
+{
+    qDebug()<<":::::::::::::::::: getCurrentGameData :::::::::::::::::: _currentStage "<<_currentGameId;
+    qDebug()<<":::::::::::::::::: uncompleteGames :::::::::::::::::: length "<<uncompleteGames.length();
+
+    OneGameData curGameData;
+    for(OneGameData game: uncompleteGames)
+    {
+        if(game.getId() == _currentGameId)
+        {
+            qDebug()<<":::::::::::::::::: finded ::::::::::::::::::";
+
+            curGameData = game;
+            break;
+        }
+    }
+    return curGameData;
 }
 
 void GameProgress::setCleanTime(float value)
@@ -69,5 +104,31 @@ void GameProgress::setCleanTime(float value)
 float GameProgress::cleanTime() const
 {
     return _cleanTime;
+}
+
+void GameProgress::currentGameCompleted(int time)
+{
+    qDebug()<<" _currentStage " << _currentGameId;
+
+    int completeGameIndex = 0;
+
+    for(int i = 0; i < uncompleteGames.length(); i++)
+    {
+        if(uncompleteGames[i].getId() == _currentGameId)
+        {
+            uncompleteGames[i].setComplete(true);
+            uncompleteGames[i].setTime(time);
+            completeGameIndex = i;
+            break;
+        }
+    }
+
+     qDebug()<<" completeGameIndex " << completeGameIndex;
+
+    completeGames.push_back(uncompleteGames[completeGameIndex]);
+    uncompleteGames.removeAt(completeGameIndex);
+    setGamesCompleteCount(completeGames.length());
+
+    _currentGameId++;
 }
 

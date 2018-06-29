@@ -201,8 +201,6 @@ Item {
 
     function gameStart()
     {
-        //car.visible = true;
-       // shadow.visible = true;
         console.log("=================== game start ===================")
         finishBullet.visible = true;
         circProgress.visible = true;

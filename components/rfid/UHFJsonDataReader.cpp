@@ -21,9 +21,9 @@ void UHFJsonDataReader::onReadyRead()
 
     //qDebug()<<"bytesReaded:: "<< bytesReaded;
     QString hex_string;
-//    std::vector<uint8_t> buff;
-//    create_hex_str(buff, hex_string);
-//    qDebug() << "hex_string  :: "<<hex_string;
+//  std::vector<uint8_t> buff;
+//  create_hex_str(buff, hex_string);
+//  qDebug() << "hex_string  :: "<<hex_string;
 
 
     const QString idIdentificator  = "49 44 3a";

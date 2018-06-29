@@ -15,7 +15,7 @@ void AppController::testConstruct()
     rfidComponent = new RFIDComponent();
     components.append(rfidComponent);
 
-    mindWaveComponent = new MindwaveComponent();
+    mindWaveComponent = new MindwaveComponentTest();
     components.append(mindWaveComponent);
 
     serverComponent = new ServerComponent();

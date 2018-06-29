@@ -3,10 +3,12 @@
 #include <QDateTime>
 
 GameTaskManager::GameTaskManager()
-{
+{    
     gamePreTask = new GamePreTask();
     taskCreator = new TaskCreator();
     gamePostTask = new GamePostTask();
+    connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
+    connect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
 }
 
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
@@ -16,69 +18,46 @@ void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
 
 void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
 {
-    mindWave = value;
+    mindWave = value;    
 }
 
 void GameTaskManager::start(UserData* user)
-{
-    gameTasks = taskCreator->create(user);
-    for(auto task: gameTasks)
-    {
-        task->setMindWaveClient(mindWave);
-    }
-
-    setAllTaskCount(gameTasks.length());
-    setCurrentGameTaskIndex(0);
+{  
+    auto oneGameData = user->getCurrentGameData();
+    currentUser = user;
+    setupCurrentGame(oneGameData);
     setTaskState(TaskState::PreGame);
 }
 
 void GameTaskManager::stop()
-{
-    setAllTaskCount(gameTasks.length());
-    setCurrentGameTaskIndex(0);
+{   
+   // clearAllTasks();
     setTaskState(TaskState::None);
-
     emit taskReset();
 }
 
-void GameTaskManager::setCurrentGameTaskIndex(int index)
+void GameTaskManager::setupCurrentGame(const OneGameData& oneGameData)
 {
     if(gameTask)
     {
-        gameTask->stop();
-    }
-
-    gameTask = gameTasks[index];
-    setCurrentTaskIndex(index);
-
-    if(gameTask)
-    {
-        disconnect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
         disconnect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+        disconnect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
     }
-
-    connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
-    connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
-
-    if(gamePreTask)
+    gameTask.clear();
+    if(oneGameData.getId() != 3)
     {
-        gamePreTask->stop();
+        gameTask.reset(new GameTask(oneGameData.getPath(), oneGameData.getDifficult()));
+        gameTask->setMindWaveClient(mindWave);
+        connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+        connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
     }
 
-    if(gamePreTask)
-    {
-        disconnect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
-        disconnect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
-    }
-    connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
-    connect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
-
-    emit taskNumberChangedEvent(index);
 }
 
 void GameTaskManager::setTaskState(TaskState taskState)
 {  
-    currentTaskState = taskState;
+    currentTaskState = taskState;  
+
     switch(taskState)
     {
     case TaskState::None:
@@ -120,30 +99,9 @@ void GameTaskManager::onTaskUpdateEvent()
 
 void GameTaskManager::onTaskCompleteEvent()
 {
+    gameTask->stop();
     auto completionTime = gameTask->getCompletionTime();
-
-    if(!isAllTaskCompleted())
-    {
-        qDebug()<<this<<"-------------------------------onTaskCompleteEvent-------------------------------";
-        setCurrentGameTaskIndex(currentTaskIndex() + 1);
-        emit taskComleteEvent(completionTime);
-
-        //save data
-        //update data
-
-        setTaskState(TaskState::PreGame);
-    }
-    else
-    {
-        emit taskComleteEvent(completionTime);
-        emit allTaskComleteEvent();
-        qDebug()<<this<<"------------------------------- Game Finished -------------------------------";
-    }
-}
-
-bool GameTaskManager::isAllTaskCompleted() const
-{
-    return currentTaskIndex() == gameTasks.length() - 1;
+    emit taskComleteEvent(completionTime);
 }
 
 bool GameTaskManager::isRunning() const
@@ -186,34 +144,7 @@ QVariantList GameTaskManager::getFullPath() const
     return gameTask->getFullPath();
 }
 
-int GameTaskManager::getTaskCount() const
-{
-    return gameTasks.length();
-}
-
 float GameTaskManager::getMindwaveLimit() const
 {
     return gameTask->getMindwaveLimit();
-}
-
-void GameTaskManager::setCurrentTaskIndex(int value)
-{
-    _currentTaskIndex = value;
-    emit currentTaskIndexChanged();
-}
-
-int GameTaskManager::currentTaskIndex() const
-{
-    return _currentTaskIndex;
-}
-
-void GameTaskManager::setAllTaskCount(int value)
-{
-    _allTaskCount = value;
-    emit allTaskCountChanged();
-}
-
-int GameTaskManager::allTaskCount() const
-{
-    return _allTaskCount;
 }

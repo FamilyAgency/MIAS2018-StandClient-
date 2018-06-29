@@ -29,7 +29,7 @@ void LoggerService::log(const QString& message, LogType type, RemoteType remoteT
     {
 
     case RemoteType::Slack:
-        slackComponent->sendMessage(logMessage, type);
+       // slackComponent->sendMessage(logMessage, type);
         break;
 
     case RemoteType::Server:

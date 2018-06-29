@@ -14,7 +14,7 @@ void MindwaveComponentTest::start()
 
 void MindwaveComponentTest::simulateMindwaveRead()
 {   
-    int min = 50;
+    int min = 90;
     int max = 100;
     int RandAtten = qrand() % ((max + 1) - min) + min;
     setAttention(RandAtten);

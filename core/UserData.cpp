@@ -8,7 +8,7 @@ UserData::UserData(QObject *parent) : QObject(parent)
     setPrizes(prizes);
 
     gameProgress = new GameProgress();
-    gameProgress->setCurrentStage(0);
+    gameProgress->setCurrentGameId(1);
     gameProgress->setGamesCount(0);
     gameProgress->setGamesCompleteCount(0);
 }
@@ -99,7 +99,7 @@ void UserData::setFirstTime(bool value)
 void UserData::setFinished(bool value)
 {
     _finished = value;
-     emit finishedChanged();
+    emit finishedChanged();
 }
 
 void UserData::setWaitEnoughToPlay(bool value)
@@ -118,8 +118,20 @@ GameProgress* UserData::getGameProgess()
     return gameProgress;
 }
 
+OneGameData UserData::getCurrentGameData() const
+{
+    return gameProgress->getCurrentGameData();
+}
+
+void UserData::currentGameCompleted(int time)
+{
+    gameProgress->currentGameCompleted(time);
+}
+
 void UserData::clearData()
 {
-
+    gameProgress->setCurrentGameId(0);
+    gameProgress->setGamesCount(0);
+    gameProgress->setGamesCompleteCount(0);
 }
 

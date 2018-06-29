@@ -7,10 +7,10 @@ Item {
     {
         target:gameTaskManager;
 
-        onTaskNumberChangedEvent:
-        {
-            roundText.text = "Round " + (taskNumber+1);
-        }
+//        onTaskNumberChangedEvent:
+//        {
+//            roundText.text = "Round " + (taskNumber+1);
+//        }
 
         onAllTaskComleteEvent:
         {

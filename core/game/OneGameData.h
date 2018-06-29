@@ -20,11 +20,21 @@ public:
     QVector<QPointF> getPath() const;
     VelocityCalculator getDifficult() const;
 
+    void setId(int value);
+    int getId() const;
+
+    bool complete() const;
+    void setComplete(bool value);
+    void setTime(int value);
+
 private:
     QVector<QPointF> path;
     QString description;
     VelocityCalculator difficult;
-    int featureId;
+    int featureId = 1;
+    int _id = 1;
+    int _time = 0;
+    bool _complete = false;
 };
 
 #endif // ONEGAMEDATA_H

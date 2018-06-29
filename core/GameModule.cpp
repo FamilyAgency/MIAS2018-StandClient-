@@ -29,7 +29,7 @@ void GameModule::setConfig(Config* config)
 }
 
 void GameModule::start()
-{ 
+{     
     gameTaskManager->start(currentUser);
 }
 
@@ -40,7 +40,10 @@ void GameModule::stop()
 
 void GameModule::onTaskComleteEvent(int completionTime)
 {
+    qDebug()<<":::::::::::::::::: current game completed ::::::::::::::::::";
+    currentUser->currentGameCompleted(completionTime);
     gameSession->addTaskTime(completionTime);
+    start();
 }
 
 void GameModule::onAllTaskComleteEvent()
