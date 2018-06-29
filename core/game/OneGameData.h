@@ -24,7 +24,7 @@ private:
     QVector<QPointF> path;
     QString description;
     VelocityCalculator difficult;
-
+    int featureId;
 };
 
 #endif // ONEGAMEDATA_H

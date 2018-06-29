@@ -44,15 +44,15 @@ public:
     GameProgress* getGameProgess();
 
 private:
-    QString _name;
-    QString _surname;
+    QString _name = "Unknown";
+    QString _surname = "Unknown";
     int _id = -1;
 
-    bool _exist;
-    bool _firstTime;
-    bool _finished;
+    bool _exist = false;
+    bool _firstTime = false;
+    bool _finished = false;
     QVariantList _prizes;
-    bool _waitEnoughToPlay;
+    bool _waitEnoughToPlay = false;
 
     QQmlContext* qmlContext;
     GameProgress* gameProgress;

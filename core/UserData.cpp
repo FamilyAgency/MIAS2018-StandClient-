@@ -2,13 +2,22 @@
 
 UserData::UserData(QObject *parent) : QObject(parent)
 {
+    QVariantList prizes;
+    prizes.append(false);
+    prizes.append(false);
+    setPrizes(prizes);
 
+    gameProgress = new GameProgress();
+    gameProgress->setCurrentStage(0);
+    gameProgress->setGamesCount(0);
+    gameProgress->setGamesCompleteCount(0);
 }
 
 void UserData::setQmlContext(QQmlContext* value)
 {
     qmlContext = value;
     qmlContext->setContextProperty("userData", this);
+    gameProgress->setQmlContext(qmlContext);
 }
 
 QVariantList UserData::prizes() const

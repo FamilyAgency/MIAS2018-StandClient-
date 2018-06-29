@@ -11,17 +11,17 @@ Item {
 
         onAllTaskComleteEvent:
         {
-            completionText.text = "Completion: " + (gameTaskManager.allTaskCount) + "/" + gameTaskManager.allTaskCount;
+           // completionText.text = "Completion: " + (gameTaskManager.allTaskCount) + "/" + gameTaskManager.allTaskCount;
         }
 
         onTaskComleteEvent:
         {
-            completionText.text = "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;
+           // completionText.text = "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;
         }
 
         onTaskReset:
         {
-            completionText.text = "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;
+          //  completionText.text = "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;
         }
     }
 
@@ -117,7 +117,7 @@ Item {
         Text
         {
             id:cleanTimeText;
-            text: "Clean game task-time: " + gameSession.cleanTime.toFixed(1);
+            text: "Clean game task-time: " + gameProgress.cleanTime.toFixed(1);
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -126,7 +126,7 @@ Item {
         Text
         {
             id:stageText;
-            text: "Current stage: " +  (gameTaskManager.currentTaskIndex + 1);
+            text: "Current stage: " + gameProgress.currentStage;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -134,7 +134,7 @@ Item {
         Text
         {
             id:completionText;
-            text: "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;
+            text: "Completion: " + gameProgress.gamesCompleteCount + " / " + gameProgress.gamesCount
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

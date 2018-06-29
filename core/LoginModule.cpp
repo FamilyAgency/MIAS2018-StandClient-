@@ -7,6 +7,7 @@ LoginModule::LoginModule(QObject *parent):BaseModule(parent)
 
 void LoginModule::setQmlContext(QQmlContext* qmlContext)
 {
+    BaseModule::setQmlContext(qmlContext);
     qmlContext->setContextProperty("loginModule", this);
 }
 

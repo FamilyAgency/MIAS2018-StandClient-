@@ -7,7 +7,8 @@ LoginModuleTest::LoginModuleTest():LoginModule()
 
 void LoginModuleTest::setQmlContext(QQmlContext* qmlContext)
 {
-     qmlContext->setContextProperty("loginModule", this);
+    LoginModule::setQmlContext(qmlContext);
+    qmlContext->setContextProperty("loginModule", this);
 }
 
 void LoginModuleTest::loginSuccessTest()
@@ -26,9 +27,9 @@ void LoginModuleTest::loginSuccessTest()
     prizes.append(false);
     userData->setPrizes(prizes);
 
-
-    GameProgress* gameProgress = new GameProgress();
+    GameProgress* gameProgress = userData->getGameProgess();
     gameProgress->setCurrentStage(1);
+    gameProgress->setCleanTime(0.0f);
 
     QVector<OneGameData> gamesData;
 
@@ -36,6 +37,7 @@ void LoginModuleTest::loginSuccessTest()
     gameData1.setPath(createPath(1));
     gameData1.setDescription("test task");
     gameData1.setDifficult(createDifficult(3));
+
     gameData1.clearUserData();
     gamesData.push_back(gameData1);
 
@@ -52,7 +54,6 @@ void LoginModuleTest::loginSuccessTest()
     gameData3.setDifficult(createDifficult(5));
     gameData3.clearUserData();
     gamesData.push_back(gameData3);
-
 
     gameProgress->setGames(gamesData);
     userData->setGameProgess(gameProgress);
