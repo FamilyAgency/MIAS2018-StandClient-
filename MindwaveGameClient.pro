@@ -45,7 +45,8 @@ SOURCES += main.cpp \
     components/RFIDComponent.cpp \
     components/rfid/BaseRFIDDataReader.cpp \
     components/rfid/UHFDataReader.cpp \
-    components/rfid/UHFJsonDataReader.cpp
+    components/rfid/UHFJsonDataReader.cpp \
+    tests/ServerComponentTest.cpp
 
 RESOURCES += qml.qrc
 
@@ -113,6 +114,7 @@ HEADERS += \
     components/RFIDComponent.h \
     components/rfid/BaseRFIDDataReader.h \
     components/rfid/UHFDataReader.h \
-    components/rfid/UHFJsonDataReader.h
+    components/rfid/UHFJsonDataReader.h \
+    tests/ServerComponentTest.h
 
 DISTFILES +=

@@ -31,3 +31,8 @@ bool ServerComponent::isHealthy()
 {
     return true;
 }
+
+void ServerComponent::fetchUser(int deviceId, int rfid)
+{
+
+}

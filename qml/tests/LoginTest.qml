@@ -124,5 +124,25 @@ Item {
                 }
             }
         }
+
+        RowLayout
+        {
+            spacing: 10;
+            Button
+            {
+                text:"RFID entered: "
+                onClicked:
+                {
+                    loginModule.rfidRecieved(rfidBox.value);
+                }
+            }
+
+            SpinBox
+            {
+                id: rfidBox
+                value: 1000
+                editable: true
+            }
+        }
     }
 }

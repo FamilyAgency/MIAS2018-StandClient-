@@ -9,7 +9,6 @@
 #include "components/MindwaveComponent.h"
 #include "components/ServerComponent.h"
 #include "components/SlackComponent.h"
-
 #include "services/LoggerService.h"
 
 #include "StandData.h"
@@ -23,6 +22,7 @@
 
 #include "tests/LoginModuleTest.h"
 #include "tests/MindwaveComponentTest.h"
+#include "tests/ServerComponentTest.h"
 
 class AppController : public QObject
 {

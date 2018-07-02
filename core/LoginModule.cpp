@@ -19,11 +19,27 @@ void LoginModule::setConfig(Config* config)
 void LoginModule::setRFIDComponent(RFIDComponent* value)
 {
     rfidComponent = value;
+    // connect on new id
+}
+
+void LoginModule::setServerComponent(ServerComponent* value)
+{
+    if(serverComponent)
+    {
+        disconnect(serverComponent, SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+    }
+    serverComponent = value;
+    connect(serverComponent, SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 }
 
 void LoginModule::setUserData(UserData* value)
 {
     userData = value;
+}
+
+void LoginModule::setStandData(StandData* value)
+{
+    standData = value;
 }
 
 void LoginModule::start()
@@ -52,8 +68,8 @@ QString LoginModule::getStringState() const
 {
     switch(state)
     {
-        case LoginState::Login: return "user login";
-        case LoginState::Logout: return "user logout";
+        case LoginState::Login: return "User login";
+        case LoginState::Logout: return "User logout";
     }
     return "undefined";
 }
@@ -63,3 +79,25 @@ QString LoginModule::getName() const
     return "Login location";
 }
 
+void LoginModule::onRFIDRecieve(int id)
+{
+    serverComponent->fetchUser(standData->config().standId, id);
+}
+
+void LoginModule::onServerResponse(const ServerResponse& response)
+{
+    if(response.type == ResponseType::UserFetched)
+    {
+        parseServerResponse(response.body);
+    }
+}
+
+void LoginModule::onServerError()
+{
+
+}
+
+void LoginModule::parseServerResponse(const QString& data)
+{
+      qDebug()<<"server answered  "<< data;
+}

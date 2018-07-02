@@ -38,6 +38,7 @@ private:
 signals:
     void configChanged();
     void connectedChanged();
+    void onRFIDRecieve(int id);
 
 public slots:
     void onDataReaded(const QString&);

@@ -18,7 +18,7 @@ void AppController::testConstruct()
     mindWaveComponent = new MindwaveComponentTest();
     components.append(mindWaveComponent);
 
-    serverComponent = new ServerComponent();
+    serverComponent = new ServerComponentTest();
     components.append(serverComponent);
 
     slackComponent = new SlackComponent();
@@ -35,6 +35,8 @@ void AppController::testConstruct()
 
     loginModule->setRFIDComponent(rfidComponent);
     loginModule->setUserData(userData);
+    loginModule->setServerComponent(serverComponent);
+    loginModule->setStandData(standData);
     modules.append(loginModule);
 
     instructionModule = new InstructionModule();

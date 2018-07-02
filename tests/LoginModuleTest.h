@@ -21,6 +21,9 @@ public:
     Q_INVOKABLE void youArePlaying();
     Q_INVOKABLE void playedRecently();
 
+    Q_INVOKABLE void rfidRecieved(int id);
+
+
 private:
     QVector<QPointF> createPath(int pathId);
     VelocityCalculator createDifficult(int diff);

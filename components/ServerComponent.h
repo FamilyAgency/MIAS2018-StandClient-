@@ -5,6 +5,19 @@
 #include "components/ExternalSystemComponent.h"
 #include "config/Config.h"
 
+enum class ResponseType
+{
+    None,
+    UserFetched
+};
+//Q_ENUMS(ResponseType)
+
+struct ServerResponse
+{
+    ResponseType type = ResponseType::None;
+    QString body;
+};
+
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
@@ -27,7 +40,7 @@ public:
 
 //   rfid ?= id
 //   -----------------user-----------------
-//   void fetchUser(int deviceId, int rfid)
+     virtual void fetchUser(int deviceId, int rfid);
 //   void saveUserProgress(int deviceId, int userId, int stage, int cleanTime, data[] mindwaveData)
 
 
@@ -50,6 +63,7 @@ private:
 
 signals:
     void configChanged();
+    void serverResponse(const ServerResponse& response);
 
 public slots:
 };

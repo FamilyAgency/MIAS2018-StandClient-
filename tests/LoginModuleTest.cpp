@@ -348,4 +348,9 @@ VelocityCalculator LoginModuleTest::createDifficult(int diff)
     return velocitycalculator;
 }
 
+void LoginModuleTest::rfidRecieved(int id)
+{
+    onRFIDRecieve(id);
+}
+
 
