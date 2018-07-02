@@ -28,7 +28,7 @@ void LoginModuleTest::loginSuccessTest()
     userData->setPrizes(prizes);
 
     GameProgress* gameProgress = userData->getGameProgess();
-    gameProgress->setCurrentGameId(2);
+    gameProgress->setCurrentGameId(1);
     gameProgress->setCleanTime(0.0f);
 
     QVector<OneGameData> gamesData;
@@ -37,9 +37,8 @@ void LoginModuleTest::loginSuccessTest()
     gameData1.setPath(createPath(1));
     gameData1.setDescription("test task");
     gameData1.setDifficult(createDifficult(3));
-    gameData1.setComplete(true);
+    gameData1.setComplete(false);
     gameData1.setId(1);
-
 
     OneGameData gameData2;
     gameData2.setPath(createPath(2));
@@ -47,7 +46,6 @@ void LoginModuleTest::loginSuccessTest()
     gameData2.setDifficult(createDifficult(4));
     gameData2.setComplete(false);
     gameData2.setId(2);
-
 
 
     OneGameData gameData3;

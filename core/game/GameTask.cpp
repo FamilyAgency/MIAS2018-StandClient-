@@ -4,19 +4,34 @@
 #include <QtMath>
 #include <QDateTime>
 
+GameTask::GameTask()
+{
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+
+    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
+}
+
 GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velCalc)
 {
+    setData(value, velCalc);
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+
+    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
+}
+
+void GameTask::setData(const QVector<QPointF>& value, const VelocityCalculator& velCalc)
+{
     path = value;
+    fullPathList.clear();
     for(int i = 0; i<value.length(); i++)
     {
         fullPathList.append(value[i]);
     }
 
     velocityCalculator = velCalc;
-    timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-
-    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
 }
 
 GameTask::~GameTask()
@@ -69,7 +84,6 @@ void GameTask::setMindWaveClient(MindwaveComponent* value)
 
 void GameTask::onUpdate()
 {
-    qDebug()<<this<<"taskUpdated";
     int humanValue = 0;
     if(mindWave)
     {
@@ -115,9 +129,7 @@ void GameTask::update(int humanValue)
         position.setY(position.y() + velocity);
 
         curPoint.setX(startPoint.x() + position.x() * velocityDirection.x());
-        curPoint.setY(startPoint.y() + position.y() * velocityDirection.y());
-
-        //  qDebug()<< curPoint.x()<< curPoint.y();
+        curPoint.setY(startPoint.y() + position.y() * velocityDirection.y());       
     }
 }
 

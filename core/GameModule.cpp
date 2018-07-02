@@ -43,7 +43,15 @@ void GameModule::onTaskComleteEvent(int completionTime)
     qDebug()<<":::::::::::::::::: current game completed ::::::::::::::::::";
     currentUser->currentGameCompleted(completionTime);
     gameSession->addTaskTime(completionTime);
-    start();
+
+    if(currentUser->hasGames())
+    {
+        start();
+    }
+    else
+    {
+         emit allTaskComleteEvent();
+    }
 }
 
 void GameModule::onAllTaskComleteEvent()

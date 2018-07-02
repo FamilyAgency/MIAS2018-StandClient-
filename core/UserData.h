@@ -44,6 +44,7 @@ public:
     GameProgress* getGameProgess();
     OneGameData getCurrentGameData() const;
     void currentGameCompleted(int time);
+    bool hasGames() const;
 
 private:
     QString _name = "Unknown";

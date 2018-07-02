@@ -128,6 +128,11 @@ void UserData::currentGameCompleted(int time)
     gameProgress->currentGameCompleted(time);
 }
 
+bool UserData::hasGames() const
+{
+    return gameProgress->hasGames();
+}
+
 void UserData::clearData()
 {
     gameProgress->setCurrentGameId(0);

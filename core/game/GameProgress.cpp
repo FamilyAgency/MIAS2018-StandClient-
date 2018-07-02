@@ -92,6 +92,7 @@ OneGameData GameProgress::getCurrentGameData() const
             break;
         }
     }
+
     return curGameData;
 }
 
@@ -129,6 +130,14 @@ void GameProgress::currentGameCompleted(int time)
     uncompleteGames.removeAt(completeGameIndex);
     setGamesCompleteCount(completeGames.length());
 
-    _currentGameId++;
+    if(!uncompleteGames.empty())
+    {
+      setCurrentGameId(_currentGameId + 1);
+    }
+}
+
+bool GameProgress::hasGames() const
+{
+    return uncompleteGames.length() > 0;
 }
 

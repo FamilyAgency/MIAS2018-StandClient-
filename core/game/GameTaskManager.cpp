@@ -9,6 +9,10 @@ GameTaskManager::GameTaskManager()
     gamePostTask = new GamePostTask();
     connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
     connect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
+
+    gameTask.reset(new GameTask());
+    connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+    connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
 }
 
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
@@ -18,7 +22,8 @@ void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
 
 void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
 {
-    mindWave = value;    
+    mindWave = value;
+    gameTask->setMindWaveClient(mindWave);
 }
 
 void GameTaskManager::start(UserData* user)
@@ -31,27 +36,13 @@ void GameTaskManager::start(UserData* user)
 
 void GameTaskManager::stop()
 {   
-   // clearAllTasks();
     setTaskState(TaskState::None);
     emit taskReset();
 }
 
 void GameTaskManager::setupCurrentGame(const OneGameData& oneGameData)
 {
-    if(gameTask)
-    {
-        disconnect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
-        disconnect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
-    }
-    gameTask.clear();
-    if(oneGameData.getId() != 3)
-    {
-        gameTask.reset(new GameTask(oneGameData.getPath(), oneGameData.getDifficult()));
-        gameTask->setMindWaveClient(mindWave);
-        connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
-        connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
-    }
-
+    gameTask->setData(oneGameData.getPath(), oneGameData.getDifficult());
 }
 
 void GameTaskManager::setTaskState(TaskState taskState)

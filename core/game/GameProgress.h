@@ -39,6 +39,8 @@ public:
     OneGameData getCurrentGameData() const;
     void currentGameCompleted(int time);
 
+    bool hasGames() const;
+
 private:
     QVector<OneGameData> uncompleteGames, completeGames;
     int _currentGameId = 0;
