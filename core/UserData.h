@@ -19,6 +19,8 @@ public:
     Q_PROPERTY(bool waitEnoughToPlay READ waitEnoughToPlay WRITE setWaitEnoughToPlay NOTIFY waitEnoughToPlayChanged)
     Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
 
+    const int maxPrizesCount = 2;
+
     QString name() const;
     QString surname() const;
     int id() const;

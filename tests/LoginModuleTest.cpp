@@ -11,12 +11,11 @@ void LoginModuleTest::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("loginModule", this);
 }
 
-void LoginModuleTest::loginSuccessTest()
+void LoginModuleTest::loginSuccessTest(int gameId)
 {
     userData->setName("Александр");
     userData->setSurname("Александров");
     userData->setId(665);
-
     userData->setFirstTime(true);
     userData->setFinished(false);
     userData->setExist(true);
@@ -27,6 +26,72 @@ void LoginModuleTest::loginSuccessTest()
     prizes.append(false);
     userData->setPrizes(prizes);
 
+    GameProgress* gameProgress = createGamesOnStage1();
+
+    if(gameId == 2)
+    {
+        gameProgress = createGamesOnStage2();
+    }
+    else if(gameId == 3)
+    {
+        gameProgress = createGamesOnStage3();
+    }
+
+    userData->setGameProgess(gameProgress);
+    setUserState(UserState::CanPlay);
+    setState(LoginState::Login);
+}
+
+GameProgress* LoginModuleTest::createGamesOnStage1()
+{
+    userData->setName("Александр");
+    userData->setSurname("Александров");
+    userData->setId(665);
+
+    GameProgress* gameProgress = userData->getGameProgess();
+    gameProgress->setCurrentGameId(1);
+    gameProgress->setCleanTime(0.0f);
+
+    QVector<OneGameData> gamesData;
+
+    OneGameData gameData1;
+    gameData1.setPath(createPath(1));
+    gameData1.setDescription("test task");
+    gameData1.setDifficult(createDifficult(3));
+    gameData1.setComplete(false);
+    gameData1.setTime(10.5f);
+    gameData1.setId(1);
+
+    OneGameData gameData2;
+    gameData2.setPath(createPath(2));
+    gameData2.setDescription("test task");
+    gameData2.setDifficult(createDifficult(4));
+    gameData2.setComplete(false);
+    gameData2.setTime(20.5f);
+    gameData2.setId(2);
+
+    OneGameData gameData3;
+    gameData3.setPath(createPath(3));
+    gameData3.setDescription("test task");
+    gameData3.setDifficult(createDifficult(5));
+    gameData3.setComplete(false);
+    gameData3.setTime(0.0f);
+    gameData3.setId(3);
+
+    gamesData.push_back(gameData1);
+    gamesData.push_back(gameData2);
+    gamesData.push_back(gameData3);
+    gameProgress->setGames(gamesData);
+
+    return gameProgress;
+}
+
+GameProgress* LoginModuleTest::createGamesOnStage2()
+{
+    userData->setName("Константин");
+    userData->setSurname("Константинов");
+    userData->setId(165);
+
     GameProgress* gameProgress = userData->getGameProgess();
     gameProgress->setCurrentGameId(2);
     gameProgress->setCleanTime(0.0f);
@@ -36,7 +101,7 @@ void LoginModuleTest::loginSuccessTest()
     OneGameData gameData1;
     gameData1.setPath(createPath(1));
     gameData1.setDescription("test task");
-    gameData1.setDifficult(createDifficult(3));   
+    gameData1.setDifficult(createDifficult(3));
     gameData1.setComplete(true);
     gameData1.setTime(10.5f);
     gameData1.setId(1);
@@ -57,21 +122,138 @@ void LoginModuleTest::loginSuccessTest()
     gameData3.setTime(0.0f);
     gameData3.setId(3);
 
+    gamesData.push_back(gameData1);
+    gamesData.push_back(gameData2);
+    gamesData.push_back(gameData3);
+    gameProgress->setGames(gamesData);
+
+    return gameProgress;
+
+}
+
+GameProgress* LoginModuleTest::createGamesOnStage3()
+{
+    userData->setName("Петр");
+    userData->setSurname("Петрович");
+    userData->setId(6665);
+
+    GameProgress* gameProgress = userData->getGameProgess();
+    gameProgress->setCurrentGameId(3);
+    gameProgress->setCleanTime(0.0f);
+
+    QVector<OneGameData> gamesData;
+
+    OneGameData gameData1;
+    gameData1.setPath(createPath(1));
+    gameData1.setDescription("test task");
+    gameData1.setDifficult(createDifficult(3));
+    gameData1.setComplete(true);
+    gameData1.setTime(10.5f);
+    gameData1.setId(1);
+
+    OneGameData gameData2;
+    gameData2.setPath(createPath(2));
+    gameData2.setDescription("test task");
+    gameData2.setDifficult(createDifficult(4));
+    gameData2.setComplete(true);
+    gameData2.setTime(20.5f);
+    gameData2.setId(2);
+
+    OneGameData gameData3;
+    gameData3.setPath(createPath(3));
+    gameData3.setDescription("test task");
+    gameData3.setDifficult(createDifficult(5));
+    gameData3.setComplete(false);
+    gameData3.setTime(0.0f);
+    gameData3.setId(3);
 
     gamesData.push_back(gameData1);
     gamesData.push_back(gameData2);
     gamesData.push_back(gameData3);
     gameProgress->setGames(gamesData);
-    userData->setGameProgess(gameProgress);
-    setState(LoginState::Login);
+
+    return gameProgress;
 }
+
+void LoginModuleTest::finished(int prizesCount)
+{
+    userData->setName("Игорь");
+    userData->setSurname("Завершалов");
+    userData->setId(665);
+    userData->setFirstTime(false);
+    userData->setFinished(true);
+    userData->setExist(true);
+    userData->setWaitEnoughToPlay(true);
+
+    QVariantList prizes;
+    for(int i  = 0; i < prizesCount; i++)
+    {
+         prizes.append(true);
+    }
+
+    auto prizeDiff = userData->maxPrizesCount - prizes.length();
+    if(prizeDiff < 0)
+    {
+        // server error
+        qDebug()<< "To much prizes!!!!!!!!!!!!!!";
+    }
+    else if (prizeDiff > 0)
+    {
+        for(int i  = 0; i < prizeDiff; i++)
+        {
+             prizes.append(false);
+        }
+    }
+
+    userData->setPrizes(prizes);
+    setUserState(UserState::Finished);
+    //setState(LoginState::Login);
+}
+
+void LoginModuleTest::moduleError()
+{
+    setState(LoginState::Error);
+}
+
+void LoginModuleTest::youArePlaying()
+{
+    userData->setName("Игорь");
+    userData->setSurname("Хитрец");
+    userData->setId(65);
+    setUserState(UserState::YouArePlaying);
+}
+
+void LoginModuleTest::playedRecently()
+{
+    userData->setName("Игорь");
+    userData->setSurname("Хитрец");
+    userData->setId(65);
+    userData->setFirstTime(false);
+    userData->setFinished(true);
+    userData->setExist(true);
+    userData->setWaitEnoughToPlay(false);
+    setUserState(UserState::WasRecently);
+}
+
+void LoginModuleTest::userDoesntExist()
+{
+    userData->setName("----");
+    userData->setSurname("----");
+    userData->setId(-1000000);
+    userData->setFirstTime(false);
+    userData->setFinished(false);
+    userData->setExist(false);
+    userData->setWaitEnoughToPlay(false);
+    setUserState(UserState::DoesntExists);
+}
+
 
 void LoginModuleTest::logoutTest()
 {
     userData->setName("");
     userData->setSurname("");
     userData->setId(-1);
-
+    setUserState(UserState::None);
     setState(LoginState::Logout);
 }
 

@@ -36,7 +36,8 @@ void GameTaskManager::start(UserData* user)
 }
 
 void GameTaskManager::stop()
-{   
+{
+
     setTaskState(TaskState::None);
     emit taskReset();
 }
@@ -53,6 +54,8 @@ void GameTaskManager::setTaskState(TaskState taskState)
     switch(taskState)
     {
     case TaskState::None:
+        gamePreTask->stop();
+        gameTask->stop();
         emit updateCanvas();
         break;
 

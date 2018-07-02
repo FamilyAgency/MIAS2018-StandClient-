@@ -9,7 +9,7 @@
 class LoginModule : public BaseModule
 {
     Q_OBJECT
-public:
+public:    
     enum class LoginError
     {
         UserDoesntExist,
@@ -27,6 +27,17 @@ public:
         Error
     };
     Q_ENUMS(LoginState)
+
+    enum class UserState
+    {
+        None,
+        CanPlay,
+        DoesntExists,
+        Finished,
+        WasRecently,
+        YouArePlaying
+    };
+    Q_ENUMS(UserState)
 
     LoginModule(QObject *parent = nullptr);
 
@@ -46,10 +57,14 @@ private:
     RFIDComponent* rfidComponent;
     UserData* userData;
     LoginState state = LoginState::Logout;
+    UserState userState = UserState::None;
+
     void setState(LoginState state);
+    void setUserState(UserState value);
 
 signals:
     void loginStateChanged(LoginModule::LoginState loginState);
+    void userStateChanged(LoginModule::UserState userState);
 
 };
 

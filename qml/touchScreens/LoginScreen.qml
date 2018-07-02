@@ -21,6 +21,39 @@ Item {
                 mainText.text = "О привет, " + userData.name + "! Начнем!";
                 startBtn.visible = true;
                 break;
+
+            case LoginState.Error:
+                mainText.text = "Ошибка сервера";
+                break;
+            }
+        }
+
+        onUserStateChanged:
+        {
+            switch(userState)
+            {
+            case UserState.None:
+                break;
+
+            case UserState.DoesntExists:
+                mainText.text = "Похоже, что тебя не существует!";
+                startBtn.visible = false;
+                break;
+
+            case UserState.Finished:
+                mainText.text = "Забирай свои призы и не приходи сюда!";
+                startBtn.visible = false;
+                break;
+
+            case UserState.WasRecently:
+                mainText.text = "Недавно же играл!";
+                startBtn.visible = false;
+                break;
+
+            case UserState.YouArePlaying:
+                mainText.text = "Играешь на другом стенде хитрец!";
+                startBtn.visible = false;
+                break;
             }
         }
     }

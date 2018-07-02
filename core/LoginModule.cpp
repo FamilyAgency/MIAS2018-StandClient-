@@ -26,8 +26,6 @@ void LoginModule::setUserData(UserData* value)
     userData = value;
 }
 
-
-
 void LoginModule::start()
 {
 
@@ -42,6 +40,12 @@ void LoginModule::setState(LoginState value)
 {
     state = value;
     emit loginStateChanged(state);
+}
+
+void LoginModule::setUserState(UserState value)
+{
+    userState = value;
+    emit userStateChanged(value);
 }
 
 QString LoginModule::getStringState() const
