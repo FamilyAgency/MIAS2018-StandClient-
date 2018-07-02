@@ -60,6 +60,10 @@ void OneGameData::setTime(int value)
     _time = value;
 }
 
+int OneGameData::getTime() const
+{
+    return _time;
+}
 
 
 

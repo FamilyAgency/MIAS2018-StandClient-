@@ -135,6 +135,7 @@ bool UserData::hasGames() const
 
 void UserData::clearData()
 {
+    gameProgress->setCleanTime(0.0f);
     gameProgress->setCurrentGameId(0);
     gameProgress->setGamesCount(0);
     gameProgress->setGamesCompleteCount(0);

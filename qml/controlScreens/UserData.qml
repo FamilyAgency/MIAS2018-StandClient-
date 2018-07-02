@@ -9,11 +9,6 @@ Item {
     {
         target: gameTaskManager
 
-        onAllTaskComleteEvent:
-        {
-           // completionText.text = "Completion: " + (gameTaskManager.allTaskCount) + "/" + gameTaskManager.allTaskCount;
-        }
-
         onTaskComleteEvent:
         {
            // completionText.text = "Completion: " + (gameTaskManager.currentTaskIndex) + "/" + gameTaskManager.allTaskCount;

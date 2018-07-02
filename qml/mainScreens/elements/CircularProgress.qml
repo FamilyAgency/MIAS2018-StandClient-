@@ -24,13 +24,17 @@ Item
 
     Connections
     {
-        target:gameTaskManager;
+        target:gameModule;
 
         onAllTaskComleteEvent:
         {
             visible = true;
         }
+    }
 
+    Connections
+    {
+        target:gameTaskManager;
         onUpdateCanvas:
         {
            // console.log("nextAttentionValue ", nextAttentionValue);

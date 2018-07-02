@@ -64,7 +64,7 @@ private:
 signals:
     void updateCanvas();   
     void taskComleteEvent(int completionTime);
-    void allTaskComleteEvent();
+   // void allTaskComleteEvent();
 
     void taskStartEvent();
     void preTaskStartEvent();  

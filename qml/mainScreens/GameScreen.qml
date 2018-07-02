@@ -207,21 +207,4 @@ Item {
         startBullet.visible = true;
         pretaskPopup.visible = true;
     }
-
-    function setState(state)
-    {
-        switch(state)
-        {
-        case "gameOver":
-            gameStop();
-            break;
-
-        case "idle":
-            gameStop();
-            break;
-
-        case "game":
-            break;
-        }
-    }
 }

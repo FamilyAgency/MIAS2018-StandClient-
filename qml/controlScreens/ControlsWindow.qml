@@ -88,6 +88,5 @@ Item {
             x:marginLeft;
             y:marginLeft;// + 240;
         }
-
     }
 }

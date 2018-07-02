@@ -10,12 +10,17 @@ Item
 
     Connections
     {
-        target:gameTaskManager;
+        target:gameModule;
 
         onAllTaskComleteEvent:
         {
-            visible = false;
+            visible = true;
         }
+    }
+
+    Connections
+    {
+        target:gameTaskManager;
 
         onPreTaskStartEvent:
         {

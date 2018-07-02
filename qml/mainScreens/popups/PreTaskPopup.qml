@@ -7,15 +7,6 @@ Item {
     {
         target:gameTaskManager;
 
-//        onTaskNumberChangedEvent:
-//        {
-//            roundText.text = "Round " + (taskNumber+1);
-//        }
-
-        onAllTaskComleteEvent:
-        {
-            visible = false;
-        }
 
         onPreTaskStartEvent:
         {
@@ -57,7 +48,7 @@ Item {
         {
             anchors.centerIn: parent
             id: roundText
-            text: "Round 1";
+            text: "Round " + gameProgress.currentGameId;
             font.family: "Helvetica";
             font.pixelSize: 35;
             color: "#ffffff";

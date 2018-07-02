@@ -49,6 +49,8 @@ void GameProgress::setGames(const QVector<OneGameData>& data)
 {
     uncompleteGames.clear();
     completeGames.clear();
+
+    float cleanTime = 0.0f;
    
     for(OneGameData game : data)
     {
@@ -59,9 +61,11 @@ void GameProgress::setGames(const QVector<OneGameData>& data)
         else
         {
             completeGames.push_back(game);
+            cleanTime += game.getTime();
         }
     }
 
+    setCleanTime(cleanTime);
     setGamesCompleteCount(completeGames.length());
     setGamesCount(data.length());
 }
@@ -124,11 +128,19 @@ void GameProgress::currentGameCompleted(int time)
         }
     }
 
-     qDebug()<<" completeGameIndex " << completeGameIndex;
+   //  qDebug()<<" completeGameIndex " << completeGameIndex;
 
     completeGames.push_back(uncompleteGames[completeGameIndex]);
     uncompleteGames.removeAt(completeGameIndex);
     setGamesCompleteCount(completeGames.length());
+
+    float cleanTime = 0.0f;
+    qDebug()<<" completeGames count " << completeGames.length();
+    for(int i = 0; i < completeGames.length(); i++)
+    {
+       cleanTime += completeGames[i].getTime();// * toSeconds;
+    }
+    setCleanTime(cleanTime);
 
     if(!uncompleteGames.empty())
     {

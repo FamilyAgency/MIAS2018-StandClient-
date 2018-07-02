@@ -15,36 +15,15 @@ Item {
         target:loginModule;
         onLoginStateChanged:
         {
-            //console.log("onLoginSuccess :::::::::::::", loginState);
             switch(loginState)
             {
-                case LoginState.Login:
-                    mainText.text = "О привет, " + userData.name + "! Начнем!";
-                    startBtn.visible = true;
+            case LoginState.Login:
+                mainText.text = "О привет, " + userData.name + "! Начнем!";
+                startBtn.visible = true;
                 break;
-
-//                case 2:
-//                     mainText.text = "О привет, Сергей! Ты не впервые у нас! Будем смотреть инструкцию?";
-//                break;
-
-//                case 3:
-//                     mainText.text = "О привет, Сергей! Слишком часто играем, возвращайся через час";
-//                break;
-
-//                case LoginState.UserDoesntExist:
-//                    erroText.visible = true;
-//                    erroText.text = "Тебя не существует, иди на регистрацию"
-//                break;
-
-//                case LoginState.Error:
-//                    erroText.visible = true;
-//                    erroText.text = "Arduino или сервер не работает, если тебе это что-нибудь говорит"
-//                break;
             }
         }
     }
-
-
 
     function reset()
     {

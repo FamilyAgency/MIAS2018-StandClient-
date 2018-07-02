@@ -25,7 +25,8 @@ public:
 
     bool complete() const;
     void setComplete(bool value);
-    void setTime(int value);
+    void setTime(int value);    
+    int getTime() const;
 
 private:
     QVector<QPointF> path;

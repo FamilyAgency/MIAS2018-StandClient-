@@ -7,6 +7,7 @@ GameTaskManager::GameTaskManager()
     gamePreTask = new GamePreTask();
     taskCreator = new TaskCreator();
     gamePostTask = new GamePostTask();
+
     connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
     connect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
 

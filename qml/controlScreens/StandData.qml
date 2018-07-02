@@ -55,7 +55,8 @@ Item {
             color: "#000000";
         }
 
-        ListView {
+        ListView
+        {
             width: 180; height: 200
 
             model: standData.getScreensInfo()
@@ -68,7 +69,5 @@ Item {
                 color: "#999999"
             }
         }
-
-
     }
 }
