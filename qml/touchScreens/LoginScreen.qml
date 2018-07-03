@@ -1,6 +1,7 @@
-import QtQuick 2.0
+import QtQuick 2.6
+import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
+//import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import com.app 1.0
 
@@ -82,6 +83,13 @@ Item {
             font.family: "Helvetica"
             font.pixelSize: 25
             color: "#999999"
+        }
+
+        ProgressBar
+        {
+            indeterminate: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            visible:false
         }
 
         Text

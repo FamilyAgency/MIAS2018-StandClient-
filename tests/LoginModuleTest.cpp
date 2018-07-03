@@ -247,7 +247,6 @@ void LoginModuleTest::userDoesntExist()
     setUserState(UserState::DoesntExists);
 }
 
-
 void LoginModuleTest::logoutTest()
 {
     userData->setName("");

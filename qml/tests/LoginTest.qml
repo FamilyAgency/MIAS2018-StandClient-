@@ -141,6 +141,8 @@ Item {
             {
                 id: rfidBox
                 value: 1000
+                from: 0
+                to: 2000
                 editable: true
             }
         }

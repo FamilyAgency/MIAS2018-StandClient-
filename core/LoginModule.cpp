@@ -94,10 +94,11 @@ void LoginModule::onServerResponse(const ServerResponse& response)
 
 void LoginModule::onServerError()
 {
-
+    setState(LoginState::Error);
 }
 
 void LoginModule::parseServerResponse(const QString& data)
 {
       qDebug()<<"server answered  "<< data;
+      //setUserState(UserState::DoesntExists);
 }
