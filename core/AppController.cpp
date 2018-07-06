@@ -197,7 +197,7 @@ BaseModule* AppController::getModuleByAppState(AppState value)
 void AppController::onConfigLoaded(Config* config)
 {
     mindWaveComponent->setConfig(config->mindwaveData);
-    rfidComponent->setConfig(config->arduinoData);
+    rfidComponent->setConfig(config->rfidData);
     serverComponent->setConfig(config->serverData);
     slackComponent->setConfig(config->slackData);
 

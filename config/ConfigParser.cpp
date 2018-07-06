@@ -23,7 +23,7 @@ void ConfigParser::parse(const QString& configData)
         QJsonObject jsonObj   = jsonDoc.object();
 
         config->configData   = parseConfigData(jsonObj);
-        config->arduinoData  = parseRFIDData(jsonObj["rfid"].toObject());
+        config->rfidData     = parseRFIDData(jsonObj["rfid"].toObject());
         config->mindwaveData = parseMindwaveData(jsonObj["mindwave"].toObject());
         config->serverData   = parseServerData(jsonObj["server"].toObject());
         config->slackData    = parseSlackData(jsonObj["slack"].toObject());

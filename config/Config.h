@@ -16,7 +16,7 @@ public:
 
     MainConfig configData;
     MindwaveConfig mindwaveData;
-    RFIDConfig arduinoData;
+    RFIDConfig rfidData;
     ServerConfig serverData;
     SlackConfig slackData;
 
