@@ -15,32 +15,33 @@ class ConfigController : public QObject
 
 public:
     ConfigController(); 
-
+    virtual ~ConfigController();
     void load();
-
-    QScopedPointer<ConfigLoader> configLoader;
-    QScopedPointer<ConfigParser> configParser;
-    QScopedPointer<ConfigWriter> configWriter;
 
     QString getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD method) const;
     void serviceFinished(bool success);
     void setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD loadingMethod);
 
 private:
-    ConfigLoader::CONFIG_LOAD_METHOD currentConfigLoadingMethod, defaultConfigLoadingMethod;
+    QSharedPointer<ConfigLoader> configLoader;
+    QSharedPointer<ConfigParser> configParser;
+    QSharedPointer<ConfigWriter> configWriter;
+    ConfigLoader::CONFIG_LOAD_METHOD currentConfigLoadingMethod;
+    ConfigLoader::CONFIG_LOAD_METHOD defaultConfigLoadingMethod;
+
     QString currentConfigPath;
     bool saveRemote;
-    Config* configData;
+    ConfigPtr config;
 
 private slots:
-     void onConfigParsingComplete(Config* configParsed);
+     void onConfigParsingComplete(ConfigPtr configParsed);
      void onConfigLoadingError();
 
 public slots:
-     void onUpdateConfigOfStartingApp(int id);
+     void save();
 
 signals:
-     void configServiceReady(Config* configData);
+     void configServiceReady(ConfigPtr config);
      void configServiceError();
 };
 

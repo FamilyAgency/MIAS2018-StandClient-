@@ -9,13 +9,6 @@
 #include <QJsonObject>
 
 
-enum class LogType
-{
-    Verbose,
-    Warning,
-    Error
-};
-
 struct TCPConfig
 {
     QString ip = "127.0.0.1";
@@ -75,24 +68,29 @@ struct MainConfig
 {
 private:
     Q_GADGET
-    Q_PROPERTY(QString version MEMBER version)
+    Q_PROPERTY(int version MEMBER version)
     Q_PROPERTY(QString configUpdateUrl MEMBER configUpdateUrl)
     Q_PROPERTY(bool needRemoteUpdate MEMBER needRemoteUpdate)
-    Q_PROPERTY(int standId MEMBER standId)
-    Q_PROPERTY(int appTypeId MEMBER appTypeId)
+    Q_PROPERTY(int appId MEMBER appId)
+    Q_PROPERTY(QString workingDirectory MEMBER workingDirectory)
+    Q_PROPERTY(QString folderSeparator MEMBER folderSeparator)
+    Q_PROPERTY(QString appName MEMBER appName)
     Q_PROPERTY(QRect touchScreen MEMBER touchScreen)
     Q_PROPERTY(QRect gameScreen MEMBER gameScreen)
 
  public:
-    QString version;
+    int version;
     QString configUpdateUrl;
     bool needRemoteUpdate;
-    int standId;
-    int appTypeId;
+    int appId;
+    QString workingDirectory;
+    QString folderSeparator = "\\";
+    QString appName = "None";
     QRect touchScreen;
     QRect gameScreen;
 };
 Q_DECLARE_METATYPE(MainConfig)
+
 
 struct ServerConfig
 {
@@ -107,9 +105,18 @@ Q_DECLARE_METATYPE(ServerConfig)
 
 struct SlackConfig
 {
-    QString logChannel;
-    QString errChannel;
+private:
+    Q_GADGET
+    Q_PROPERTY(QString logChannel MEMBER logChannel)
+    Q_PROPERTY(QString errorChannel MEMBER errorChannel)
+    Q_PROPERTY(bool enabled MEMBER enabled)
+
+public:
+    QString logChannel = "";
+    QString errorChannel = "";
+    bool enabled = false;
 };
+Q_DECLARE_METATYPE(SlackConfig)
 
 
 #endif // TYPES_H

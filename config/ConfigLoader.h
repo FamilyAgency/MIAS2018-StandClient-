@@ -23,17 +23,19 @@ public:
     };
 
     ConfigLoader();
+    virtual ~ConfigLoader();
+
     void load(CONFIG_LOAD_METHOD method, const QString& path = "");
     QString getConfig() const;
     bool isValid() const;
 
 private:   
-    HTTPClient* httpClient;
+    QSharedPointer<HTTPClient> httpClient;
     QString configContext = "";
 
 private slots:
     void httpRequestSuccessHandler(const QString& data);
-    void httpRequestFailedHandler();
+    void httpRequestFailedHandler(const QString&);
 };
 
 #endif // CONFIGLOADER_H

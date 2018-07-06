@@ -2,6 +2,16 @@
 
 Config::Config()
 {
+    mainConfig.reset(new MainConfig);
+    mindwaveConfig.reset(new MindwaveConfig);
+    rfidConfig.reset(new RFIDConfig);
+    serverConfig.reset(new ServerConfig);
+    slackConfig.reset(new SlackConfig);
+    loggerConfig.reset(new LoggerConfig);
+}
+
+Config::~Config()
+{
 
 }
 

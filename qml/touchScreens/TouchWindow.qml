@@ -12,10 +12,10 @@ Window {
     visible: true
     id: touchCore    
     flags: Qt.SplashScreen
-    width: standData.config.touchScreen.width
-    height: standData.config.touchScreen.height
-    x: standData.config.touchScreen.x
-    y: standData.config.touchScreen.y
+    width: standData.mainConfig.touchScreen.width
+    height: standData.mainConfig.touchScreen.height
+    x: standData.mainConfig.touchScreen.x
+    y: standData.mainConfig.touchScreen.y
 
 
     Connections

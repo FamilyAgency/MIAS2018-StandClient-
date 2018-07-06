@@ -23,12 +23,12 @@ void MindwaveComponent::onDisconnectionSuccess()
     setConnected(false);
 }
 
-void MindwaveComponent::setConfig(const MindwaveConfig& config)
+void MindwaveComponent::setConfig(ConfigPtr config)
 {
-    mindwaveConfig = config;
-    mindwaveReader->setConfig(mindwaveConfig);
-    mindwaveParser->setConfig(mindwaveConfig);
-    emit configChanged();
+//    mindwaveConfig = config;
+//    mindwaveReader->setConfig(mindwaveConfig);
+//    mindwaveParser->setConfig(mindwaveConfig);
+//    emit configChanged();
 }
 
 void MindwaveComponent::start()

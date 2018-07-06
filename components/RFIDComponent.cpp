@@ -10,11 +10,11 @@ RFIDComponent::RFIDComponent(QObject *parent) : ExternalSystemComponent(parent)
     connect(rfidDataReader, SIGNAL(readError()), this, SLOT(onReadError()));
 }
 
-void RFIDComponent::setConfig(const RFIDConfig& config)
+void RFIDComponent::setConfig(ConfigPtr config)
 {
-    rfidConfig = config;
-    rfidDataReader->setConfig(config);
-    emit configChanged();
+//    rfidConfig = config;
+//    rfidDataReader->setConfig(config);
+//    emit configChanged();
 }
 
 void RFIDComponent::start()

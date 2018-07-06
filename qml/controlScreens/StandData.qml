@@ -17,7 +17,7 @@ Item {
 
         Text
         {
-            text: "Version: " + standData.config.version;
+            text: "Version: " + standData.mainConfig.version;
             font.family: "Helvetica";
             font.pixelSize: 15;
             color: "#999999";
@@ -25,7 +25,7 @@ Item {
 
         Text
         {
-            text: "Stand Id: " + standData.config.standId;
+            text: "App Id: " + standData.mainConfig.appId;
             font.family: "Helvetica";
             font.pixelSize: 15;
             color: "#999999";
@@ -33,7 +33,7 @@ Item {
 
         Text
         {
-            text: "App Type Id: " + standData.config.appTypeId;
+            text: "App Name: " + standData.mainConfig.appName;
             font.family: "Helvetica";
             font.pixelSize: 15;
             color: "#999999";
@@ -41,7 +41,7 @@ Item {
 
         Text
         {
-            text: "Need remote update: " + standData.config.needRemoteUpdate;
+            text: "Need remote update: " + standData.mainConfig.needRemoteUpdate;
             font.family: "Helvetica";
             font.pixelSize: 15;
             color: "#999999";

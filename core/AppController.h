@@ -86,7 +86,7 @@ signals:
 
 
 public slots:
-    void onConfigLoaded(Config* config);
+    void onConfigLoaded(ConfigPtr config);
     void onConfigError();
 
 private slots:

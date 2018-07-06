@@ -24,7 +24,7 @@ void GameModule::setQmlContext(QQmlContext* value)
     gameTaskManager->setQmlContext(value);
 }
 
-void GameModule::setConfig(Config* config)
+void GameModule::setConfig(ConfigPtr config)
 {
     BaseModule::setConfig(config);
 }

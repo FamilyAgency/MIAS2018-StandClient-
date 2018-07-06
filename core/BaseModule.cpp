@@ -5,7 +5,7 @@ BaseModule::BaseModule(QObject *parent) : QObject(parent)
 
 }
 
-void BaseModule::setConfig(Config* value)
+void BaseModule::setConfig(ConfigPtr value)
 {
     config = value;
 }

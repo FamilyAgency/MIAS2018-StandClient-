@@ -52,7 +52,6 @@ void AppController::testConstruct()
     modules.append(resultModule);
 
     logger = new LoggerService();
-    logger->setSlackComponent(slackComponent);
     services.append(logger);
 }
 
@@ -100,7 +99,6 @@ void AppController::releaseConstruct()
     modules.append(resultModule);
 
     logger = new LoggerService();
-    logger->setSlackComponent(slackComponent);
     services.append(logger);
 }
 
@@ -178,7 +176,7 @@ void AppController::setAppState(AppState value)
     currentModule->start();
     emit appStateChanged(value);
 
-    logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
+    //logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
 }
 
 BaseModule* AppController::getModuleByAppState(AppState value)
@@ -194,14 +192,12 @@ BaseModule* AppController::getModuleByAppState(AppState value)
     return nullptr;
 }
 
-void AppController::onConfigLoaded(Config* config)
+void AppController::onConfigLoaded(ConfigPtr config)
 {
-    mindWaveComponent->setConfig(config->mindwaveData);
-    rfidComponent->setConfig(config->rfidData);
-    serverComponent->setConfig(config->serverData);
-    slackComponent->setConfig(config->slackData);
-
-    standData->setConfig(config->configData);
+    for (auto comp : components)
+    {
+        comp->setConfig(config);
+    }
 
     for (auto module : modules)
     {
@@ -213,7 +209,9 @@ void AppController::onConfigLoaded(Config* config)
         service->setConfig(config);
     }
 
-    start();
+    standData->setConfig(config);
+
+   // start();
 }
 
 void AppController::onConfigError()
@@ -223,8 +221,8 @@ void AppController::onConfigError()
 
 void AppController::start()
 {    
-    QString initStatus = "Stand " + QString::number(standData->config().standId) + " started.........";
-    logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
+   // QString initStatus = "Stand " + QString::number(standData->config().appId) + " started.........";
+    //logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
 
     for (auto comp : components)
     {

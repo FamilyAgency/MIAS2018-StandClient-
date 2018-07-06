@@ -23,7 +23,14 @@ ConfigController::ConfigController()
 
     connect(configLoader.data(), SIGNAL(configLoaded(const QString&)), configParser.data(), SLOT(parse(const QString&)));
     connect(configLoader.data(), SIGNAL(configLoadingError()), this, SLOT(onConfigLoadingError()));
-    connect(configParser.data(), SIGNAL(parseComplete(Config* )), this, SLOT(onConfigParsingComplete(Config* )));
+    connect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr )));
+}
+
+ConfigController::~ConfigController()
+{
+    disconnect(configLoader.data(), SIGNAL(configLoaded(const QString&)), configParser.data(), SLOT(parse(const QString&)));
+    disconnect(configLoader.data(), SIGNAL(configLoadingError()), this, SLOT(onConfigLoadingError()));
+    disconnect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr )));
 }
 
 QString ConfigController::getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD method) const
@@ -33,9 +40,8 @@ QString ConfigController::getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD method)
     case ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE:
         return  ":/resources/config.json";
     case ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE:
-        return   QCoreApplication::applicationDirPath() + "/" + "config.json";
+        return  QCoreApplication::applicationDirPath() + "/" + "config.json";
     }
-
     return "";
 }
 
@@ -51,20 +57,20 @@ void ConfigController::load()
     configLoader->load(currentConfigLoadingMethod, currentConfigPath);
 }
 
-void ConfigController::onConfigParsingComplete(Config* configParsed)
+void ConfigController::onConfigParsingComplete(ConfigPtr configParsed)
 {
-    configData = configParsed;
+    config= configParsed;
 
     switch(currentConfigLoadingMethod)
     {
     case ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE:
     case ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE:
-        qDebug() << "ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE: "<<configData->configData.needRemoteUpdate;
-        if(configData->configData.needRemoteUpdate)
+        qDebug() << "ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE: "<<config->mainConfig->needRemoteUpdate;
+        if(config->mainConfig->needRemoteUpdate)
         {
             qDebug() << "will load from remote";
             currentConfigLoadingMethod =  ConfigLoader::CONFIG_LOAD_METHOD::URL;
-            currentConfigPath = configData->configData.configUpdateUrl;
+            currentConfigPath = config->mainConfig->configUpdateUrl;
             load();
         }
         else
@@ -74,11 +80,11 @@ void ConfigController::onConfigParsingComplete(Config* configParsed)
         break;
 
     case ConfigLoader::CONFIG_LOAD_METHOD::URL:
-        if(saveRemote && configData->valid && defaultConfigLoadingMethod!= ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE)
+        if(saveRemote && config->valid && defaultConfigLoadingMethod!= ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE)
         {
-            configWriter->save(configData, getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE));
+            configWriter->save(config, getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE));
         }        
-        serviceFinished(configData->valid);
+        serviceFinished(config->valid);
         break;
     }
 }
@@ -94,7 +100,7 @@ void ConfigController::onConfigLoadingError()
 
     case ConfigLoader::CONFIG_LOAD_METHOD::URL:
         qDebug() << "load from url error";
-        if(configData->valid)
+        if(config->valid)
         {
             qDebug() << "but config loaded from disk.. can run";
             serviceFinished(true);
@@ -112,7 +118,7 @@ void ConfigController::serviceFinished(bool success)
 {
     if(success)
     {
-        emit configServiceReady(configData);
+        emit configServiceReady(config);
     }
     else
     {
@@ -120,8 +126,8 @@ void ConfigController::serviceFinished(bool success)
     }
 }
 
-void ConfigController::onUpdateConfigOfStartingApp(int id)
+void ConfigController::save()
 {
-    configWriter->saveProcessConfigData(configData, id);
+    configWriter->save(config, getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE));
 }
 

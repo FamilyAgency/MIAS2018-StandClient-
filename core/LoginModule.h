@@ -48,7 +48,7 @@ public:
     virtual void setUserData(UserData* userData);
     virtual void setStandData(StandData* value);
 
-    virtual void setConfig(Config* config) override;
+    virtual void setConfig(ConfigPtr config) override;
     void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
     virtual void stop() override;    

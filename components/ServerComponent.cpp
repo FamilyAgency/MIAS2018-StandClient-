@@ -5,10 +5,10 @@ ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(pare
     name = "Server";
 }
 
-void ServerComponent::setConfig(const ServerConfig& config)
+void ServerComponent::setConfig(ConfigPtr config)
 {   
-    serverConfig = config;
-    emit configChanged();
+//    serverConfig = config;
+//    emit configChanged();
 }
 
 void ServerComponent::start()

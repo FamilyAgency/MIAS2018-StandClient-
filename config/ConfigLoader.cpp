@@ -4,15 +4,23 @@
 
 ConfigLoader::ConfigLoader()
 {
+    httpClient.reset(new HTTPClient());
+    connect(httpClient.data(), SIGNAL(httpRequestSuccess(const QString&)), this, SLOT(httpRequestSuccessHandler(const QString&)));
+    connect(httpClient.data(), SIGNAL(httpRequestFailed(const QString&)), this, SLOT(httpRequestFailedHandler(const QString&)));
+}
 
+ConfigLoader::~ConfigLoader()
+{
+    disconnect(httpClient.data(), SIGNAL(httpRequestSuccess(const QString&)), this, SLOT(httpRequestSuccessHandler(const QString&)));
+    disconnect(httpClient.data(), SIGNAL(httpRequestFailed(const QString&)), this, SLOT(httpRequestFailedHandler(const QString&)));
 }
 
 void ConfigLoader::load(CONFIG_LOAD_METHOD method, const QString& path)
 {
     if(method == CONFIG_LOAD_METHOD::LOCAL_FILE ||
-       method == CONFIG_LOAD_METHOD::RESOURCE_FILE)
+            method == CONFIG_LOAD_METHOD::RESOURCE_FILE)
     {
-       QFile file(path);
+        QFile file(path);
 
         if(file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
@@ -28,21 +36,18 @@ void ConfigLoader::load(CONFIG_LOAD_METHOD method, const QString& path)
     }
     else if(method == CONFIG_LOAD_METHOD::URL)
     {
-       httpClient = new HTTPClient();
-       connect(httpClient, SIGNAL(httpRequestSuccess(const QString&)), this, SLOT(httpRequestSuccessHandler(const QString&)));
-       connect(httpClient, SIGNAL(httpRequestFailed()), this, SLOT(httpRequestFailedHandler()));
-       qDebug()<<"config url " << path;
-       httpClient->runRequest(path);
-    }   
+        qDebug()<<"config url " << path;
+        httpClient->runGetRequest(path);
+    }
 }
 
 void ConfigLoader::httpRequestSuccessHandler(const QString& data)
 {
-     qDebug()<<"httpRequestSuccessHandler";
-     emit configLoaded(data);
+    qDebug()<<"httpRequestSuccessHandler";
+    emit configLoaded(data);
 }
 
-void ConfigLoader::httpRequestFailedHandler()
+void ConfigLoader::httpRequestFailedHandler(const QString& error)
 {
     qDebug()<<"httpRequestFailed";
     configLoadingError();

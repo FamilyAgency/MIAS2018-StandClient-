@@ -11,14 +11,14 @@ class BaseModule : public QObject
 public:
     explicit BaseModule(QObject *parent = nullptr);
 
-    virtual void setConfig(Config* config);
+    virtual void setConfig(ConfigPtr config);
     virtual void start() = 0;
     virtual void stop() = 0;
     virtual void setQmlContext(QQmlContext* qmlContext);
     virtual QString getName() const = 0;
 
 protected:
-    Config* config;
+    ConfigPtr config;
     QQmlContext* qmlContext;
 
 signals:

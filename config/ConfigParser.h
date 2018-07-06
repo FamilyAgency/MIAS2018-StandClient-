@@ -11,22 +11,23 @@ class ConfigParser : public QObject
 
 public:
     ConfigParser();
+    virtual ~ConfigParser();
 
 signals:
-    void parseComplete(Config* );
+    void parseComplete(ConfigPtr);
     void parseError();
 
 public slots:
     void parse(const QString& configData);
 
 private:
-    Config* config;
-
-    MainConfig parseConfigData(const QJsonObject& jsonObj);
-    RFIDConfig parseRFIDData(const QJsonObject& jsonObj);
-    MindwaveConfig parseMindwaveData(const QJsonObject& jsonObj);
-    ServerConfig parseServerData(const QJsonObject& jsonObj);
-    SlackConfig parseSlackData(const QJsonObject& jsonObj);
+    ConfigPtr config;
+    void parseMainConfig(QSharedPointer<MainConfig> mainConfig, const QJsonObject& jsonObj);
+    void parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj);
+    void parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj);
+    void parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj);
+    void parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj);
+    void parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj);
 };
 
 #endif // CONFIGPARSER_H

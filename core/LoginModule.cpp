@@ -11,7 +11,7 @@ void LoginModule::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("loginModule", this);
 }
 
-void LoginModule::setConfig(Config* config)
+void LoginModule::setConfig(ConfigPtr config)
 {
     BaseModule::setConfig(config);
 }
@@ -81,7 +81,7 @@ QString LoginModule::getName() const
 
 void LoginModule::onRFIDRecieve(int id)
 {
-    serverComponent->fetchUser(standData->config().standId, id);
+   // serverComponent->fetchUser(standData->config().app, id);
 }
 
 void LoginModule::onServerResponse(const ServerResponse& response)

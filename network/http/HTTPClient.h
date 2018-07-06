@@ -12,12 +12,14 @@ class HTTPClient : public QObject
     Q_OBJECT
 public:
     explicit HTTPClient(QObject *parent = nullptr);
+    virtual ~HTTPClient();
     bool getRequestStatus() const;
-    void runRequest(const QString& URL);
+    void runGetRequest(const QString& url);
+    void runPostRequest(const QNetworkRequest& request, const QByteArray& data);
 
 signals:
     void httpRequestSuccess(const QString& data);
-    void httpRequestFailed();
+    void httpRequestFailed(const QString& data);
 
 public slots:
     void httpRequestSuccessHandler(QNetworkReply*);

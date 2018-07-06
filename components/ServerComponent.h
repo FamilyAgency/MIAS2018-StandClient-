@@ -21,11 +21,11 @@ struct ServerResponse
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
-    Q_PROPERTY(ServerConfig config READ config WRITE setConfig NOTIFY configChanged)
+    //Q_PROPERTY(ServerConfig config READ config WRITE setConfig NOTIFY configChanged)
 public:
     explicit ServerComponent(QObject *parent = nullptr);
 
-    void setConfig(const ServerConfig& config);
+    virtual void setConfig(ConfigPtr config) override;
     ServerConfig config() const;
 
     virtual void start() override;

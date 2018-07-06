@@ -5,7 +5,7 @@ InstructionModule::InstructionModule(QObject *parent) : BaseModule(parent)
 
 }
 
-void InstructionModule::setConfig(Config* config)
+void InstructionModule::setConfig(ConfigPtr config)
 {
 
 }

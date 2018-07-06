@@ -5,26 +5,27 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include "components/BaseComponent.h"
-#include "config/Config.h"
-#include "core/Types.h"
+#include "network/http/HTTPClient.h"
 
 class SlackComponent : public BaseComponent
 {
     Q_OBJECT
 public:
     explicit SlackComponent(QObject *parent = nullptr);
-    void sendMessage(const QString& msg, LogType type);
-    void setConfig(const SlackConfig& config);
+    virtual ~SlackComponent();
+    void sendMessage(const QString& msg, const QString& channel);
+    virtual void setConfig(ConfigPtr value) override;
 
 private:
-   QNetworkAccessManager* networkManager;
-   SlackConfig slackConfig;
-
-signals:
+   QSharedPointer<HTTPClient> httpClient;
+   QSharedPointer<SlackConfig> slackConfig;
 
 private slots:
-   void httpRequestSuccessHandler(QNetworkReply* reply);
-   void onRequestFailed();
+   void httpRequestSuccessHandler(const QString& data);
+   void httpRequestFailedHandler(const QString& data);
+
+signals:
+   void slackNotifyResponse(const QString& message);
 };
 
 #endif // SLACKCOMPONENT_H

@@ -9,24 +9,30 @@
 
 ConfigParser::ConfigParser()
 {
-    config = new Config();
+    config.reset(new Config());
+}
+
+ConfigParser::~ConfigParser()
+{
+
 }
 
 void ConfigParser::parse(const QString& configData)
 {
     try
     {
-//        qDebug()<<"configData................"<<endl;
-//        qDebug()<<configData <<endl;
-//        qDebug()<<"configData................"<<endl;
+        //        qDebug()<<"configData................"<<endl;
+        //        qDebug()<<configData <<endl;
+        //        qDebug()<<"configData................"<<endl;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(configData.toUtf8());
         QJsonObject jsonObj   = jsonDoc.object();
 
-        config->configData   = parseConfigData(jsonObj);
-        config->rfidData     = parseRFIDData(jsonObj["rfid"].toObject());
-        config->mindwaveData = parseMindwaveData(jsonObj["mindwave"].toObject());
-        config->serverData   = parseServerData(jsonObj["server"].toObject());
-        config->slackData    = parseSlackData(jsonObj["slack"].toObject());
+        parseMainConfig(config->mainConfig, jsonObj);
+        parseRFIDConfig(config->rfidConfig, jsonObj["rfid"].toObject());
+        parseMindwaveConfig(config->mindwaveConfig, jsonObj["mindwave"].toObject());
+        parseServerConfig(config->serverConfig, jsonObj["server"].toObject());
+        parseSlackConfig(config->slackConfig, jsonObj["slack"].toObject());
+        parseLoggerConfig(config->loggerConfig, jsonObj["logger"].toObject());
 
         config->setRawData(configData);
         config->valid = true;
@@ -39,71 +45,62 @@ void ConfigParser::parse(const QString& configData)
     }
 }
 
-MainConfig ConfigParser::parseConfigData(const QJsonObject& jsonObj)
+void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const QJsonObject& jsonObj)
 {
-    MainConfig configData;
-    configData.version = jsonObj["version"].toString();
-    configData.configUpdateUrl = jsonObj["configUpdateUrl"].toString();
-    configData.needRemoteUpdate = jsonObj["needRemoteUpdate"].toBool();
-    configData.standId = jsonObj["standId"].toInt();
-    configData.appTypeId = jsonObj["appTypeId"].toInt();
+    mainConfig->version = jsonObj["version"].toInt();
+    mainConfig->configUpdateUrl = jsonObj["configUpdateUrl"].toString();
+    mainConfig->needRemoteUpdate = jsonObj["needRemoteUpdate"].toBool();
+    mainConfig->appId = jsonObj["appId"].toInt();
+    mainConfig->workingDirectory = jsonObj["workingDirectory"].toString();
+    mainConfig->folderSeparator = jsonObj["folderSeparator"].toString();
+    mainConfig->appName = jsonObj["appName"].toString();
 
     QJsonObject touchScreenData = jsonObj["screens"].toObject()["touch"].toObject();
-    configData.touchScreen.setX(touchScreenData["x"].toInt());
-    configData.touchScreen.setY(touchScreenData["y"].toInt());
-    configData.touchScreen.setWidth(touchScreenData["width"].toInt());
-    configData.touchScreen.setHeight(touchScreenData["height"].toInt());
+    mainConfig->touchScreen.setX(touchScreenData["x"].toInt());
+    mainConfig->touchScreen.setY(touchScreenData["y"].toInt());
+    mainConfig->touchScreen.setWidth(touchScreenData["width"].toInt());
+    mainConfig->touchScreen.setHeight(touchScreenData["height"].toInt());
 
     QJsonObject gameScreenData = jsonObj["screens"].toObject()["game"].toObject();
-    configData.gameScreen.setX(gameScreenData["x"].toInt());
-    configData.gameScreen.setY(gameScreenData["y"].toInt());
-    configData.gameScreen.setWidth(gameScreenData["width"].toInt());
-    configData.gameScreen.setHeight(gameScreenData["height"].toInt());
-
-    return configData;
+    mainConfig->gameScreen.setX(gameScreenData["x"].toInt());
+    mainConfig->gameScreen.setY(gameScreenData["y"].toInt());
+    mainConfig->gameScreen.setWidth(gameScreenData["width"].toInt());
+    mainConfig->gameScreen.setHeight(gameScreenData["height"].toInt());
 }
 
-RFIDConfig ConfigParser::parseRFIDData(const QJsonObject& jsonObj)
+void ConfigParser::parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj)
 {
-    RFIDConfig rfid;
-    rfid.serialPort = jsonObj["serialPort"].toString();
-    rfid.baudRate = jsonObj["baudRate"].toInt();
-    rfid.autoConnect = jsonObj["autoConnect"].toBool();
-    rfid.portKeyWord = jsonObj["portKeyWord"].toString();
-    rfid.useKeyword = jsonObj["useKeyword"].toBool();
-    return rfid;
+    rfidConfig->serialPort = jsonObj["serialPort"].toString();
+    rfidConfig->baudRate = jsonObj["baudRate"].toInt();
+    rfidConfig->autoConnect = jsonObj["autoConnect"].toBool();
+    rfidConfig->portKeyWord = jsonObj["portKeyWord"].toString();
+    rfidConfig->useKeyword = jsonObj["useKeyword"].toBool();
 }
 
-MindwaveConfig ConfigParser::parseMindwaveData(const QJsonObject& jsonObj)
+void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj)
 {
-    MindwaveConfig mindwave;
-    mindwave.ip = jsonObj["ip"].toString();
-    mindwave.port = jsonObj["port"].toInt();
-    mindwave.autoConnect = jsonObj["autoConnect"].toBool();
-    mindwave.delimeter = jsonObj["delimeter"].toString();
-    mindwave.initialCommand = jsonObj["initialCommand"].toString();
-    mindwave.authCommand = jsonObj["authCommand"].toString();
-    return mindwave;
+    mindwaveConfig->ip = jsonObj["ip"].toString();
+    mindwaveConfig->port = jsonObj["port"].toInt();
+    mindwaveConfig->autoConnect = jsonObj["autoConnect"].toBool();
+    mindwaveConfig->delimeter = jsonObj["delimeter"].toString();
+    mindwaveConfig->initialCommand = jsonObj["initialCommand"].toString();
+    mindwaveConfig->authCommand = jsonObj["authCommand"].toString();
 }
 
-ServerConfig ConfigParser::parseServerData(const QJsonObject& jsonObj)
-{
-    ServerConfig server;
-    server.url = jsonObj["url"].toString();
-    return server;
+void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj)
+{   
+    serverConfig->url = jsonObj["url"].toString();
 }
 
-SlackConfig ConfigParser::parseSlackData(const QJsonObject& jsonObj)
+void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj)
 {
-    SlackConfig slack;
+    slackConfig->logChannel = jsonObj["logChannel"].toString();
+    slackConfig->errorChannel = jsonObj["errorChannel"].toString();
+    slackConfig->enabled = jsonObj["enabled"].toBool();
+}
 
-    int id = 0; //config->configData.standId
-
-    QJsonArray logChannels = jsonObj["logChannels"].toArray();
-    slack.logChannel = logChannels[id].toString();
-
-    QJsonArray errChannels = jsonObj["errorChannels"].toArray();
-    slack.errChannel = errChannels[id].toString();
-
-    return slack;
+void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj)
+{
+    loggerConfig->localEnabled = jsonObj["local"].toObject()["enabled"].toBool();
+    loggerConfig->localPath = jsonObj["local"].toObject()["path"].toString();
 }

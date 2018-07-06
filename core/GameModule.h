@@ -15,7 +15,7 @@ class GameModule : public BaseModule
 public:
     GameModule();
 
-    virtual void setConfig(Config* config) override;
+    virtual void setConfig(ConfigPtr config) override;
     virtual void start() override;
     virtual void stop() override;
     virtual void setQmlContext(QQmlContext* value) override;

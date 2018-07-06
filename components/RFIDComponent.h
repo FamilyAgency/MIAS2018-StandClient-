@@ -11,13 +11,13 @@
 class RFIDComponent : public ExternalSystemComponent
 {
     Q_OBJECT
-    Q_PROPERTY(RFIDConfig config READ config WRITE setConfig NOTIFY configChanged)
+   // Q_PROPERTY(RFIDConfig config READ config WRITE setConfig NOTIFY configChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
 
 public:
     explicit RFIDComponent(QObject *parent = nullptr);
 
-    void setConfig(const RFIDConfig& config);
+    virtual void setConfig(ConfigPtr config) override;
     RFIDConfig config() const;
 
     virtual void start() override;

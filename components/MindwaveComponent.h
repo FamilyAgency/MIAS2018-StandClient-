@@ -10,7 +10,7 @@ class MindwaveComponent : public ExternalSystemComponent
 {    
     Q_OBJECT
 
-    Q_PROPERTY(MindwaveConfig config READ config WRITE setConfig NOTIFY configChanged)
+   // Q_PROPERTY(MindwaveConfig config READ config WRITE setConfig NOTIFY configChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
 
 public:
@@ -35,7 +35,7 @@ public:
     bool connected() const;
 
     virtual void setQmlContext(QQmlContext* value) override;
-    virtual void setConfig(const MindwaveConfig& value);
+    virtual void setConfig(ConfigPtr value) override;
     virtual void start() override;
     MindwaveConfig config() const;
     virtual bool isHealthy() override;
