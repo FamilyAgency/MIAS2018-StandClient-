@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "core/game/GameTask.h"
-#include "core/UserData.h"
+#include "core/data/UserData.h"
 
 class TaskCreator : public QObject
 {

@@ -1,12 +1,17 @@
 #include "GameModule.h"
 
-GameModule::GameModule() : BaseModule()
+GameModule::GameModule(QObject *parent):BaseModule(parent)
 {
     gameTaskManager.reset(new GameTaskManager);
     connect(gameTaskManager.data(), SIGNAL(taskComleteEvent(int)), this, SLOT(onTaskComleteEvent(int)));
 }
 
-void GameModule::setMindwave(MindwaveComponent* value)
+GameModule::~GameModule()
+{
+
+}
+
+void GameModule::setMindwave(QSharedPointer<MindwaveComponent> value)
 {
     mindWaveComponent = value;
     gameTaskManager->setMindWaveClient(mindWaveComponent);
@@ -65,7 +70,7 @@ QString GameModule::getName() const
     return "Game location";
 }
 
-void GameModule::setUser(UserData* value)
+void GameModule::setUser(QSharedPointer<UserData> value)
 {
     currentUser = value;
 }

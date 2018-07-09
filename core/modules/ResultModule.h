@@ -10,6 +10,7 @@ class ResultModule : public BaseModule
 public:
     explicit ResultModule(QObject *parent = nullptr);
 
+    virtual ~ResultModule();
     virtual void start() override;
     virtual void stop() override;
     virtual QString getName() const override;

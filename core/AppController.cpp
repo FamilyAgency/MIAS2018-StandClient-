@@ -8,25 +8,25 @@ AppController::AppController(QObject *parent) : QObject(parent)
 
 void AppController::testConstruct()
 {
-    userData = new UserData();
-    standData = new StandData();
+    userData.reset(new UserData());
+    standData.reset(new StandData());
     gameSession = new GameSession();
 
     ////////////////////// components //////////////////////
 
-    logger = new LoggerComponent();
+    logger.reset(new LoggerComponent());
     components.append(logger);
 
-    rfidComponent = new RFIDComponent();
+    rfidComponent.reset(new RFIDComponent());
     components.append(rfidComponent);
 
-    mindWaveComponent = new MindwaveComponentTest();
+    mindWaveComponent.reset(new MindwaveComponentTest());
     components.append(mindWaveComponent);
 
-    serverComponent = new ServerComponentTest();
-    components.append(serverComponent);    
+    serverComponent.reset(new ServerComponentTest());
+    components.append(serverComponent);
 
-    healthCheckerComponent = new HealthCheckerComponent();
+    healthCheckerComponent.reset(new HealthCheckerComponent());
     healthCheckerComponent->addComponent(rfidComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
     healthCheckerComponent->addComponent(serverComponent);
@@ -34,8 +34,8 @@ void AppController::testConstruct()
 
     ////////////////////// modules //////////////////////
 
-    introModule = new IntroModuleTest();
-    connect(introModule, SIGNAL(loginStateChanged(LoginState)), this, SLOT(onLoginStateChanged(LoginState)));
+    introModule.reset(new IntroModuleTest());
+    connect(introModule.data(), SIGNAL(loginStateChanged(LoginState)), this, SLOT(onLoginStateChanged(LoginState)));
 
     introModule->setRFIDComponent(rfidComponent);
     introModule->setUserData(userData);
@@ -43,16 +43,16 @@ void AppController::testConstruct()
     introModule->setStandData(standData);
     modules.append(introModule);
 
-    instructionModule = new InstructionModule();
+    instructionModule.reset(new InstructionModule());
     modules.append(instructionModule);
 
-    gameModule = new GameModule();
+    gameModule.reset(new GameModule());
     gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
-    connect(gameModule, SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+    connect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
-    resultModule = new ResultModule();
+    resultModule.reset(new ResultModule());
     modules.append(resultModule);
 }
 
@@ -133,7 +133,7 @@ void AppController::setAppState(AppState value)
     //logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
 }
 
-BaseModule* AppController::getModuleByAppState(AppState value)
+QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {

@@ -12,14 +12,14 @@
 #include "components/SlackComponent.h"
 #include "components/LoggerComponent.h"
 
-#include "StandData.h"
-#include "UserData.h"
+#include "data/StandData.h"
+#include "data/UserData.h"
 #include "config/Config.h"
 
-#include "IntroModule.h"
-#include "InstructionModule.h"
-#include "GameModule.h"
-#include "ResultModule.h"
+#include "modules/IntroModule.h"
+#include "modules/InstructionModule.h"
+#include "modules/GameModule.h"
+#include "modules/ResultModule.h"
 #include "Types.h"
 
 #include "tests/IntroModuleTest.h"
@@ -52,30 +52,30 @@ public:
     Q_INVOKABLE void backtoIntro();
 
 private:
-    IntroModule* introModule;
-    IntroModuleTest* introModuleTest;
-    InstructionModule* instructionModule;
-    GameModule* gameModule;
-    ResultModule* resultModule;   
-    QList<BaseModule*> modules;
+    QSharedPointer<IntroModule> introModule;
+    QSharedPointer<IntroModuleTest> introModuleTest;
+    QSharedPointer<InstructionModule> instructionModule;
+    QSharedPointer<GameModule> gameModule;
+    QSharedPointer<ResultModule> resultModule;
+    QList<QSharedPointer<BaseModule>> modules;
 
-    LoggerComponent* logger;
-    HealthCheckerComponent* healthCheckerComponent;
-    RFIDComponent* rfidComponent;
-    MindwaveComponent* mindWaveComponent;
-    ServerComponent* serverComponent;
-    QList<BaseComponent*> components;
+    QSharedPointer<LoggerComponent> logger;
+    QSharedPointer<HealthCheckerComponent> healthCheckerComponent;
+    QSharedPointer<RFIDComponent> rfidComponent;
+    QSharedPointer<MindwaveComponent> mindWaveComponent;
+    QSharedPointer<ServerComponent> serverComponent;
+    QList<QSharedPointer<BaseComponent>> components;
 
-    StandData* standData;
-    UserData* userData;
-    Config* config;
+    QSharedPointer<StandData> standData;
+    QSharedPointer<UserData> userData;
+    ConfigPtr config;
     GameSession* gameSession;
 
     AppState appState = AppState::Login;
-    BaseModule* currentModule = nullptr;
+    QSharedPointer<BaseModule> currentModule = nullptr;
 
     void setAppState(AppState appState);
-    BaseModule* getModuleByAppState(AppState value);
+    QSharedPointer<BaseModule> getModuleByAppState(AppState value);
 
     void testConstruct();
     void releaseConstruct();

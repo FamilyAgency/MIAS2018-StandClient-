@@ -2,7 +2,7 @@
 #define LOGINMODULETEST_H
 
 #include <QObject>
-#include "core/IntroModule.h"
+#include "core/modules/IntroModule.h"
 #include "core/game/VelocityCalculator.h"
 
 class IntroModuleTest : public IntroModule

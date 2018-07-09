@@ -12,7 +12,7 @@
 #include "core/game/GamePostTask.h"
 
 #include "core/game/TaskCreator.h"
-#include "core/UserData.h"
+#include "core/data/UserData.h"
 
 class GameTaskManager: public QObject
 {
@@ -38,16 +38,16 @@ public:
         PostGame
     };
 
-    void start(UserData* value);
+    void start(QSharedPointer<UserData> value);
     void stop();
-    void setMindWaveClient(MindwaveComponent* mindWave);
+    void setMindWaveClient(QSharedPointer<MindwaveComponent> mindWave);
     void setTaskState(TaskState taskState);
     void setQmlContext(QQmlContext* value);
 
 private:
     TaskState currentTaskState;
     TaskCreator* taskCreator;
-    MindwaveComponent* mindWave = nullptr;
+    QSharedPointer<MindwaveComponent> mindWave = nullptr;
 
     void runTask();
     void preTaskTimerComplete();
@@ -59,7 +59,7 @@ private:
     GamePostTask* gamePostTask = nullptr;
 
     int currentGameId = 0;
-    UserData* currentUser;
+    QSharedPointer<UserData> currentUser;
 
 signals:
     void updateCanvas();   

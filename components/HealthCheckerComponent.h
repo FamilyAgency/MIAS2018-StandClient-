@@ -18,10 +18,10 @@ public:
     virtual void start() override;
     virtual void stop() override;
 
-    void addComponent(ExternalSystemComponent* component);
+    void addComponent(QSharedPointer<ExternalSystemComponent> component);
 
 private:
-     QList<ExternalSystemComponent*> components;
+     QList<QSharedPointer<ExternalSystemComponent>> components;
 
 };
 

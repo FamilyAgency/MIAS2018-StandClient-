@@ -3,37 +3,38 @@
 
 #include <QObject>
 #include "BaseModule.h"
-#include "UserData.h"
+#include "core/data/UserData.h"
 #include "components/RFIDComponent.h"
 #include "components/ServerComponent.h"
-#include "core/StandData.h"
+#include "core/data/StandData.h"
 
 class IntroModule : public BaseModule
 {
     Q_OBJECT
 public:
-    IntroModule(QObject *parent = nullptr);
+    explicit IntroModule(QObject *parent = nullptr);
+    virtual ~IntroModule();
 
-    virtual void setRFIDComponent(RFIDComponent* rfidComponent);
-    virtual void setServerComponent(ServerComponent* value);
-    virtual void setUserData(UserData* userData);
-    virtual void setStandData(StandData* value);
-
+    virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void setConfig(ConfigPtr config) override;
-    void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
-    virtual void stop() override;    
+    virtual void stop() override;
     virtual QString getName() const override;
+
+    virtual void setRFIDComponent(QSharedPointer<RFIDComponent> rfidComponent);
+    virtual void setServerComponent(QSharedPointer<ServerComponent> value);
+    virtual void setUserData(QSharedPointer<UserData> userData);
+    virtual void setStandData(QSharedPointer<StandData> value);
 
     QString getStringState() const;
 
     friend class IntroModuleTest;
 
 private:
-    RFIDComponent* rfidComponent = nullptr;
-    ServerComponent* serverComponent = nullptr;
-    UserData* userData = nullptr;
-    StandData* standData = nullptr;
+    QSharedPointer<RFIDComponent> rfidComponent = nullptr;
+    QSharedPointer<ServerComponent> serverComponent = nullptr;
+    QSharedPointer<UserData> userData = nullptr;
+    QSharedPointer<StandData> standData = nullptr;
     LoginState state = LoginState::Logout;
     UserState userState = UserState::None;
 

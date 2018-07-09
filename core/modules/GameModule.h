@@ -6,30 +6,32 @@
 #include "BaseModule.h"
 #include "components/MindwaveComponent.h"
 #include "core/game/GameTaskManager.h"
-#include "core/UserData.h"
-#include "GameSession.h"
+#include "core/data/UserData.h"
+#include "core/GameSession.h"
 
 class GameModule : public BaseModule
 {
     Q_OBJECT
 public:
-    GameModule();
+    explicit GameModule(QObject *parent = nullptr);
+    virtual ~GameModule();
 
+    virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
     virtual void start() override;
     virtual void stop() override;
-    virtual void setQmlContext(QQmlContext* value) override;
-    void setGameSession(GameSession* gameSession);
-    void setMindwave(MindwaveComponent* value);
+
     virtual QString getName() const override;
 
-    void setUser(UserData* value);
+    void setGameSession(GameSession* gameSession);
+    void setMindwave(QSharedPointer<MindwaveComponent> value);
+    void setUser(QSharedPointer<UserData> value);
 
 private:
-    MindwaveComponent* mindWaveComponent;
+    QSharedPointer<MindwaveComponent> mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
     GameSession* gameSession;
-    UserData* currentUser;
+    QSharedPointer<UserData> currentUser;
 
 private slots:
     void onTaskComleteEvent(int completionTime);

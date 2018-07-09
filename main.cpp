@@ -7,7 +7,7 @@
 
 #include "config/ConfigController.h"
 #include "core/AppController.h"
-#include "core/IntroModule.h"
+#include "core/modules/IntroModule.h"
 
 int main(int argc, char *argv[])
 { 

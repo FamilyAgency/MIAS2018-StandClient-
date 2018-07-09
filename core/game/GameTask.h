@@ -35,12 +35,12 @@ public:
     float getForwardVectorRotation() const;
 
     float getMindwaveLimit() const;
-    void setMindWaveClient(MindwaveComponent* value);
+    void setMindWaveClient(QSharedPointer<MindwaveComponent> value);
 
 private:
     const int taskTimerMills = 10;
 
-    MindwaveComponent* mindWave;
+    QSharedPointer<MindwaveComponent> mindWave;
 
     QVector<QPointF> path;
     QPointF curPoint, startPoint, endPoint, position;

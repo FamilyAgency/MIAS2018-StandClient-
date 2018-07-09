@@ -5,6 +5,11 @@ ResultModule::ResultModule(QObject *parent) : BaseModule(parent)
 
 }
 
+ResultModule::~ResultModule()
+{
+
+}
+
 void ResultModule::start()
 {
 

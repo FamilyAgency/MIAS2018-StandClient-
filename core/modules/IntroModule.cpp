@@ -5,6 +5,11 @@ IntroModule::IntroModule(QObject *parent):BaseModule(parent)
 
 }
 
+IntroModule::~IntroModule()
+{
+
+}
+
 void IntroModule::setQmlContext(QQmlContext* qmlContext)
 {
     BaseModule::setQmlContext(qmlContext);
@@ -16,28 +21,28 @@ void IntroModule::setConfig(ConfigPtr config)
     BaseModule::setConfig(config);
 }
 
-void IntroModule::setRFIDComponent(RFIDComponent* value)
+void IntroModule::setRFIDComponent(QSharedPointer<RFIDComponent> value)
 {
     rfidComponent = value;
     // connect on new id
 }
 
-void IntroModule::setServerComponent(ServerComponent* value)
+void IntroModule::setServerComponent(QSharedPointer<ServerComponent> value)
 {
     if(serverComponent)
     {
-        disconnect(serverComponent, SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+        disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
     }
     serverComponent = value;
-    connect(serverComponent, SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+    connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 }
 
-void IntroModule::setUserData(UserData* value)
+void IntroModule::setUserData(QSharedPointer<UserData> value)
 {
     userData = value;
 }
 
-void IntroModule::setStandData(StandData* value)
+void IntroModule::setStandData(QSharedPointer<StandData> value)
 {
     standData = value;
 }

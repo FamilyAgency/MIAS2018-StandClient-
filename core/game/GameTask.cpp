@@ -77,7 +77,7 @@ void GameTask::setPoints()
     velocityDirection.normalize();
 }
 
-void GameTask::setMindWaveClient(MindwaveComponent* value)
+void GameTask::setMindWaveClient(QSharedPointer<MindwaveComponent> value)
 {
     mindWave = value;
 }

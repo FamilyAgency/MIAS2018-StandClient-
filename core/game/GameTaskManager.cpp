@@ -21,13 +21,13 @@ void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("gameTaskManager", this);
 }
 
-void GameTaskManager::setMindWaveClient(MindwaveComponent* value)
+void GameTaskManager::setMindWaveClient(QSharedPointer<MindwaveComponent> value)
 {
     mindWave = value;
     gameTask->setMindWaveClient(mindWave);
 }
 
-void GameTaskManager::start(UserData* user)
+void GameTaskManager::start(QSharedPointer<UserData> user)
 {  
     auto oneGameData = user->getCurrentGameData();
     currentUser = user;

@@ -21,14 +21,8 @@ SOURCES += main.cpp \
     core/game/GameTaskManager.cpp \
     core/game/TaskCreator.cpp \
     core/game/VelocityCalculator.cpp \
-    core/BaseModule.cpp \
-    core/GameModule.cpp \
     core/AppController.cpp \
-    core/InstructionModule.cpp \
-    core/ResultModule.cpp \
     core/GameSession.cpp \
-    core/UserData.cpp \
-    core/StandData.cpp \
     components/BaseComponent.cpp \
     components/ServerComponent.cpp \
     components/ExternalSystemComponent.cpp \
@@ -45,8 +39,14 @@ SOURCES += main.cpp \
     components/rfid/UHFJsonDataReader.cpp \
     tests/ServerComponentTest.cpp \
     components/LoggerComponent.cpp \
-    core/IntroModule.cpp \
-    tests/IntroModuleTest.cpp
+    tests/IntroModuleTest.cpp \
+    core/modules/BaseModule.cpp \
+    core/modules/GameModule.cpp \
+    core/modules/InstructionModule.cpp \
+    core/modules/IntroModule.cpp \
+    core/modules/ResultModule.cpp \
+    core/data/StandData.cpp \
+    core/data/UserData.cpp
 
 RESOURCES += qml.qrc
 
@@ -90,14 +90,8 @@ HEADERS += \
     core/game/GameTaskManager.h \
     core/game/TaskCreator.h \
     core/game/VelocityCalculator.h \
-    core/BaseModule.h \
-    core/GameModule.h \
     core/AppController.h \
-    core/InstructionModule.h \
-    core/ResultModule.h \
-    core/GameSession.h \
-    core/UserData.h \
-    core/StandData.h \
+    core/GameSession.h \   
     components/BaseComponent.h \
     components/ServerComponent.h \
     components/ExternalSystemComponent.h \
@@ -114,7 +108,13 @@ HEADERS += \
     components/rfid/UHFJsonDataReader.h \
     tests/ServerComponentTest.h \
     components/LoggerComponent.h \
-    core/IntroModule.h \
-    tests/IntroModuleTest.h
+    tests/IntroModuleTest.h \
+    core/modules/BaseModule.h \
+    core/modules/GameModule.h \
+    core/modules/InstructionModule.h \
+    core/modules/IntroModule.h \
+    core/modules/ResultModule.h \
+    core/data/StandData.h \
+    core/data/UserData.h
 
 DISTFILES +=

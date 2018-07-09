@@ -5,6 +5,11 @@ BaseModule::BaseModule(QObject *parent) : QObject(parent)
 
 }
 
+BaseModule::~BaseModule()
+{
+
+}
+
 void BaseModule::setConfig(ConfigPtr value)
 {
     config = value;

@@ -16,7 +16,7 @@ void HealthCheckerComponent::setQmlContext(QQmlContext* value)
     qmlContext->setContextProperty("healthChecker", this);
 }
 
-void HealthCheckerComponent::addComponent(ExternalSystemComponent* component)
+void HealthCheckerComponent::addComponent(QSharedPointer<ExternalSystemComponent> component)
 {
     components.append(component);
 }
