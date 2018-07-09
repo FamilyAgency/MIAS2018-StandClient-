@@ -77,7 +77,8 @@ Item {
         }
     }
 
-    PageIndicator {
+    PageIndicator
+    {
         id: indicator
 
         count: swipeView.count

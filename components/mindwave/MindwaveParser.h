@@ -2,7 +2,7 @@
 #define MINDWAVEPARSER_H
 
 #include <QObject>
-#include "core/Types.h"
+#include "config/Config.h"
 
 struct MindwaveData
 {

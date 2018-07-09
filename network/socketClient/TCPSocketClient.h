@@ -9,7 +9,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QtQML>
-#include "core/Types.h"
+#include "config/Config.h"
 
 class TCPSocketClient : public QObject
 {
