@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.4
 Item {
     Component.onCompleted:
     {
-        console.log("arduino component  ", rfid.config)
+       // console.log("arduino component  ", rfid.config)
     }
 
     ColumnLayout
@@ -62,7 +62,7 @@ Item {
         Text
         {
             id:autoCon;
-            text: "Auto connect: " + rfid.config.autoConnect;
+            text: "Auto connect: " + rfid.rfidConfig.autoConnect;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -71,7 +71,7 @@ Item {
         Text
         {
             id:baudRate;
-            text: "Baud rate: " + rfid.config.baudRate;
+            text: "Baud rate: " + rfid.rfidConfig.baudRate;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

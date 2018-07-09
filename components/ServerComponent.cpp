@@ -5,11 +5,26 @@ ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(pare
     name = "Server";
 }
 
-void ServerComponent::setConfig(ConfigPtr config)
+ServerComponent::~ServerComponent()
 {
 
-//    serverConfig = config;
-//    emit configChanged();
+}
+
+void ServerComponent::setConfig(ConfigPtr config)
+{
+   BaseComponent::setConfig(config);
+   setServerConfig(*config->serverConfig);
+}
+
+ServerConfig ServerComponent::serverConfig() const
+{
+    return _serverConfig;
+}
+
+void ServerComponent::setServerConfig(const ServerConfig& value)
+{
+    _serverConfig = value;
+    emit serverConfigChanged();
 }
 
 void ServerComponent::start()
@@ -20,12 +35,6 @@ void ServerComponent::start()
 void ServerComponent::stop()
 {
 
-}
-
-
-ServerConfig ServerComponent::config() const
-{
-    return serverConfig;
 }
 
 void ServerComponent::setQmlContext(QQmlContext* value)

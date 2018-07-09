@@ -39,17 +39,20 @@ struct ServerResponse
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
-    //Q_PROPERTY(ServerConfig config READ config WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
 public:
     explicit ServerComponent(QObject *parent = nullptr);
+    virtual ~ServerComponent();
 
-    virtual void setConfig(ConfigPtr config) override;
-    ServerConfig config() const;
+    virtual void setQmlContext(QQmlContext* value) override;
+    virtual void setConfig(ConfigPtr config) override;   
 
     virtual void start() override;
     virtual void stop() override;
-    virtual void setQmlContext(QQmlContext* value) override;
     virtual bool isHealthy() override;
+
+    ServerConfig serverConfig() const;
+    void setServerConfig(const ServerConfig& );
 
 
 // REST API
@@ -78,10 +81,10 @@ public:
 //    void healthCheck(deviceId);
     
 private:
-     ServerConfig serverConfig;
+     ServerConfig _serverConfig;
 
 signals:
-    void configChanged();
+    void serverConfigChanged();
     void serverResponse(const ServerResponse& response);
 
 public slots:

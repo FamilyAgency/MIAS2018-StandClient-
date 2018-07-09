@@ -52,7 +52,7 @@ Item {
         Text
         {
             id:conServer;
-            text: "Server: " + mind.config.ip;
+            text: "Server: " + mind.mindwaveConfig.ip;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -61,7 +61,7 @@ Item {
         Text
         {
             id:conPort;
-            text: "Port: " + mind.config.port;
+            text: "Port: " + mind.mindwaveConfig.port;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
@@ -70,7 +70,7 @@ Item {
         Text
         {
             id:auto;
-            text: "Auto connection: " + mind.config.autoConnect;
+            text: "Auto connection: " + mind.mindwaveConfig.autoConnect;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"

@@ -100,7 +100,12 @@ void AppController::startResult()
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
-{    
+{
+    for (auto module : modules)
+    {
+        module->setQmlContext(qmlContext);
+    }
+
     for (auto comp : components)
     {
         comp->setQmlContext(qmlContext);
@@ -108,12 +113,7 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
 
     userData->setQmlContext(qmlContext);
     standData->setQmlContext(qmlContext);
-    gameSession->setQmlContext(qmlContext);
-
-    for (auto module : modules)
-    {
-        module->setQmlContext(qmlContext);
-    }
+    gameSession->setQmlContext(qmlContext);   
 }
 
 void AppController::setAppState(AppState value)

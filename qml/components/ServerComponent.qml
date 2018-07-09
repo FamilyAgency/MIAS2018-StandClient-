@@ -18,7 +18,7 @@ Item {
         Text
         {
             id:url;
-            text: "Url: " + server.config.url;
+            text: "Url: " + server.serverConfig.url;
             font.family: "Helvetica"
             font.pixelSize: 15
             color: "#999999"
