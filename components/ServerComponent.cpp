@@ -6,7 +6,8 @@ ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(pare
 }
 
 void ServerComponent::setConfig(ConfigPtr config)
-{   
+{
+
 //    serverConfig = config;
 //    emit configChanged();
 }
@@ -15,6 +16,12 @@ void ServerComponent::start()
 {
 
 }
+
+void ServerComponent::stop()
+{
+
+}
+
 
 ServerConfig ServerComponent::config() const
 {

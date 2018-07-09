@@ -10,17 +10,26 @@ class MindwaveComponent : public ExternalSystemComponent
 {    
     Q_OBJECT
 
-   // Q_PROPERTY(MindwaveConfig config READ config WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(MindwaveConfig mindwaveConfig READ mindwaveConfig WRITE setMindwaveConfig NOTIFY mindwaveConfigChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
-
-public:
-    explicit MindwaveComponent(QObject *parent = nullptr);
-
     Q_PROPERTY(int attention READ attention WRITE setAttention NOTIFY attentionChanged)
     Q_PROPERTY(int meditation READ meditation WRITE setMeditation NOTIFY meditationChanged)
     Q_PROPERTY(int poorSignalLevel READ poorSignalLevel WRITE setPoorSignalLevel NOTIFY poorSignalLevelChanged)
 
+public:
+    explicit MindwaveComponent(QObject *parent = nullptr);
+    virtual ~MindwaveComponent();
+
     Q_INVOKABLE QString poorSignalColor() const;
+
+    virtual void setQmlContext(QQmlContext* value) override;
+    virtual void setConfig(ConfigPtr value) override;
+    virtual void start() override;
+    virtual void stop() override;
+    virtual bool isHealthy() override;
+
+    MindwaveConfig mindwaveConfig() const;
+    void setMindwaveConfig(const MindwaveConfig& );
 
     void setAttention(int value);
     int attention() const;
@@ -34,18 +43,12 @@ public:
     void setConnected(bool value);
     bool connected() const;
 
-    virtual void setQmlContext(QQmlContext* value) override;
-    virtual void setConfig(ConfigPtr value) override;
-    virtual void start() override;
-    MindwaveConfig config() const;
-    virtual bool isHealthy() override;
-
     friend class MindwaveComponentTest;    
 
 private:
-    MindwaveConfig mindwaveConfig;
-    MindwaveReader* mindwaveReader;
-    MindwaveParser* mindwaveParser;
+    MindwaveConfig _mindwaveConfig;
+    QSharedPointer<MindwaveReader> mindwaveReader;
+    QSharedPointer<MindwaveParser> mindwaveParser;
 
     int _attention = 0;
     int _meditation = 0;
@@ -59,7 +62,7 @@ signals:
     void attentionChanged();
     void meditationChanged();
     void poorSignalLevelChanged();
-    void configChanged();
+    void mindwaveConfigChanged();
     void connectedChanged();
 
 private slots:

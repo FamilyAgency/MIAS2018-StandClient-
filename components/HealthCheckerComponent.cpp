@@ -2,6 +2,11 @@
 
 HealthCheckerComponent::HealthCheckerComponent(QObject *parent) : BaseComponent(parent)
 {
+    name = "HealthChecker";
+}
+
+HealthCheckerComponent::~HealthCheckerComponent()
+{
 
 }
 
@@ -14,6 +19,16 @@ void HealthCheckerComponent::setQmlContext(QQmlContext* value)
 void HealthCheckerComponent::addComponent(ExternalSystemComponent* component)
 {
     components.append(component);
+}
+
+void HealthCheckerComponent::start()
+{
+
+}
+
+void HealthCheckerComponent::stop()
+{
+
 }
 
 QVariantList HealthCheckerComponent::getInfo() const

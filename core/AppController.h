@@ -4,23 +4,25 @@
 #include <QQmlContext>
 #include <QObject>
 #include <QList>
+
 #include "components/HealthCheckerComponent.h"
 #include "components/RFIDComponent.h"
 #include "components/MindwaveComponent.h"
 #include "components/ServerComponent.h"
 #include "components/SlackComponent.h"
-#include "services/LoggerService.h"
+#include "components/LoggerComponent.h"
 
 #include "StandData.h"
 #include "UserData.h"
 #include "config/Config.h"
-#include "LoginModule.h"
+
+#include "IntroModule.h"
 #include "InstructionModule.h"
 #include "GameModule.h"
 #include "ResultModule.h"
 #include "Types.h"
 
-#include "tests/LoginModuleTest.h"
+#include "tests/IntroModuleTest.h"
 #include "tests/MindwaveComponentTest.h"
 #include "tests/ServerComponentTest.h"
 
@@ -50,21 +52,18 @@ public:
     Q_INVOKABLE void backtoIntro();
 
 private:
-    LoginModule* loginModule;
-    LoginModuleTest* loginModuleTest;
+    IntroModule* introModule;
+    IntroModuleTest* introModuleTest;
     InstructionModule* instructionModule;
     GameModule* gameModule;
     ResultModule* resultModule;   
     QList<BaseModule*> modules;
 
-    LoggerService* logger;
-    QList<BaseService*> services;
-
+    LoggerComponent* logger;
     HealthCheckerComponent* healthCheckerComponent;
     RFIDComponent* rfidComponent;
     MindwaveComponent* mindWaveComponent;
     ServerComponent* serverComponent;
-    SlackComponent* slackComponent;
     QList<BaseComponent*> components;
 
     StandData* standData;
@@ -90,7 +89,7 @@ public slots:
     void onConfigError();
 
 private slots:
-    void onLoginStateChanged(LoginModule::LoginState loginState);
+    void onLoginStateChanged(LoginState loginState);
     void onAllTaskComleteEvent();
 
 };

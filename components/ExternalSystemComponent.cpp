@@ -4,3 +4,8 @@ ExternalSystemComponent::ExternalSystemComponent(QObject *parent) : BaseComponen
 {
 
 }
+
+ExternalSystemComponent::~ExternalSystemComponent()
+{
+
+}

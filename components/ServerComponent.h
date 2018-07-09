@@ -12,6 +12,24 @@ enum class ResponseType
 };
 //Q_ENUMS(ResponseType)
 
+enum class LoginError
+{
+    UserDoesntExist,
+    WasRecently,
+    ServerError,
+    ArduinoError,
+    Undefined
+};
+//Q_ENUMS(LoginError)
+
+enum class LoginState
+{
+    Login,
+    Logout,
+    Error
+};
+//Q_ENUMS(LoginState)
+
 struct ServerResponse
 {
     ResponseType type = ResponseType::None;
@@ -29,6 +47,7 @@ public:
     ServerConfig config() const;
 
     virtual void start() override;
+    virtual void stop() override;
     virtual void setQmlContext(QQmlContext* value) override;
     virtual bool isHealthy() override;
 

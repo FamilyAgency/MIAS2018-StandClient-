@@ -1,28 +1,28 @@
-#include "LoginModule.h"
+#include "IntroModule.h"
 
-LoginModule::LoginModule(QObject *parent):BaseModule(parent)
+IntroModule::IntroModule(QObject *parent):BaseModule(parent)
 {
 
 }
 
-void LoginModule::setQmlContext(QQmlContext* qmlContext)
+void IntroModule::setQmlContext(QQmlContext* qmlContext)
 {
     BaseModule::setQmlContext(qmlContext);
-    qmlContext->setContextProperty("loginModule", this);
+    qmlContext->setContextProperty("introModule", this);
 }
 
-void LoginModule::setConfig(ConfigPtr config)
+void IntroModule::setConfig(ConfigPtr config)
 {
     BaseModule::setConfig(config);
 }
 
-void LoginModule::setRFIDComponent(RFIDComponent* value)
+void IntroModule::setRFIDComponent(RFIDComponent* value)
 {
     rfidComponent = value;
     // connect on new id
 }
 
-void LoginModule::setServerComponent(ServerComponent* value)
+void IntroModule::setServerComponent(ServerComponent* value)
 {
     if(serverComponent)
     {
@@ -32,39 +32,39 @@ void LoginModule::setServerComponent(ServerComponent* value)
     connect(serverComponent, SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 }
 
-void LoginModule::setUserData(UserData* value)
+void IntroModule::setUserData(UserData* value)
 {
     userData = value;
 }
 
-void LoginModule::setStandData(StandData* value)
+void IntroModule::setStandData(StandData* value)
 {
     standData = value;
 }
 
-void LoginModule::start()
+void IntroModule::start()
 {
 
 }
 
-void LoginModule::stop()
+void IntroModule::stop()
 {
     //userData->clearData();
 }
 
-void LoginModule::setState(LoginState value)
+void IntroModule::setState(LoginState value)
 {
     state = value;
     emit loginStateChanged(state);
 }
 
-void LoginModule::setUserState(UserState value)
+void IntroModule::setUserState(UserState value)
 {
     userState = value;
     emit userStateChanged(value);
 }
 
-QString LoginModule::getStringState() const
+QString IntroModule::getStringState() const
 {
     switch(state)
     {
@@ -74,17 +74,17 @@ QString LoginModule::getStringState() const
     return "undefined";
 }
 
-QString LoginModule::getName() const
+QString IntroModule::getName() const
 {
     return "Login location";
 }
 
-void LoginModule::onRFIDRecieve(int id)
+void IntroModule::onRFIDRecieve(int id)
 {
    // serverComponent->fetchUser(standData->config().app, id);
 }
 
-void LoginModule::onServerResponse(const ServerResponse& response)
+void IntroModule::onServerResponse(const ServerResponse& response)
 {
     if(response.type == ResponseType::UserFetched)
     {
@@ -92,12 +92,12 @@ void LoginModule::onServerResponse(const ServerResponse& response)
     }
 }
 
-void LoginModule::onServerError()
+void IntroModule::onServerError()
 {
     setState(LoginState::Error);
 }
 
-void LoginModule::parseServerResponse(const QString& data)
+void IntroModule::parseServerResponse(const QString& data)
 {
       qDebug()<<"server answered  "<< data;
       //setUserState(UserState::DoesntExists);

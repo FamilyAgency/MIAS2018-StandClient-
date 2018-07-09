@@ -2,15 +2,14 @@
 #define LOGINMODULETEST_H
 
 #include <QObject>
-#include "core/LoginModule.h"
-#include "tests/LoginModuleTest.h"
+#include "core/IntroModule.h"
 #include "core/game/VelocityCalculator.h"
 
-class LoginModuleTest : public LoginModule
+class IntroModuleTest : public IntroModule
 {
     Q_OBJECT
 public:
-    LoginModuleTest();
+    IntroModuleTest();
     virtual void setQmlContext(QQmlContext* qmlContext) override;
 
     Q_INVOKABLE virtual void loginSuccessTest(int gameId);
@@ -20,9 +19,7 @@ public:
     Q_INVOKABLE void moduleError();
     Q_INVOKABLE void youArePlaying();
     Q_INVOKABLE void playedRecently();
-
     Q_INVOKABLE void rfidRecieved(int id);
-
 
 private:
     QVector<QPointF> createPath(int pathId);

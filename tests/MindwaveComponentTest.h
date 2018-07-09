@@ -10,12 +10,11 @@ class MindwaveComponentTest : public MindwaveComponent
 public:
     explicit MindwaveComponentTest(QObject *parent = nullptr);
     virtual void start() override;
+    virtual void stop() override;
 
 private:
     QTimer* timer;
     const int taskTimerMills = 1000;
-
-signals:
 
 private slots:
     void simulateMindwaveRead();

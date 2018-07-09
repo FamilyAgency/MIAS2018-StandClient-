@@ -22,10 +22,8 @@ SOURCES += main.cpp \
     core/game/TaskCreator.cpp \
     core/game/VelocityCalculator.cpp \
     core/BaseModule.cpp \
-    core/LoginModule.cpp \
     core/GameModule.cpp \
     core/AppController.cpp \
-    tests/LoginModuleTest.cpp \
     core/InstructionModule.cpp \
     core/ResultModule.cpp \
     core/GameSession.cpp \
@@ -38,7 +36,6 @@ SOURCES += main.cpp \
     components/mindwave/MindwaveReader.cpp \
     components/mindwave/MindwaveParser.cpp \
     components/SlackComponent.cpp \
-    services/LoggerService.cpp \
     services/BaseService.cpp \
     core/game/GameProgress.cpp \
     core/game/OneGameData.cpp \
@@ -46,7 +43,10 @@ SOURCES += main.cpp \
     components/rfid/BaseRFIDDataReader.cpp \
     components/rfid/UHFDataReader.cpp \
     components/rfid/UHFJsonDataReader.cpp \
-    tests/ServerComponentTest.cpp
+    tests/ServerComponentTest.cpp \
+    components/LoggerComponent.cpp \
+    core/IntroModule.cpp \
+    tests/IntroModuleTest.cpp
 
 RESOURCES += qml.qrc
 
@@ -91,10 +91,8 @@ HEADERS += \
     core/game/TaskCreator.h \
     core/game/VelocityCalculator.h \
     core/BaseModule.h \
-    core/LoginModule.h \
     core/GameModule.h \
     core/AppController.h \
-    tests/LoginModuleTest.h \
     core/InstructionModule.h \
     core/ResultModule.h \
     core/GameSession.h \
@@ -107,7 +105,6 @@ HEADERS += \
     components/mindwave/MindwaveReader.h \
     components/mindwave/MindwaveParser.h \
     components/SlackComponent.h \
-    services/LoggerService.h \
     services/BaseService.h \
     core/game/GameProgress.h \
     core/game/OneGameData.h \
@@ -115,6 +112,9 @@ HEADERS += \
     components/rfid/BaseRFIDDataReader.h \
     components/rfid/UHFDataReader.h \
     components/rfid/UHFJsonDataReader.h \
-    tests/ServerComponentTest.h
+    tests/ServerComponentTest.h \
+    components/LoggerComponent.h \
+    core/IntroModule.h \
+    tests/IntroModuleTest.h
 
 DISTFILES +=

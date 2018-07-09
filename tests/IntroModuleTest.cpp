@@ -1,17 +1,17 @@
-#include "LoginModuleTest.h"
+#include "IntroModuleTest.h"
 
-LoginModuleTest::LoginModuleTest():LoginModule()
+IntroModuleTest::IntroModuleTest():IntroModule()
 {
 
 }
 
-void LoginModuleTest::setQmlContext(QQmlContext* qmlContext)
+void IntroModuleTest::setQmlContext(QQmlContext* qmlContext)
 {
-    LoginModule::setQmlContext(qmlContext);
+    IntroModule::setQmlContext(qmlContext);
     qmlContext->setContextProperty("loginModule", this);
 }
 
-void LoginModuleTest::loginSuccessTest(int gameId)
+void IntroModuleTest::loginSuccessTest(int gameId)
 {
     userData->setName("Александр");
     userData->setSurname("Александров");
@@ -42,7 +42,7 @@ void LoginModuleTest::loginSuccessTest(int gameId)
     setState(LoginState::Login);
 }
 
-GameProgress* LoginModuleTest::createGamesOnStage1()
+GameProgress* IntroModuleTest::createGamesOnStage1()
 {
     userData->setName("Александр");
     userData->setSurname("Александров");
@@ -86,7 +86,7 @@ GameProgress* LoginModuleTest::createGamesOnStage1()
     return gameProgress;
 }
 
-GameProgress* LoginModuleTest::createGamesOnStage2()
+GameProgress* IntroModuleTest::createGamesOnStage2()
 {
     userData->setName("Константин");
     userData->setSurname("Константинов");
@@ -131,7 +131,7 @@ GameProgress* LoginModuleTest::createGamesOnStage2()
 
 }
 
-GameProgress* LoginModuleTest::createGamesOnStage3()
+GameProgress* IntroModuleTest::createGamesOnStage3()
 {
     userData->setName("Петр");
     userData->setSurname("Петрович");
@@ -175,7 +175,7 @@ GameProgress* LoginModuleTest::createGamesOnStage3()
     return gameProgress;
 }
 
-void LoginModuleTest::finished(int prizesCount)
+void IntroModuleTest::finished(int prizesCount)
 {
     userData->setName("Игорь");
     userData->setSurname("Завершалов");
@@ -210,12 +210,12 @@ void LoginModuleTest::finished(int prizesCount)
     //setState(LoginState::Login);
 }
 
-void LoginModuleTest::moduleError()
+void IntroModuleTest::moduleError()
 {
     setState(LoginState::Error);
 }
 
-void LoginModuleTest::youArePlaying()
+void IntroModuleTest::youArePlaying()
 {
     userData->setName("Игорь");
     userData->setSurname("Хитрец");
@@ -223,7 +223,7 @@ void LoginModuleTest::youArePlaying()
     setUserState(UserState::YouArePlaying);
 }
 
-void LoginModuleTest::playedRecently()
+void IntroModuleTest::playedRecently()
 {
     userData->setName("Игорь");
     userData->setSurname("Хитрец");
@@ -235,7 +235,7 @@ void LoginModuleTest::playedRecently()
     setUserState(UserState::WasRecently);
 }
 
-void LoginModuleTest::userDoesntExist()
+void IntroModuleTest::userDoesntExist()
 {
     userData->setName("----");
     userData->setSurname("----");
@@ -247,7 +247,7 @@ void LoginModuleTest::userDoesntExist()
     setUserState(UserState::DoesntExists);
 }
 
-void LoginModuleTest::logoutTest()
+void IntroModuleTest::logoutTest()
 {
     userData->setName("");
     userData->setSurname("");
@@ -256,7 +256,7 @@ void LoginModuleTest::logoutTest()
     setState(LoginState::Logout);
 }
 
-QVector<QPointF> LoginModuleTest::createPath(int pathId)
+QVector<QPointF> IntroModuleTest::createPath(int pathId)
 {
     QVector<QPointF> path;
     QPointF point1 = QPointF(388, 88);
@@ -314,7 +314,7 @@ QVector<QPointF> LoginModuleTest::createPath(int pathId)
     return path;
 }
 
-VelocityCalculator LoginModuleTest::createDifficult(int diff)
+VelocityCalculator IntroModuleTest::createDifficult(int diff)
 {
     VelocityCalculator velocitycalculator;
     switch(diff)
@@ -347,7 +347,7 @@ VelocityCalculator LoginModuleTest::createDifficult(int diff)
     return velocitycalculator;
 }
 
-void LoginModuleTest::rfidRecieved(int id)
+void IntroModuleTest::rfidRecieved(int id)
 {
     onRFIDRecieve(id);
 }

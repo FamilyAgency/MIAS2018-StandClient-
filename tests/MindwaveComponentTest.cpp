@@ -12,6 +12,11 @@ void MindwaveComponentTest::start()
      timer->start(taskTimerMills);
 }
 
+void MindwaveComponentTest::stop()
+{
+
+}
+
 void MindwaveComponentTest::simulateMindwaveRead()
 {   
     int min = 90;

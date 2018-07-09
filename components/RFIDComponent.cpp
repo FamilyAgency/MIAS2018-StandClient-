@@ -3,23 +3,50 @@
 
 RFIDComponent::RFIDComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
-    name = "RFID";
+    name = "Rfid";
 
-    rfidDataReader = new UHFJsonDataReader();
-    connect(rfidDataReader, SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
-    connect(rfidDataReader, SIGNAL(readError()), this, SLOT(onReadError()));
+    rfidDataReader.reset(new UHFJsonDataReader());
+    connect(rfidDataReader.data(), SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
+    connect(rfidDataReader.data(), SIGNAL(readError()), this, SLOT(onReadError()));
+}
+
+RFIDComponent::~RFIDComponent()
+{
+    disconnect(rfidDataReader.data(), SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
+    disconnect(rfidDataReader.data(), SIGNAL(readError()), this, SLOT(onReadError()));
+}
+
+void RFIDComponent::setQmlContext(QQmlContext* value)
+{
+    BaseComponent::setQmlContext(value);
+    qmlContext->setContextProperty("rfid", this);
 }
 
 void RFIDComponent::setConfig(ConfigPtr config)
 {
-//    rfidConfig = config;
-//    rfidDataReader->setConfig(config);
-//    emit configChanged();
+    BaseComponent::setConfig(config);
+    setRfidConfig(*config->rfidConfig);
+}
+
+void RFIDComponent::setRfidConfig(const RFIDConfig& value)
+{
+    _rfidConfig = value;
+    emit rfidConfigChanged();
+}
+
+RFIDConfig RFIDComponent::rfidConfig() const
+{
+    return _rfidConfig;
 }
 
 void RFIDComponent::start()
 {
    //arduinoDataReader->start();
+}
+
+void RFIDComponent::stop()
+{
+
 }
 
 void RFIDComponent::startReading(int modelIndex)
@@ -40,17 +67,6 @@ void RFIDComponent::onDataReaded(const QString&)
 void RFIDComponent::onReadError()
 {
 
-}
-
-RFIDConfig RFIDComponent::config() const
-{
-    return rfidConfig;
-}
-
-void RFIDComponent::setQmlContext(QQmlContext* value)
-{
-    BaseComponent::setQmlContext(value);
-    qmlContext->setContextProperty("rfid", this);
 }
 
 void RFIDComponent::setConnected(bool value)

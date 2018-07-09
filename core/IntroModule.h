@@ -8,40 +8,11 @@
 #include "components/ServerComponent.h"
 #include "core/StandData.h"
 
-class LoginModule : public BaseModule
+class IntroModule : public BaseModule
 {
     Q_OBJECT
-public:    
-    enum class LoginError
-    {
-        UserDoesntExist,
-        WasRecently,
-        ServerError,
-        ArduinoError,
-        Undefined
-    };
-    Q_ENUMS(LoginError)
-
-    enum class LoginState
-    {       
-        Login,
-        Logout,
-        Error
-    };
-    Q_ENUMS(LoginState)
-
-    enum class UserState
-    {
-        None,
-        CanPlay,
-        DoesntExists,
-        Finished,
-        WasRecently,
-        YouArePlaying
-    };
-    Q_ENUMS(UserState)
-
-    LoginModule(QObject *parent = nullptr);
+public:
+    IntroModule(QObject *parent = nullptr);
 
     virtual void setRFIDComponent(RFIDComponent* rfidComponent);
     virtual void setServerComponent(ServerComponent* value);
@@ -56,7 +27,7 @@ public:
 
     QString getStringState() const;
 
-    friend class LoginModuleTest;
+    friend class IntroModuleTest;
 
 private:
     RFIDComponent* rfidComponent = nullptr;
@@ -71,8 +42,8 @@ private:
     void parseServerResponse(const QString& data);
 
 signals:
-    void loginStateChanged(LoginModule::LoginState loginState);
-    void userStateChanged(LoginModule::UserState userState);
+    void loginStateChanged(LoginState loginState);
+    void userStateChanged(UserState userState);
 
 private slots:
     void onRFIDRecieve(int id);

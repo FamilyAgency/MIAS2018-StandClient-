@@ -10,6 +10,7 @@ struct MindwaveData
     {
 
     }
+
     bool valid = false;
     int attention = 0;
     int meditation = 0;

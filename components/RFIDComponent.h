@@ -11,32 +11,35 @@
 class RFIDComponent : public ExternalSystemComponent
 {
     Q_OBJECT
-   // Q_PROPERTY(RFIDConfig config READ config WRITE setConfig NOTIFY configChanged)
+    Q_PROPERTY(RFIDConfig rfidConfig READ rfidConfig WRITE setRfidConfig NOTIFY rfidConfigChanged)
     Q_PROPERTY(bool connected READ connected WRITE setConnected NOTIFY connectedChanged)
 
 public:
     explicit RFIDComponent(QObject *parent = nullptr);
-
-    virtual void setConfig(ConfigPtr config) override;
-    RFIDConfig config() const;
-
-    virtual void start() override;
-    virtual void setQmlContext(QQmlContext* value) override;
-    virtual bool isHealthy() override;
-
-    void setConnected(bool value);
-    bool connected() const;
+    virtual ~RFIDComponent();
 
     Q_INVOKABLE QVariantList getPortsAvailable() const;
     Q_INVOKABLE void startReading(int modelIndex);
 
+    virtual void setConfig(ConfigPtr config) override;
+    virtual void start() override;
+    virtual void stop() override;
+    virtual void setQmlContext(QQmlContext* value) override;
+    virtual bool isHealthy() override;
+
+    void setRfidConfig(const RFIDConfig& rfidConfig);
+    RFIDConfig rfidConfig() const;
+
+    void setConnected(bool value);
+    bool connected() const;
+
 private:
-     RFIDConfig rfidConfig;
+     RFIDConfig _rfidConfig;
      bool _connected = false;
-     BaseRFIDDataReader* rfidDataReader;
+     QSharedPointer<BaseRFIDDataReader> rfidDataReader;
 
 signals:
-    void configChanged();
+    void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);
 

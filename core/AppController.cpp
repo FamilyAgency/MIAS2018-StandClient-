@@ -12,6 +12,11 @@ void AppController::testConstruct()
     standData = new StandData();
     gameSession = new GameSession();
 
+    ////////////////////// components //////////////////////
+
+    logger = new LoggerComponent();
+    components.append(logger);
+
     rfidComponent = new RFIDComponent();
     components.append(rfidComponent);
 
@@ -19,25 +24,24 @@ void AppController::testConstruct()
     components.append(mindWaveComponent);
 
     serverComponent = new ServerComponentTest();
-    components.append(serverComponent);
-
-    slackComponent = new SlackComponent();
-    components.append(slackComponent);
+    components.append(serverComponent);    
 
     healthCheckerComponent = new HealthCheckerComponent();
     healthCheckerComponent->addComponent(rfidComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
     healthCheckerComponent->addComponent(serverComponent);
-    components.append(healthCheckerComponent);
+    components.append(healthCheckerComponent);   
 
-    loginModule = new LoginModuleTest();
-    connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
+    ////////////////////// modules //////////////////////
 
-    loginModule->setRFIDComponent(rfidComponent);
-    loginModule->setUserData(userData);
-    loginModule->setServerComponent(serverComponent);
-    loginModule->setStandData(standData);
-    modules.append(loginModule);
+    introModule = new IntroModuleTest();
+    connect(introModule, SIGNAL(loginStateChanged(LoginState)), this, SLOT(onLoginStateChanged(LoginState)));
+
+    introModule->setRFIDComponent(rfidComponent);
+    introModule->setUserData(userData);
+    introModule->setServerComponent(serverComponent);
+    introModule->setStandData(standData);
+    modules.append(introModule);
 
     instructionModule = new InstructionModule();
     modules.append(instructionModule);
@@ -50,69 +54,24 @@ void AppController::testConstruct()
 
     resultModule = new ResultModule();
     modules.append(resultModule);
-
-    logger = new LoggerService();
-    services.append(logger);
 }
 
 void AppController::releaseConstruct()
 {
-    userData = new UserData();
-    standData = new StandData();
-    gameSession = new GameSession();
 
-    rfidComponent = new RFIDComponent();
-    components.append(rfidComponent);
-
-    mindWaveComponent = new MindwaveComponent();
-    components.append(mindWaveComponent);
-
-    serverComponent = new ServerComponent();
-    components.append(serverComponent);
-
-    slackComponent = new SlackComponent();
-    components.append(slackComponent);
-
-    healthCheckerComponent = new HealthCheckerComponent();
-    healthCheckerComponent->addComponent(rfidComponent);
-    healthCheckerComponent->addComponent(mindWaveComponent);
-    healthCheckerComponent->addComponent(serverComponent);
-    components.append(healthCheckerComponent);
-
-    loginModule = new LoginModule();
-    connect(loginModule, SIGNAL(loginStateChanged(LoginModule::LoginState)), this, SLOT(onLoginStateChanged(LoginModule::LoginState)));
-
-    loginModule->setRFIDComponent(rfidComponent);
-    loginModule->setUserData(userData);
-    modules.append(loginModule);
-
-    instructionModule = new InstructionModule();
-    modules.append(instructionModule);
-
-    gameModule = new GameModule();
-    gameModule->setMindwave(mindWaveComponent);
-    gameModule->setGameSession(gameSession);
-    connect(gameModule, SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
-    modules.append(gameModule);
-
-    resultModule = new ResultModule();
-    modules.append(resultModule);
-
-    logger = new LoggerService();
-    services.append(logger);
 }
 
-void AppController::onLoginStateChanged(LoginModule::LoginState loginState)
+void AppController::onLoginStateChanged(LoginState loginState)
 {
     //QString loginMsg = "login state changed  " + loginModule->getStringState();
     //logger->log(loginMsg);
 
-    if(loginState == LoginModule::LoginState::Login)
+    if(loginState == LoginState::Login)
     {
         gameModule->setUser(userData);
         gameSession->start();
     }
-    else if(loginState == LoginModule::LoginState::Logout)
+    else if(loginState == LoginState::Logout)
     {
         userData->clearData();
         gameSession->stop();
@@ -155,11 +114,6 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
     {
         module->setQmlContext(qmlContext);
     }
-
-    for (auto service : services)
-    {
-        service->setQmlContext(qmlContext);
-    }
 }
 
 void AppController::setAppState(AppState value)
@@ -183,7 +137,7 @@ BaseModule* AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {
-    case AppState::Login: return loginModule;
+    case AppState::Login: return introModule;
     case AppState::Instruction: return instructionModule;
     case AppState::Game: return gameModule;
     case AppState::Result: return resultModule;
@@ -204,11 +158,6 @@ void AppController::onConfigLoaded(ConfigPtr config)
         module->setConfig(config);
     }
 
-    for (auto service : services)
-    {
-        service->setConfig(config);
-    }
-
     standData->setConfig(config);
 
    // start();
@@ -227,11 +176,6 @@ void AppController::start()
     for (auto comp : components)
     {
         comp->start();
-    }
-
-    for (auto service : services)
-    {
-        service->start();
     }
 
     setAppState(AppState::Login);

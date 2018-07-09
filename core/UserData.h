@@ -5,6 +5,17 @@
 #include <QQmlContext>
 #include "core/game/GameProgress.h"
 
+enum class UserState
+{
+    None,
+    CanPlay,
+    DoesntExists,
+    Finished,
+    WasRecently,
+    YouArePlaying
+};
+//Q_ENUMS(UserState)
+
 class UserData : public QObject
 {
     Q_OBJECT
