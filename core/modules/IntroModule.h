@@ -26,8 +26,6 @@ public:
     virtual void setUserData(QSharedPointer<UserData> userData);
     virtual void setStandData(QSharedPointer<StandData> value);
 
-    QString getStringState() const;
-
     friend class IntroModuleTest;
 
 private:
@@ -35,16 +33,8 @@ private:
     QSharedPointer<ServerComponent> serverComponent = nullptr;
     QSharedPointer<UserData> userData = nullptr;
     QSharedPointer<StandData> standData = nullptr;
-    LoginState state = LoginState::Logout;
-    UserState userState = UserState::None;
 
-    void setState(LoginState state);
-    void setUserState(UserState value);
     void parseServerResponse(const QString& data);
-
-signals:
-    void loginStateChanged(LoginState loginState);
-    void userStateChanged(UserState userState);
 
 private slots:
     void onRFIDRecieve(int id);

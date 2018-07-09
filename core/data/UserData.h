@@ -5,22 +5,10 @@
 #include <QQmlContext>
 #include "core/game/GameProgress.h"
 
-enum class UserState
-{
-    None,
-    CanPlay,
-    DoesntExists,
-    Finished,
-    WasRecently,
-    YouArePlaying
-};
-//Q_ENUMS(UserState)
-
 class UserData : public QObject
 {
     Q_OBJECT
-public:
-    explicit UserData(QObject *parent = nullptr);
+
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString surname READ surname WRITE setSurname NOTIFY surnameChanged)
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
@@ -29,6 +17,30 @@ public:
     Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
     Q_PROPERTY(bool waitEnoughToPlay READ waitEnoughToPlay WRITE setWaitEnoughToPlay NOTIFY waitEnoughToPlayChanged)
     Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
+
+    Q_ENUMS(UserState)
+    Q_ENUMS(LoginState)
+
+public:
+    explicit UserData(QObject *parent = nullptr);
+    virtual ~UserData();
+
+    enum class UserState
+    {
+        None,
+        CanPlay,
+        DoesntExists,
+        Finished,
+        WasRecently,
+        YouArePlaying
+    };
+
+    enum class LoginState
+    {
+        Login,
+        Logout,
+        Error
+    };
 
     const int maxPrizesCount = 2;
 
@@ -59,6 +71,10 @@ public:
     void currentGameCompleted(int time);
     bool hasGames() const;
 
+    void setUserState(UserState value);
+    void setLoginState(LoginState value);
+    QString getStringState() const;
+
 private:
     QString _name = "Unknown";
     QString _surname = "Unknown";
@@ -72,6 +88,8 @@ private:
 
     QQmlContext* qmlContext;
     GameProgress* gameProgress;
+    UserState userState;
+    LoginState loginState = LoginState::Logout;
 
 signals:
     void nameChanged();
@@ -82,6 +100,9 @@ signals:
     void waitEnoughToPlayChanged();
     void finishedChanged();
     void prizesChanged();
+
+    void userStateChanged(UserData::UserState userState);
+    void loginStateChanged(UserData::LoginState loginState);
 };
 
 #endif // USERDATA_H

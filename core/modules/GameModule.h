@@ -23,14 +23,14 @@ public:
 
     virtual QString getName() const override;
 
-    void setGameSession(GameSession* gameSession);
+    void setGameSession(QSharedPointer<GameSession> value);
     void setMindwave(QSharedPointer<MindwaveComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
 private:
     QSharedPointer<MindwaveComponent> mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
-    GameSession* gameSession;
+    QSharedPointer<GameSession> gameSession;
     QSharedPointer<UserData> currentUser;
 
 private slots:

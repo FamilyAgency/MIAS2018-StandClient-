@@ -10,25 +10,6 @@ enum class ResponseType
     None,
     UserFetched
 };
-//Q_ENUMS(ResponseType)
-
-enum class LoginError
-{
-    UserDoesntExist,
-    WasRecently,
-    ServerError,
-    ArduinoError,
-    Undefined
-};
-//Q_ENUMS(LoginError)
-
-enum class LoginState
-{
-    Login,
-    Logout,
-    Error
-};
-//Q_ENUMS(LoginState)
 
 struct ServerResponse
 {
@@ -40,9 +21,21 @@ class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
     Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
+
+    Q_ENUMS(LoginError)
+
 public:
     explicit ServerComponent(QObject *parent = nullptr);
     virtual ~ServerComponent();
+
+    enum class LoginError
+    {
+        UserDoesntExist,
+        WasRecently,
+        ServerError,
+        ArduinoError,
+        Undefined
+    };
 
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;   

@@ -2,10 +2,17 @@
 
 MindwaveReader::MindwaveReader(QObject *parent) : QObject(parent)
 {
-    client.reset(new TCPSocketClient);
-    connect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
-    connect(client.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-    connect(client.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+//    client.reset(new TCPSocketClient);
+//    connect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
+//    connect(client.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+//    connect(client.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+}
+
+MindwaveReader::~MindwaveReader()
+{
+//    disconnect(client.data(), SIGNAL(socketDataRecieve(const QString&)), this, SLOT(onItemDataRecieve(const QString&)));
+//    disconnect(client.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+//    disconnect(client.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
 }
 
 void MindwaveReader::onConnectionSuccess()

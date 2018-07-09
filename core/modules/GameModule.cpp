@@ -17,7 +17,7 @@ void GameModule::setMindwave(QSharedPointer<MindwaveComponent> value)
     gameTaskManager->setMindWaveClient(mindWaveComponent);
 }
 
-void GameModule::setGameSession(GameSession* value)
+void GameModule::setGameSession(QSharedPointer<GameSession> value)
 {
     gameSession = value;
 }

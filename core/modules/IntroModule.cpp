@@ -57,27 +57,7 @@ void IntroModule::stop()
     //userData->clearData();
 }
 
-void IntroModule::setState(LoginState value)
-{
-    state = value;
-    emit loginStateChanged(state);
-}
 
-void IntroModule::setUserState(UserState value)
-{
-    userState = value;
-    emit userStateChanged(value);
-}
-
-QString IntroModule::getStringState() const
-{
-    switch(state)
-    {
-        case LoginState::Login: return "User login";
-        case LoginState::Logout: return "User logout";
-    }
-    return "undefined";
-}
 
 QString IntroModule::getName() const
 {
@@ -99,7 +79,7 @@ void IntroModule::onServerResponse(const ServerResponse& response)
 
 void IntroModule::onServerError()
 {
-    setState(LoginState::Error);
+    userData->setLoginState(UserData::LoginState::Error);
 }
 
 void IntroModule::parseServerResponse(const QString& data)

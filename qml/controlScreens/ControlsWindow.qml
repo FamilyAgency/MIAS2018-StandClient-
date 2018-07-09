@@ -73,16 +73,18 @@ Item {
         id:testScreen;
     }
 
-    Window {
-        objectName: "User window"
-        title: "User Window"
-        visible: true
-        id: user
-        flags: Qt.SplashScreen
-        width: 400
-        height: 800
-        x: 0
-        y:50
+    Window
+    {
+        objectName: "User window";
+        title: "User Window";
+        visible: true;
+        id: user;
+        flags: Qt.SplashScreen;
+        width: 400;
+        height: 800;
+        x: 0;
+        y: 50;
+
         UserData
         {
             x:marginLeft;

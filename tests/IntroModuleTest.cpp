@@ -38,8 +38,8 @@ void IntroModuleTest::loginSuccessTest(int gameId)
     }
 
     userData->setGameProgess(gameProgress);
-    setUserState(UserState::CanPlay);
-    setState(LoginState::Login);
+    userData->setUserState(UserData::UserState::CanPlay);
+    userData->setLoginState(UserData::LoginState::Login);
 }
 
 GameProgress* IntroModuleTest::createGamesOnStage1()
@@ -188,7 +188,7 @@ void IntroModuleTest::finished(int prizesCount)
     QVariantList prizes;
     for(int i  = 0; i < prizesCount; i++)
     {
-         prizes.append(true);
+        prizes.append(true);
     }
 
     auto prizeDiff = userData->maxPrizesCount - prizes.length();
@@ -201,18 +201,18 @@ void IntroModuleTest::finished(int prizesCount)
     {
         for(int i  = 0; i < prizeDiff; i++)
         {
-             prizes.append(false);
+            prizes.append(false);
         }
     }
 
     userData->setPrizes(prizes);
-    setUserState(UserState::Finished);
+    userData->setUserState(UserData::UserState::Finished);
     //setState(LoginState::Login);
 }
 
 void IntroModuleTest::moduleError()
 {
-    setState(LoginState::Error);
+    userData->setLoginState(UserData::LoginState::Error);
 }
 
 void IntroModuleTest::youArePlaying()
@@ -220,7 +220,7 @@ void IntroModuleTest::youArePlaying()
     userData->setName("Игорь");
     userData->setSurname("Хитрец");
     userData->setId(65);
-    setUserState(UserState::YouArePlaying);
+    userData->setUserState(UserData::UserState::YouArePlaying);
 }
 
 void IntroModuleTest::playedRecently()
@@ -232,7 +232,7 @@ void IntroModuleTest::playedRecently()
     userData->setFinished(true);
     userData->setExist(true);
     userData->setWaitEnoughToPlay(false);
-    setUserState(UserState::WasRecently);
+    userData->setUserState(UserData::UserState::WasRecently);
 }
 
 void IntroModuleTest::userDoesntExist()
@@ -244,7 +244,7 @@ void IntroModuleTest::userDoesntExist()
     userData->setFinished(false);
     userData->setExist(false);
     userData->setWaitEnoughToPlay(false);
-    setUserState(UserState::DoesntExists);
+    userData->setUserState(UserData::UserState::DoesntExists);
 }
 
 void IntroModuleTest::logoutTest()
@@ -252,8 +252,8 @@ void IntroModuleTest::logoutTest()
     userData->setName("");
     userData->setSurname("");
     userData->setId(-1);
-    setUserState(UserState::None);
-    setState(LoginState::Logout);
+    userData->setUserState(UserData::UserState::None);
+    userData->setLoginState(UserData::LoginState::Logout);
 }
 
 QVector<QPointF> IntroModuleTest::createPath(int pathId)
@@ -290,24 +290,24 @@ QVector<QPointF> IntroModuleTest::createPath(int pathId)
 
     switch(pathId)
     {
-        case 1:
-            path<<point4<<point6<<point10<<point7<<point16<<point17;
+    case 1:
+        path<<point4<<point6<<point10<<point7<<point16<<point17;
         break;
 
-        case 2:
-            path<<point17<<point20<<point3<<point2;
+    case 2:
+        path<<point17<<point20<<point3<<point2;
         break;
 
-        case 3:
-            path<<point2<<point1<<point6<<point5<<point9;
+    case 3:
+        path<<point2<<point1<<point6<<point5<<point9;
         break;
 
-        case 4:
-            path<<point9<<point13<<point10<<point14<<point15<<point16<<point17<<point18<<point19;
+    case 4:
+        path<<point9<<point13<<point10<<point14<<point15<<point16<<point17<<point18<<point19;
         break;
 
-        case 5:
-           path<<point19<<point12<<point11<<point20<<point8<<point10<<point1;
+    case 5:
+        path<<point19<<point12<<point11<<point20<<point8<<point10<<point1;
         break;
     }
 
@@ -319,28 +319,28 @@ VelocityCalculator IntroModuleTest::createDifficult(int diff)
     VelocityCalculator velocitycalculator;
     switch(diff)
     {
-        case 0:
-           velocitycalculator.setLimits(2.0f, 2.5f, 30.0f);
+    case 0:
+        velocitycalculator.setLimits(2.0f, 2.5f, 30.0f);
         break;
 
-        case 1:
-           velocitycalculator.setLimits(2.0f, 3.5f, 40.0f);
+    case 1:
+        velocitycalculator.setLimits(2.0f, 3.5f, 40.0f);
         break;
 
-        case 2:
-            velocitycalculator.setLimits(2.0f, 3.3f, 45.0f);
+    case 2:
+        velocitycalculator.setLimits(2.0f, 3.3f, 45.0f);
         break;
 
-        case 3:
-           velocitycalculator.setLimits(2, 3, 60);
+    case 3:
+        velocitycalculator.setLimits(2, 3, 60);
         break;
 
-        case 4:
-            velocitycalculator.setLimits(2, 2, 70);
+    case 4:
+        velocitycalculator.setLimits(2, 2, 70);
         break;
 
-        case 5:
-           velocitycalculator.setLimits(2, 3, 75);
+    case 5:
+        velocitycalculator.setLimits(2, 3, 75);
         break;
     }
 

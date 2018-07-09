@@ -1,4 +1,5 @@
 #include "UserData.h"
+#include <QQmlEngine>
 
 UserData::UserData(QObject *parent) : QObject(parent)
 {
@@ -13,11 +14,40 @@ UserData::UserData(QObject *parent) : QObject(parent)
     gameProgress->setGamesCompleteCount(0);
 }
 
+UserData::~UserData()
+{
+    if(gameProgress)
+    {
+        delete gameProgress;
+    }
+}
+
 void UserData::setQmlContext(QQmlContext* value)
 {
     qmlContext = value;
     qmlContext->setContextProperty("userData", this);
     gameProgress->setQmlContext(qmlContext);
+}
+
+void UserData::setUserState(UserState value)
+{
+    userState = value;
+    emit userStateChanged(value);
+}
+void UserData::setLoginState(LoginState value)
+{
+    loginState = value;
+    emit loginStateChanged(value);
+}
+
+QString UserData::getStringState() const
+{
+    switch(loginState)
+    {
+    case LoginState::Login: return "User login";
+    case LoginState::Logout: return "User logout";
+    }
+    return "undefined";
 }
 
 QVariantList UserData::prizes() const

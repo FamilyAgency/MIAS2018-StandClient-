@@ -9,10 +9,12 @@ AppController::AppController(QObject *parent) : QObject(parent)
 void AppController::testConstruct()
 {
     userData.reset(new UserData());
-    standData.reset(new StandData());
-    gameSession = new GameSession();
+    connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
-    ////////////////////// components //////////////////////
+    standData.reset(new StandData());
+    gameSession.reset(new GameSession());
+
+    //////////////////// components //////////////////////
 
     logger.reset(new LoggerComponent());
     components.append(logger);
@@ -30,13 +32,11 @@ void AppController::testConstruct()
     healthCheckerComponent->addComponent(rfidComponent);
     healthCheckerComponent->addComponent(mindWaveComponent);
     healthCheckerComponent->addComponent(serverComponent);
-    components.append(healthCheckerComponent);   
+    components.append(healthCheckerComponent);
 
     ////////////////////// modules //////////////////////
 
     introModule.reset(new IntroModuleTest());
-    connect(introModule.data(), SIGNAL(loginStateChanged(LoginState)), this, SLOT(onLoginStateChanged(LoginState)));
-
     introModule->setRFIDComponent(rfidComponent);
     introModule->setUserData(userData);
     introModule->setServerComponent(serverComponent);
@@ -56,22 +56,75 @@ void AppController::testConstruct()
     modules.append(resultModule);
 }
 
+AppController::~AppController()
+{
+    disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
+    disconnect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+}
+
 void AppController::releaseConstruct()
 {
 
 }
 
-void AppController::onLoginStateChanged(LoginState loginState)
+void AppController::setQmlContext(QQmlContext* qmlContext)
+{
+    for (auto module : modules)
+    {
+        module->setQmlContext(qmlContext);
+    }
+
+    for (auto comp : components)
+    {
+        comp->setQmlContext(qmlContext);
+    }
+
+    userData->setQmlContext(qmlContext);
+    standData->setQmlContext(qmlContext);
+    gameSession->setQmlContext(qmlContext);
+}
+
+void AppController::onConfigLoaded(ConfigPtr config)
+{
+    for (auto comp : components)
+    {
+        comp->setConfig(config);
+    }
+
+    for (auto module : modules)
+    {
+        module->setConfig(config);
+    }
+
+    standData->setConfig(config);
+
+    start();
+}
+
+void AppController::start()
+{
+    // QString initStatus = "Stand " + QString::number(standData->config().appId) + " started.........";
+    //logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
+
+    for (auto comp : components)
+    {
+        comp->start();
+    }
+
+    setAppState(AppState::Login);
+}
+
+void AppController::onLoginStateChanged(UserData::LoginState loginState)
 {
     //QString loginMsg = "login state changed  " + loginModule->getStringState();
     //logger->log(loginMsg);
 
-    if(loginState == LoginState::Login)
+    if(loginState == UserData::LoginState::Login)
     {
         gameModule->setUser(userData);
         gameSession->start();
     }
-    else if(loginState == LoginState::Logout)
+    else if(loginState == UserData::LoginState::Logout)
     {
         userData->clearData();
         gameSession->stop();
@@ -99,23 +152,6 @@ void AppController::startResult()
     setAppState(AppState::Result);
 }
 
-void AppController::setQmlContext(QQmlContext* qmlContext)
-{
-    for (auto module : modules)
-    {
-        module->setQmlContext(qmlContext);
-    }
-
-    for (auto comp : components)
-    {
-        comp->setQmlContext(qmlContext);
-    }
-
-    userData->setQmlContext(qmlContext);
-    standData->setQmlContext(qmlContext);
-    gameSession->setQmlContext(qmlContext);   
-}
-
 void AppController::setAppState(AppState value)
 {
     if(currentModule)
@@ -137,30 +173,13 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {
-    case AppState::Login: return introModule;
-    case AppState::Instruction: return instructionModule;
-    case AppState::Game: return gameModule;
-    case AppState::Result: return resultModule;
+        case AppState::Login: return introModule;
+        case AppState::Instruction: return instructionModule;
+        case AppState::Game: return gameModule;
+        case AppState::Result: return resultModule;
     }
 
     return nullptr;
-}
-
-void AppController::onConfigLoaded(ConfigPtr config)
-{
-    for (auto comp : components)
-    {
-        comp->setConfig(config);
-    }
-
-    for (auto module : modules)
-    {
-        module->setConfig(config);
-    }
-
-    standData->setConfig(config);
-
-   // start();
 }
 
 void AppController::onConfigError()
@@ -168,22 +187,8 @@ void AppController::onConfigError()
     qDebug() << "config Service Error";
 }
 
-void AppController::start()
-{    
-   // QString initStatus = "Stand " + QString::number(standData->config().appId) + " started.........";
-    //logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
-
-    for (auto comp : components)
-    {
-        comp->start();
-    }
-
-    setAppState(AppState::Login);
-}
-
 void AppController::backtoIntro()
 {
     setAppState(AppState::Login);
 }
-
 

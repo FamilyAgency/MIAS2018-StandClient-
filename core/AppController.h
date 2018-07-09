@@ -40,9 +40,9 @@ public:
     };
     Q_ENUMS(AppState)
 
-    AppController(QObject *parent = nullptr);
+    explicit AppController(QObject *parent = nullptr);
+    virtual ~AppController();
 
-public:
     void setQmlContext(QQmlContext* qmlContext);
 
     Q_INVOKABLE void start();
@@ -69,7 +69,7 @@ private:
     QSharedPointer<StandData> standData;
     QSharedPointer<UserData> userData;
     ConfigPtr config;
-    GameSession* gameSession;
+    QSharedPointer<GameSession> gameSession;
 
     AppState appState = AppState::Login;
     QSharedPointer<BaseModule> currentModule = nullptr;
@@ -83,13 +83,12 @@ private:
 signals:
     void appStateChanged(AppState appState);
 
-
 public slots:
     void onConfigLoaded(ConfigPtr config);
     void onConfigError();
 
 private slots:
-    void onLoginStateChanged(LoginState loginState);
+    void onLoginStateChanged(UserData::LoginState loginState);
     void onAllTaskComleteEvent();
 
 };

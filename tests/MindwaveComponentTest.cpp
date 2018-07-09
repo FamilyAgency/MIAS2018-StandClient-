@@ -7,9 +7,19 @@ MindwaveComponentTest::MindwaveComponentTest(QObject *parent) : MindwaveComponen
     connect(timer, SIGNAL(timeout()), this, SLOT(simulateMindwaveRead()));
 }
 
+MindwaveComponentTest::~MindwaveComponentTest()
+{
+    if(timer)
+    {
+        timer->stop();
+        disconnect(timer, SIGNAL(timeout()), this, SLOT(simulateMindwaveRead()));
+        delete timer;
+    }
+}
+
 void MindwaveComponentTest::start()
 {
-     timer->start(taskTimerMills);
+    timer->start(taskTimerMills);
 }
 
 void MindwaveComponentTest::stop()
@@ -32,5 +42,5 @@ void MindwaveComponentTest::simulateMindwaveRead()
 
     setPoorSignalLevel(signalRemappedValue);
 
-   // qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
+    // qDebug()<<"attention: "<<_attention <<"meditation: "<<_meditation <<"poorSignalLevel: "<<_poorSignalLevel;
 }

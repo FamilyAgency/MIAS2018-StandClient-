@@ -10,6 +10,7 @@ class MindwaveReader : public QObject
     Q_OBJECT
 public:
     explicit MindwaveReader(QObject *parent = nullptr);
+    virtual ~MindwaveReader();
 
     virtual void setConfig(const MindwaveConfig& value);
     virtual void start();

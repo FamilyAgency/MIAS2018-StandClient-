@@ -6,18 +6,18 @@ MindwaveComponent::MindwaveComponent(QObject *parent) : ExternalSystemComponent(
     name = "Mindwave";
 
     mindwaveReader.reset(new MindwaveReader());
-    connect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
-    connect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-    connect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+//    connect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
+//    connect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+//    connect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
 
     mindwaveParser.reset(new MindwaveParser());
 }
 
 MindwaveComponent::~MindwaveComponent()
 {
-    disconnect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
-    disconnect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-    disconnect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+   // disconnect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
+   // disconnect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+   // disconnect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
 }
 
 void MindwaveComponent::setQmlContext(QQmlContext* value)
@@ -30,10 +30,10 @@ void MindwaveComponent::setConfig(ConfigPtr config)
 {
     BaseComponent::setConfig(config);
 
-    setMindwaveConfig(*config->mindwaveConfig);
+    //    setMindwaveConfig(*config->mindwaveConfig);
 
-    mindwaveReader->setConfig(_mindwaveConfig);
-    mindwaveParser->setConfig(_mindwaveConfig);
+    //    mindwaveReader->setConfig(_mindwaveConfig);
+    //    mindwaveParser->setConfig(_mindwaveConfig);
 }
 
 void MindwaveComponent::setMindwaveConfig(const MindwaveConfig& value)
@@ -69,15 +69,15 @@ void MindwaveComponent::stop()
 
 void MindwaveComponent::onDataRecieve(const QString& data)
 {   
-    MindwaveData mindwaveData = mindwaveParser->parse(data);
-    if(mindwaveData.valid)
-    {
-        setMeditation(mindwaveData.meditation);
-        setAttention(mindwaveData.attention);
+    //    MindwaveData mindwaveData = mindwaveParser->parse(data);
+    //    if(mindwaveData.valid)
+    //    {
+    //        setMeditation(mindwaveData.meditation);
+    //        setAttention(mindwaveData.attention);
 
-        _poorSignalColor = mindwaveData.poorSignalColor;
-        setPoorSignalLevel(mindwaveData.poorSignalLevel);
-     }
+    //        _poorSignalColor = mindwaveData.poorSignalColor;
+    //        setPoorSignalLevel(mindwaveData.poorSignalLevel);
+    //     }
 }
 
 void MindwaveComponent::setPoorSignalLevel(int value)

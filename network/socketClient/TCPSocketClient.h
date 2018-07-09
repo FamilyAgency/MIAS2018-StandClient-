@@ -34,7 +34,7 @@ public slots:
 signals:
     void connectionSuccess();
     void disconnectionSuccess();
-    void connectionStatusChanged (TCPSocketClient::ConnectionStatus status);
+    void connectionStatusChanged(TCPSocketClient::ConnectionStatus status);
 
 signals:
     void runningChanged();
@@ -46,7 +46,7 @@ signals:
 
 public:
     TCPSocketClient();
-    ~TCPSocketClient();
+    virtual ~TCPSocketClient();
 
     Q_PROPERTY(bool running READ running WRITE setRunning NOTIFY runningChanged)
     Q_PROPERTY(QString ip READ ip WRITE setIp NOTIFY ipChanged)
@@ -95,7 +95,7 @@ protected:
 private:
     QTimer* waitForConnectionTimer;
     QTimer* waitForReconnectionTimer;
-    QTimer* senderTimer;
+   // QTimer* senderTimer;
     ConnectionStatus connectionStatus;
 
     void killAllTimers();

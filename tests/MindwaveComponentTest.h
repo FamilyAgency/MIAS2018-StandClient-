@@ -9,6 +9,8 @@ class MindwaveComponentTest : public MindwaveComponent
     Q_OBJECT
 public:
     explicit MindwaveComponentTest(QObject *parent = nullptr);
+    virtual ~MindwaveComponentTest();
+
     virtual void start() override;
     virtual void stop() override;
 

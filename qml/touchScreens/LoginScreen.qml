@@ -13,24 +13,10 @@ Item {
 
     Connections
     {
-        target:loginModule;
-        onLoginStateChanged:
-        {
-            switch(loginState)
-            {
-            case LoginState.Login:
-                mainText.text = "О привет, " + userData.name + "! Начнем!";
-                startBtn.visible = true;
-                break;
-
-            case LoginState.Error:
-                mainText.text = "Ошибка сервера";
-                break;
-            }
-        }
-
+        target:userData;
         onUserStateChanged:
         {
+            console.log("state changed:  ", userState)
             switch(userState)
             {
             case UserState.None:
@@ -57,6 +43,25 @@ Item {
                 break;
             }
         }
+
+        onLoginStateChanged:
+        {
+            console.log("state loginState:  ", loginState)
+            switch(loginState)
+            {
+            case LoginState.Login:
+                mainText.text = "О привет, " + userData.name + "! Начнем!";
+                startBtn.visible = true;
+                break;
+
+            case LoginState.Error:
+                mainText.text = "Ошибка сервера";
+                startBtn.visible = false;
+                break;
+            }
+        }
+
+
     }
 
     function reset()

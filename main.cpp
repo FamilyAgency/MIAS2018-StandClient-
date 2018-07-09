@@ -26,8 +26,9 @@ int main(int argc, char *argv[])
    QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
-    qmlRegisterType<IntroModule>("com.app", 1, 0, "LoginState");
-    qmlRegisterType<IntroModule>("com.app", 1, 0, "UserState");
+    qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
+
+    qmlRegisterType<UserData>("com.app", 1, 0, "UserState");
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 

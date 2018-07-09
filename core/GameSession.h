@@ -8,11 +8,13 @@
 class GameSession : public QObject
 {
     Q_OBJECT
-public:
+
     Q_PROPERTY(float sessionTime READ sessionTime WRITE setSessionTime NOTIFY sessionTimeChanged)
     Q_PROPERTY(float cleanTime READ cleanTime WRITE setCleanTime NOTIFY cleanTimeChanged)
 
+public:
     explicit GameSession(QObject *parent = nullptr);
+    virtual ~GameSession();
     void setQmlContext(QQmlContext* value);
 
     void start();

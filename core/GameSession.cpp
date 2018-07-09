@@ -2,11 +2,19 @@
 #include <QDateTime>
 #include <QDebug>
 
-
 GameSession::GameSession(QObject *parent) : QObject(parent)
 {
     sessionTimer = new QTimer(this);
     connect(sessionTimer, SIGNAL(timeout()), this, SLOT(onSessionTimerUpdate()));
+}
+
+GameSession::~GameSession()
+{
+    if(sessionTimer)
+    {
+        disconnect(sessionTimer, SIGNAL(timeout()), this, SLOT(onSessionTimerUpdate()));
+        delete sessionTimer;
+    }
 }
 
 void GameSession::setQmlContext(QQmlContext* qmlContext)

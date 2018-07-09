@@ -51,14 +51,30 @@ TCPSocketClient::~TCPSocketClient()
     {
         socket->abort();
         killAllTimers();
+        disconnect(socket, SIGNAL(connected()),          this, SLOT(connected()));
+        disconnect(socket, SIGNAL(disconnected()),       this, SLOT(disconnected()));
+        disconnect(socket, SIGNAL(readyRead()),          this, SLOT(readyRead()));
+        disconnect(socket, SIGNAL(bytesWritten(qint64)), this, SLOT(bytesWritten(qint64)));
         delete socket;
+    }
+
+    if(waitForConnectionTimer)
+    {
+        disconnect(waitForConnectionTimer, SIGNAL(timeout()), this, SLOT(connectionTimerHandler()));
+        delete waitForConnectionTimer;
+    }
+
+    if(waitForReconnectionTimer)
+    {
+        disconnect(waitForReconnectionTimer, SIGNAL(timeout()), this, SLOT(reconnectionTimerHandler()));
+        delete waitForReconnectionTimer;
     }
 }
 
 void TCPSocketClient::connected()
 {   
     qDebug()<<"TCPSocketSender : connected";
-    setConnectionStatus(ConnectionStatus::CONNECTED);  
+    setConnectionStatus(ConnectionStatus::CONNECTED);
 }
 
 void TCPSocketClient::setConnectionStatus(ConnectionStatus status)
