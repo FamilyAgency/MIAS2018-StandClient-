@@ -8,7 +8,7 @@ IntroModuleTest::IntroModuleTest():IntroModule()
 void IntroModuleTest::setQmlContext(QQmlContext* qmlContext)
 {
     IntroModule::setQmlContext(qmlContext);
-    qmlContext->setContextProperty("loginModule", this);
+    qmlContext->setContextProperty("introModule", this);
 }
 
 void IntroModuleTest::loginSuccessTest(int gameId)

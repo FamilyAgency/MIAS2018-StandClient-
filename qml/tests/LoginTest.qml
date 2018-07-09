@@ -31,7 +31,7 @@ Item {
                 text:"Login success | stage : "
                 onClicked:
                 {
-                    loginModule.loginSuccessTest(stageBox.value);
+                    introModule.loginSuccessTest(stageBox.value);
                 }
             }
 
@@ -48,7 +48,7 @@ Item {
             text:"User doesn't exist"
             onClicked:
             {
-                loginModule.userDoesntExist();
+                introModule.userDoesntExist();
             }
         }
 
@@ -60,7 +60,7 @@ Item {
                 text:"Finished | prizes get: "
                 onClicked:
                 {
-                    loginModule.finished(prizeBox.value);
+                    introModule.finished(prizeBox.value);
                 }
             }
 
@@ -77,7 +77,7 @@ Item {
             text:"Wait you played resent"
             onClicked:
             {
-                loginModule.playedRecently();
+                introModule.playedRecently();
             }
         }
 
@@ -86,7 +86,7 @@ Item {
             text:"You are playing!!!"
             onClicked:
             {
-                loginModule.youArePlaying();
+                introModule.youArePlaying();
             }
         }
 
@@ -95,7 +95,7 @@ Item {
             text:"Module error"
             onClicked:
             {
-                loginModule.moduleError();
+                introModule.moduleError();
             }
         }
 
@@ -105,7 +105,7 @@ Item {
             id:logOutBtn
             onClicked:
             {
-                loginModule.logoutTest();
+                introModule.logoutTest();
             }
             background: Rectangle
             {
@@ -133,7 +133,7 @@ Item {
                 text:"RFID entered: "
                 onClicked:
                 {
-                    loginModule.rfidRecieved(rfidBox.value);
+                    introModule.rfidRecieved(rfidBox.value);
                 }
             }
 

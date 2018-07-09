@@ -34,7 +34,7 @@ Window {
         switch(appState)
         {
         case AppState.Login:
-            loginScreen.visible = true;
+            introScreen.visible = true;
             break;
 
         case AppState.Instruction:
@@ -51,9 +51,9 @@ Window {
         }
     }
 
-    LoginScreen
+    IntroScreen
     {
-        id: loginScreen;
+        id: introScreen;
     }
 
     InstructionScreen
@@ -90,12 +90,12 @@ Window {
 
     function hideAll()
     {
-        loginScreen.visible = false;
+        introScreen.visible = false;
         instructionScreen.visible = false;
         gameScreen.visible = false;
         resultScreen.visible = false;
 
-        loginScreen.reset();
+        introScreen.reset();
         instructionScreen.reset();
         gameScreen.reset();
         resultScreen.reset();

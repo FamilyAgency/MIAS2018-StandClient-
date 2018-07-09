@@ -16,7 +16,6 @@
         <file>qml/touchScreens/GameScreen.qml</file>
         <file>qml/mainScreens/MainWindow.qml</file>
         <file>qml/controlScreens/ControlsWindow.qml</file>
-        <file>qml/touchScreens/LoginScreen.qml</file>
         <file>qml/touchScreens/ResultScreen.qml</file>
         <file>qml/mainScreens/Consts.qml</file>
         <file>qml/mainScreens/GameScreen.qml</file>
@@ -33,5 +32,6 @@
         <file>qml/components/ServerComponent.qml</file>
         <file>resources/heart.png</file>
         <file>qml/components/RFIDComponent.qml</file>
+        <file>qml/touchScreens/IntroScreen.qml</file>
     </qresource>
 </RCC>

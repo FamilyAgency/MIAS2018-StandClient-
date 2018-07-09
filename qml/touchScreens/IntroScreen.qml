@@ -16,7 +16,6 @@ Item {
         target:userData;
         onUserStateChanged:
         {
-            console.log("state changed:  ", userState)
             switch(userState)
             {
             case UserState.None:
@@ -46,7 +45,6 @@ Item {
 
         onLoginStateChanged:
         {
-            console.log("state loginState:  ", loginState)
             switch(loginState)
             {
             case LoginState.Login:
@@ -60,8 +58,6 @@ Item {
                 break;
             }
         }
-
-
     }
 
     function reset()
