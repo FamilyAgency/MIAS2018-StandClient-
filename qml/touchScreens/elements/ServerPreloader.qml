@@ -1,0 +1,45 @@
+import QtQuick 2.0
+import QtQuick.Controls 2.1
+import QtQuick.Controls 2.1
+import com.app 1.0
+
+Item
+{
+    anchors.fill: parent;
+
+    Component.onCompleted:
+    {
+        visible = false;
+    }
+
+    Connections
+    {
+        target:server
+        onServerStatusChanged:
+        {
+            visible = (status == ServerStatus.Busy);
+        }
+
+    }
+
+    Rectangle
+    {
+        anchors.fill: parent;
+        opacity: 0.7;
+        color: "white";
+    }
+
+    Button
+    {
+        anchors.fill: parent;
+        opacity: 0.0;
+    }
+
+    BusyIndicator
+    {
+        anchors.centerIn: parent;
+        running: true;
+        implicitHeight: 200;
+        implicitWidth: 200;
+    }
+}

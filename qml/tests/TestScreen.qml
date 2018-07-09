@@ -13,6 +13,12 @@ Item {
     }
     LoginTest
     {
-        y : 50;
+        y: 50;
+    }
+
+    RFIDTest
+    {
+        y: 50;
+        x: 350;
     }
 }

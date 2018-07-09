@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
-
     qmlRegisterType<UserData>("com.app", 1, 0, "UserState");
+    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 

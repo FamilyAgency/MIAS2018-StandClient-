@@ -18,11 +18,12 @@ Item {
         spacing: 10;
         Text
         {
-            text: "Login Test";
+            text: "Server Login Test";
             font.family: "Helvetica"
             font.pixelSize: 17
             color: consts.infoTextColor
         }
+
         RowLayout
         {
             spacing: 10;
@@ -31,7 +32,7 @@ Item {
                 text:"Login success | stage : "
                 onClicked:
                 {
-                    introModule.loginSuccessTest(stageBox.value);
+                    server.fetchUser(stageBox.value);
                 }
             }
 
@@ -48,7 +49,7 @@ Item {
             text:"User doesn't exist"
             onClicked:
             {
-                introModule.userDoesntExist();
+                server.fetchDoesntExistUser(-1);
             }
         }
 
@@ -60,7 +61,7 @@ Item {
                 text:"Finished | prizes get: "
                 onClicked:
                 {
-                    introModule.finished(prizeBox.value);
+                    server.finishedWithPrizes(prizeBox.value);
                 }
             }
 
@@ -74,10 +75,10 @@ Item {
 
         Button
         {
-            text:"Wait you played resent"
+            text:"Wait you played recent"
             onClicked:
             {
-                introModule.playedRecently();
+                server.fetchPlayedRecentUser(100);
             }
         }
 
@@ -86,16 +87,25 @@ Item {
             text:"You are playing!!!"
             onClicked:
             {
-                introModule.youArePlaying();
+                server.fetchAlreadyPlayingUser(200);
             }
         }
 
         Button
         {
-            text:"Module error"
+            text:"Server error"
             onClicked:
             {
-                introModule.moduleError();
+                server.simulateServerError();
+            }
+        }
+
+        Button
+        {
+            text:"Server timeout"
+            onClicked:
+            {
+                server.simulateServerTimeout();
             }
         }
 
@@ -123,28 +133,6 @@ Item {
                     spread: 0.5
                 }
             }
-        }
-
-        RowLayout
-        {
-            spacing: 10;
-            Button
-            {
-                text:"RFID entered: "
-                onClicked:
-                {
-                    introModule.rfidRecieved(rfidBox.value);
-                }
-            }
-
-            SpinBox
-            {
-                id: rfidBox
-                value: 1000
-                from: 0
-                to: 2000
-                editable: true
-            }
-        }
+        }        
     }
 }

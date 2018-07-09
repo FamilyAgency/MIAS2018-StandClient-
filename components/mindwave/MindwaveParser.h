@@ -32,7 +32,6 @@ private:
 
      QString getPoorSignalColor(int value) const;
      MindwaveData parseOneDataChunck(const QString& data);
-
 };
 
 #endif // MINDWAVEPARSER_H

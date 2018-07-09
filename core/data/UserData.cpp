@@ -1,5 +1,8 @@
 #include "UserData.h"
 #include <QQmlEngine>
+#include <QJsonDocument.h>
+#include <QJsonObject.h>
+#include <QJsonArray.h>
 
 UserData::UserData(QObject *parent) : QObject(parent)
 {
@@ -96,6 +99,11 @@ bool UserData::waitEnoughToPlay() const
     return _waitEnoughToPlay;
 }
 
+bool UserData::playingOnAnother() const
+{
+    return _playingOnAnother;
+}
+
 void UserData::setName(const QString& value)
 {
     _name = value;
@@ -138,6 +146,12 @@ void UserData::setWaitEnoughToPlay(bool value)
     emit waitEnoughToPlayChanged();
 }
 
+void UserData::setPlayingOnAnother(bool value)
+{
+    _playingOnAnother = value;
+    emit playingOnAnotherChanged();
+}
+
 void UserData::setGameProgess(GameProgress* value)
 {
     gameProgress = value;
@@ -169,5 +183,56 @@ void UserData::clearData()
     gameProgress->setCurrentGameId(0);
     gameProgress->setGamesCount(0);
     gameProgress->setGamesCompleteCount(0);
+}
+
+void UserData::parse(const QString& userObject)
+{
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(userObject.toUtf8());
+    QJsonObject jsonObj   = jsonDoc.object();
+
+    setName(jsonObj["name"].toString());
+    setSurname(jsonObj["surname"].toString());
+    setId(jsonObj["id"].toInt());
+    setFirstTime(true);
+    setFinished(false);
+    setExist(jsonObj["exist"].toBool());
+    setWaitEnoughToPlay(jsonObj["waitEnoughToPlay"].toBool());
+    setPlayingOnAnother(jsonObj["playingOnAnother"].toBool());
+    setFinished(jsonObj["finished"].toBool());
+
+    QVariantList prizes;
+    prizes.append(true);
+    prizes.append(false);
+    setPrizes(prizes);
+
+   // GameProgress* gameProgress = createGamesOnStage1();
+   // userData->setGameProgess(gameProgress);
+
+    if(!exist())
+    {
+        setUserState(UserData::UserState::DoesntExists);
+        return;
+    }
+
+    if(!waitEnoughToPlay())
+    {
+        setUserState(UserData::UserState::WasRecently);
+        return;
+    }
+
+    if(playingOnAnother())
+    {
+        setUserState(UserData::UserState::YouArePlaying);
+        return;
+    }
+
+    if(finished())
+    {
+        setUserState(UserData::UserState::Finished);
+        return;
+    }
+
+    setUserState(UserData::UserState::CanPlay);
+    setLoginState(UserData::LoginState::Login);
 }
 

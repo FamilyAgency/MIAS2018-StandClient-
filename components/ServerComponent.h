@@ -4,16 +4,27 @@
 #include <QObject>
 #include "components/ExternalSystemComponent.h"
 #include "config/Config.h"
+#include "network/http/HTTPClient.h"
 
 enum class ResponseType
 {
     None,
+    Error,
     UserFetched
+};
+
+enum class ServerErrorType
+{
+    None,
+    TimeOut,
+    NetworkError,
+    ServerIsDown
 };
 
 struct ServerResponse
 {
     ResponseType type = ResponseType::None;
+    ServerErrorType errorType = ServerErrorType::None;
     QString body;
 };
 
@@ -23,10 +34,17 @@ class ServerComponent : public ExternalSystemComponent
     Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
 
     Q_ENUMS(LoginError)
+    Q_ENUMS(ServerStatus)
 
 public:
     explicit ServerComponent(QObject *parent = nullptr);
     virtual ~ServerComponent();
+
+    enum class ServerStatus
+    {
+        Free,
+        Busy
+    };
 
     enum class LoginError
     {
@@ -47,6 +65,8 @@ public:
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
 
+    void setServerStatus(ServerStatus serverStatus);
+
 
 // REST API
 //   -----------------config-----------------
@@ -55,7 +75,7 @@ public:
 
 //   rfid ?= id
 //   -----------------user-----------------
-     virtual void fetchUser(int deviceId, int rfid);
+     virtual void fetchUser(int rfid);
 //   void saveUserProgress(int deviceId, int userId, int stage, int cleanTime, data[] mindwaveData)
 
 
@@ -72,15 +92,23 @@ public:
 
 //   -----------------tools-----------------
 //    void healthCheck(deviceId);
+
+    friend class ServerComponentTest;
     
 private:
      ServerConfig _serverConfig;
+     QSharedPointer<HTTPClient> httpClient;
+     ServerStatus _serverStatus;
 
 signals:
     void serverConfigChanged();
+    void serverStatusChanged(const ServerStatus& status);
     void serverResponse(const ServerResponse& response);
+    void serverError();
 
-public slots:
+protected slots:
+   void httpRequestSuccessHandler(const QString& data);
+   void httpRequestFailedHandler(const QString& data);
 };
 
 #endif // SERVERCOMPONENT_H

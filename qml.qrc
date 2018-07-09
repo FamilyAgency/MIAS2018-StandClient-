@@ -33,5 +33,8 @@
         <file>resources/heart.png</file>
         <file>qml/components/RFIDComponent.qml</file>
         <file>qml/touchScreens/IntroScreen.qml</file>
+        <file>qml/touchScreens/elements/ServerPreloader.qml</file>
+        <file>qml/touchScreens/elements/ServerErrorPopup.qml</file>
+        <file>qml/tests/RFIDTest.qml</file>
     </qresource>
 </RCC>

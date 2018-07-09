@@ -34,13 +34,12 @@ private:
     QSharedPointer<UserData> userData = nullptr;
     QSharedPointer<StandData> standData = nullptr;
 
-    void parseServerResponse(const QString& data);
-
 private slots:
     void onRFIDRecieve(int id);
-    void onServerResponse(const ServerResponse& response);
-    void onServerError();
+    void onRFIDConnectedChanged();
 
+    void onServerResponse(const ServerResponse& response);
+    void onServerError();      
 };
 
 #endif // LOGINMODULE_H

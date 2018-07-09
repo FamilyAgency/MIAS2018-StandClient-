@@ -16,6 +16,7 @@ class UserData : public QObject
     Q_PROPERTY(bool firstTime READ firstTime WRITE setFirstTime NOTIFY firstTimeChanged)
     Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
     Q_PROPERTY(bool waitEnoughToPlay READ waitEnoughToPlay WRITE setWaitEnoughToPlay NOTIFY waitEnoughToPlayChanged)
+    Q_PROPERTY(bool playingOnAnother READ playingOnAnother WRITE setPlayingOnAnother NOTIFY playingOnAnotherChanged)
     Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
 
     Q_ENUMS(UserState)
@@ -52,6 +53,7 @@ public:
     bool finished() const;
     QVariantList prizes() const;
     bool waitEnoughToPlay() const;
+    bool playingOnAnother() const;
 
     void setName(const QString& value);
     void setSurname(const QString& value);
@@ -61,10 +63,12 @@ public:
     void setFinished(bool value);
     void setPrizes(const QVariantList& value);
     void setWaitEnoughToPlay(bool value);
+    void setPlayingOnAnother(bool value);
 
     void setQmlContext(QQmlContext* value);
     void setGameProgess(GameProgress* value);
     void clearData();
+    void parse(const QString& userObject);
 
     GameProgress* getGameProgess();
     OneGameData getCurrentGameData() const;
@@ -85,6 +89,7 @@ private:
     bool _finished = false;
     QVariantList _prizes;
     bool _waitEnoughToPlay = false;
+    bool _playingOnAnother = false;
 
     QQmlContext* qmlContext;
     GameProgress* gameProgress;
@@ -100,6 +105,7 @@ signals:
     void waitEnoughToPlayChanged();
     void finishedChanged();
     void prizesChanged();
+    void playingOnAnotherChanged();
 
     void userStateChanged(UserData::UserState userState);
     void loginStateChanged(UserData::LoginState loginState);
