@@ -22,9 +22,9 @@
 #include "modules/ResultModule.h"
 #include "Types.h"
 
-#include "tests/IntroModuleTest.h"
 #include "tests/MindwaveComponentTest.h"
 #include "tests/ServerComponentTest.h"
+#include "tests/RFIDComponentTest.h"
 
 class AppController : public QObject
 {
@@ -90,6 +90,7 @@ public slots:
 private slots:
     void onLoginStateChanged(UserData::LoginState loginState);
     void onAllTaskComleteEvent();
+    void onServerResponse(const ServerResponse& response);
 
 };
 

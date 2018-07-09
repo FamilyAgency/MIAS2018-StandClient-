@@ -11,7 +11,7 @@ ServerComponentTest::ServerComponentTest(QObject *parent) : ServerComponent(pare
 
 void ServerComponentTest::fetchUser(int rfid)
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -25,7 +25,7 @@ void ServerComponentTest::fetchUser(int rfid)
 
 void ServerComponentTest::onFetchUser()
 {
-    ServerResponse response;
+    response.clear();
     response.type = ResponseType::UserFetched;
 
     QJsonObject userObject;
@@ -51,12 +51,12 @@ void ServerComponentTest::onFetchUser()
     gameObject1.insert("time", QJsonValue::fromVariant(12000));
 
     QJsonObject gameObject2;
-    gameObject2.insert("gameId", QJsonValue::fromVariant(1));
+    gameObject2.insert("gameId", QJsonValue::fromVariant(2));
     gameObject2.insert("complete", QJsonValue::fromVariant(false));
     gameObject2.insert("time", QJsonValue::fromVariant(12000));
 
     QJsonObject gameObject3;
-    gameObject3.insert("gameId", QJsonValue::fromVariant(1));
+    gameObject3.insert("gameId", QJsonValue::fromVariant(3));
     gameObject3.insert("complete", QJsonValue::fromVariant(false));
     gameObject3.insert("time", QJsonValue::fromVariant(12000));
 
@@ -65,6 +65,21 @@ void ServerComponentTest::onFetchUser()
     gamesArray.insert(2, QJsonValue::fromVariant(gameObject3));
 
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
+
+
+
+//    GameProgress* gameProgress = createGamesOnStage1();
+
+//    if(gameId == 2)
+//    {
+//        gameProgress = createGamesOnStage2();
+//    }
+//    else if(gameId == 3)
+//    {
+//        gameProgress = createGamesOnStage3();
+//    }
+
+//    userData->setGameProgess(gameProgress);
 
     QJsonDocument doc(userObject);
 
@@ -87,7 +102,7 @@ void ServerComponentTest::onFetchUser()
 
 void ServerComponentTest::fetchDoesntExistUser(int rfid)
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -101,7 +116,7 @@ void ServerComponentTest::fetchDoesntExistUser(int rfid)
 
 void ServerComponentTest::onFetchDoesntExistUser()
 {
-    ServerResponse response;
+    response.clear();
     response.type = ResponseType::UserFetched;
 
     QJsonObject userObject;
@@ -153,7 +168,7 @@ void ServerComponentTest::onFetchDoesntExistUser()
 
 void ServerComponentTest::fetchPlayedRecentUser(int rfid)
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -167,7 +182,7 @@ void ServerComponentTest::fetchPlayedRecentUser(int rfid)
 
 void ServerComponentTest::onFetchPlayedRecentUser()
 {
-    ServerResponse response;
+    response.clear();
     response.type = ResponseType::UserFetched;
 
     QJsonObject userObject;
@@ -226,7 +241,7 @@ void ServerComponentTest::onFetchPlayedRecentUser()
 
 void ServerComponentTest::fetchAlreadyPlayingUser(int rfid)
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -240,7 +255,7 @@ void ServerComponentTest::fetchAlreadyPlayingUser(int rfid)
 
 void ServerComponentTest::onFetchAlreadyPlayingUser()
 {
-    ServerResponse response;
+    response.clear();
     response.type = ResponseType::UserFetched;
 
     QJsonObject userObject;
@@ -300,7 +315,7 @@ void ServerComponentTest::onFetchAlreadyPlayingUser()
 
 void ServerComponentTest::finishedWithPrizes(int rfid)
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -314,7 +329,7 @@ void ServerComponentTest::finishedWithPrizes(int rfid)
 
 void ServerComponentTest::onFinishedWithPrizes()
 {
-    ServerResponse response;
+    response.clear();
     response.type = ResponseType::UserFetched;
 
     QJsonObject userObject;
@@ -375,7 +390,7 @@ void ServerComponentTest::onFinishedWithPrizes()
 
 void ServerComponentTest::simulateServerTimeout()
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -392,7 +407,7 @@ void ServerComponentTest::onSimulateServerTimeout()
 
 void ServerComponentTest::simulateServerError()
 {
-    if(_serverStatus == ServerStatus::Busy)
+    if(!canRunRequest())
     {
         qDebug()<<"wait for server please";
         return;
@@ -407,6 +422,120 @@ void ServerComponentTest::onSimulateServerError()
 {
    httpRequestFailedHandler("Error: Simulate Server Error");
 }
+
+void ServerComponentTest::logout()
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    setServerStatus(ServerStatus::Busy);
+
+    QTimer::singleShot(1000, this, SLOT(onUserLogout()));
+}
+
+void ServerComponentTest::onUserLogout()
+{
+    response.clear();
+    response.type = ResponseType::Logout;
+    httpRequestSuccessHandler("Logout");
+}
+
+
+
+QVector<QPointF> ServerComponentTest::createPath(int pathId)
+{
+    QVector<QPointF> path;
+    QPointF point1 = QPointF(388, 88);
+    QPointF point2 = QPointF(621, 71 );
+    QPointF point3 = QPointF(970, 114);
+    QPointF point4 = QPointF(223, 222);
+    QPointF point5 = QPointF(347, 243);
+    QPointF point6 = QPointF(467, 264);
+    QPointF point7 = QPointF(690, 300);
+    QPointF point8 = QPointF(987, 207);
+    QPointF point9 = QPointF(218, 422);
+    QPointF point10 = QPointF(511, 357);
+    QPointF point11 = QPointF(969, 389);
+    QPointF point12 = QPointF(1152, 379);
+    QPointF point13 = QPointF(315, 537);
+    QPointF point14 = QPointF(573, 417);
+    QPointF point15 = QPointF(666, 500);
+    QPointF point16 = QPointF(735, 458);
+    QPointF point17 = QPointF(917, 495);
+    QPointF point18 = QPointF(913, 570);
+    QPointF point19 = QPointF(1144, 616);
+    QPointF point20 = QPointF(1002, 316);
+
+    //penta
+    //path.clear();
+    //path<<QPointF(150, 125)<<QPointF(260, 210)<<QPointF(125, 210)<<QPointF(235, 125)<<QPointF(194, 260)<<QPointF(150, 125);
+    //velocitycalculator.setLimits(0, 3.5, 40);
+    //gameTasks.append(new GameTask(path, velocitycalculator));
+
+    path.clear();
+
+    switch(pathId)
+    {
+    case 1:
+        path<<point4<<point6<<point10<<point7<<point16<<point17;
+        break;
+
+    case 2:
+        path<<point17<<point20<<point3<<point2;
+        break;
+
+    case 3:
+        path<<point2<<point1<<point6<<point5<<point9;
+        break;
+
+    case 4:
+        path<<point9<<point13<<point10<<point14<<point15<<point16<<point17<<point18<<point19;
+        break;
+
+    case 5:
+        path<<point19<<point12<<point11<<point20<<point8<<point10<<point1;
+        break;
+    }
+
+    return path;
+}
+
+VelocityCalculator ServerComponentTest::createDifficult(int diff)
+{
+    VelocityCalculator velocitycalculator;
+    switch(diff)
+    {
+    case 0:
+        velocitycalculator.setLimits(2.0f, 2.5f, 30.0f);
+        break;
+
+    case 1:
+        velocitycalculator.setLimits(2.0f, 3.5f, 40.0f);
+        break;
+
+    case 2:
+        velocitycalculator.setLimits(2.0f, 3.3f, 45.0f);
+        break;
+
+    case 3:
+        velocitycalculator.setLimits(2, 3, 60);
+        break;
+
+    case 4:
+        velocitycalculator.setLimits(2, 2, 70);
+        break;
+
+    case 5:
+        velocitycalculator.setLimits(2, 3, 75);
+        break;
+    }
+
+    return velocitycalculator;
+}
+
 
 
 

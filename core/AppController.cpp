@@ -19,13 +19,14 @@ void AppController::testConstruct()
     logger.reset(new LoggerComponent());
     components.append(logger);
 
-    rfidComponent.reset(new RFIDComponent());
+    rfidComponent.reset(new RFIDComponentTest());
     components.append(rfidComponent);
 
     mindWaveComponent.reset(new MindwaveComponentTest());
     components.append(mindWaveComponent);
 
-    serverComponent.reset(new ServerComponentTest());
+    serverComponent.reset(new ServerComponentTest());  
+    connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
     components.append(serverComponent);
 
     healthCheckerComponent.reset(new HealthCheckerComponent());
@@ -36,7 +37,7 @@ void AppController::testConstruct()
 
     ////////////////////// modules //////////////////////
 
-    introModule.reset(new IntroModuleTest());
+    introModule.reset(new IntroModule());
     introModule->setRFIDComponent(rfidComponent);
     introModule->setUserData(userData);
     introModule->setServerComponent(serverComponent);
@@ -60,6 +61,7 @@ AppController::~AppController()
 {
     disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
     disconnect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+    disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 }
 
 void AppController::releaseConstruct()
@@ -112,6 +114,14 @@ void AppController::start()
     }
 
     setAppState(AppState::Login);
+}
+
+void AppController::onServerResponse(const ServerResponse& response)
+{
+    if(response.type == ResponseType::Logout)
+    {
+        userData->setLoginState(UserData::LoginState::Logout);
+    }
 }
 
 void AppController::onLoginStateChanged(UserData::LoginState loginState)

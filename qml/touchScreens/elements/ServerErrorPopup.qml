@@ -44,6 +44,7 @@ Item
         text: "OK...";
         onClicked:
         {
+            server.setServerStatus(ServerStatus.Free);
             error.visible = false;
         }
     }

@@ -7,7 +7,6 @@ ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(pare
     httpClient.reset(new HTTPClient());
     connect(httpClient.data(), SIGNAL(httpRequestSuccess(const QString&)), this, SLOT(httpRequestSuccessHandler(const QString&)));
     connect(httpClient.data(), SIGNAL(httpRequestFailed(const QString&)), this, SLOT(httpRequestFailedHandler(const QString&)));
-
 }
 
 ServerComponent::~ServerComponent()
@@ -60,27 +59,33 @@ bool ServerComponent::isHealthy()
     return true;
 }
 
+ bool ServerComponent::canRunRequest() const
+ {
+     return _serverStatus == ServerStatus::Free;
+ }
+
 void ServerComponent::fetchUser(int rfid)
+{
+
+}
+
+void ServerComponent::logout()
 {
 
 }
 
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
 {
-    setServerStatus(ServerStatus::Free);
-
-    ServerResponse response;
-    response.type = ResponseType::UserFetched;
+    setServerStatus(ServerStatus::Free);   
     response.body = data;
     emit serverResponse(response);
 }
 
 void ServerComponent::httpRequestFailedHandler(const QString& data)
 {
-    setServerStatus(ServerStatus::Free);
+    setServerStatus(ServerStatus::Error);
     qDebug()<<"server error occurs";
 
-    ServerResponse response;
     response.type = ResponseType::Error;
     response.errorType = ServerErrorType::NetworkError;
     response.body = data;

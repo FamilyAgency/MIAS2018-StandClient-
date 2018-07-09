@@ -115,7 +115,7 @@ Item {
             id:logOutBtn
             onClicked:
             {
-                introModule.logoutTest();
+                server.logout();
             }
             background: Rectangle
             {

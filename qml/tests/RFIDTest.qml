@@ -33,7 +33,7 @@ Item
                 text:"RFID entered: "
                 onClicked:
                 {
-                    introModule.rfidRecieved(rfidBox.value);
+                    rfid.testDataCome(rfidBox.value);
                 }
             }
 

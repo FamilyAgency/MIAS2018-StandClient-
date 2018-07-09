@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include "components/ServerComponent.h"
+#include "core/game/VelocityCalculator.h"
+#include "core/game/GameProgress.h"
 
 class ServerComponentTest: public ServerComponent
 {
@@ -11,6 +13,7 @@ class ServerComponentTest: public ServerComponent
 public:
     explicit ServerComponentTest(QObject *parent = nullptr);
     Q_INVOKABLE virtual void fetchUser(int rfid) override;
+    Q_INVOKABLE virtual void logout() override;
     Q_INVOKABLE void fetchDoesntExistUser(int rfid);
     Q_INVOKABLE void fetchPlayedRecentUser(int rfid);
     Q_INVOKABLE void fetchAlreadyPlayingUser(int rfid);
@@ -22,11 +25,15 @@ public:
 private:
     int lastRfid = 1;
 
+    QVector<QPointF> createPath(int pathId);
+    VelocityCalculator createDifficult(int diff);
+
 private slots:
     void onFetchUser();
     void onFetchDoesntExistUser();
     void onFetchPlayedRecentUser();
     void onFetchAlreadyPlayingUser();
+    void onUserLogout();
 
     void onSimulateServerError();
     void onSimulateServerTimeout();

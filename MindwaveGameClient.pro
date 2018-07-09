@@ -39,14 +39,14 @@ SOURCES += main.cpp \
     components/rfid/UHFJsonDataReader.cpp \
     tests/ServerComponentTest.cpp \
     components/LoggerComponent.cpp \
-    tests/IntroModuleTest.cpp \
     core/modules/BaseModule.cpp \
     core/modules/GameModule.cpp \
     core/modules/InstructionModule.cpp \
     core/modules/IntroModule.cpp \
     core/modules/ResultModule.cpp \
     core/data/StandData.cpp \
-    core/data/UserData.cpp
+    core/data/UserData.cpp \
+    tests/RFIDComponentTest.cpp
 
 RESOURCES += qml.qrc
 
@@ -108,13 +108,13 @@ HEADERS += \
     components/rfid/UHFJsonDataReader.h \
     tests/ServerComponentTest.h \
     components/LoggerComponent.h \
-    tests/IntroModuleTest.h \
     core/modules/BaseModule.h \
     core/modules/GameModule.h \
     core/modules/InstructionModule.h \
     core/modules/IntroModule.h \
     core/modules/ResultModule.h \
     core/data/StandData.h \
-    core/data/UserData.h
+    core/data/UserData.h \
+    tests/RFIDComponentTest.h
 
 DISTFILES +=

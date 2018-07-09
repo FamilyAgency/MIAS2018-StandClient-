@@ -34,6 +34,8 @@ private:
     QSharedPointer<UserData> userData = nullptr;
     QSharedPointer<StandData> standData = nullptr;
 
+    bool canFetchUser() const;
+
 private slots:
     void onRFIDRecieve(int id);
     void onRFIDConnectedChanged();

@@ -19,7 +19,6 @@ Item
         {
             visible = (status == ServerStatus.Busy);
         }
-
     }
 
     Rectangle

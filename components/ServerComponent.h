@@ -10,7 +10,8 @@ enum class ResponseType
 {
     None,
     Error,
-    UserFetched
+    UserFetched,
+    Logout
 };
 
 enum class ServerErrorType
@@ -26,6 +27,13 @@ struct ServerResponse
     ResponseType type = ResponseType::None;
     ServerErrorType errorType = ServerErrorType::None;
     QString body;
+
+    void clear()
+    {
+        type = ResponseType::None;
+        errorType = ServerErrorType::None;
+        body = "";
+    }
 };
 
 class ServerComponent : public ExternalSystemComponent
@@ -43,7 +51,8 @@ public:
     enum class ServerStatus
     {
         Free,
-        Busy
+        Busy,
+        Error
     };
 
     enum class LoginError
@@ -65,7 +74,7 @@ public:
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
 
-    void setServerStatus(ServerStatus serverStatus);
+    Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
 
 
 // REST API
@@ -76,6 +85,7 @@ public:
 //   rfid ?= id
 //   -----------------user-----------------
      virtual void fetchUser(int rfid);
+     virtual void logout();
 //   void saveUserProgress(int deviceId, int userId, int stage, int cleanTime, data[] mindwaveData)
 
 
@@ -98,7 +108,10 @@ public:
 private:
      ServerConfig _serverConfig;
      QSharedPointer<HTTPClient> httpClient;
-     ServerStatus _serverStatus;
+     ServerStatus _serverStatus = ServerStatus::Free;
+     bool canRunRequest() const;
+
+     ServerResponse response;
 
 signals:
     void serverConfigChanged();

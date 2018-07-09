@@ -31,27 +31,13 @@ void IntroModule::setConfig(ConfigPtr config)
 }
 
 void IntroModule::setRFIDComponent(QSharedPointer<RFIDComponent> value)
-{    
-    if(rfidComponent)
-    {
-        disconnect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
-        disconnect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
-    }
-
+{
     rfidComponent = value;
-    connect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
-    connect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
 }
 
 void IntroModule::setServerComponent(QSharedPointer<ServerComponent> value)
 {
-    if(serverComponent)
-    {
-        disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
-    }
-
     serverComponent = value;
-    connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 }
 
 void IntroModule::setUserData(QSharedPointer<UserData> value)
@@ -66,12 +52,34 @@ void IntroModule::setStandData(QSharedPointer<StandData> value)
 
 void IntroModule::start()
 {
+    qDebug()<<"======================= IntroModule START =======================";
 
+    if(serverComponent)
+    {
+        connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+    }
+
+    if(rfidComponent)
+    {
+        connect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
+        connect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
+    }
 }
 
 void IntroModule::stop()
 {
-    //userData->clearData();
+    qDebug()<<"======================= IntroModule STOP =======================";
+
+    if(serverComponent)
+    {
+        disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+    }
+
+    if(rfidComponent)
+    {
+        disconnect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
+        disconnect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
+    }
 }
 
 void IntroModule::onRFIDConnectedChanged()
@@ -82,7 +90,16 @@ void IntroModule::onRFIDConnectedChanged()
 
 void IntroModule::onRFIDRecieve(int id)
 {
-    serverComponent->fetchUser(id);
+    if(canFetchUser())
+    {
+        serverComponent->fetchUser(id);
+    }
+}
+
+bool IntroModule::canFetchUser() const
+{
+    //server busy, main screen
+    return true;
 }
 
 void IntroModule::onServerResponse(const ServerResponse& response)
