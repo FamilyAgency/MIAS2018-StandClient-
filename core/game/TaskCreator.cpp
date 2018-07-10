@@ -9,11 +9,11 @@ TaskCreator::TaskCreator(QObject *parent) : QObject(parent)
 
  QMap<int, QSharedPointer<GameTask>> TaskCreator::create(UserData* user)
 {
-   auto gameProgress = user->getGameProgess();
-   auto games = gameProgress->getGames();
+   GameProgress gameProgress = user->getGameProgess();
+   auto games = gameProgress.getGames();
    QMap<int, QSharedPointer<GameTask>> gameTasks;
 
-   for(OneGameData oneGameData: gameProgress->getGames())
+   for(OneGameData oneGameData: games)
    {
        if(!oneGameData.complete())
        {

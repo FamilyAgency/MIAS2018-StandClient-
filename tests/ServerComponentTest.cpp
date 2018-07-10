@@ -20,7 +20,7 @@ void ServerComponentTest::fetchUser(int rfid)
     lastRfid = rfid;
     setServerStatus(ServerStatus::Busy);
 
-    QTimer::singleShot(4000, this, SLOT(onFetchUser()));
+    QTimer::singleShot(1000, this, SLOT(onFetchUser()));
 }
 
 void ServerComponentTest::onFetchUser()
@@ -46,19 +46,33 @@ void ServerComponentTest::onFetchUser()
 
     QJsonArray gamesArray;
     QJsonObject gameObject1;
-    gameObject1.insert("gameId", QJsonValue::fromVariant(1));
+    gameObject1.insert("id", QJsonValue::fromVariant(1));
     gameObject1.insert("complete", QJsonValue::fromVariant(false));
     gameObject1.insert("time", QJsonValue::fromVariant(12000));
+    gameObject1.insert("description", QJsonValue::fromVariant("some game 1"));
+
+    QJsonArray jsonArray = createPathJsonArray(createPath(1));
+    gameObject1.insert("path", QJsonValue::fromVariant(jsonArray));
 
     QJsonObject gameObject2;
-    gameObject2.insert("gameId", QJsonValue::fromVariant(2));
+    gameObject2.insert("id", QJsonValue::fromVariant(2));
     gameObject2.insert("complete", QJsonValue::fromVariant(false));
     gameObject2.insert("time", QJsonValue::fromVariant(12000));
+    gameObject1.insert("description", QJsonValue::fromVariant("some game 2"));
+
+
+    jsonArray = createPathJsonArray(createPath(2));
+    gameObject2.insert("path", QJsonValue::fromVariant(jsonArray));
 
     QJsonObject gameObject3;
-    gameObject3.insert("gameId", QJsonValue::fromVariant(3));
+    gameObject3.insert("id", QJsonValue::fromVariant(3));
     gameObject3.insert("complete", QJsonValue::fromVariant(false));
     gameObject3.insert("time", QJsonValue::fromVariant(12000));
+    gameObject1.insert("description", QJsonValue::fromVariant("some game 3"));
+
+
+    jsonArray = createPathJsonArray(createPath(3));
+    gameObject3.insert("path", QJsonValue::fromVariant(jsonArray));
 
     gamesArray.insert(0, QJsonValue::fromVariant(gameObject1));
     gamesArray.insert(1, QJsonValue::fromVariant(gameObject2));
@@ -68,18 +82,18 @@ void ServerComponentTest::onFetchUser()
 
 
 
-//    GameProgress* gameProgress = createGamesOnStage1();
+    //    GameProgress* gameProgress = createGamesOnStage1();
 
-//    if(gameId == 2)
-//    {
-//        gameProgress = createGamesOnStage2();
-//    }
-//    else if(gameId == 3)
-//    {
-//        gameProgress = createGamesOnStage3();
-//    }
+    //    if(gameId == 2)
+    //    {
+    //        gameProgress = createGamesOnStage2();
+    //    }
+    //    else if(gameId == 3)
+    //    {
+    //        gameProgress = createGamesOnStage3();
+    //    }
 
-//    userData->setGameProgess(gameProgress);
+    //    userData->setGameProgess(gameProgress);
 
     QJsonDocument doc(userObject);
 
@@ -96,9 +110,6 @@ void ServerComponentTest::onFetchUser()
 
     httpRequestSuccessHandler(doc.toJson());
 }
-
-
-
 
 void ServerComponentTest::fetchDoesntExistUser(int rfid)
 {
@@ -387,7 +398,6 @@ void ServerComponentTest::onFinishedWithPrizes()
     httpRequestSuccessHandler(doc.toJson());
 }
 
-
 void ServerComponentTest::simulateServerTimeout()
 {
     if(!canRunRequest())
@@ -420,7 +430,7 @@ void ServerComponentTest::simulateServerError()
 
 void ServerComponentTest::onSimulateServerError()
 {
-   httpRequestFailedHandler("Error: Simulate Server Error");
+    httpRequestFailedHandler("Error: Simulate Server Error");
 }
 
 void ServerComponentTest::logout()
@@ -536,8 +546,16 @@ VelocityCalculator ServerComponentTest::createDifficult(int diff)
     return velocitycalculator;
 }
 
+QJsonArray ServerComponentTest::createPathJsonArray(const QVector<QPointF>& path)
+{
+    QJsonArray jsonArray;
 
-
-
-
-
+    for (auto &point : path)
+    {
+        QJsonObject jsonPoint;
+        jsonPoint.insert("x", point.x());
+        jsonPoint.insert("y", point.y());
+        jsonArray.append(jsonPoint);
+    }
+    return jsonArray;
+}

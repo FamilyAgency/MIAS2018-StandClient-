@@ -66,11 +66,11 @@ public:
     void setPlayingOnAnother(bool value);
 
     void setQmlContext(QQmlContext* value);
-    void setGameProgess(GameProgress* value);
+    void setGameProgess(const GameProgress& value);
     void clearData();
     void parse(const QString& userObject);
 
-    GameProgress* getGameProgess();
+    GameProgress getGameProgess() const;
     OneGameData getCurrentGameData() const;
     void currentGameCompleted(int time);
     bool hasGames() const;
@@ -92,7 +92,8 @@ private:
     bool _playingOnAnother = false;
 
     QQmlContext* qmlContext;
-    GameProgress* gameProgress;
+
+    GameProgress gameProgress;
     UserState userState;
     LoginState loginState = LoginState::Logout;
 

@@ -3,6 +3,8 @@
 #include <QJsonDocument.h>
 #include <QJsonObject.h>
 #include <QJsonArray.h>
+#include <QDebug>
+
 
 UserData::UserData(QObject *parent) : QObject(parent)
 {
@@ -10,26 +12,17 @@ UserData::UserData(QObject *parent) : QObject(parent)
     prizes.append(false);
     prizes.append(false);
     setPrizes(prizes);
-
-    gameProgress = new GameProgress();
-    gameProgress->setCurrentGameId(1);
-    gameProgress->setGamesCount(0);
-    gameProgress->setGamesCompleteCount(0);
 }
 
 UserData::~UserData()
 {
-    if(gameProgress)
-    {
-        delete gameProgress;
-    }
+
 }
 
 void UserData::setQmlContext(QQmlContext* value)
 {
     qmlContext = value;
     qmlContext->setContextProperty("userData", this);
-    gameProgress->setQmlContext(qmlContext);
 }
 
 void UserData::setUserState(UserState value)
@@ -152,37 +145,37 @@ void UserData::setPlayingOnAnother(bool value)
     emit playingOnAnotherChanged();
 }
 
-void UserData::setGameProgess(GameProgress* value)
+void UserData::setGameProgess(const GameProgress& value)
 {
     gameProgress = value;
 }
 
-GameProgress* UserData::getGameProgess()
+GameProgress UserData::getGameProgess() const
 {
     return gameProgress;
 }
 
 OneGameData UserData::getCurrentGameData() const
 {
-    return gameProgress->getCurrentGameData();
+    return gameProgress.getCurrentGameData();
 }
 
 void UserData::currentGameCompleted(int time)
 {
-    gameProgress->currentGameCompleted(time);
+    gameProgress.currentGameCompleted(time);
 }
 
 bool UserData::hasGames() const
 {
-    return gameProgress->hasGames();
+    return gameProgress.hasGames();
 }
 
 void UserData::clearData()
 {
-    gameProgress->setCleanTime(0.0f);
-    gameProgress->setCurrentGameId(0);
-    gameProgress->setGamesCount(0);
-    gameProgress->setGamesCompleteCount(0);
+    gameProgress.setCleanTime(0.0f);
+    gameProgress.setCurrentGameId(0);
+    gameProgress.setGamesCount(0);
+    gameProgress.setGamesCompleteCount(0);
 }
 
 void UserData::parse(const QString& userObject)
@@ -205,8 +198,34 @@ void UserData::parse(const QString& userObject)
     prizes.append(false);
     setPrizes(prizes);
 
-   // GameProgress* gameProgress = createGamesOnStage1();
-   // userData->setGameProgess(gameProgress);
+
+    auto gamesJson = jsonObj["games"].toArray();
+    QVector<OneGameData> games;
+    for(int i = 0; i < gamesJson.size(); i++)
+    {
+        auto gameJson = gamesJson[i].toObject();
+        OneGameData oneGameData;
+        oneGameData.setId(gameJson["id"].toInt());
+        oneGameData.setComplete(gameJson["complete"].toBool());
+        oneGameData.setTime(gameJson["time"].toInt());
+        oneGameData.setDescription(gameJson["description"].toString());
+        QVector<QPointF> path;
+        auto pathArray = gameJson["path"].toArray();
+        for(auto pointJson: pathArray)
+        {
+            QPointF point;
+            point.setX(pointJson.toObject()["x"].toDouble());
+            point.setY(pointJson.toObject()["y"].toDouble());
+            path.push_back(point);
+        }
+        oneGameData.setPath(path);
+        games.push_back(oneGameData);
+    }
+
+    GameProgress gameProgress;
+    gameProgress.setGames(games);
+    gameProgress.setCurrentGameId(jsonObj["currentGameId"].toInt());
+    setGameProgess(gameProgress);
 
     if(!exist())
     {

@@ -1,21 +1,21 @@
 #include "GameProgress.h"
 #include <QDebug>
 
-GameProgress::GameProgress(QObject *parent) : QObject(parent)
+GameProgress::GameProgress()//(QObject *parent) : QObject(parent)
 {
 
 }
 
-void GameProgress::setQmlContext(QQmlContext* qmlContext)
-{
-    //qmlContext = value;
-    qmlContext->setContextProperty("gameProgress", this);
-}
+//void GameProgress::setQmlContext(QQmlContext* qmlContext)
+//{
+//    //qmlContext = value;
+//    qmlContext->setContextProperty("gameProgress", this);
+//}
 
 void GameProgress::setCurrentGameId(int stage)
 {
     _currentGameId = stage;
-    emit currentGameIdChanged();
+   // emit currentGameIdChanged();
 }
 
 int GameProgress::currentGameId() const
@@ -26,7 +26,7 @@ int GameProgress::currentGameId() const
 void GameProgress::setGamesCount(int count)
 {
     _gamesCount = count;
-    emit gamesCountChanged();
+   // emit gamesCountChanged();
 }
 
 int GameProgress::gamesCount() const
@@ -37,7 +37,7 @@ int GameProgress::gamesCount() const
 void GameProgress::setGamesCompleteCount(int count)
 {
     _gamesCompleteCount = count;
-    emit gamesCompleteCountChanged();
+   // emit gamesCompleteCountChanged();
 }
 
 int GameProgress::gamesCompleteCount() const
@@ -103,7 +103,7 @@ OneGameData GameProgress::getCurrentGameData() const
 void GameProgress::setCleanTime(float value)
 {
     _cleanTime = value;
-    emit cleanTimeChanged();
+   // emit cleanTimeChanged();
 }
 
 float GameProgress::cleanTime() const

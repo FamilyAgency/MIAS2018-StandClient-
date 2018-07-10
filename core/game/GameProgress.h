@@ -1,23 +1,23 @@
 #ifndef GAMEPROGRESS_H
 #define GAMEPROGRESS_H
 
-#include <QObject>
+//#include <QObject>
 #include <QVector>
 #include <QQmlContext>
 #include "OneGameData.h"
 
-class GameProgress : public QObject
+class GameProgress //: public QObject
 {
-    Q_OBJECT
+  //  Q_OBJECT
 
-    Q_PROPERTY(int currentGameId READ currentGameId WRITE setCurrentGameId NOTIFY currentGameIdChanged)
-    Q_PROPERTY(int gamesCount READ gamesCount WRITE setGamesCount NOTIFY gamesCountChanged)
-    Q_PROPERTY(int gamesCompleteCount READ gamesCompleteCount WRITE setGamesCompleteCount NOTIFY gamesCompleteCountChanged)
-    Q_PROPERTY(float cleanTime READ cleanTime WRITE setCleanTime NOTIFY cleanTimeChanged)
+//    Q_PROPERTY(int currentGameId READ currentGameId WRITE setCurrentGameId NOTIFY currentGameIdChanged)
+//    Q_PROPERTY(int gamesCount READ gamesCount WRITE setGamesCount NOTIFY gamesCountChanged)
+//    Q_PROPERTY(int gamesCompleteCount READ gamesCompleteCount WRITE setGamesCompleteCount NOTIFY gamesCompleteCountChanged)
+//    Q_PROPERTY(float cleanTime READ cleanTime WRITE setCleanTime NOTIFY cleanTimeChanged)
 
 public:
-    explicit GameProgress(QObject *parent = nullptr);
-    void setQmlContext(QQmlContext* value);
+    explicit GameProgress();//QObject *parent = nullptr);
+   // void setQmlContext(QQmlContext* value);
 
     void setCurrentGameId(int stage);
     int currentGameId() const;
@@ -49,11 +49,11 @@ private:
     float complitionTime;
     float _cleanTime = 0.0f;
 
-signals:
-    void currentGameIdChanged();
-    void gamesCountChanged();
-    void gamesCompleteCountChanged();
-    void cleanTimeChanged();
+//signals:
+//    void currentGameIdChanged();
+//    void gamesCountChanged();
+//    void gamesCompleteCountChanged();
+//    void cleanTimeChanged();
 
 };
 
