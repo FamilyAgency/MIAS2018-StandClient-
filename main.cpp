@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
    QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
    QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
 
+
+
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
     qmlRegisterType<UserData>("com.app", 1, 0, "UserState");

@@ -6,7 +6,8 @@
     "appId": 1,
     "appName": "Main stand",
     "folderSeparator": "\\",
-    "monitoring": {
+    "monitoring":
+    {
         "enabled": true,
         "memoryCheckMills": 10000
     },

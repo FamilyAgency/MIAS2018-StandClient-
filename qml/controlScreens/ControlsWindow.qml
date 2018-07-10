@@ -3,10 +3,11 @@ import "../components"
 import "../tests"
 import QtQuick.Window 2.2
 
-Item {
+Item
+{
     property int marginLeft:50;
     property int marginTop:10;
-    property int columnShift:400;   
+    property int columnShift:400;
 
     function setState(state)
     {

@@ -46,7 +46,9 @@ SOURCES += main.cpp \
     core/modules/ResultModule.cpp \
     core/data/StandData.cpp \
     core/data/UserData.cpp \
-    tests/RFIDComponentTest.cpp
+    tests/RFIDComponentTest.cpp \
+    components/MonitoringComponent.cpp \
+    components/monitoring/MemoryChecker.cpp
 
 RESOURCES += qml.qrc
 
@@ -115,6 +117,8 @@ HEADERS += \
     core/modules/ResultModule.h \
     core/data/StandData.h \
     core/data/UserData.h \
-    tests/RFIDComponentTest.h
+    tests/RFIDComponentTest.h \
+    components/MonitoringComponent.h \
+    components/monitoring/MemoryChecker.h
 
 DISTFILES +=

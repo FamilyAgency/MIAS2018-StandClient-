@@ -5,23 +5,23 @@ import "qml/mainScreens"
 import "qml/controlScreens"
 import com.app 1.0
 
-ApplicationWindow {
-    visible: true
-    width: 1500
-    height: 800
-    x:420
-    y:100
-    title: qsTr("App")
-    id:core
-
+ApplicationWindow
+{
+    visible: true;
+    width: 1500;
+    height: 800;
+    x: 420;
+    y: 100;
+    title: qsTr("App");
+    id: core;
 
     property int marginLeft:50;
     property int marginTop:10;
-    property int columnShift:400;   
+    property int columnShift:400;
 
     Item
     {
-        focus: true
+        focus: true;
         Keys.onPressed:
         {
             if (event.key === Qt.Key_Escape)

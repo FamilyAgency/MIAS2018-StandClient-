@@ -11,6 +11,7 @@
 #include "components/ServerComponent.h"
 #include "components/SlackComponent.h"
 #include "components/LoggerComponent.h"
+#include "components/MonitoringComponent.h"
 
 #include "data/StandData.h"
 #include "data/UserData.h"
@@ -64,6 +65,7 @@ private:
     QSharedPointer<RFIDComponent> rfidComponent;
     QSharedPointer<MindwaveComponent> mindWaveComponent;
     QSharedPointer<ServerComponent> serverComponent;
+    QSharedPointer<MonitoringComponent> monitoringComponent;
     QList<QSharedPointer<BaseComponent>> components;
 
     QSharedPointer<StandData> standData;

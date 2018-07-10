@@ -35,6 +35,9 @@ void AppController::testConstruct()
     healthCheckerComponent->addComponent(serverComponent);
     components.append(healthCheckerComponent);
 
+    monitoringComponent.reset(new MonitoringComponent());
+    components.push_back(monitoringComponent);
+
     ////////////////////// modules //////////////////////
 
     introModule.reset(new IntroModule());

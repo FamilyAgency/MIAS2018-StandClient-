@@ -120,6 +120,19 @@ public:
 };
 Q_DECLARE_METATYPE(SlackConfig)
 
+struct MonitoringConfig
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(int memoryCheckMills MEMBER memoryCheckMills)
+    Q_PROPERTY(bool enabled MEMBER enabled)
+
+public:
+    int memoryCheckMills = 10000;
+    bool enabled = false;
+};
+Q_DECLARE_METATYPE(MonitoringConfig)
+
 struct LoggerConfig
 {
 private:
@@ -146,6 +159,8 @@ public:
     QSharedPointer<ServerConfig> serverConfig;
     QSharedPointer<SlackConfig> slackConfig;
     QSharedPointer<LoggerConfig> loggerConfig;
+    QSharedPointer<MonitoringConfig> monitoringConfig;
+
 
     QString getRawData() const;
     void setRawData(const QString& value);

@@ -8,6 +8,7 @@ Config::Config()
     serverConfig.reset(new ServerConfig);
     slackConfig.reset(new SlackConfig);
     loggerConfig.reset(new LoggerConfig);
+    monitoringConfig.reset(new MonitoringConfig);
 }
 
 Config::~Config()

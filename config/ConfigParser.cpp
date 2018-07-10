@@ -33,6 +33,7 @@ void ConfigParser::parse(const QString& configData)
         parseServerConfig(config->serverConfig, jsonObj["server"].toObject());
         parseSlackConfig(config->slackConfig, jsonObj["slack"].toObject());
         parseLoggerConfig(config->loggerConfig, jsonObj["logger"].toObject());
+        parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
 
         config->setRawData(configData);
         config->valid = true;
@@ -97,6 +98,12 @@ void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, con
     slackConfig->logChannel = jsonObj["logChannel"].toString();
     slackConfig->errorChannel = jsonObj["errorChannel"].toString();
     slackConfig->enabled = jsonObj["enabled"].toBool();
+}
+
+void ConfigParser::parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj)
+{
+     monitoringConfig->memoryCheckMills = jsonObj["memoryCheckMills"].toInt();
+     monitoringConfig->enabled = jsonObj["enabled"].toBool();
 }
 
 void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj)
