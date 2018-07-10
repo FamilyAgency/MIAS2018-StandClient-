@@ -9,7 +9,7 @@ ServerComponentTest::ServerComponentTest(QObject *parent) : ServerComponent(pare
     name = "Server Test";
 }
 
-void ServerComponentTest::fetchUser(int rfid)
+void ServerComponentTest::fetchUserWithGameId(int rfid, int gameId)
 {
     if(!canRunRequest())
     {
@@ -18,6 +18,7 @@ void ServerComponentTest::fetchUser(int rfid)
     }
 
     lastRfid = rfid;
+    lastGameId = gameId;
     setServerStatus(ServerStatus::Busy);
 
     QTimer::singleShot(1000, this, SLOT(onFetchUser()));
@@ -37,7 +38,7 @@ void ServerComponentTest::onFetchUser()
     userObject.insert("waitEnoughToPlay", QJsonValue::fromVariant(true));
     userObject.insert("finished", QJsonValue::fromVariant(false));
     userObject.insert("gameMaxTime", QJsonValue::fromVariant(3000));
-    userObject.insert("currentGameId", QJsonValue::fromVariant(1));
+    userObject.insert("currentGameId", QJsonValue::fromVariant(lastGameId));
 
     QJsonArray prizesArray;
     prizesArray.insert(0, QJsonValue::fromVariant(false));
@@ -47,7 +48,7 @@ void ServerComponentTest::onFetchUser()
     QJsonArray gamesArray;
     QJsonObject gameObject1;
     gameObject1.insert("id", QJsonValue::fromVariant(1));
-    gameObject1.insert("complete", QJsonValue::fromVariant(false));
+    gameObject1.insert("complete", QJsonValue::fromVariant(lastGameId > 1));
     gameObject1.insert("time", QJsonValue::fromVariant(12000));
     gameObject1.insert("description", QJsonValue::fromVariant("some game 1"));
 
@@ -57,7 +58,7 @@ void ServerComponentTest::onFetchUser()
 
     QJsonObject gameObject2;
     gameObject2.insert("id", QJsonValue::fromVariant(2));
-    gameObject2.insert("complete", QJsonValue::fromVariant(false));
+    gameObject2.insert("complete", QJsonValue::fromVariant(lastGameId > 2));
     gameObject2.insert("time", QJsonValue::fromVariant(12000));
     gameObject2.insert("description", QJsonValue::fromVariant("some game 2"));
 
@@ -69,7 +70,7 @@ void ServerComponentTest::onFetchUser()
 
     QJsonObject gameObject3;
     gameObject3.insert("id", QJsonValue::fromVariant(3));
-    gameObject3.insert("complete", QJsonValue::fromVariant(false));
+    gameObject3.insert("complete", QJsonValue::fromVariant(lastGameId > 3));
     gameObject3.insert("time", QJsonValue::fromVariant(12000));
     gameObject3.insert("description", QJsonValue::fromVariant("some game 3"));
 
@@ -77,41 +78,12 @@ void ServerComponentTest::onFetchUser()
     gameObject3.insert("path", QJsonValue::fromVariant(jsonArray));
     gameObject3.insert("difficult", QJsonValue::fromVariant(createDiffJsonObject(createDifficult(3))));
 
-
     gamesArray.insert(0, QJsonValue::fromVariant(gameObject1));
     gamesArray.insert(1, QJsonValue::fromVariant(gameObject2));
     gamesArray.insert(2, QJsonValue::fromVariant(gameObject3));
 
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
-
-
-
-    //    GameProgress* gameProgress = createGamesOnStage1();
-
-    //    if(gameId == 2)
-    //    {
-    //        gameProgress = createGamesOnStage2();
-    //    }
-    //    else if(gameId == 3)
-    //    {
-    //        gameProgress = createGamesOnStage3();
-    //    }
-
-    //    userData->setGameProgess(gameProgress);
-
     QJsonDocument doc(userObject);
-
-    switch(lastRfid)
-    {
-    case 1000:
-
-        break;
-
-    case 1001:
-
-        break;
-    }
-
     httpRequestSuccessHandler(doc.toJson());
 }
 
@@ -165,21 +137,8 @@ void ServerComponentTest::onFetchDoesntExistUser()
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
 
     QJsonDocument doc(userObject);
-
-    switch(lastRfid)
-    {
-    case 1000:
-
-        break;
-
-    case 1001:
-
-        break;
-    }
-
     httpRequestSuccessHandler(doc.toJson());
 }
-
 
 void ServerComponentTest::fetchPlayedRecentUser(int rfid)
 {
@@ -239,18 +198,6 @@ void ServerComponentTest::onFetchPlayedRecentUser()
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
 
     QJsonDocument doc(userObject);
-
-    switch(lastRfid)
-    {
-    case 1000:
-
-        break;
-
-    case 1001:
-
-        break;
-    }
-
     httpRequestSuccessHandler(doc.toJson());
 }
 
@@ -313,18 +260,6 @@ void ServerComponentTest::onFetchAlreadyPlayingUser()
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
 
     QJsonDocument doc(userObject);
-
-    switch(lastRfid)
-    {
-    case 1000:
-
-        break;
-
-    case 1001:
-
-        break;
-    }
-
     httpRequestSuccessHandler(doc.toJson());
 }
 
@@ -387,18 +322,6 @@ void ServerComponentTest::onFinishedWithPrizes()
     userObject.insert("games", QJsonValue::fromVariant(gamesArray));
 
     QJsonDocument doc(userObject);
-
-    switch(lastRfid)
-    {
-    case 1000:
-
-        break;
-
-    case 1001:
-
-        break;
-    }
-
     httpRequestSuccessHandler(doc.toJson());
 }
 

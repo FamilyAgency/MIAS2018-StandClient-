@@ -113,12 +113,14 @@ float GameProgress::cleanTime() const
 
 void GameProgress::currentGameCompleted(int time)
 {
-    qDebug()<<" _currentStage " << _currentGameId;
+    qDebug()<<" _currentGameId " << _currentGameId;
+    qDebug()<<" completeGames count " << completeGames.length();
 
     int completeGameIndex = 0;
 
     for(int i = 0; i < uncompleteGames.length(); i++)
     {
+         qDebug()<<" uncompleteGames[i].getId() " << uncompleteGames[i].getId();
         if(uncompleteGames[i].getId() == _currentGameId)
         {
             uncompleteGames[i].setComplete(true);
@@ -150,6 +152,7 @@ void GameProgress::currentGameCompleted(int time)
 
 bool GameProgress::hasGames() const
 {
+     qDebug()<<" hasGames " << uncompleteGames.length();
     return uncompleteGames.length() > 0;
 }
 

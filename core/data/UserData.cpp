@@ -206,6 +206,7 @@ void UserData::parse(const QString& userObject)
         OneGameData oneGameData;
         oneGameData.setId(gameJson["id"].toInt());
         oneGameData.setComplete(gameJson["complete"].toBool());
+        qDebug()<<" completion "<<gameJson["complete"].toBool();
         oneGameData.setTime(gameJson["time"].toInt());
         oneGameData.setDescription(gameJson["description"].toString());
 
@@ -243,6 +244,8 @@ void UserData::parse(const QString& userObject)
     gameProgress.setGames(games);
     gameProgress.setCurrentGameId(jsonObj["currentGameId"].toInt());
     setGameProgess(gameProgress);
+
+    qDebug()<<" current game id " << jsonObj["currentGameId"].toInt();
 
     if(!exist())
     {

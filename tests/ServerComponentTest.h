@@ -12,7 +12,7 @@ class ServerComponentTest: public ServerComponent
 
 public:
     explicit ServerComponentTest(QObject *parent = nullptr);
-    Q_INVOKABLE virtual void fetchUser(int rfid) override;
+    Q_INVOKABLE void fetchUserWithGameId(int rfid, int gameId);
     Q_INVOKABLE virtual void logout() override;
     Q_INVOKABLE void fetchDoesntExistUser(int rfid);
     Q_INVOKABLE void fetchPlayedRecentUser(int rfid);
@@ -24,6 +24,7 @@ public:
 
 private:
     int lastRfid = 1;
+    int lastGameId = 1;
 
     QVector<QPointF> createPath(int pathId);
     VelocityCalculator createDifficult(int diff);

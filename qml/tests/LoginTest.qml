@@ -32,7 +32,7 @@ Item {
                 text:"Login success | stage : "
                 onClicked:
                 {
-                    server.fetchUser(stageBox.value);
+                    server.fetchUserWithGameId(1, stageBox.value);
                 }
             }
 
