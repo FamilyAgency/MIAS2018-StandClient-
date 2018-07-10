@@ -25,8 +25,8 @@ enum class LogRemoteType
 class LoggerComponent : public BaseComponent
 {
     Q_OBJECT
-public:
 
+public:
     LoggerComponent(QObject *parent = nullptr);
     virtual ~LoggerComponent();
 
@@ -47,6 +47,7 @@ private:
     QSharedPointer<SlackComponent> slackComponent;
     int appId = 0;
     QString appName = "None";
+    QString logFormat = "dd.MM.yyyy";
 
     void logTofile(const QString& message);
 

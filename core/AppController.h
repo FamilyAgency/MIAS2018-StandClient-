@@ -60,7 +60,7 @@ private:
     QSharedPointer<ResultModule> resultModule;
     QList<QSharedPointer<BaseModule>> modules;
 
-    QSharedPointer<LoggerComponent> logger;
+    QSharedPointer<LoggerComponent> loggerComponent;
     QSharedPointer<HealthCheckerComponent> healthCheckerComponent;
     QSharedPointer<RFIDComponent> rfidComponent;
     QSharedPointer<MindwaveComponent> mindWaveComponent;

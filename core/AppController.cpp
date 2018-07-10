@@ -16,8 +16,8 @@ void AppController::testConstruct()
 
     //////////////////// components //////////////////////
 
-    logger.reset(new LoggerComponent());
-    components.append(logger);
+    loggerComponent.reset(new LoggerComponent());
+    components.append(loggerComponent);
 
     rfidComponent.reset(new RFIDComponentTest());
     components.append(rfidComponent);
@@ -108,8 +108,8 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
 void AppController::start()
 {
-    // QString initStatus = "Stand " + QString::number(standData->config().appId) + " started.........";
-    //logger->log(initStatus, LogType::Verbose, LoggerService::RemoteType::Slack);
+    QString message = "app started.........";
+    loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 
     for (auto comp : components)
     {
@@ -128,10 +128,7 @@ void AppController::onServerResponse(const ServerResponse& response)
 }
 
 void AppController::onLoginStateChanged(UserData::LoginState loginState)
-{
-    //QString loginMsg = "login state changed  " + loginModule->getStringState();
-    //logger->log(loginMsg);
-
+{ 
     if(loginState == UserData::LoginState::Login)
     {
         gameModule->setUser(userData);
@@ -179,7 +176,8 @@ void AppController::setAppState(AppState value)
     currentModule->start();
     emit appStateChanged(value);
 
-    //logger->log("App state changed : " + currentModule->getName(), LogType::Verbose, LoggerService::RemoteType::Slack);
+    QString message = "App state changed : " + currentModule->getName();
+    loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
 
 QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)

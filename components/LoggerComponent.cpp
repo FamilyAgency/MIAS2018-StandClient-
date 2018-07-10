@@ -108,7 +108,7 @@ QString LoggerComponent::createLocalMessage(const QString& message) const
 QString LoggerComponent::getLocalLogAbsoluteFilePath() const
 {
     QDateTime now = QDateTime::currentDateTime();
-    QString fileFullPath = getLocalLogDirPath() + "/" + now.date().toString() +".txt";
+    QString fileFullPath = getLocalLogDirPath() + "/" + now.date().toString(logFormat) +".txt";
     return fileFullPath;
 }
 
