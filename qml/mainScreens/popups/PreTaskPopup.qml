@@ -48,7 +48,7 @@ Item {
         {
             anchors.centerIn: parent
             id: roundText
-            text: "Round ";// + gameProgress.currentGameId;
+            text: "Round " + userData.currentGameId;
             font.family: "Helvetica";
             font.pixelSize: 35;
             color: "#ffffff";

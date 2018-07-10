@@ -27,7 +27,7 @@ Item {
         {
             id:mainText;
             anchors.centerIn: parent
-            text: "Game " ;//+  gameProgress.currentGameId
+            text: "Game " +  userData.currentGameId
             font.family: "Helvetica"
             font.pixelSize: 25
             color: "#ffffff"

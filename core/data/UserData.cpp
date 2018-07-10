@@ -163,6 +163,7 @@ OneGameData UserData::getCurrentGameData() const
 void UserData::currentGameCompleted(int time)
 {
     gameProgress.currentGameCompleted(time);
+    updateGameProgressData();
 }
 
 bool UserData::hasGames() const
@@ -186,7 +187,6 @@ void UserData::parse(const QString& userObject)
     setName(jsonObj["name"].toString());
     setSurname(jsonObj["surname"].toString());
     setId(jsonObj["id"].toInt());
-    qDebug()<<" userId "<<jsonObj["id"].toInt();
     setFirstTime(true);
     setFinished(false);
     setExist(jsonObj["exist"].toBool());
@@ -197,7 +197,7 @@ void UserData::parse(const QString& userObject)
     auto prizesJson = jsonObj["prizes"].toArray();
     QVariantList prizes;
     prizes.append(prizesJson[0].toBool());
-    prizes.append(prizesJson[0].toBool());
+    prizes.append(prizesJson[1].toBool());
     setPrizes(prizes);
 
     auto gamesJson = jsonObj["games"].toArray();
@@ -246,7 +246,7 @@ void UserData::parse(const QString& userObject)
     gameProgress.setCurrentGameId(jsonObj["currentGameId"].toInt());
     setGameProgess(gameProgress);
 
-    qDebug()<<" current game id " << jsonObj["currentGameId"].toInt();
+    updateGameProgressData();
 
     if(!exist())
     {
@@ -274,5 +274,58 @@ void UserData::parse(const QString& userObject)
 
     setUserState(UserData::UserState::CanPlay);
     setLoginState(UserData::LoginState::Login);
+}
+
+
+void UserData::updateGameProgressData()
+{
+    setCleanGameTime(gameProgress.cleanTime());
+    setCurrentGameId(gameProgress.currentGameId());
+    setGamesCompleteCount(gameProgress.gamesCompleteCount());
+    setGamesCount(gameProgress.gamesCount());
+}
+
+void UserData::setCleanGameTime(float value)
+{
+    _cleanGameTime = value;
+    emit cleanGameTimeChanged();
+}
+
+float UserData::cleanGameTime() const
+{
+    return _cleanGameTime;
+}
+
+void UserData::setCurrentGameId(int stage)
+{
+    _currentGameId = stage;
+     emit currentGameIdChanged();
+}
+
+int UserData::currentGameId() const
+{
+    return _currentGameId;
+}
+
+void UserData::setGamesCount(int count)
+{
+    _gamesCount = count;
+    emit gamesCountChanged();
+}
+
+int UserData::gamesCount() const
+{
+    return _gamesCount;
+}
+
+void UserData::setGamesCompleteCount(int count)
+{
+    _gamesCompleteCount = count;
+    emit gamesCompleteCountChanged();
+}
+
+int UserData::gamesCompleteCount() const
+{
+    return _gamesCompleteCount;
 }
 

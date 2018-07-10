@@ -114,7 +114,7 @@ Item {
             Text
             {
                 id:cleanTimeText;
-                text: "Clean game task-time: ";// + gameProgress.cleanTime.toFixed(1);
+                text: "Clean game task-time: " + userData.cleanGameTime.toFixed(1);
                 font.family: "Helvetica"
                 font.pixelSize: 15
                 color: "#999999"
@@ -123,7 +123,7 @@ Item {
             Text
             {
                 id:stageText;
-                text: "Current stage: ";// + gameProgress.currentGameId;
+                text: "Current stage: " + userData.currentGameId;
                 font.family: "Helvetica"
                 font.pixelSize: 15
                 color: "#999999"
@@ -131,7 +131,7 @@ Item {
             Text
             {
                 id:completionText;
-                text: "Completion: ";// + gameProgress.gamesCompleteCount + " / " + gameProgress.gamesCount
+                text: "Completion: " + userData.gamesCompleteCount + " / " + userData.gamesCount
                 font.family: "Helvetica"
                 font.pixelSize: 15
                 color: "#999999"

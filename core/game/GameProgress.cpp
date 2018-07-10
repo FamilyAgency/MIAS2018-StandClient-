@@ -15,7 +15,6 @@ GameProgress::GameProgress()//(QObject *parent) : QObject(parent)
 void GameProgress::setCurrentGameId(int stage)
 {
     _currentGameId = stage;
-   // emit currentGameIdChanged();
 }
 
 int GameProgress::currentGameId() const
@@ -26,7 +25,6 @@ int GameProgress::currentGameId() const
 void GameProgress::setGamesCount(int count)
 {
     _gamesCount = count;
-   // emit gamesCountChanged();
 }
 
 int GameProgress::gamesCount() const
@@ -37,7 +35,6 @@ int GameProgress::gamesCount() const
 void GameProgress::setGamesCompleteCount(int count)
 {
     _gamesCompleteCount = count;
-   // emit gamesCompleteCountChanged();
 }
 
 int GameProgress::gamesCompleteCount() const
@@ -103,7 +100,6 @@ OneGameData GameProgress::getCurrentGameData() const
 void GameProgress::setCleanTime(float value)
 {
     _cleanTime = value;
-   // emit cleanTimeChanged();
 }
 
 float GameProgress::cleanTime() const
@@ -113,9 +109,6 @@ float GameProgress::cleanTime() const
 
 void GameProgress::currentGameCompleted(int time)
 {
-    qDebug()<<" _currentGameId " << _currentGameId;
-    qDebug()<<" completeGames count " << completeGames.length();
-
     int completeGameIndex = 0;
 
     for(int i = 0; i < uncompleteGames.length(); i++)
@@ -130,18 +123,17 @@ void GameProgress::currentGameCompleted(int time)
         }
     }
 
-   //  qDebug()<<" completeGameIndex " << completeGameIndex;
-
     completeGames.push_back(uncompleteGames[completeGameIndex]);
     uncompleteGames.removeAt(completeGameIndex);
     setGamesCompleteCount(completeGames.length());
 
     float cleanTime = 0.0f;
-    qDebug()<<" completeGames count " << completeGames.length();
+
     for(int i = 0; i < completeGames.length(); i++)
     {
        cleanTime += completeGames[i].getTime();// * toSeconds;
     }
+
     setCleanTime(cleanTime);
 
     if(!uncompleteGames.empty())

@@ -19,6 +19,12 @@ class UserData : public QObject
     Q_PROPERTY(bool playingOnAnother READ playingOnAnother WRITE setPlayingOnAnother NOTIFY playingOnAnotherChanged)
     Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
 
+    Q_PROPERTY(int currentGameId READ currentGameId WRITE setCurrentGameId NOTIFY currentGameIdChanged)
+    Q_PROPERTY(int gamesCount READ gamesCount WRITE setGamesCount NOTIFY gamesCountChanged)
+    Q_PROPERTY(int gamesCompleteCount READ gamesCompleteCount WRITE setGamesCompleteCount NOTIFY gamesCompleteCountChanged)
+    Q_PROPERTY(float cleanGameTime READ cleanGameTime WRITE setCleanGameTime NOTIFY cleanGameTimeChanged)
+
+
     Q_ENUMS(UserState)
     Q_ENUMS(LoginState)
 
@@ -97,6 +103,25 @@ private:
     UserState userState;
     LoginState loginState = LoginState::Logout;
 
+    int _currentGameId = 0;
+    int _gamesCount = 0;
+    int _gamesCompleteCount = 0;
+    float _cleanGameTime = 0.0f;
+
+    void updateGameProgressData();
+
+    void setCurrentGameId(int stage);
+    int currentGameId() const;
+
+    void setGamesCount(int count);
+    int gamesCount() const;
+
+    void setGamesCompleteCount(int count);
+    int gamesCompleteCount() const;
+
+    void setCleanGameTime(float count);
+    float cleanGameTime() const;
+
 signals:
     void nameChanged();
     void surnameChanged();
@@ -110,6 +135,12 @@ signals:
 
     void userStateChanged(UserData::UserState userState);
     void loginStateChanged(UserData::LoginState loginState);
+
+signals:
+    void currentGameIdChanged();
+    void gamesCountChanged();
+    void gamesCompleteCountChanged();
+    void cleanGameTimeChanged();
 };
 
 #endif // USERDATA_H
