@@ -186,6 +186,7 @@ void UserData::parse(const QString& userObject)
     setName(jsonObj["name"].toString());
     setSurname(jsonObj["surname"].toString());
     setId(jsonObj["id"].toInt());
+    qDebug()<<" userId "<<jsonObj["id"].toInt();
     setFirstTime(true);
     setFinished(false);
     setExist(jsonObj["exist"].toBool());
@@ -193,9 +194,10 @@ void UserData::parse(const QString& userObject)
     setPlayingOnAnother(jsonObj["playingOnAnother"].toBool());
     setFinished(jsonObj["finished"].toBool());
 
+    auto prizesJson = jsonObj["prizes"].toArray();
     QVariantList prizes;
-    prizes.append(true);
-    prizes.append(false);
+    prizes.append(prizesJson[0].toBool());
+    prizes.append(prizesJson[0].toBool());
     setPrizes(prizes);
 
     auto gamesJson = jsonObj["games"].toArray();
@@ -206,7 +208,6 @@ void UserData::parse(const QString& userObject)
         OneGameData oneGameData;
         oneGameData.setId(gameJson["id"].toInt());
         oneGameData.setComplete(gameJson["complete"].toBool());
-        qDebug()<<" completion "<<gameJson["complete"].toBool();
         oneGameData.setTime(gameJson["time"].toInt());
         oneGameData.setDescription(gameJson["description"].toString());
 

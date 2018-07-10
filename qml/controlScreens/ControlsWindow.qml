@@ -59,17 +59,17 @@ Item {
         id:health
     }
 
-    Logger
-    {
-        x:marginLeft + 800;
-        y:marginTop;
-        id:logger;
-    }
+//    Logger
+//    {
+//        x:marginLeft + 800;
+//        y:marginTop;
+//        id:logger;
+//    }
 
     TestScreen
     {
         x:marginLeft + 800;
-        y:marginTop + 300;
+        y:marginTop;
         id:testScreen;
     }
 

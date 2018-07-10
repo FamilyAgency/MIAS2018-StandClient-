@@ -31,7 +31,7 @@ void ServerComponentTest::onFetchUser()
 
     QJsonObject userObject;
     userObject.insert("exist", QJsonValue::fromVariant(true));
-    userObject.insert("userId", QJsonValue::fromVariant(lastRfid));
+    userObject.insert("id", QJsonValue::fromVariant(lastRfid));
     userObject.insert("name", QJsonValue::fromVariant("Ivan"));
     userObject.insert("surname", QJsonValue::fromVariant("Ivanov"));
     userObject.insert("firstTime", QJsonValue::fromVariant(true));
@@ -161,7 +161,7 @@ void ServerComponentTest::onFetchPlayedRecentUser()
 
     QJsonObject userObject;
     userObject.insert("exist", QJsonValue::fromVariant(true));
-    userObject.insert("userId", QJsonValue::fromVariant(lastRfid));
+    userObject.insert("id", QJsonValue::fromVariant(lastRfid));
     userObject.insert("name", QJsonValue::fromVariant("Igor"));
     userObject.insert("surname", QJsonValue::fromVariant("Igor"));
     userObject.insert("firstTime", QJsonValue::fromVariant(true));
@@ -222,7 +222,7 @@ void ServerComponentTest::onFetchAlreadyPlayingUser()
 
     QJsonObject userObject;
     userObject.insert("exist", QJsonValue::fromVariant(true));
-    userObject.insert("userId", QJsonValue::fromVariant(lastRfid));
+    userObject.insert("id", QJsonValue::fromVariant(lastRfid));
     userObject.insert("name", QJsonValue::fromVariant("Igor"));
     userObject.insert("surname", QJsonValue::fromVariant("Igor"));
     userObject.insert("firstTime", QJsonValue::fromVariant(true));
@@ -284,7 +284,7 @@ void ServerComponentTest::onFinishedWithPrizes()
 
     QJsonObject userObject;
     userObject.insert("exist", QJsonValue::fromVariant(true));
-    userObject.insert("userId", QJsonValue::fromVariant(lastRfid));
+    userObject.insert("id", QJsonValue::fromVariant(lastRfid));
     userObject.insert("name", QJsonValue::fromVariant("Igor"));
     userObject.insert("surname", QJsonValue::fromVariant("Igor"));
     userObject.insert("firstTime", QJsonValue::fromVariant(true));

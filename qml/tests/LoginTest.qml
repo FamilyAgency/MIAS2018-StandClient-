@@ -32,8 +32,17 @@ Item {
                 text:"Login success | stage : "
                 onClicked:
                 {
-                    server.fetchUserWithGameId(1, stageBox.value);
+                    server.fetchUserWithGameId(idBox.value, stageBox.value);
                 }
+            }
+
+            SpinBox
+            {
+                id: idBox
+                value: 1000
+                editable: true
+                from:1000
+                to:3000
             }
 
             SpinBox
@@ -41,6 +50,8 @@ Item {
                 id: stageBox
                 value: 1
                 editable: true
+                from:1
+                to:3
             }
         }
 
@@ -70,6 +81,8 @@ Item {
                 id: prizeBox
                 value: 0
                 editable: true
+                from:0
+                to:2
             }
         }
 
