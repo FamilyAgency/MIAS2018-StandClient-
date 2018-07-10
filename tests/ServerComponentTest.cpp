@@ -53,26 +53,30 @@ void ServerComponentTest::onFetchUser()
 
     QJsonArray jsonArray = createPathJsonArray(createPath(1));
     gameObject1.insert("path", QJsonValue::fromVariant(jsonArray));
+    gameObject1.insert("difficult", QJsonValue::fromVariant(createDiffJsonObject(createDifficult(1))));
 
     QJsonObject gameObject2;
     gameObject2.insert("id", QJsonValue::fromVariant(2));
     gameObject2.insert("complete", QJsonValue::fromVariant(false));
     gameObject2.insert("time", QJsonValue::fromVariant(12000));
-    gameObject1.insert("description", QJsonValue::fromVariant("some game 2"));
+    gameObject2.insert("description", QJsonValue::fromVariant("some game 2"));
 
 
     jsonArray = createPathJsonArray(createPath(2));
     gameObject2.insert("path", QJsonValue::fromVariant(jsonArray));
+    gameObject2.insert("difficult", QJsonValue::fromVariant(createDiffJsonObject(createDifficult(2))));
+
 
     QJsonObject gameObject3;
     gameObject3.insert("id", QJsonValue::fromVariant(3));
     gameObject3.insert("complete", QJsonValue::fromVariant(false));
     gameObject3.insert("time", QJsonValue::fromVariant(12000));
-    gameObject1.insert("description", QJsonValue::fromVariant("some game 3"));
-
+    gameObject3.insert("description", QJsonValue::fromVariant("some game 3"));
 
     jsonArray = createPathJsonArray(createPath(3));
     gameObject3.insert("path", QJsonValue::fromVariant(jsonArray));
+    gameObject3.insert("difficult", QJsonValue::fromVariant(createDiffJsonObject(createDifficult(3))));
+
 
     gamesArray.insert(0, QJsonValue::fromVariant(gameObject1));
     gamesArray.insert(1, QJsonValue::fromVariant(gameObject2));
@@ -558,4 +562,16 @@ QJsonArray ServerComponentTest::createPathJsonArray(const QVector<QPointF>& path
         jsonArray.append(jsonPoint);
     }
     return jsonArray;
+}
+
+QJsonObject ServerComponentTest::createDiffJsonObject(const VelocityCalculator& velCalc)
+{
+    QJsonObject diffObject;
+    diffObject.insert("humanValueThresholdMax", velCalc.humanValueThresholdMax);
+    diffObject.insert("humanValueThresholdMin", velCalc.humanValueThresholdMin);
+    diffObject.insert("minVelocity", velCalc.minVelocity);
+    diffObject.insert("maxVelocity", velCalc.maxVelocity);
+    diffObject.insert("minBackVelocity", velCalc.minBackVelocity);
+    diffObject.insert("maxBackVelocity", velCalc.maxBackVelocity);
+    return diffObject;
 }

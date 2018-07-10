@@ -28,7 +28,7 @@ public:
        return humanValueThresholdMin / humanValueThresholdMax;
     }
 
-private:
+public:
     float humanValueThresholdMax = 100;
     float humanValueThresholdMin = 60;
 

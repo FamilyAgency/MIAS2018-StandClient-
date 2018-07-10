@@ -198,7 +198,6 @@ void UserData::parse(const QString& userObject)
     prizes.append(false);
     setPrizes(prizes);
 
-
     auto gamesJson = jsonObj["games"].toArray();
     QVector<OneGameData> games;
     for(int i = 0; i < gamesJson.size(); i++)
@@ -209,6 +208,24 @@ void UserData::parse(const QString& userObject)
         oneGameData.setComplete(gameJson["complete"].toBool());
         oneGameData.setTime(gameJson["time"].toInt());
         oneGameData.setDescription(gameJson["description"].toString());
+
+        auto diffObject = gameJson["difficult"].toObject();
+        auto humanValueThresholdMax = diffObject["humanValueThresholdMax"].toDouble();
+        auto humanValueThresholdMin = diffObject["humanValueThresholdMin"].toDouble();
+        auto minVelocity = diffObject["minVelocity"].toDouble();
+        auto maxVelocity = diffObject["maxVelocity"].toDouble();
+        auto minBackVelocity = diffObject["minBackVelocity"].toDouble();
+        auto maxBackVelocity = diffObject["maxBackVelocity"].toDouble();
+
+        oneGameData.setDifficult
+                (VelocityCalculator
+                 (minVelocity,
+                  maxVelocity,
+                  humanValueThresholdMin,
+                  humanValueThresholdMax,
+                  minBackVelocity,
+                  maxBackVelocity));
+
         QVector<QPointF> path;
         auto pathArray = gameJson["path"].toArray();
         for(auto pointJson: pathArray)

@@ -28,6 +28,8 @@ private:
     QVector<QPointF> createPath(int pathId);
     VelocityCalculator createDifficult(int diff);
     QJsonArray createPathJsonArray(const QVector<QPointF>& path);
+    QJsonObject createDiffJsonObject(const VelocityCalculator& velCalc);
+
 
 private slots:
     void onFetchUser();
