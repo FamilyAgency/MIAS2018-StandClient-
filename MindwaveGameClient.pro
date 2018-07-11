@@ -48,8 +48,9 @@ SOURCES += main.cpp \
     core/data/UserData.cpp \
     tests/RFIDComponentTest.cpp \
     components/MonitoringComponent.cpp \
-    components/monitoring/MemoryChecker.cpp
+    components/monitoring/MemoryChecker.cpp \
     components/ServerRemoteComponent.cpp \
+    tools/AppSettings.cpp \
     tools/StringTools.cpp
 
 RESOURCES += qml.qrc
@@ -121,8 +122,9 @@ HEADERS += \
     core/data/UserData.h \
     tests/RFIDComponentTest.h \
     components/MonitoringComponent.h \
-    components/monitoring/MemoryChecker.h
+    components/monitoring/MemoryChecker.h \
     components/ServerRemoteComponent.h \
+    tools/AppSettings.h \
     tools/StringTools.h
 
 DISTFILES +=

@@ -161,7 +161,6 @@ public:
     QSharedPointer<LoggerConfig> loggerConfig;
     QSharedPointer<MonitoringConfig> monitoringConfig;
 
-
     QString getRawData() const;
     void setRawData(const QString& value);
 

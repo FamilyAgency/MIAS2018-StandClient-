@@ -9,9 +9,7 @@ class AppSettings : public QObject
 public:
     explicit AppSettings(QObject *parent = nullptr);
 
-signals:
-
-public slots:
+    void init();
 };
 
 #endif // APPSETTINGS_H

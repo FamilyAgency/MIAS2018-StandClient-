@@ -111,6 +111,7 @@ void IntroModule::onServerResponse(const ServerResponse& response)
     else if(response.type == ResponseType::UserFetched)
     {
         qDebug()<<"server answered  "<< response.body;
+       // serverComponent->parse(response);
         userData->clearData();
         userData->parse(response.body);
     }

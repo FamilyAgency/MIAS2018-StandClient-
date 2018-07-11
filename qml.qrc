@@ -10,7 +10,6 @@
         <file>qml/components/MindwaveComponent.qml</file>
         <file>qml/components/HealthCheckerComponent.qml</file>
         <file>qml/touchScreens/TouchWindow.qml</file>
-        <file>qml/tests/LoginTest.qml</file>
         <file>qml/touchScreens/InstructionScreen.qml</file>
         <file>qml/touchScreens/BackBtn.qml</file>
         <file>qml/touchScreens/GameScreen.qml</file>
@@ -36,5 +35,7 @@
         <file>qml/touchScreens/elements/ServerPreloader.qml</file>
         <file>qml/touchScreens/elements/ServerErrorPopup.qml</file>
         <file>qml/tests/RFIDTest.qml</file>
+        <file>qml/tests/ServerRemoteTest.qml</file>
+        <file>qml/tests/ServerFakeTest.qml</file>
     </qresource>
 </RCC>

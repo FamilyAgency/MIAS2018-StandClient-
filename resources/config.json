@@ -8,7 +8,7 @@
     "folderSeparator": "\\",
     "monitoring":
     {
-        "enabled": true,
+        "enabled": false,
         "memoryCheckMills": 10000
     },
     "logger":
@@ -54,12 +54,12 @@
         "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r"
     },
     "slack": {
-        "enabled": true,
+        "enabled": false,
         "errorChannel": "https://hooks.slack.com/services/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",
         "logChannel": "https://hooks.slack.com/services/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"
     },
     "server":
     {
-        "url": "http://mindwave.family.creative"
+        "url": "http://mias2018.familyagency.ru"
     }
 }
