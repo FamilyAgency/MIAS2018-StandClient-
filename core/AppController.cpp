@@ -8,6 +8,9 @@ AppController::AppController(QObject *parent) : QObject(parent)
 
 void AppController::testConstruct()
 {
+    appSettings.reset(new AppSettings);
+    appSettings->init();
+
     userData.reset(new UserData());
     connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
@@ -25,7 +28,7 @@ void AppController::testConstruct()
     mindWaveComponent.reset(new MindwaveComponentTest());
     components.append(mindWaveComponent);
 
-    serverComponent.reset(new ServerComponentTest());  
+    serverComponent.reset(new ServerRemoteComponent());
     connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
     components.append(serverComponent);
 
@@ -201,5 +204,13 @@ void AppController::onConfigError()
 void AppController::backtoIntro()
 {
     setAppState(AppState::Login);
+}
+
+//===================TESTS===================
+
+void AppController::testCrash()
+{
+    IntroModule* module;
+    module->start();
 }
 

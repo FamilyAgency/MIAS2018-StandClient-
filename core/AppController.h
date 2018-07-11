@@ -9,6 +9,7 @@
 #include "components/RFIDComponent.h"
 #include "components/MindwaveComponent.h"
 #include "components/ServerComponent.h"
+#include "components/ServerRemoteComponent.h"
 #include "components/SlackComponent.h"
 #include "components/LoggerComponent.h"
 #include "components/MonitoringComponent.h"
@@ -26,6 +27,8 @@
 #include "tests/MindwaveComponentTest.h"
 #include "tests/ServerComponentTest.h"
 #include "tests/RFIDComponentTest.h"
+
+#include "tools/AppSettings.h"
 
 class AppController : public QObject
 {
@@ -52,6 +55,8 @@ public:
     Q_INVOKABLE void startResult();
     Q_INVOKABLE void backtoIntro();
 
+    Q_INVOKABLE void testCrash();
+
 private:
     QSharedPointer<IntroModule> introModule;
     QSharedPointer<IntroModuleTest> introModuleTest;
@@ -72,6 +77,7 @@ private:
     QSharedPointer<UserData> userData;
     ConfigPtr config;
     QSharedPointer<GameSession> gameSession;
+    QSharedPointer<AppSettings> appSettings;
 
     AppState appState = AppState::Login;
     QSharedPointer<BaseModule> currentModule = nullptr;
