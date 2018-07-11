@@ -6,12 +6,12 @@ Item {
 
     Text
     {
-        text: "===================TESTS==================="
-        font.family: "Helvetica"
-        font.pixelSize: 18
-        color: "#990000"
+        text: "===================TESTS===================";
+        font.family: "Helvetica";
+        font.pixelSize: 18;
+        color: "#990000";
     }
-    LoginTest
+    ServerRemoteTest
     {
         y: 50;
     }
@@ -19,5 +19,13 @@ Item {
     RFIDTest
     {
         y: 500;
+        visible:false;
+    }
+
+    Button
+    {
+        text: "Make Me Crash";
+        y: 700;
+        onClicked: appController.testCrash();
     }
 }

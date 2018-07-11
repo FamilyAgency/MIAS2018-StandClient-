@@ -11,7 +11,18 @@ enum class ResponseType
     None,
     Error,
     UserFetched,
-    Logout
+    Logout,
+
+    GetUserDataRequest,
+    ConfigRequest,
+    UpdatesRequest,
+    HealthLogRequest,
+    AllUsersRequest,
+    CreateUserRequest,
+    SearchUserRequest,
+    DeleteAllTestUsersRequest,
+    VerifyUserRequest,
+    ConfirmUserRequest
 };
 
 enum class ServerErrorType
@@ -76,6 +87,8 @@ public:
 
     Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
 
+    virtual void parse(const ServerResponse& response);
+
 
 // REST API
 //   -----------------config-----------------
@@ -104,14 +117,13 @@ public:
 //    void healthCheck(deviceId);
 
     friend class ServerComponentTest;
-    
-private:
+
+protected:
+     ServerResponse response;
      ServerConfig _serverConfig;
      QSharedPointer<HTTPClient> httpClient;
      ServerStatus _serverStatus = ServerStatus::Free;
      bool canRunRequest() const;
-
-     ServerResponse response;
 
 signals:
     void serverConfigChanged();
@@ -120,8 +132,8 @@ signals:
     void serverError();
 
 protected slots:
-   void httpRequestSuccessHandler(const QString& data);
-   void httpRequestFailedHandler(const QString& data);
+   virtual void httpRequestSuccessHandler(const QString& data);
+   virtual void httpRequestFailedHandler(const QString& data);
 };
 
 #endif // SERVERCOMPONENT_H

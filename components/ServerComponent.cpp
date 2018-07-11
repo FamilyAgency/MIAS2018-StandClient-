@@ -76,8 +76,9 @@ void ServerComponent::logout()
 
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
 {
-    setServerStatus(ServerStatus::Free);   
     response.body = data;
+    parse(response);
+    setServerStatus(ServerStatus::Free);
     emit serverResponse(response);
 }
 
@@ -91,4 +92,9 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
     response.body = data;
     emit serverError();
     emit serverResponse(response);
+}
+
+void ServerComponent::parse(const ServerResponse& response)
+{
+
 }

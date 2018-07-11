@@ -18,7 +18,7 @@ Item {
         spacing: 10;
         Text
         {
-            text: "Server Login Test";
+            text: "Server Fake Tests";
             font.family: "Helvetica"
             font.pixelSize: 17
             color: consts.infoTextColor

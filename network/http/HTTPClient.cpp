@@ -1,5 +1,7 @@
 #include "HTTPClient.h"
 #include <QThread.h>
+#include <QTextCodec.h>
+#include "tools/StringTools.h"
 
 HTTPClient::HTTPClient(QObject *parent) : QObject(parent)
 {
@@ -33,20 +35,28 @@ void HTTPClient::runGetRequest(const QString& URL)
 
 void HTTPClient::runPostRequest(const QNetworkRequest& request, const QByteArray& data)
 {
-    networkManager->post(request, data);
+    networkManager->post(request, data);  
+}
+
+void HTTPClient::runDeleteRequest(const QNetworkRequest& request)
+{
+    networkManager->deleteResource(request);
 }
 
 void HTTPClient::httpRequestSuccessHandler(QNetworkReply* reply)
 {
     if (reply->error() != QNetworkReply::NoError )
     {
-        qDebug() << "Request failed, " << reply->errorString();
+        qDebug() << "Request failed, " << reply->readAll();
         emit httpRequestFailed(reply->errorString());
     }
     else
     {
         QByteArray ba = reply->readAll();
-        emit httpRequestSuccess(QString::fromUtf8(ba));
+        StringTools stringTools;
+        QString modifyedString = stringTools.convertUnicodeToCyrillic(ba);
+
+        emit httpRequestSuccess(modifyedString);
     }
 
     reply->deleteLater();
