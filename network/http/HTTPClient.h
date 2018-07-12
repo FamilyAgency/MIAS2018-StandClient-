@@ -6,6 +6,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QSslError>
+#include <QTimer>
 
 class HTTPClient : public QObject
 {
@@ -18,6 +19,9 @@ public:
     void runPostRequest(const QNetworkRequest& request, const QByteArray& data);
     void runDeleteRequest(const QNetworkRequest& request);
 
+    void setTimemoutInterval(int interval);
+    void setRequestTryCount(int requestTryCount);
+
 signals:
     void httpRequestSuccess(const QString& data);
     void httpRequestFailed(const QString& data);
@@ -29,8 +33,14 @@ public slots:
 
 private:
      QNetworkAccessManager *networkManager;
-
      QChar toCyrConverter(const QString& unicode);
+     QTimer* timeoutTimer;
+     QNetworkReply* httpReply = nullptr;
+     int requestTryCount = 1;
+     int requestTimemoutInterval = 1;
+
+private slots:
+     void onTimeoutHandle();
 };
 
 #endif // HTTPCLIENT_H

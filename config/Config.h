@@ -99,9 +99,13 @@ struct ServerConfig
 private:
     Q_GADGET
     Q_PROPERTY(QString url MEMBER url)
+    Q_PROPERTY(int requestTimemoutInterval MEMBER requestTimemoutInterval)
+    Q_PROPERTY(int requestTryCount MEMBER requestTryCount)
 
 public:
     QString url = "http://mindwave.family.creative";
+    int requestTimemoutInterval = 5000;
+    int requestTryCount = 2;
 };
 Q_DECLARE_METATYPE(ServerConfig)
 

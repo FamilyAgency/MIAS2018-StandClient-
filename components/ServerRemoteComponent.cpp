@@ -104,11 +104,11 @@ void ServerRemoteComponent::createUserRequest(bool isTestUser)
                       "+79067704595",
                       isTestUser ? "1" : "0");
 
-//    createUserRequest("Вика",
-//                      "Журавлева",
-//                      "vika@gmail.com",
-//                      "+89151546522",
-//                      isTestUser ? "1" : "0");
+    //    createUserRequest("Вика",
+    //                      "Журавлева",
+    //                      "vika@gmail.com",
+    //                      "+89151546522",
+    //                      isTestUser ? "1" : "0");
 }
 
 void ServerRemoteComponent::searchUserRequest(const QString& email, const QString& phone)
@@ -221,15 +221,15 @@ void ServerRemoteComponent::confirmUserRequest(int userId, int code)
 
 void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 {
-//    if(!canRunRequest())
-//    {
-//        qDebug()<<"wait for server please";
-//        return;
-//    }
+    //    if(!canRunRequest())
+    //    {
+    //        qDebug()<<"wait for server please";
+    //        return;
+    //    }
 
-//    response.clear();
-//    response.type = ResponseType::ConfirmPrizeRequest;
-//    setServerStatus(ServerStatus::Busy);
+    //    response.clear();
+    //    response.type = ResponseType::ConfirmPrizeRequest;
+    //    setServerStatus(ServerStatus::Busy);
 }
 
 void ServerRemoteComponent::parse(const ServerResponse& response)
@@ -254,19 +254,19 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
 
     if(response.type == ResponseType::CreateUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();       
+        QJsonObject dataJson = responeJson["data"].toObject();
         createBaseUserInfo(dataJson);
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::ConfirmUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();        
+        QJsonObject dataJson = responeJson["data"].toObject();
         createBaseUserInfo(dataJson);
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::VerifyUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();        
+        QJsonObject dataJson = responeJson["data"].toObject();
         createBaseUserInfo(dataJson);
         emit serverRequestSuccess(response.type);
     }
@@ -276,7 +276,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
 
         if(dataArrayJson.size() > 0 )
         {
-            QJsonObject dataJson = dataArrayJson[0].toObject();           
+            QJsonObject dataJson = dataArrayJson[0].toObject();
             createBaseUserInfo(dataJson);
             emit serverRequestSuccess(response.type);
         }
@@ -352,9 +352,24 @@ void ServerRemoteComponent::simulateServerError()
     response.type = ResponseType::VerifyUserRequest;
     setServerStatus(ServerStatus::Busy);
 
-    QString fullRequest = serverConfig().url;
+    QString fullRequest = "http://mias2018.familyagency.ru";
     httpClient->runGetRequest(fullRequest);
-   // httpRequestFailedHandler("Error: Simulate Server Error");
+}
+
+void ServerRemoteComponent::simulateServerTimeout()
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::VerifyUserRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = "http://familyagency.ru/lab/infloop.php";
+    httpClient->runGetRequest(fullRequest);
 }
 
 

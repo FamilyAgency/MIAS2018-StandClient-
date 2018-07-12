@@ -91,6 +91,8 @@ void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveCo
 void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj)
 {   
     serverConfig->url = jsonObj["url"].toString();
+    serverConfig->requestTimemoutInterval = jsonObj["requestTimemoutInterval"].toInt();
+    serverConfig->requestTryCount = jsonObj["requestCount"].toInt();
 }
 
 void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj)

@@ -13,6 +13,10 @@ HTTPClient::HTTPClient(QObject *parent) : QObject(parent)
     //connect(networkManager, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpRequestErrorHandler(QNetworkReply::NetworkError)));
     connect(networkManager, SIGNAL(sslErrors(QNetworkReply*, QList<QSslError>)), this, SLOT(sslErrorHandler(QNetworkReply*, QList<QSslError>)));
 
+    timeoutTimer = new QTimer(this);
+    timeoutTimer->setSingleShot(true);
+    timeoutTimer->setInterval(requestTimemoutInterval);
+    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
 }
 
 HTTPClient::~HTTPClient()
@@ -27,26 +31,50 @@ HTTPClient::~HTTPClient()
     }
 }
 
+void HTTPClient::setTimemoutInterval(int value)
+{
+    requestTimemoutInterval = value;
+    timeoutTimer->setInterval(value);
+}
+
+void HTTPClient::setRequestTryCount(int value)
+{
+    requestTryCount = value;
+}
+
+void HTTPClient::onTimeoutHandle()
+{
+    qDebug()<<"==============  onTimeoutHandle ============= ";
+    if(httpReply)
+    {
+        httpReply->abort();
+    }
+}
+
 void HTTPClient::runGetRequest(const QString& URL)
 {
     qDebug()<<"runGetRequest: "<<URL;
 
     QNetworkRequest request = QNetworkRequest(QUrl(URL));
-    networkManager->get(request);
+    httpReply = networkManager->get(request);
+    timeoutTimer->start();
 }
 
 void HTTPClient::runPostRequest(const QNetworkRequest& request, const QByteArray& data)
 {
-    networkManager->post(request, data);  
+    httpReply = networkManager->post(request, data);
+    timeoutTimer->start();
 }
 
 void HTTPClient::runDeleteRequest(const QNetworkRequest& request)
-{
-    networkManager->deleteResource(request);
+{    
+    httpReply = networkManager->deleteResource(request);
+    timeoutTimer->start();
 }
 
 void HTTPClient::httpRequestSuccessHandler(QNetworkReply* reply)
 {
+    timeoutTimer->stop();
     if (reply->error() != QNetworkReply::NoError )
     {
         qDebug() << "Request failed, " << reply->readAll();
@@ -65,11 +93,12 @@ void HTTPClient::httpRequestSuccessHandler(QNetworkReply* reply)
 
 void HTTPClient::httpRequestErrorHandler(QNetworkReply::NetworkError data)
 {
-
+    timeoutTimer->stop();
 }
 
 void HTTPClient::sslErrorHandler(QNetworkReply* reply,const QList<QSslError> &errors)
 {
+    timeoutTimer->stop();
     foreach ( const QSslError &e, errors) {
         qDebug() << "SSL Error:" << e.errorString();
     }

@@ -25,6 +25,8 @@ void ServerComponent::setConfig(ConfigPtr config)
 {
    BaseComponent::setConfig(config);
    setServerConfig(*config->serverConfig);
+   httpClient->setTimemoutInterval(_serverConfig.requestTimemoutInterval);
+   httpClient->setRequestTryCount(_serverConfig.requestTryCount);
 }
 
 ServerConfig ServerComponent::serverConfig() const

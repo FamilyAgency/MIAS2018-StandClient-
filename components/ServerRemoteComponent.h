@@ -42,6 +42,7 @@ public:
 
     //test
     Q_INVOKABLE void simulateServerError();
+    Q_INVOKABLE void simulateServerTimeout();
 
 private:
     BaseUserInfo _baseUserInfo;

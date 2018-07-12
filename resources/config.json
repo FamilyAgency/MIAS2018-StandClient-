@@ -60,6 +60,8 @@
     },
     "server":
     {
-        "url": "http://mias2018.familyagency.ru"
+        "url": "http://mias2018.familyagency.ru",
+        "requestTimemoutInterval": 5000,
+        "requestCount": 3
     }
 }
