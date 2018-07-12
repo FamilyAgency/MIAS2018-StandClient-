@@ -13,7 +13,7 @@ enum class ResponseType
     UserFetched,
     Logout,
 
-    GetUserDataRequest,
+    SearchUserByIdRequest,
     ConfigRequest,
     UpdatesRequest,
     HealthLogRequest,
@@ -130,6 +130,7 @@ signals:
     void serverStatusChanged(const ServerStatus& status);
     void serverResponse(const ServerResponse& response);
     void serverError();
+    void serverLogged(const QString& log);
 
 protected slots:
    virtual void httpRequestSuccessHandler(const QString& data);

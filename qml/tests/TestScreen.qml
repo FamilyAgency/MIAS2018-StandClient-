@@ -25,6 +25,7 @@ Item {
     Button
     {
         text: "Make Me Crash";
+        visible:false;
         y: 700;
         onClicked: appController.testCrash();
     }

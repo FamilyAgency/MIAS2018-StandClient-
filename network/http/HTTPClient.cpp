@@ -28,8 +28,9 @@ HTTPClient::~HTTPClient()
 
 void HTTPClient::runGetRequest(const QString& URL)
 {
+    qDebug()<<"runGetRequest: "<<URL;
+
     QNetworkRequest request = QNetworkRequest(QUrl(URL));
-    //httpReply =
     networkManager->get(request);
 }
 
@@ -55,7 +56,6 @@ void HTTPClient::httpRequestSuccessHandler(QNetworkReply* reply)
         QByteArray ba = reply->readAll();
         StringTools stringTools;
         QString modifyedString = stringTools.convertUnicodeToCyrillic(ba);
-
         emit httpRequestSuccess(modifyedString);
     }
 

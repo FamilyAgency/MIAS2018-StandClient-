@@ -2,6 +2,7 @@
 #define SERVERREMOTECOMPONENT_H
 
 #include <QObject>
+#include <QJsonObject>
 #include "components/ServerComponent.h"
 
 class ServerRemoteComponent : public ServerComponent
@@ -17,11 +18,15 @@ public:
     Q_INVOKABLE void allUsersRequest();
     Q_INVOKABLE void createUserRequest(bool isTestUser);
     Q_INVOKABLE void searchUserRequest(const QString& email, const QString& phone);
+    Q_INVOKABLE void searchUserByIdRequest(int id);
     Q_INVOKABLE void deleteAllTestUsersRequest();
     Q_INVOKABLE void verifyUserRequest(int id);
     Q_INVOKABLE void confirmUserRequest(int id, int code);
 
     virtual void parse(const ServerResponse& response) override;
+
+private:
+    void createBaseUserInfo(const QJsonObject& object);
 };
 
 #endif // SERVERREMOTECOMPONENT_H

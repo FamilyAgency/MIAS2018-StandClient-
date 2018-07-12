@@ -3,6 +3,7 @@
 #include <QJsonDocument.h>
 #include <QJsonObject.h>
 #include <QJsonArray.h>
+#include "core/data/UserData.h"
 
 ServerRemoteComponent::ServerRemoteComponent(QObject *parent) : ServerComponent(parent)
 {
@@ -20,7 +21,6 @@ void ServerRemoteComponent::configRequest(int deviceId)
     response.type = ResponseType::ConfigRequest;
     setServerStatus(ServerStatus::Busy);
     QString fullRequest = serverConfig().url + "/config/" + QString::number(deviceId);
-    qDebug()<<"fullRequest "<<fullRequest;
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -36,7 +36,6 @@ void ServerRemoteComponent::updatesRequest(int deviceId)
     response.type = ResponseType::UpdatesRequest;
     setServerStatus(ServerStatus::Busy);
     QString fullRequest = serverConfig().url + "/config/" + QString::number(deviceId) + "/updates";
-    qDebug()<<"fullRequest "<<fullRequest;
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -65,7 +64,6 @@ void ServerRemoteComponent::allUsersRequest()
     response.type = ResponseType::AllUsersRequest;
     setServerStatus(ServerStatus::Busy);
     QString fullRequest = serverConfig().url + "/users";
-    qDebug()<<"fullRequest "<<fullRequest;
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -86,18 +84,19 @@ void ServerRemoteComponent::createUserRequest(bool isTestUser)
 
     QUrlQuery query;
     QString name = "Юрий";
+
     query.addQueryItem("name", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ");
     query.addQueryItem("surname", "абвгдеёжзийклмнопрстуфхцчшщъыьэюя");
     query.addQueryItem("email", "яндекс@почта.рф");
-    query.addQueryItem("phone", "89067704595");
+    query.addQueryItem("phone", "+79067704595");
     query.addQueryItem("test", isTestUser ? "1" : "0");
 
-//    query.addQueryItem("name", "Вика");
-//    query.addQueryItem("surname", "Журавлева");
-//    query.addQueryItem("email", "vika@gmail.com");
-//    query.addQueryItem("phone", "89151546522");
-//    query.addQueryItem("test", isTestUser ? "1" : "0");
-
+    //    query.addQueryItem("name", "Вика");
+    //    query.addQueryItem("surname", "Журавлева");
+    //    query.addQueryItem("email", "vika@gmail.com");
+    //    query.addQueryItem("phone", "89151546522");
+    //    query.addQueryItem("test", isTestUser ? "1" : "0");
+    qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
     httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
@@ -129,9 +128,28 @@ void ServerRemoteComponent::searchUserRequest(const QString& email, const QStrin
     {
         query.addQueryItem("phone", phone);
     }
-    fullRequest += query.toString();
+    else
+    {
+        // empty fields
+        return;
+    }
+    fullRequest.append(query.toString(QUrl::FullyEncoded).toUtf8());
+    httpClient->runGetRequest(fullRequest);
+}
 
-    qDebug()<<"fullRequest "<<fullRequest;
+void ServerRemoteComponent::searchUserByIdRequest(int id)
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::SearchUserByIdRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(id);
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -166,7 +184,6 @@ void ServerRemoteComponent::verifyUserRequest(int id)
     setServerStatus(ServerStatus::Busy);
 
     QString fullRequest = serverConfig().url + "/users/" + QString::number(id) + "/verify";
-    qDebug()<<"fullRequest "<<fullRequest;
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -188,17 +205,22 @@ void ServerRemoteComponent::confirmUserRequest(int id, int code)
 
     QUrlQuery query;
     query.addQueryItem("code", QString::number(code));
-
     httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void ServerRemoteComponent::parse(const ServerResponse& response)
 {
+    qDebug() << "ServerRemoteComponent " << response.body;
+    emit serverLogged(response.body);
+
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response.body.toUtf8());
     QJsonObject responeJson   = jsonDoc.object();
 
     QString status = responeJson["status"].toString();
     int code = responeJson["code"].toInt();
+
+    qDebug() << "status: " << status;
+    qDebug() << "code: " << code;
 
     if(status != "success" || code != 200)
     {
@@ -206,52 +228,51 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         return;
     }
 
-    QJsonObject dataJson = responeJson["data"].toObject();
-
-    //qDebug()<<dataJson.find("status");
-   // return;
-    //dataJson["status"].
-
-    status = dataJson["status"].toString();
-    code = dataJson["code"].toInt();
-
-//    if(status != "success" || code != 200)
-//    {
-//        qDebug()<<"Huston we have a problems. level 2";
-//        return;
-//    }
-
     if(response.type == ResponseType::CreateUserRequest)
     {
-        int id = dataJson["id"].toInt();
-        auto name = dataJson["name"];
-        QString surname = dataJson["surname"].toString();
-        QString email = dataJson["email"].toString();
-        QString phone = dataJson["phone"].toString();
-
-        qDebug()<<" ===== Server :: User Created :: ";
-        qDebug()<<"id = "<<id;
-        qDebug()<<"name = "<<name;
-        qDebug()<<"surname = "<<surname;
-        qDebug()<<"email = "<<email;
-        qDebug()<<"phone = "<<phone;
-        qDebug()<<"====================";
+        QJsonObject dataJson = responeJson["data"].toObject();
+       createBaseUserInfo(dataJson);
     }
     else if(response.type == ResponseType::ConfirmUserRequest)
     {
-
+        QJsonObject dataJson = responeJson["data"].toObject();
+        createBaseUserInfo(dataJson);
     }
     else if(response.type == ResponseType::VerifyUserRequest)
     {
-
+        QJsonObject dataJson = responeJson["data"].toObject();
+        createBaseUserInfo(dataJson);
     }
     else if(response.type == ResponseType::SearchUserRequest)
     {
-
+        QJsonArray dataArrayJson = responeJson["data"].toArray();
+        if(dataArrayJson.size() > 0 )
+        {
+            QJsonObject dataJson = dataArrayJson[0].toObject();
+            createBaseUserInfo(dataJson);
+        }
     }
-    else if(response.type == ResponseType::GetUserDataRequest)
+    else if(response.type == ResponseType::SearchUserByIdRequest)
     {
-
+        QJsonArray dataArrayJson = responeJson["data"].toArray();
+        if(dataArrayJson.size() > 0 )
+        {
+            QJsonObject dataJson = dataArrayJson[0].toObject();
+            createBaseUserInfo(dataJson);
+        }
     }
+}
+
+void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
+{
+    BaseUserInfo baseUserInfo;
+    baseUserInfo.id = object["id"].toInt();
+    baseUserInfo.name = object["name"].toString();
+    baseUserInfo.surname = object["surname"].toString();
+    baseUserInfo.email = object["email"].toString();
+    baseUserInfo.phone = object["phone"].toString();
+    baseUserInfo.confirmed = object["confirmed"].toInt();
+    baseUserInfo.test = object["test"].toInt();
+    baseUserInfo.print();
 }
 

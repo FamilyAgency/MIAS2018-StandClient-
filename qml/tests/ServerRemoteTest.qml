@@ -5,8 +5,18 @@ import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "../mainScreens"
 
-Item {
+Item
+{
     id: loginTest
+
+    Connections
+    {
+        target:server;
+        onServerLogged:
+        {
+            ouputConsole.text = log;
+        }
+    }
 
     Consts
     {
@@ -44,8 +54,6 @@ Item {
         {
             spacing: 10;
 
-
-
             Button
             {
                 text:"Config Request"
@@ -53,24 +61,24 @@ Item {
                 {
                     server.configRequest(1);
                 }
-            }       
-        }
-
-        Button
-        {
-            text:"Update Request"
-            onClicked:
-            {
-                server.updatesRequest(1);
             }
-        }
 
-        Button
-        {
-            text:"Health Log Request"
-            onClicked:
+            Button
             {
-                server.healthLogRequest(1);
+                text:"Update Request"
+                onClicked:
+                {
+                    server.updatesRequest(1);
+                }
+            }
+
+            Button
+            {
+                text:"Health Log Request"
+                onClicked:
+                {
+                    server.healthLogRequest(1);
+                }
             }
         }
 
@@ -91,22 +99,80 @@ Item {
                 server.createUserRequest(true);
             }
         }
-
-        Button
+        RowLayout
         {
-            text:"Search User Request"
-            onClicked:
+            spacing: 10;
+
+            Button
             {
-                server.searchUserRequest("15@gmail.com", "");
+                text:"Search User Request"
+                onClicked:
+                {
+                    server.searchUserRequest(email.text, phone.text);
+                }
+            }
+
+            TextField
+            {
+                id:email;
+                implicitWidth: 160;
+                placeholderText: "email@mail.com";
+                text: "яндекс@почта.рф";
+            }
+            TextField
+            {
+                id:phone;
+                implicitWidth: 160;
+                placeholderText: "phone";
+                text: "+79067706666";
+            }
+        }
+        RowLayout
+        {
+            spacing: 10;
+
+            Button
+            {
+                text:"Search User By Id Request"
+                onClicked:
+                {
+                    server.searchUserByIdRequest(userId.value);
+                }
+            }
+
+            SpinBox
+            {
+                id: userId
+                value: 0
+                editable: true
+                from:0
+                to:3000
             }
         }
 
         Button
         {
+            id:deleteBtn
             text:"Delete All Test Users Request"
             onClicked:
             {
                 server.deleteAllTestUsersRequest();
+            }
+            background: Rectangle
+            {
+                color: deleteBtn.hovered ?  'skyblue' : "#990000";
+                border.color: "#26282a"
+                border.width: 1
+                radius: 4
+
+                layer.enabled: true
+                layer.effect: DropShadow
+                {
+                    verticalOffset: 1
+                    color: "#aaaaaa"
+                    samples:4
+                    spread: 0.5
+                }
             }
         }
 
@@ -165,21 +231,26 @@ Item {
             }
         }
 
-        Button
+        RowLayout
         {
-            text:"Server error"
-            onClicked:
-            {
-                server.simulateServerError();
-            }
-        }
+            spacing: 10;
 
-        Button
-        {
-            text:"Server timeout"
-            onClicked:
+            Button
             {
-                server.simulateServerTimeout();
+                text:"Server error"
+                onClicked:
+                {
+                    server.simulateServerError();
+                }
+            }
+
+            Button
+            {
+                text:"Server timeout"
+                onClicked:
+                {
+                    server.simulateServerTimeout();
+                }
             }
         }
 

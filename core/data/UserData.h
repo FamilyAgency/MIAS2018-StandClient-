@@ -2,8 +2,47 @@
 #define USERDATA_H
 
 #include <QObject>
+#include <qDebug>
 #include <QQmlContext>
 #include "core/game/GameProgress.h"
+
+struct BaseUserInfo
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(int id MEMBER id)
+    Q_PROPERTY(QString name MEMBER name)
+    Q_PROPERTY(QString surname MEMBER surname)
+    Q_PROPERTY(QString email MEMBER email)
+    Q_PROPERTY(QString phone MEMBER phone)
+    Q_PROPERTY(int confirmed MEMBER confirmed)
+    Q_PROPERTY(int test MEMBER test)
+
+public:
+    int id = 0;
+    QString name = "";
+    QString surname = "";
+    QString email = "";
+    QString phone = "";
+    int confirmed = 0;
+    int test = 0;
+
+    void print()
+    {
+
+        qDebug()<<"===== User Info =====";
+        qDebug()<<"id = "<<id;
+        qDebug()<<"name = "<<name;
+        qDebug()<<"surname = "<<surname;
+        qDebug()<<"email = "<<email;
+        qDebug()<<"phone = "<<phone;
+        qDebug()<<"confirmed = "<<confirmed;
+        qDebug()<<"test = "<<test;
+        qDebug()<<"====================";
+    }
+};
+Q_DECLARE_METATYPE(BaseUserInfo)
+
 
 class UserData : public QObject
 {
