@@ -16,12 +16,17 @@ Item
     Connections
     {
         target:server
-        onServerError:
+        onServerRequestError:
         {
             console.log("server error");
             visible = true;
         }
 
+        onServerGlobalError:
+        {
+            console.log("server error");
+            visible = true;
+        }
     }
 
     Rectangle

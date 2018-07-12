@@ -124,7 +124,7 @@ void AppController::start()
 
 void AppController::onServerResponse(const ServerResponse& response)
 {
-    if(response.type == ResponseType::Logout)
+    if(response.type == ServerComponent::ResponseType::Logout)
     {
         userData->setLoginState(UserData::LoginState::Logout);
     }

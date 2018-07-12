@@ -12,6 +12,7 @@ HTTPClient::HTTPClient(QObject *parent) : QObject(parent)
     connect(networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestSuccessHandler(QNetworkReply*)));
     //connect(networkManager, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(httpRequestErrorHandler(QNetworkReply::NetworkError)));
     connect(networkManager, SIGNAL(sslErrors(QNetworkReply*, QList<QSslError>)), this, SLOT(sslErrorHandler(QNetworkReply*, QList<QSslError>)));
+
 }
 
 HTTPClient::~HTTPClient()

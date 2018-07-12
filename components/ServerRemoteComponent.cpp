@@ -3,7 +3,6 @@
 #include <QJsonDocument.h>
 #include <QJsonObject.h>
 #include <QJsonArray.h>
-#include "core/data/UserData.h"
 
 ServerRemoteComponent::ServerRemoteComponent(QObject *parent) : ServerComponent(parent)
 {
@@ -47,9 +46,9 @@ void ServerRemoteComponent::healthLogRequest(int deviceId)
         return;
     }
 
-    response.clear();
-    response.type = ResponseType::HealthLogRequest;
-    setServerStatus(ServerStatus::Busy);
+    //    response.clear();
+    //    response.type = ResponseType::HealthLogRequest;
+    //    setServerStatus(ServerStatus::Busy);
 }
 
 void ServerRemoteComponent::allUsersRequest()
@@ -67,7 +66,11 @@ void ServerRemoteComponent::allUsersRequest()
     httpClient->runGetRequest(fullRequest);
 }
 
-void ServerRemoteComponent::createUserRequest(bool isTestUser)
+void ServerRemoteComponent::createUserRequest(const QString& name,
+                                              const QString& surname,
+                                              const QString& email,
+                                              const QString& phone,
+                                              bool test)
 {
     if(!canRunRequest())
     {
@@ -83,21 +86,29 @@ void ServerRemoteComponent::createUserRequest(bool isTestUser)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     QUrlQuery query;
-    QString name = "Юрий";
+    query.addQueryItem("name", name);
+    query.addQueryItem("surname", surname);
+    query.addQueryItem("email", email);
+    query.addQueryItem("phone", phone);
+    query.addQueryItem("test", test ? "1" : "0");
 
-    query.addQueryItem("name", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ");
-    query.addQueryItem("surname", "абвгдеёжзийклмнопрстуфхцчшщъыьэюя");
-    query.addQueryItem("email", "яндекс@почта.рф");
-    query.addQueryItem("phone", "+79067704595");
-    query.addQueryItem("test", isTestUser ? "1" : "0");
-
-    //    query.addQueryItem("name", "Вика");
-    //    query.addQueryItem("surname", "Журавлева");
-    //    query.addQueryItem("email", "vika@gmail.com");
-    //    query.addQueryItem("phone", "89151546522");
-    //    query.addQueryItem("test", isTestUser ? "1" : "0");
     qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
     httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
+}
+
+void ServerRemoteComponent::createUserRequest(bool isTestUser)
+{
+    createUserRequest("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
+                      "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
+                      "яндекс@почта.рф",
+                      "+79067704595",
+                      isTestUser ? "1" : "0");
+
+//    createUserRequest("Вика",
+//                      "Журавлева",
+//                      "vika@gmail.com",
+//                      "+89151546522",
+//                      isTestUser ? "1" : "0");
 }
 
 void ServerRemoteComponent::searchUserRequest(const QString& email, const QString& phone)
@@ -137,7 +148,7 @@ void ServerRemoteComponent::searchUserRequest(const QString& email, const QStrin
     httpClient->runGetRequest(fullRequest);
 }
 
-void ServerRemoteComponent::searchUserByIdRequest(int id)
+void ServerRemoteComponent::searchUserByIdRequest(int userId)
 {
     if(!canRunRequest())
     {
@@ -149,7 +160,7 @@ void ServerRemoteComponent::searchUserByIdRequest(int id)
     response.type = ResponseType::SearchUserByIdRequest;
     setServerStatus(ServerStatus::Busy);
 
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(id);
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId);
     httpClient->runGetRequest(fullRequest);
 }
 
@@ -171,7 +182,7 @@ void ServerRemoteComponent::deleteAllTestUsersRequest()
     httpClient->runDeleteRequest(request);
 }
 
-void ServerRemoteComponent::verifyUserRequest(int id)
+void ServerRemoteComponent::verifyUserRequest(int userId)
 {
     if(!canRunRequest())
     {
@@ -183,11 +194,11 @@ void ServerRemoteComponent::verifyUserRequest(int id)
     response.type = ResponseType::VerifyUserRequest;
     setServerStatus(ServerStatus::Busy);
 
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(id) + "/verify";
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/verify";
     httpClient->runGetRequest(fullRequest);
 }
 
-void ServerRemoteComponent::confirmUserRequest(int id, int code)
+void ServerRemoteComponent::confirmUserRequest(int userId, int code)
 {
     if(!canRunRequest())
     {
@@ -199,13 +210,26 @@ void ServerRemoteComponent::confirmUserRequest(int id, int code)
     response.type = ResponseType::ConfirmUserRequest;
     setServerStatus(ServerStatus::Busy);
 
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(id) + "/confirm";
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/confirm";
     QNetworkRequest request(fullRequest);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     QUrlQuery query;
     query.addQueryItem("code", QString::number(code));
     httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
+}
+
+void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
+{
+//    if(!canRunRequest())
+//    {
+//        qDebug()<<"wait for server please";
+//        return;
+//    }
+
+//    response.clear();
+//    response.type = ResponseType::ConfirmPrizeRequest;
+//    setServerStatus(ServerStatus::Busy);
 }
 
 void ServerRemoteComponent::parse(const ServerResponse& response)
@@ -224,43 +248,82 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
 
     if(status != "success" || code != 200)
     {
-        qDebug()<<"Huston we have a problems. level 1";
+        handleRequestError(response);
         return;
     }
 
     if(response.type == ResponseType::CreateUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();
-       createBaseUserInfo(dataJson);
+        QJsonObject dataJson = responeJson["data"].toObject();       
+        createBaseUserInfo(dataJson);
+        emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::ConfirmUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();
+        QJsonObject dataJson = responeJson["data"].toObject();        
         createBaseUserInfo(dataJson);
+        emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::VerifyUserRequest)
     {
-        QJsonObject dataJson = responeJson["data"].toObject();
+        QJsonObject dataJson = responeJson["data"].toObject();        
         createBaseUserInfo(dataJson);
+        emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::SearchUserRequest)
     {
         QJsonArray dataArrayJson = responeJson["data"].toArray();
+
         if(dataArrayJson.size() > 0 )
         {
-            QJsonObject dataJson = dataArrayJson[0].toObject();
+            QJsonObject dataJson = dataArrayJson[0].toObject();           
             createBaseUserInfo(dataJson);
+            emit serverRequestSuccess(response.type);
+        }
+        else
+        {
+            emit userNotFound();
+            qDebug()<<"===== nobody was found =====";
         }
     }
     else if(response.type == ResponseType::SearchUserByIdRequest)
     {
-        QJsonArray dataArrayJson = responeJson["data"].toArray();
-        if(dataArrayJson.size() > 0 )
+        qDebug()<<"===== SearchUserRequest =====";
+        QJsonObject dataJson = responeJson["data"].toObject();
+        if(!dataJson.empty())
         {
-            QJsonObject dataJson = dataArrayJson[0].toObject();
             createBaseUserInfo(dataJson);
+            emit serverRequestSuccess(response.type);
+        }
+        else
+        {
+            emit userNotFound();
+            qDebug()<<"===== nobody was found =====";
         }
     }
+}
+
+void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
+{
+    qDebug() << "server error: " << (int)response.type;
+    serverRequestError(response.type);
+}
+
+void ServerRemoteComponent::setBaseUserInfo(const BaseUserInfo& baseUserInfo)
+{
+    _baseUserInfo = baseUserInfo;
+    emit baseUserInfoChanged();
+}
+
+BaseUserInfo ServerRemoteComponent::baseUserInfo() const
+{
+    return _baseUserInfo;
+}
+
+void ServerRemoteComponent::clearBaseUserInfo()
+{
+    _baseUserInfo.clear();
+    emit baseUserInfoChanged();
 }
 
 void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
@@ -274,5 +337,24 @@ void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
     baseUserInfo.confirmed = object["confirmed"].toInt();
     baseUserInfo.test = object["test"].toInt();
     baseUserInfo.print();
+    setBaseUserInfo(baseUserInfo);
 }
+
+void ServerRemoteComponent::simulateServerError()
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::VerifyUserRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url;
+    httpClient->runGetRequest(fullRequest);
+   // httpRequestFailedHandler("Error: Simulate Server Error");
+}
+
 

@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
+
+
+
     QScopedPointer<ConfigController> configController(new ConfigController);
     engine.rootContext()->setContextProperty("configController", configController.data());
 
@@ -31,6 +34,10 @@ int main(int argc, char *argv[])
     qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
     qmlRegisterType<UserData>("com.app", 1, 0, "UserState");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
+    qmlRegisterType<ServerComponent>("com.app", 1, 0, "RegistrationError");
+    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");
+    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
+
 
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 

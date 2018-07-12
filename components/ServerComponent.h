@@ -6,47 +6,6 @@
 #include "config/Config.h"
 #include "network/http/HTTPClient.h"
 
-enum class ResponseType
-{
-    None,
-    Error,
-    UserFetched,
-    Logout,
-
-    SearchUserByIdRequest,
-    ConfigRequest,
-    UpdatesRequest,
-    HealthLogRequest,
-    AllUsersRequest,
-    CreateUserRequest,
-    SearchUserRequest,
-    DeleteAllTestUsersRequest,
-    VerifyUserRequest,
-    ConfirmUserRequest
-};
-
-enum class ServerErrorType
-{
-    None,
-    TimeOut,
-    NetworkError,
-    ServerIsDown
-};
-
-struct ServerResponse
-{
-    ResponseType type = ResponseType::None;
-    ServerErrorType errorType = ServerErrorType::None;
-    QString body;
-
-    void clear()
-    {
-        type = ResponseType::None;
-        errorType = ServerErrorType::None;
-        body = "";
-    }
-};
-
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
@@ -75,6 +34,50 @@ public:
         Undefined
     };
 
+    enum class ResponseType
+    {
+        None,
+        Error,
+        UserFetched,
+        Logout,
+
+        SearchUserByIdRequest,
+        ConfigRequest,
+        UpdatesRequest,
+        HealthLogRequest,
+        AllUsersRequest,
+        CreateUserRequest,
+        SearchUserRequest,
+        DeleteAllTestUsersRequest,
+        VerifyUserRequest,
+        ConfirmUserRequest,
+        ConfirmPrizeRequest
+    };
+    Q_ENUMS(ResponseType)
+
+    enum class ServerGlobalErrorType
+    {
+        None,
+        TimeOut,
+        NetworkError,
+        ServerIsDown
+    };
+    Q_ENUMS(ServerGlobalErrorType)
+
+    struct ServerResponse
+    {
+        ResponseType type = ResponseType::None;
+        ServerGlobalErrorType errorType = ServerGlobalErrorType::None;
+        QString body;
+
+        void clear()
+        {
+            type = ResponseType::None;
+            errorType = ServerGlobalErrorType::None;
+            body = "";
+        }
+    };
+
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;   
 
@@ -90,31 +93,9 @@ public:
     virtual void parse(const ServerResponse& response);
 
 
-// REST API
-//   -----------------config-----------------
-//   void getStandConfig(int deviceId);
-//   void checkUpdates(int deviceId);
-
-//   rfid ?= id
-//   -----------------user-----------------
      virtual void fetchUser(int rfid);
      virtual void logout();
-//   void saveUserProgress(int deviceId, int userId, int stage, int cleanTime, data[] mindwaveData)
 
-
-//   -----------------reg-----------------
-//    void findUser(int deviceId, name, surname, mobile, email);
-//    void sendUser(int deviceId, name, surname, mobile, email, pinNeeded);
-//    void sendPin(int deviceId,int)
-//    void writeRFID(int deviceId, userId);
-
-
-//   -----------------prize-----------------
-//   void fetchUser(int deviceId, int rfid)
-
-
-//   -----------------tools-----------------
-//    void healthCheck(deviceId);
 
     friend class ServerComponentTest;
 
@@ -129,12 +110,20 @@ signals:
     void serverConfigChanged();
     void serverStatusChanged(const ServerStatus& status);
     void serverResponse(const ServerResponse& response);
-    void serverError();
+
+    void serverRequestError(ResponseType responseType);
+    void serverRequestSuccess(ResponseType responseType);
+    void serverGlobalError(ServerGlobalErrorType globalErrorType);
+
     void serverLogged(const QString& log);
+
+    void userNotFound();
 
 protected slots:
    virtual void httpRequestSuccessHandler(const QString& data);
    virtual void httpRequestFailedHandler(const QString& data);
 };
+
+typedef ServerComponent::ServerResponse ServerResponse;
 
 #endif // SERVERCOMPONENT_H

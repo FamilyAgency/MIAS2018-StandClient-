@@ -104,11 +104,11 @@ bool IntroModule::canFetchUser() const
 
 void IntroModule::onServerResponse(const ServerResponse& response)
 {
-    if(response.type == ResponseType::Error)
+    if(response.type == ServerComponent::ResponseType::Error)
     {
         qDebug()<<"======================= server error =======================";
     }
-    else if(response.type == ResponseType::UserFetched)
+    else if(response.type == ServerComponent::ResponseType::UserFetched)
     {
         qDebug()<<"server answered  "<< response.body;
        // serverComponent->parse(response);

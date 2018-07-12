@@ -1,22 +1,14 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.1
+import QtQuick 2.0
 import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 import "../mainScreens"
+import com.app 1.0
 
 Item
 {
-    id: loginTest
-
-    Connections
-    {
-        target:server;
-        onServerLogged:
-        {
-            ouputConsole.text = log;
-        }
-    }
+    id: serverTest;
 
     Consts
     {
@@ -27,27 +19,31 @@ Item
     {
         spacing: 10;
 
-
-        TextArea
+        ScrollView
         {
-            id:ouputConsole;
-            implicitWidth: 310;
+            implicitWidth: 500;
             implicitHeight: 200;
-            width: 310;
-            height: 200;
-            wrapMode: TextEdit.Wrap;
-            selectByMouse: true;
-            clip: true;
-            textFormat: Text.RichText;
-            font.family: "Helvetica";
-            font.pixelSize: 14;
+
+            TextArea
+            {
+                id:ouputConsole;
+                width: 310;
+                height: 200;
+                wrapMode: TextEdit.Wrap;
+                selectByMouse: true;
+                clip: true;
+                textFormat: Text.RichText;
+                font.family: "Helvetica";
+                font.pixelSize: 14;
+            }
         }
+
         Text
         {
             text: "Server Remote Tests";
-            font.family: "Helvetica"
-            font.pixelSize: 17
-            color: consts.infoTextColor
+            font.family: "Helvetica";
+            font.pixelSize: 17;
+            color: consts.infoTextColor;
         }
 
         RowLayout
@@ -56,7 +52,7 @@ Item
 
             Button
             {
-                text:"Config Request"
+                text:"Config Request";
                 onClicked:
                 {
                     server.configRequest(1);
@@ -65,7 +61,7 @@ Item
 
             Button
             {
-                text:"Update Request"
+                text:"Update Request";
                 onClicked:
                 {
                     server.updatesRequest(1);
@@ -74,21 +70,110 @@ Item
 
             Button
             {
-                text:"Health Log Request"
+                text:"Health Log Request";
                 onClicked:
                 {
                     server.healthLogRequest(1);
                 }
             }
         }
+        RowLayout
+        {
+            spacing: 10;
+
+            Button
+            {
+                text:"All Users Request"
+                onClicked:
+                {
+                    server.allUsersRequest();
+                }
+            }
+
+            Button
+            {
+                id: deleteBtn;
+                text: "Delete All Test Users Request";
+                onClicked:
+                {
+                    server.deleteAllTestUsersRequest();
+                }
+                background: Rectangle
+                {
+                    color: deleteBtn.hovered ?  "skyblue" : "#990000";
+                    border.color: "#26282a";
+                    border.width: 1;
+                    radius: 4;
+
+                    layer.enabled: true
+                    layer.effect: DropShadow
+                    {
+                        verticalOffset: 1;
+                        color: "#aaaaaa";
+                        samples:4;
+                        spread: 0.5;
+                    }
+                }
+            }
+        }
+
+        RowLayout
+        {
+            spacing: 10;
+
+            Button
+            {
+                text:"Server error";
+                onClicked:
+                {
+                    server.simulateServerError();
+                }
+            }
+
+            Button
+            {
+                text:"Server timeout";
+                onClicked:
+                {
+                    server.simulateServerTimeout();
+                }
+            }
+        }
 
         Button
         {
-            text:"All Users Request"
+            text:"LOG OUT";
+            id:logOutBtn;
+
             onClicked:
             {
-                server.allUsersRequest();
+                server.logout();
             }
+
+            background: Rectangle
+            {
+                color: logOutBtn.hovered ?  "skyblue" : "#990000";
+                border.color: "#26282a"
+                border.width: 1
+                radius: 4
+
+                layer.enabled: true
+                layer.effect: DropShadow
+                {
+                    verticalOffset: 1
+                    color: "#aaaaaa"
+                    samples:4
+                    spread: 0.5
+                }
+            }
+        }
+
+        Text
+        {
+            text: "Registraton Tests";
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+            color: consts.infoTextColor;
         }
 
         Button
@@ -96,6 +181,8 @@ Item
             text:"Create User Request"
             onClicked:
             {
+                server.clearBaseUserInfo();
+                server.createUserRequest("Юрий", "Попов", "yurik@gmail.com", "89067784587", true);
                 server.createUserRequest(true);
             }
         }
@@ -108,6 +195,7 @@ Item
                 text:"Search User Request"
                 onClicked:
                 {
+                    server.clearBaseUserInfo();
                     server.searchUserRequest(email.text, phone.text);
                 }
             }
@@ -119,6 +207,7 @@ Item
                 placeholderText: "email@mail.com";
                 text: "яндекс@почта.рф";
             }
+
             TextField
             {
                 id:phone;
@@ -127,52 +216,28 @@ Item
                 text: "+79067706666";
             }
         }
+
         RowLayout
         {
             spacing: 10;
 
             Button
             {
-                text:"Search User By Id Request"
+                text:"Search User By Id Request";
                 onClicked:
                 {
+                    server.clearBaseUserInfo();
                     server.searchUserByIdRequest(userId.value);
                 }
             }
 
             SpinBox
             {
-                id: userId
-                value: 0
-                editable: true
-                from:0
-                to:3000
-            }
-        }
-
-        Button
-        {
-            id:deleteBtn
-            text:"Delete All Test Users Request"
-            onClicked:
-            {
-                server.deleteAllTestUsersRequest();
-            }
-            background: Rectangle
-            {
-                color: deleteBtn.hovered ?  'skyblue' : "#990000";
-                border.color: "#26282a"
-                border.width: 1
-                radius: 4
-
-                layer.enabled: true
-                layer.effect: DropShadow
-                {
-                    verticalOffset: 1
-                    color: "#aaaaaa"
-                    samples:4
-                    spread: 0.5
-                }
+                id: userId;
+                value: 0;
+                editable: true;
+                from:0;
+                to:3000;
             }
         }
 
@@ -182,7 +247,7 @@ Item
 
             Button
             {
-                text:"Verify User Request"
+                text:"Verify User Request";
                 onClicked:
                 {
                     server.verifyUserRequest(userVerifyId.value);
@@ -191,11 +256,11 @@ Item
 
             SpinBox
             {
-                id: userVerifyId
-                value: 0
-                editable: true
-                from:0
-                to:3000
+                id: userVerifyId;
+                value: 0;
+                editable: true;
+                from: 0;
+                to: 3000;
             }
         }
 
@@ -205,7 +270,8 @@ Item
 
             Button
             {
-                text:"Confirm User Request"
+                text:"Confirm User Request";
+
                 onClicked:
                 {
                     server.confirmUserRequest(userConfirmId.value, pinCode.value);
@@ -214,21 +280,29 @@ Item
 
             SpinBox
             {
-                id: userConfirmId
-                value: 0
-                editable: true
-                from:0
-                to:3000
+                id: userConfirmId;
+                value: 0;
+                editable: true;
+                from :0;
+                to: 3000;
             }
 
             SpinBox
             {
-                id: pinCode
-                value: 0
-                editable: true
-                from:0
-                to:99999
+                id: pinCode;
+                value: 0;
+                editable: true;
+                from: 0;
+                to: 99999;
             }
+        }
+
+        Text
+        {
+            text: "Prize Tests";
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+            color: consts.infoTextColor;
         }
 
         RowLayout
@@ -237,46 +311,122 @@ Item
 
             Button
             {
-                text:"Server error"
+                text:"Confirm Prize";
+
                 onClicked:
                 {
-                    server.simulateServerError();
+                    server.confirmPrizeRequest(userPrizeId.value, prizeId.value);
                 }
             }
 
-            Button
+            SpinBox
             {
-                text:"Server timeout"
-                onClicked:
-                {
-                    server.simulateServerTimeout();
-                }
+                id: userPrizeId;
+                value: 0;
+                editable: true;
+                from :0;
+                to: 3000;
+            }
+
+
+            SpinBox
+            {
+                id: prizeId;
+                value: 0;
+                editable: true;
+                from :0;
+                to: 2;
             }
         }
 
-        Button
+        UserRegistrationData
         {
-            text:"LOG OUT"
-            id:logOutBtn
-            onClicked:
-            {
-                server.logout();
-            }
-            background: Rectangle
-            {
-                color: logOutBtn.hovered ?  'skyblue' : "#990000";
-                border.color: "#26282a"
-                border.width: 1
-                radius: 4
 
-                layer.enabled: true
-                layer.effect: DropShadow
-                {
-                    verticalOffset: 1
-                    color: "#aaaaaa"
-                    samples:4
-                    spread: 0.5
-                }
+        }
+    }
+
+    Connections
+    {
+        target:server;
+
+        onUserNotFound:
+        {
+            console.log("onUserNotFound");
+        }
+
+        onServerLogged:
+        {
+            ouputConsole.text = log;
+        }
+
+        onServerRequestSuccess:
+        {
+            console.log(" ========= onServerRequestSuccess =========");
+
+            switch(responseType)
+            {
+            case ResponseType.CreateUserRequest:
+                console.log("ResponseType.CreateUserRequest");
+                break;
+
+            case ResponseType.SearchUserRequest:
+                console.log("ResponseType.SearchUserRequest");
+                break;
+
+            case ResponseType.VerifyUserRequest:
+                console.log("ResponseType.VerifyUserRequest");
+                break;
+
+            case ResponseType.ConfirmUserRequest:
+                console.log("ResponseType.ConfirmUserRequest");
+                break;
+            }
+
+            console.log(" ==================");
+        }
+
+        onServerRequestError:
+        {
+            console.log(" ========= onServerRequestError =========");
+
+            switch(responseType)
+            {
+            case ResponseType.CreateUserRequest:
+                console.log("ResponseType.CreateUserRequest");
+                break;
+
+            case ResponseType.SearchUserRequest:
+                console.log("ResponseType.SearchUserRequest");
+                break;
+
+            case ResponseType.VerifyUserRequest:
+                console.log("ResponseType.VerifyUserRequest");
+                break;
+
+            case ResponseType.ConfirmUserRequest:
+                console.log("ResponseType.ConfirmUserRequest");
+                break;
+            }
+
+            console.log(" ==================");
+        }
+
+        onServerGlobalError:
+        {
+            console.log(globalErrorType);
+            switch(globalErrorType)
+            {
+            case ServerGlobalErrorType.TimeOut:
+                console.log("ServerGlobalErrorType.TimeOut");
+                break;
+
+            case ServerGlobalErrorType.NetworkError:
+                console.log("ServerGlobalErrorType.NetworkError");
+                break;
+
+            case ServerGlobalErrorType.Server500:
+                console.log("ServerGlobalErrorType.Server500");
+                break;
             }
         }
     }

@@ -15,7 +15,7 @@ private:
     Q_PROPERTY(QString surname MEMBER surname)
     Q_PROPERTY(QString email MEMBER email)
     Q_PROPERTY(QString phone MEMBER phone)
-    Q_PROPERTY(int confirmed MEMBER confirmed)
+   // Q_PROPERTY(int confirmed MEMBER confirmed)
     Q_PROPERTY(int test MEMBER test)
 
 public:
@@ -24,12 +24,21 @@ public:
     QString surname = "";
     QString email = "";
     QString phone = "";
-    int confirmed = 0;
     int test = 0;
+    int confirmed = 0;
+
+    Q_INVOKABLE bool isPinConfirmed() const
+    {
+        return confirmed == 1;
+    }
+
+    Q_INVOKABLE int getPinToConfirm() const
+    {
+        return confirmed;
+    }
 
     void print()
     {
-
         qDebug()<<"===== User Info =====";
         qDebug()<<"id = "<<id;
         qDebug()<<"name = "<<name;
@@ -39,6 +48,17 @@ public:
         qDebug()<<"confirmed = "<<confirmed;
         qDebug()<<"test = "<<test;
         qDebug()<<"====================";
+    }
+
+    void clear()
+    {
+        id = 0;
+        name = "";
+        surname = "";
+        email = "";
+        phone = "";
+        confirmed = 0;
+        test = 0;
     }
 };
 Q_DECLARE_METATYPE(BaseUserInfo)

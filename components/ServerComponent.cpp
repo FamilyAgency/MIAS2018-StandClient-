@@ -59,10 +59,10 @@ bool ServerComponent::isHealthy()
     return true;
 }
 
- bool ServerComponent::canRunRequest() const
- {
-     return _serverStatus == ServerStatus::Free;
- }
+bool ServerComponent::canRunRequest() const
+{
+ return _serverStatus == ServerStatus::Free;
+}
 
 void ServerComponent::fetchUser(int rfid)
 {
@@ -88,10 +88,9 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
     qDebug()<<"server error occurs";
 
     response.type = ResponseType::Error;
-    response.errorType = ServerErrorType::NetworkError;
+    response.errorType = ServerGlobalErrorType::NetworkError;
     response.body = data;
-    emit serverError();
-    emit serverResponse(response);
+    emit serverGlobalError(response.errorType);
 }
 
 void ServerComponent::parse(const ServerResponse& response)
