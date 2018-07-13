@@ -67,6 +67,8 @@ void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const 
     mainConfig->gameScreen.setY(gameScreenData["y"].toInt());
     mainConfig->gameScreen.setWidth(gameScreenData["width"].toInt());
     mainConfig->gameScreen.setHeight(gameScreenData["height"].toInt());
+
+    mainConfig->qmlOnStart = jsonObj["qmlOnStart"].toString();
 }
 
 void ConfigParser::parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj)

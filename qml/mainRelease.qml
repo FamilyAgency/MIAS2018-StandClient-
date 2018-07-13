@@ -1,8 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
-import "qml/touchScreens"
-import "qml/mainScreens"
-import "qml/controlScreens"
+import "touchScreens"
+import "mainScreens"
+import "controlScreens"
 import com.app 1.0
 
 ApplicationWindow
@@ -39,10 +39,5 @@ ApplicationWindow
     MainWindow
     {
         id:mainWindow
-    }
-
-    ControlsWindow
-    {
-        id:controlsWindow
     }
 }

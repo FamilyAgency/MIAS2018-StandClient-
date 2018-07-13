@@ -79,6 +79,7 @@ private:
     Q_PROPERTY(QString appName MEMBER appName)
     Q_PROPERTY(QRect touchScreen MEMBER touchScreen)
     Q_PROPERTY(QRect gameScreen MEMBER gameScreen)
+    Q_PROPERTY(QString qmlOnStart MEMBER qmlOnStart)
 
  public:
     int version;
@@ -90,6 +91,7 @@ private:
     QString appName = "None";
     QRect touchScreen;
     QRect gameScreen;
+    QString qmlOnStart = "qrc:/qml/mainRelease.qml";
 };
 Q_DECLARE_METATYPE(MainConfig)
 

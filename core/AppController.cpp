@@ -104,9 +104,7 @@ void AppController::onConfigLoaded(ConfigPtr config)
         module->setConfig(config);
     }
 
-    standData->setConfig(config);
-
-    start();
+    standData->setConfig(config);  
 }
 
 void AppController::start()

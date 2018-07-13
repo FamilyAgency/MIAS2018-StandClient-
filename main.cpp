@@ -25,10 +25,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("appController", appController.data());
     appController.data()->setQmlContext(engine.rootContext());
 
-   QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
-   QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
-
-
+    QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
+    QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
@@ -39,12 +37,21 @@ int main(int argc, char *argv[])
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
 
 
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-
-    if (engine.rootObjects().isEmpty())
+    QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {
-        return -1;
-    }
+        qDebug()<<"loadedddd";
+
+        engine.load(QUrl(QLatin1String(conf->mainConfig->qmlOnStart.toLatin1())));
+
+        if (engine.rootObjects().isEmpty())
+        {
+            return -1;
+        }
+    });
+
+
+
+
 
     // config load. entry point
     configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);

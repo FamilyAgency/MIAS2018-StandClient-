@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>resources/config.json</file>
         <file>resources/car2.png</file>
@@ -38,5 +37,7 @@
         <file>qml/tests/ServerRemoteTest.qml</file>
         <file>qml/tests/ServerFakeTest.qml</file>
         <file>qml/tests/UserRegistrationData.qml</file>
+        <file>qml/mainRelease.qml</file>
+        <file>qml/mainDebug.qml</file>
     </qresource>
 </RCC>

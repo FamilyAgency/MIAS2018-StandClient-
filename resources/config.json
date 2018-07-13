@@ -6,6 +6,7 @@
     "appId": 1,
     "appName": "Main stand",
     "folderSeparator": "\\",
+    "qmlOnStart": "qrc:/qml/mainDebug.qml",
     "monitoring":
     {
         "enabled": false,

@@ -23,7 +23,7 @@ public:
 
 private:   
     QQmlContext* qmlContext;
-    MainConfig _mainConfig;
+    MainConfig _mainConfig;   
 
 signals:
     void mainConfigChanged();
