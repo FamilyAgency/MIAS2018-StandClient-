@@ -18,6 +18,7 @@ public:
     void runGetRequest(const QString& url);
     void runPostRequest(const QNetworkRequest& request, const QByteArray& data);
     void runDeleteRequest(const QNetworkRequest& request);
+    void runPutRequest(const QNetworkRequest& request, const QByteArray& data);
 
     void setTimemoutInterval(int interval);
     void setRequestTryCount(int requestTryCount);

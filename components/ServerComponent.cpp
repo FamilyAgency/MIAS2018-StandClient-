@@ -66,11 +66,6 @@ bool ServerComponent::canRunRequest() const
  return _serverStatus == ServerStatus::Free;
 }
 
-void ServerComponent::fetchUser(int rfid)
-{
-
-}
-
 void ServerComponent::logout()
 {
 
@@ -78,6 +73,7 @@ void ServerComponent::logout()
 
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
 {
+
     response.body = data;
     parse(response);
     setServerStatus(ServerStatus::Free);
@@ -86,8 +82,8 @@ void ServerComponent::httpRequestSuccessHandler(const QString& data)
 
 void ServerComponent::httpRequestFailedHandler(const QString& data)
 {
-    setServerStatus(ServerStatus::Error);
     qDebug()<<"server error occurs";
+    setServerStatus(ServerStatus::Error);
 
     response.type = ResponseType::Error;
     response.errorType = ServerGlobalErrorType::NetworkError;
@@ -97,5 +93,5 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
 
 void ServerComponent::parse(const ServerResponse& response)
 {
-
+    //implementation needed, inherited classes
 }

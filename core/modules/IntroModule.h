@@ -36,11 +36,14 @@ private:
 
     bool canFetchUser() const;
 
+    void connectComponents();
+    void disconnectComponents();
+
 private slots:
     void onRFIDRecieve(int id);
     void onRFIDConnectedChanged();
-
-    void onServerResponse(const ServerResponse& response);
+    void onNewUserEntered(const UserObject& userObject);
+    void onUserNotFound();
     void onServerError();      
 };
 

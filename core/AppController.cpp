@@ -104,7 +104,9 @@ void AppController::onConfigLoaded(ConfigPtr config)
         module->setConfig(config);
     }
 
-    standData->setConfig(config);  
+    standData->setConfig(config);
+
+    start();
 }
 
 void AppController::start()
@@ -178,6 +180,7 @@ void AppController::setAppState(AppState value)
     emit appStateChanged(value);
 
     QString message = "App state changed : " + currentModule->getName();
+    qDebug()<<message;
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
 

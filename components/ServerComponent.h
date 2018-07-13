@@ -5,6 +5,7 @@
 #include "components/ExternalSystemComponent.h"
 #include "config/Config.h"
 #include "network/http/HTTPClient.h"
+#include "core/data/UserData.h"
 
 class ServerComponent : public ExternalSystemComponent
 {
@@ -91,10 +92,7 @@ public:
     Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
 
     virtual void parse(const ServerResponse& response);
-
-
-     virtual void fetchUser(int rfid);
-     virtual void logout();
+    virtual void logout();
 
 
     friend class ServerComponentTest;
@@ -117,7 +115,9 @@ signals:
 
     void serverLogged(const QString& log);
 
-    void userNotFound();
+
+    void newUserEntered(const UserObject&);
+    void userNotFound();    
 
 protected slots:
    virtual void httpRequestSuccessHandler(const QString& data);

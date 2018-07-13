@@ -61,8 +61,14 @@ void HTTPClient::runGetRequest(const QString& URL)
 }
 
 void HTTPClient::runPostRequest(const QNetworkRequest& request, const QByteArray& data)
-{
+{  
     httpReply = networkManager->post(request, data);
+    timeoutTimer->start();
+}
+
+void HTTPClient::runPutRequest(const QNetworkRequest& request, const QByteArray& data)
+{
+    httpReply = networkManager->put(request, data);
     timeoutTimer->start();
 }
 

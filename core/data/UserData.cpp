@@ -276,6 +276,22 @@ void UserData::parse(const QString& userObject)
     setLoginState(UserData::LoginState::Login);
 }
 
+void UserData::setUserDoesntExist()
+{
+     setUserState(UserData::UserState::DoesntExists);
+}
+
+void UserData::setNewUserData(const UserObject& userObject)
+{
+    auto baseuserInfo =  userObject.baseUserInfo;
+
+    setName(baseuserInfo.name);
+    setSurname(baseuserInfo.surname);
+    setId(baseuserInfo.id);
+
+    setUserState(UserData::UserState::CanPlay);
+    setLoginState(UserData::LoginState::Login);
+}
 
 void UserData::updateGameProgressData()
 {

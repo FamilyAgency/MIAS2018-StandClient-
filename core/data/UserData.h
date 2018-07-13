@@ -64,6 +64,12 @@ public:
 Q_DECLARE_METATYPE(BaseUserInfo)
 
 
+struct UserObject
+{
+    BaseUserInfo baseUserInfo;
+};
+
+
 class UserData : public QObject
 {
     Q_OBJECT
@@ -133,7 +139,13 @@ public:
     void setQmlContext(QQmlContext* value);
     void setGameProgess(const GameProgress& value);
     void clearData();
+
+
     void parse(const QString& userObject);
+    void setNewUserData(const UserObject& userObject);
+    void setUserDoesntExist();
+
+
 
     GameProgress getGameProgess() const;
     OneGameData getCurrentGameData() const;

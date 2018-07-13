@@ -332,9 +332,9 @@ Item
             SpinBox
             {
                 id: prizeId;
-                value: 0;
+                value: 1;
                 editable: true;
-                from :0;
+                from :1;
                 to: 2;
             }
         }
@@ -380,8 +380,11 @@ Item
             case ResponseType.ConfirmUserRequest:
                 console.log("ResponseType.ConfirmUserRequest");
                 break;
-            }
 
+            case ResponseType.ConfirmPrizeRequest:
+                console.log("ResponseType.ConfirmPrizeRequest");
+                break;
+            }
             console.log(" ==================");
         }
 
@@ -405,6 +408,10 @@ Item
 
             case ResponseType.ConfirmUserRequest:
                 console.log("ResponseType.ConfirmUserRequest");
+                break;
+
+            case ResponseType.ConfirmPrizeRequest:
+                console.log("ResponseType.ConfirmPrizeRequest");
                 break;
             }
 

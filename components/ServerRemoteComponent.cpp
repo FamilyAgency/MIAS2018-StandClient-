@@ -16,6 +16,7 @@ void ServerRemoteComponent::configRequest(int deviceId)
         qDebug()<<"wait for server please";
         return;
     }
+
     response.clear();
     response.type = ResponseType::ConfigRequest;
     setServerStatus(ServerStatus::Busy);
@@ -221,15 +222,24 @@ void ServerRemoteComponent::confirmUserRequest(int userId, int code)
 
 void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 {
-    //    if(!canRunRequest())
-    //    {
-    //        qDebug()<<"wait for server please";
-    //        return;
-    //    }
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
 
-    //    response.clear();
-    //    response.type = ResponseType::ConfirmPrizeRequest;
-    //    setServerStatus(ServerStatus::Busy);
+    response.clear();
+    response.type = ResponseType::ConfirmPrizeRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid);
+    QNetworkRequest request(fullRequest);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery query;
+    query.addQueryItem("status", QString::number(1));
+   // query.addQueryItem("type", QString::number(1));
+    httpClient->runPutRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
 void ServerRemoteComponent::parse(const ServerResponse& response)
@@ -293,6 +303,11 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         if(!dataJson.empty())
         {
             createBaseUserInfo(dataJson);
+
+            UserObject userObject;
+            userObject.baseUserInfo = baseUserInfo();
+
+            emit newUserEntered(userObject);
             emit serverRequestSuccess(response.type);
         }
         else
@@ -300,6 +315,11 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
             emit userNotFound();
             qDebug()<<"===== nobody was found =====";
         }
+    }
+    else if(response.type == ResponseType::ConfirmPrizeRequest)
+    {
+         qDebug()<<"=====ConfirmPrizeRequest=====";
+         emit serverRequestSuccess(response.type);
     }
 }
 
@@ -371,5 +391,3 @@ void ServerRemoteComponent::simulateServerTimeout()
     QString fullRequest = "http://familyagency.ru/lab/infloop.php";
     httpClient->runGetRequest(fullRequest);
 }
-
-

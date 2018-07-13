@@ -49,8 +49,6 @@ private:
     void createBaseUserInfo(const QJsonObject& object);
     void handleRequestError(const ServerResponse&  response);
 
-
-
 signals:
     void baseUserInfoChanged();
 };
