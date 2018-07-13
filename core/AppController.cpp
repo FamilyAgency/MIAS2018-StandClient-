@@ -109,7 +109,12 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
     standData->setConfig(config);
 
-    start();
+    QTimer::singleShot(1000, this, SLOT(delayStart()));
+}
+
+void AppController::delayStart()
+{
+     start();
 }
 
 void AppController::start()
@@ -122,7 +127,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Instruction);
+    setAppState(AppState::Roulette);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "RegistrationError");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
+    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
 
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)

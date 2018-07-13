@@ -94,6 +94,8 @@ private:
     void testConstruct();
     void releaseConstruct();
 
+
+
 signals:
     void appStateChanged(AppState appState);
 
@@ -106,6 +108,7 @@ private slots:
     void onAllTaskComleteEvent();
     void onServerResponse(const ServerResponse& response);
 
+    void delayStart();
 };
 
 #endif // APPCOPCONTROLLER_H

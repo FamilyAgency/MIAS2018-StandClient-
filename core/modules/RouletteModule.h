@@ -2,22 +2,45 @@
 #define ROULETTEMODULE_H
 
 #include <QObject>
+#include <QTimer>
 #include "BaseModule.h"
 
 class RouletteModule : public BaseModule
 {
     Q_OBJECT
-public:
-    explicit RouletteModule(QObject *parent = nullptr);
 
+    Q_PROPERTY(float carY READ carY WRITE setCarY NOTIFY carYChanged)
+
+public:
+    enum class RouletteState
+    {
+        Intro,
+        Roll,
+        RollFinished
+    };
+    Q_ENUMS(RouletteState)
+
+    explicit RouletteModule(QObject *parent = nullptr);
     virtual ~RouletteModule();
+
+    virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
     virtual void stop() override;
     virtual QString getName() const override;
 
-signals:
+    float carY() const;
+    void setCarY(float value);
 
-public slots:
+private:
+     QTimer* carStartTimer = nullptr;
+     int _carY = 0;
+
+signals:
+     void carYChanged();
+     void rouletteStateChanged(RouletteState state);
+
+private slots:
+     void onUpdate();
 };
 
 

@@ -36,8 +36,13 @@ void GameTask::setData(const QVector<QPointF>& value, const VelocityCalculator& 
 
 GameTask::~GameTask()
 {
-    disconnect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-    delete timer;
+    if(timer)
+    {
+        timer->stop();
+        disconnect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+        delete timer;
+    }
+
     qDebug()<<"!!!!!!!!!!!!!destroyed game task!!!!!!!!!!!!!";
 }
 

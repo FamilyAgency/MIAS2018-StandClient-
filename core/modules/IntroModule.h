@@ -26,8 +26,6 @@ public:
     virtual void setUserData(QSharedPointer<UserData> userData);
     virtual void setStandData(QSharedPointer<StandData> value);
 
-    friend class IntroModuleTest;
-
 private:
     QSharedPointer<RFIDComponent> rfidComponent = nullptr;
     QSharedPointer<ServerComponent> serverComponent = nullptr;
