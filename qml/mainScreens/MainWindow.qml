@@ -37,7 +37,7 @@ Window {
     {       
         switch(appState)
         {
-        case AppState.Login:
+        case AppState.Intro:
              mainGameScreen.gameStop();
             break;
 

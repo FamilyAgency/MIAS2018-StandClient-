@@ -20,8 +20,10 @@
 
 #include "modules/IntroModule.h"
 #include "modules/InstructionModule.h"
+#include "modules/RouletteModule.h"
 #include "modules/GameModule.h"
 #include "modules/ResultModule.h"
+
 #include "Types.h"
 
 #include "tests/MindwaveComponentTest.h"
@@ -39,6 +41,7 @@ public:
     {
         Intro,
         Instruction,
+        Roulette,
         Game,
         Result
     };
@@ -51,18 +54,21 @@ public:
 
     Q_INVOKABLE void start();
     Q_INVOKABLE void startInstruction();
+    Q_INVOKABLE void startRoulette();
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void startResult();
     Q_INVOKABLE void backToIntro();
 
     Q_INVOKABLE void testCrash();
+    Q_INVOKABLE AppState getAppState() const;
 
 private:
     QSharedPointer<IntroModule> introModule;
-    QSharedPointer<IntroModuleTest> introModuleTest;
     QSharedPointer<InstructionModule> instructionModule;
     QSharedPointer<GameModule> gameModule;
     QSharedPointer<ResultModule> resultModule;
+    QSharedPointer<RouletteModule> rouletteModule;
+
     QList<QSharedPointer<BaseModule>> modules;
 
     QSharedPointer<LoggerComponent> loggerComponent;
@@ -82,7 +88,7 @@ private:
     AppState appState = AppState::Intro;
     QSharedPointer<BaseModule> currentModule = nullptr;
 
-    void setAppState(AppState appState);
+    void setAppState(AppState appState);   
     QSharedPointer<BaseModule> getModuleByAppState(AppState value);
 
     void testConstruct();

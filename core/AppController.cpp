@@ -53,6 +53,9 @@ void AppController::testConstruct()
     instructionModule.reset(new InstructionModule());
     modules.append(instructionModule);
 
+    rouletteModule.reset(new RouletteModule());
+    modules.append(rouletteModule);
+
     gameModule.reset(new GameModule());
     gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
@@ -119,7 +122,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Intro);
+    setAppState(AppState::Instruction);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -155,6 +158,11 @@ void AppController::startInstruction()
     setAppState(AppState::Instruction);
 }
 
+void AppController::startRoulette()
+{
+    setAppState(AppState::Roulette);
+}
+
 void AppController::startGame()
 {
     setAppState(AppState::Game);
@@ -184,12 +192,18 @@ void AppController::setAppState(AppState value)
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
 
+AppController::AppState AppController::getAppState() const
+{
+    return appState;
+}
+
 QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {
         case AppState::Intro: return introModule;
         case AppState::Instruction: return instructionModule;
+        case AppState::Roulette: return rouletteModule;
         case AppState::Game: return gameModule;
         case AppState::Result: return resultModule;
     }

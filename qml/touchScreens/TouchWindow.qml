@@ -20,6 +20,10 @@ Window
     y: standData.mainConfig.touchScreen.y;
     color: "#1c1c1c";
 
+    Component.onCompleted:
+    {
+         setState(appController.getAppState());
+    }
 
     Connections
     {
@@ -36,12 +40,16 @@ Window
         hideAll();
         switch(appState)
         {
-        case AppState.Login:
+        case AppState.Intro:
             introScreen.visible = true;
             break;
 
         case AppState.Instruction:
             instructionScreen.visible = true;
+            break;
+
+        case AppState.Roulette:
+            rouletteScreen.visible = true;
             break;
 
         case AppState.Game:
@@ -62,19 +70,21 @@ Window
     InstructionScreen
     {
         id: instructionScreen;
-        visible: false;
+    }
+
+    RouletteScreen
+    {
+        id: rouletteScreen;
     }
 
     GameScreen
     {
         id: gameScreen;
-        visible: false
     }
 
     ResultScreen
     {
         id: resultScreen;
-        visible: false;
     }
 
     HealthCheckerComponent
@@ -107,6 +117,7 @@ Window
         instructionScreen.visible = false;
         gameScreen.visible = false;
         resultScreen.visible = false;
+        rouletteScreen.visible = false;
 
         introScreen.reset();
         instructionScreen.reset();

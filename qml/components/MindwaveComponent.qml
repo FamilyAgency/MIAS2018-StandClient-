@@ -185,8 +185,10 @@ Item {
             {
                 id:meditationProgressBar;
                 value: 0.0
-                style: ProgressBarStyle {
-                    background: Rectangle {
+                style: ProgressBarStyle
+                {
+                    background: Rectangle
+                    {
                         radius: 2
                         color: "lightgray"
                         border.color: "gray"

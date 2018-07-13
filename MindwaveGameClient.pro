@@ -51,7 +51,8 @@ SOURCES += main.cpp \
     components/monitoring/MemoryChecker.cpp \
     components/ServerRemoteComponent.cpp \
     tools/AppSettings.cpp \
-    tools/StringTools.cpp
+    tools/StringTools.cpp \
+    core/modules/RouletteModule.cpp
 
 RESOURCES += qml.qrc
 
@@ -125,6 +126,7 @@ HEADERS += \
     components/monitoring/MemoryChecker.h \
     components/ServerRemoteComponent.h \
     tools/AppSettings.h \
-    tools/StringTools.h
+    tools/StringTools.h \
+    core/modules/RouletteModule.h
 
 DISTFILES +=
