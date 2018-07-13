@@ -119,7 +119,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Login);
+    setAppState(AppState::Intro);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -141,7 +141,7 @@ void AppController::onLoginStateChanged(UserData::LoginState loginState)
     {
         userData->clearData();
         gameSession->stop();
-        setAppState(AppState::Login);
+        setAppState(AppState::Intro);
     }
 }
 
@@ -188,7 +188,7 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {
-        case AppState::Login: return introModule;
+        case AppState::Intro: return introModule;
         case AppState::Instruction: return instructionModule;
         case AppState::Game: return gameModule;
         case AppState::Result: return resultModule;
@@ -202,9 +202,10 @@ void AppController::onConfigError()
     qDebug() << "config Service Error";
 }
 
-void AppController::backtoIntro()
+void AppController::backToIntro()
 {
-    setAppState(AppState::Login);
+    userData->setLoginState(UserData::LoginState::Logout);
+    setAppState(AppState::Intro);
 }
 
 //===================TESTS===================

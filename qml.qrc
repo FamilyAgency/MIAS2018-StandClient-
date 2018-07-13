@@ -39,5 +39,7 @@
         <file>qml/tests/UserRegistrationData.qml</file>
         <file>qml/mainRelease.qml</file>
         <file>qml/mainDebug.qml</file>
+        <file>qml/tests/touchScreens/IntroScreenTest.qml</file>
+        <file>qml/tests/touchScreens/TouchWindowTest.qml</file>
     </qresource>
 </RCC>

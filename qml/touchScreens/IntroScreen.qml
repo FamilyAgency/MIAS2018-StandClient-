@@ -5,15 +5,65 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import com.app 1.0
 
-Item {
+Item
+{
+    id:login;
 
-    id:login
-    anchors.fill: parent
-    anchors.centerIn: parent
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
+    ColumnLayout
+    {
+        spacing: 10;
+        anchors.centerIn: parent;
+
+        Text
+        {
+            id:mainText;
+            Layout.alignment : Qt.AlignHCenter;
+            text: "Привет. Приложи браслет, чтобы начать";
+            font.family: "Helvetica";
+            font.pixelSize: 25;
+            color: "#999999";
+        }
+
+        ProgressBar
+        {
+            indeterminate: true;
+            anchors.horizontalCenter: parent.horizontalCenter;
+            visible:false;
+        }
+
+        Text
+        {
+            id:erroText;
+            Layout.alignment : Qt.AlignHCenter;
+            visible : false;
+            text: "Не знаю кто ты человек";
+            font.family: "Helvetica";
+            font.pixelSize: 20;
+            color: "#990000";
+        }
+
+        Button
+        {
+            id: startBtn;
+            implicitHeight: 80;
+            implicitWidth: 80;
+            Layout.alignment : Qt.AlignHCenter;
+            text:"Start";
+            visible:false;
+            onClicked:
+            {
+                appController.startInstruction();
+            }
+        }
+    }
 
     Connections
     {
         target:userData;
+
         onUserStateChanged:
         {
             switch(userState)
@@ -70,50 +120,5 @@ Item {
     function setTestState(state)
     {
         reset();
-    }
-
-    ColumnLayout
-    {
-        spacing: 10;
-        anchors.centerIn: parent
-        Text
-        {
-            id:mainText;
-            Layout.alignment : Qt.AlignHCenter
-            text: "Привет. Приложи браслет, чтобы начать";
-            font.family: "Helvetica"
-            font.pixelSize: 25
-            color: "#999999"
-        }
-
-        ProgressBar
-        {
-            indeterminate: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            visible:false
-        }
-
-        Text
-        {
-            id:erroText;
-            Layout.alignment : Qt.AlignHCenter
-            visible : false;
-            text: "Не знаю кто ты человек";
-            font.family: "Helvetica"
-            font.pixelSize: 20
-            color: "#990000"
-        }
-
-        Button
-        {
-            id: startBtn
-            Layout.alignment : Qt.AlignHCenter
-            text:"Start"
-            visible:false
-            onClicked:
-            {
-                appController.startInstruction();
-            }
-        }
     }
 }

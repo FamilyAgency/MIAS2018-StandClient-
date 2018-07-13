@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
-import "touchScreens"
+import "tests/touchScreens"
 import "mainScreens"
 import "controlScreens"
 import com.app 1.0
@@ -22,6 +22,7 @@ ApplicationWindow
     Item
     {
         focus: true;
+
         Keys.onPressed:
         {
             if (event.key === Qt.Key_Escape)
@@ -31,18 +32,18 @@ ApplicationWindow
         }
     }
 
-    TouchWindow
+    TouchWindowTest
     {
         id:touchWindow;
     }
 
     MainWindow
     {
-        id:mainWindow
+        id:mainWindow;
     }
 
     ControlsWindow
     {
-        id:controlsWindow
+        id:controlsWindow;
     }
 }

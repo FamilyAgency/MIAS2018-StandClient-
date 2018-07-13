@@ -37,7 +37,7 @@ class AppController : public QObject
 public:
     enum class AppState
     {
-        Login,
+        Intro,
         Instruction,
         Game,
         Result
@@ -53,7 +53,7 @@ public:
     Q_INVOKABLE void startInstruction();
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void startResult();
-    Q_INVOKABLE void backtoIntro();
+    Q_INVOKABLE void backToIntro();
 
     Q_INVOKABLE void testCrash();
 
@@ -79,7 +79,7 @@ private:
     QSharedPointer<GameSession> gameSession;
     QSharedPointer<AppSettings> appSettings;
 
-    AppState appState = AppState::Login;
+    AppState appState = AppState::Intro;
     QSharedPointer<BaseModule> currentModule = nullptr;
 
     void setAppState(AppState appState);

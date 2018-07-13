@@ -30,6 +30,7 @@ void UserData::setUserState(UserState value)
     userState = value;
     emit userStateChanged(value);
 }
+
 void UserData::setLoginState(LoginState value)
 {
     loginState = value;

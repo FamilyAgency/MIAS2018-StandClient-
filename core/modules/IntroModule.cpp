@@ -45,7 +45,6 @@ void IntroModule::start()
 {
     qDebug()<<"======================= IntroModule START =======================";
     connectComponents();
-
 }
 
 void IntroModule::stop()
@@ -59,10 +58,9 @@ void IntroModule::onRFIDConnectedChanged()
 
 }
 
-
 void IntroModule::onRFIDRecieve(int id)
 {
-
+   // serverComponent->searchuser
 }
 
 bool IntroModule::canFetchUser() const
@@ -121,5 +119,3 @@ void IntroModule::disconnectComponents()
         disconnect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
     }
 }
-
-

@@ -3,8 +3,9 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
-import "../components"
-import "elements"
+import "../../components"
+import "../../touchScreens/elements"
+import "../../touchScreens"
 import com.app 1.0
 
 Window
@@ -18,8 +19,7 @@ Window
     height: standData.mainConfig.touchScreen.height;
     x: standData.mainConfig.touchScreen.x;
     y: standData.mainConfig.touchScreen.y;
-    color: "#1c1c1c";
-
+   // color: "#1c1c1c";
 
     Connections
     {
@@ -57,6 +57,11 @@ Window
     IntroScreen
     {
         id: introScreen;
+
+        IntroScreenTest
+        {
+
+        }
     }
 
     InstructionScreen

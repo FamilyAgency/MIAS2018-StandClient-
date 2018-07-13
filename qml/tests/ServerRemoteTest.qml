@@ -385,6 +385,7 @@ Item
                 console.log("ResponseType.ConfirmPrizeRequest");
                 break;
             }
+
             console.log(" ==================");
         }
 
