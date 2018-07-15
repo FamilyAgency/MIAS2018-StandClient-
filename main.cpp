@@ -15,9 +15,6 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
-
-
-
     QScopedPointer<ConfigController> configController(new ConfigController);
     engine.rootContext()->setContextProperty("configController", configController.data());
 
@@ -25,7 +22,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("appController", appController.data());
     appController.data()->setQmlContext(engine.rootContext());
 
-    QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
+   // QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
     QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
@@ -37,22 +34,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
 
-
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
-    {
-        qDebug()<<"loadedddd";
-
+    {    
         engine.load(QUrl(QLatin1String(conf->mainConfig->qmlOnStart.toLatin1())));
 
         if (engine.rootObjects().isEmpty())
         {
             return -1;
         }
+
+        appController->onConfigLoaded(conf);
     });
-
-
-
-
 
     // config load. entry point
     configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);

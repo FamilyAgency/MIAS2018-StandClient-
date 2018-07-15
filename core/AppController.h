@@ -107,8 +107,6 @@ private slots:
     void onLoginStateChanged(UserData::LoginState loginState);
     void onAllTaskComleteEvent();
     void onServerResponse(const ServerResponse& response);
-
-    void delayStart();
 };
 
 #endif // APPCOPCONTROLLER_H

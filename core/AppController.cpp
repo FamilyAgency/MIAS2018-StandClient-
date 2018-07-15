@@ -109,12 +109,7 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
     standData->setConfig(config);
 
-    QTimer::singleShot(1000, this, SLOT(delayStart()));
-}
-
-void AppController::delayStart()
-{
-     start();
+    start();
 }
 
 void AppController::start()
