@@ -118,7 +118,6 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
     standData->setConfig(config);
     userData->setConfig(config);
-
     start();
 }
 

@@ -1,16 +1,10 @@
 #include "GameProgress.h"
 #include <QDebug>
 
-GameProgress::GameProgress()//(QObject *parent) : QObject(parent)
+GameProgress::GameProgress()
 {
 
 }
-
-//void GameProgress::setQmlContext(QQmlContext* qmlContext)
-//{
-//    //qmlContext = value;
-//    qmlContext->setContextProperty("gameProgress", this);
-//}
 
 void GameProgress::setCurrentGameId(int stage)
 {
@@ -87,8 +81,6 @@ OneGameData GameProgress::getCurrentGameData() const
     {
         if(game.getId() == _currentGameId)
         {
-            qDebug()<<":::::::::::::::::: finded ::::::::::::::::::";
-
             curGameData = game;
             break;
         }
@@ -113,7 +105,6 @@ void GameProgress::currentGameCompleted(int time)
 
     for(int i = 0; i < uncompleteGames.length(); i++)
     {
-         qDebug()<<" uncompleteGames[i].getId() " << uncompleteGames[i].getId();
         if(uncompleteGames[i].getId() == _currentGameId)
         {
             uncompleteGames[i].setComplete(true);

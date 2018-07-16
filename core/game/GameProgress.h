@@ -1,19 +1,15 @@
 #ifndef GAMEPROGRESS_H
 #define GAMEPROGRESS_H
 
-//#include <QObject>
 #include <QVector>
 #include <QQmlContext>
 #include "OneGameData.h"
 
-class GameProgress //: public QObject
+class GameProgress
 {
-  //  Q_OBJECT
-
 
 public:
-    explicit GameProgress();//QObject *parent = nullptr);
-   // void setQmlContext(QQmlContext* value);
+    explicit GameProgress();
 
     void setCurrentGameId(int stage);
     int currentGameId() const;

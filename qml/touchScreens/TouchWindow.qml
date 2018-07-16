@@ -20,11 +20,6 @@ Window
     y: standData.mainConfig.touchScreen.y;
     color: "#1c1c1c";
 
-//    Component.onCompleted:
-//    {
-//         setState(appController.getAppState());
-//    }
-
     Connections
     {
         target:appController;
@@ -90,15 +85,18 @@ Window
     HealthCheckerComponent
     {
         id:health;
-        y: 900;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin: 200;
         x: 50;
     }
 
     BackBtn
     {
         id:backBtn;
-        x: 720;
-        y: 100;
+        anchors.top: parent.top;
+         anchors.topMargin: 100;
+        anchors.right: parent.right;
+        anchors.rightMargin: 100;
     }
 
     ServerPreloader

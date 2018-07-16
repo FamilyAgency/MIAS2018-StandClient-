@@ -47,6 +47,12 @@ void RouletteModule::setMindwave(QSharedPointer<MindwaveComponent> value)
     mindwaveComponent = value;
 }
 
+void RouletteModule::setConfig(ConfigPtr config)
+{
+    carMiddleThreshold = -config->mainConfig->touchScreen.height() / 2.;
+    carTopThreshold = -config->mainConfig->touchScreen.height();
+}
+
 void RouletteModule::start()
 {
     choosenCategory = 0;

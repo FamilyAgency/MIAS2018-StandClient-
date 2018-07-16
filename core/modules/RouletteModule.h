@@ -32,6 +32,7 @@ public:
     RouletteState state() const;
 
     virtual void setQmlContext(QQmlContext* qmlContext) override;
+    virtual void setConfig(ConfigPtr config) override;
     void setMindwave(QSharedPointer<MindwaveComponent> value);
 
     virtual void start() override;
@@ -47,9 +48,10 @@ private:
      const float prepareTimerDelay = 2000.0;
 
      const float carInitialPosition = 0.0f;
-     const int carMiddleThreshold = -600;
+     int carMiddleThreshold = -600;
+     float carTopThreshold = -1200;
      const float carDecriment = -1;
-     const float carTopThreshold = -1200;
+
 
      const int mindwaveAttentionThreshold = 80;
 
