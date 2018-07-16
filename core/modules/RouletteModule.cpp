@@ -101,20 +101,20 @@ void RouletteModule::createRollParams(float rollSpeed)
         return;
     }
 
-    int min = 1;
-    int max = 3;
+    int min = 0;
+    int max = 2;
     choosenCategory = qrand() % ((max + 1) - min) + min;
     float degrees = 360;
 
     switch(choosenCategory)
     {
-    case 1:
+    case 0:
         degrees = 360 + 90;
         break;
-    case 2:
+    case 1:
         degrees = 360 + 270;
         break;
-    case 3:
+    case 2:
         degrees = 360;
         break;
     }

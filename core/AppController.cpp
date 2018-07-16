@@ -64,6 +64,7 @@ void AppController::testConstruct()
     gameModule.reset(new GameModule());
     gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
+    gameModule->setUser(userData);
     connect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
@@ -146,7 +147,6 @@ void AppController::onLoginStateChanged(UserData::LoginState loginState)
 { 
     if(loginState == UserData::LoginState::Login)
     {
-        gameModule->setUser(userData);
         gameSession->start();
     }
     else if(loginState == UserData::LoginState::Logout)

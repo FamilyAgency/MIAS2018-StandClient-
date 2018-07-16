@@ -172,10 +172,6 @@ bool UserData::hasGames() const
     return gameProgress.hasGames();
 }
 
-
-
-
-
 void UserData::setConfig(ConfigPtr value)
 {
    setGameConfig(*value->standGamesConfig);
@@ -190,8 +186,44 @@ void UserData::setGameConfig(StandGamesConfig config)
 void UserData::setGameCategory(int id)
 {
     qDebug()<<"setGameCategory  "<< id;
-    auto description = _gameConfig.games[id].description;
+    auto choosenGame = _gameConfig.games[id];
+    auto description = choosenGame.description;
     emit descriptionChanged(description);
+
+    QVector<OneGameData> games;
+    OneGameData oneGameData1;
+    oneGameData1.setId(1);
+    oneGameData1.setComplete(false);
+    oneGameData1.setTime(0.0f);
+    oneGameData1.setDescription("");
+    oneGameData1.setPath(choosenGame.path1);
+    oneGameData1.setDifficult(VelocityCalculator(2, 3, 60));
+    games.push_back(oneGameData1);
+
+    OneGameData oneGameData2;
+    oneGameData2.setId(2);
+    oneGameData2.setComplete(false);
+    oneGameData2.setTime(0.0f);
+    oneGameData2.setDescription("");
+    oneGameData2.setPath(choosenGame.path2);
+    oneGameData2.setDifficult(VelocityCalculator(2, 2, 70));
+    games.push_back(oneGameData2);
+
+    OneGameData oneGameData3;
+    oneGameData3.setId(3);
+    oneGameData3.setComplete(false);
+    oneGameData3.setTime(0.0f);
+    oneGameData3.setDescription("");
+    oneGameData3.setPath(choosenGame.path3);
+    oneGameData3.setDifficult(VelocityCalculator(2, 2, 70));
+    games.push_back(oneGameData3);
+
+    GameProgress gameProgress;
+    gameProgress.setGames(games);
+    gameProgress.setCurrentGameId(1);
+    setGameProgess(gameProgress);
+
+    updateGameProgressData();   
 }
 
 void UserData::clearData()
@@ -223,53 +255,48 @@ void UserData::parse(const QString& userObject)
     prizes.append(prizesJson[1].toBool());
     setPrizes(prizes);
 
-    auto gamesJson = jsonObj["games"].toArray();
-    QVector<OneGameData> games;
-    for(int i = 0; i < gamesJson.size(); i++)
-    {
-        auto gameJson = gamesJson[i].toObject();
-        OneGameData oneGameData;
-        oneGameData.setId(gameJson["id"].toInt());
-        oneGameData.setComplete(gameJson["complete"].toBool());
-        oneGameData.setTime(gameJson["time"].toInt());
-        oneGameData.setDescription(gameJson["description"].toString());
+//    auto gamesJson = jsonObj["games"].toArray();
+//    QVector<OneGameData> games;
+//    for(int i = 0; i < gamesJson.size(); i++)
+//    {
+//        auto gameJson = gamesJson[i].toObject();
+//        OneGameData oneGameData;
+//        oneGameData.setId(gameJson["id"].toInt());
+//        oneGameData.setComplete(gameJson["complete"].toBool());
+//        oneGameData.setTime(gameJson["time"].toInt());
+//        oneGameData.setDescription(gameJson["description"].toString());
 
-        auto diffObject = gameJson["difficult"].toObject();
-        auto humanValueThresholdMax = diffObject["humanValueThresholdMax"].toDouble();
-        auto humanValueThresholdMin = diffObject["humanValueThresholdMin"].toDouble();
-        auto minVelocity = diffObject["minVelocity"].toDouble();
-        auto maxVelocity = diffObject["maxVelocity"].toDouble();
-        auto minBackVelocity = diffObject["minBackVelocity"].toDouble();
-        auto maxBackVelocity = diffObject["maxBackVelocity"].toDouble();
+//        auto diffObject = gameJson["difficult"].toObject();
+//        auto humanValueThresholdMax = diffObject["humanValueThresholdMax"].toDouble();
+//        auto humanValueThresholdMin = diffObject["humanValueThresholdMin"].toDouble();
+//        auto minVelocity = diffObject["minVelocity"].toDouble();
+//        auto maxVelocity = diffObject["maxVelocity"].toDouble();
+//        auto minBackVelocity = diffObject["minBackVelocity"].toDouble();
+//        auto maxBackVelocity = diffObject["maxBackVelocity"].toDouble();
 
-        oneGameData.setDifficult
-                (VelocityCalculator
-                 (minVelocity,
-                  maxVelocity,
-                  humanValueThresholdMin,
-                  humanValueThresholdMax,
-                  minBackVelocity,
-                  maxBackVelocity));
+//        oneGameData.setDifficult
+//                (VelocityCalculator
+//                 (minVelocity,
+//                  maxVelocity,
+//                  humanValueThresholdMin,
+//                  humanValueThresholdMax,
+//                  minBackVelocity,
+//                  maxBackVelocity));
 
-        QVector<QPointF> path;
-        auto pathArray = gameJson["path"].toArray();
-        for(auto pointJson: pathArray)
-        {
-            QPointF point;
-            point.setX(pointJson.toObject()["x"].toDouble());
-            point.setY(pointJson.toObject()["y"].toDouble());
-            path.push_back(point);
-        }
-        oneGameData.setPath(path);
-        games.push_back(oneGameData);
-    }
+//        QVector<QPointF> path;
+//        auto pathArray = gameJson["path"].toArray();
+//        for(auto pointJson: pathArray)
+//        {
+//            QPointF point;
+//            point.setX(pointJson.toObject()["x"].toDouble());
+//            point.setY(pointJson.toObject()["y"].toDouble());
+//            path.push_back(point);
+//        }
+//        oneGameData.setPath(path);
+//        games.push_back(oneGameData);
+//    }
 
-    GameProgress gameProgress;
-    gameProgress.setGames(games);
-    gameProgress.setCurrentGameId(jsonObj["currentGameId"].toInt());
-    setGameProgess(gameProgress);
 
-    updateGameProgressData();
 
     if(!exist())
     {
@@ -318,10 +345,15 @@ void UserData::setNewUserData(const UserObject& userObject)
 
 void UserData::updateGameProgressData()
 {
+    qDebug()<<":::::::::::::::::: updateGameProgressData ::::::::::::::::::  ";
+
     setCleanGameTime(gameProgress.cleanTime());
     setCurrentGameId(gameProgress.currentGameId());
     setGamesCompleteCount(gameProgress.gamesCompleteCount());
     setGamesCount(gameProgress.gamesCount());
+
+    qDebug()<<":::::::::::::::::: gameProgress.gamesCompleteCount() ::::::::::::::::::  "<<gameProgress.gamesCompleteCount();
+
 }
 
 void UserData::setCleanGameTime(float value)
