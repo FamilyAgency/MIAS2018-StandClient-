@@ -28,11 +28,12 @@ void GameTaskManager::setMindWaveClient(QSharedPointer<MindwaveComponent> value)
 }
 
 void GameTaskManager::start(QSharedPointer<UserData> user)
-{  
-    auto oneGameData = user->getCurrentGameData();
-    currentUser = user;
-    setupCurrentGame(oneGameData);
-    setTaskState(TaskState::PreGame);
+{
+    qDebug()<<"Game Started";
+//    auto oneGameData = user->getCurrentGameData();
+//    currentUser = user;
+//    setupCurrentGame(oneGameData);
+//    setTaskState(TaskState::PreGame);
 }
 
 void GameTaskManager::stop()

@@ -54,6 +54,8 @@ void AppController::testConstruct()
     modules.append(instructionModule);
 
     rouletteModule.reset(new RouletteModule());
+    rouletteModule->setMindwave(mindWaveComponent);
+    connect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
     modules.append(rouletteModule);
 
     gameModule.reset(new GameModule());
@@ -148,6 +150,11 @@ void AppController::onLoginStateChanged(UserData::LoginState loginState)
     }
 }
 
+void AppController::onCarStarting()
+{
+    startGame();
+}
+
 void AppController::onAllTaskComleteEvent()
 {
     setAppState(AppState::Result);
@@ -187,8 +194,7 @@ void AppController::setAppState(AppState value)
     currentModule->start();
     emit appStateChanged(value);
 
-    QString message = "App state changed : " + currentModule->getName();
-    qDebug()<<message;
+    QString message = "___App state changed : " + currentModule->getName();
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
 

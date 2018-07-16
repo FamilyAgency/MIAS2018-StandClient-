@@ -88,13 +88,11 @@ private:
     AppState appState = AppState::Intro;
     QSharedPointer<BaseModule> currentModule = nullptr;
 
-    void setAppState(AppState appState);   
+    void setAppState(AppState appState);
     QSharedPointer<BaseModule> getModuleByAppState(AppState value);
 
     void testConstruct();
     void releaseConstruct();
-
-
 
 signals:
     void appStateChanged(AppState appState);
@@ -107,6 +105,7 @@ private slots:
     void onLoginStateChanged(UserData::LoginState loginState);
     void onAllTaskComleteEvent();
     void onServerResponse(const ServerResponse& response);
+    void onCarStarting();
 };
 
 #endif // APPCOPCONTROLLER_H

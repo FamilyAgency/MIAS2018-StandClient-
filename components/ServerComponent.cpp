@@ -73,10 +73,9 @@ void ServerComponent::logout()
 
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
 {
-
-    response.body = data;
-    parse(response);
     setServerStatus(ServerStatus::Free);
+    response.body = data;    
+    parse(response);   
     emit serverResponse(response);
 }
 
@@ -84,7 +83,6 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
 {
     qDebug()<<"server error occurs";
     setServerStatus(ServerStatus::Error);
-
     response.type = ResponseType::Error;
     response.errorType = ServerGlobalErrorType::NetworkError;
     response.body = data;

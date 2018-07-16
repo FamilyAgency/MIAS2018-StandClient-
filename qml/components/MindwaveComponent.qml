@@ -31,7 +31,7 @@ Item {
 
         onPoorSignalLevelChanged:
         {
-           // signalProgressBarColor.color = mind.poorSignalColor();
+            // signalProgressBarColor.color = mind.poorSignalColor();
         }
     }
 
@@ -39,9 +39,11 @@ Item {
     {
 
         spacing: 10;
-        RowLayout {
+        RowLayout
+        {
             spacing: 6;
-            Text {
+            Text
+            {
                 text: "Mindwave component";
                 font.family: "Helvetica"
                 font.pixelSize: 17
@@ -85,23 +87,27 @@ Item {
             color: "#999999"
         }
 
-        RowLayout {
+        RowLayout
+        {
             spacing: 6;
 
-
-            Text {
+            Text
+            {
                 text: "signalLevel";
                 font.family: "Helvetica"
                 font.pixelSize: 15
                 color: "#009900"
             }
+
             ProgressBar
             {
                 id:signalProgressBar;
                 opacity:0.2
                 value: mind.poorSignalLevel / 100.;
-                style: ProgressBarStyle {
-                    background: Rectangle {
+                style: ProgressBarStyle
+                {
+                    background: Rectangle
+                    {
                         radius: 2
                         color: "lightgray"
                         border.color: "gray"
@@ -111,7 +117,7 @@ Item {
                     }
                     progress: Rectangle
                     {
-                      //id:signalProgressBarColor;
+                        //id:signalProgressBarColor;
                         color:  "#009900"
                         border.color: "steelblue"
                     }
@@ -128,11 +134,12 @@ Item {
             }
         }
 
-        RowLayout {
+        RowLayout
+        {
             spacing: 6;
 
-
-            Text {
+            Text
+            {
                 text: "Attention";
                 font.family: "Helvetica"
                 font.pixelSize: 15
@@ -144,8 +151,10 @@ Item {
                 id:attentionProgressBar;
                 opacity:0.2
                 value: 0.0;
-                style: ProgressBarStyle {
-                    background: Rectangle {
+                style: ProgressBarStyle
+                {
+                    background: Rectangle
+                    {
                         radius: 2
                         color: "lightgray"
                         border.color: "gray"
@@ -153,7 +162,8 @@ Item {
                         implicitWidth: 300
                         implicitHeight: 24
                     }
-                    progress: Rectangle {
+                    progress: Rectangle
+                    {
                         color:  "#990000"
                         border.color: "steelblue"
                     }
@@ -174,7 +184,8 @@ Item {
         {
             visible: true
             opacity: 0.2;
-            Text {
+            Text
+            {
                 text: "Meditation";
                 font.family: "Helvetica"
                 font.pixelSize: 15
@@ -217,7 +228,8 @@ Item {
             visible: false
             spacing: 6;
             ExclusiveGroup { id: tabPositionGroup }
-            RadioButton {
+            RadioButton
+            {
                 id: btn1
                 text: "Attention"
                 checked: true
@@ -228,7 +240,8 @@ Item {
                 }
             }
 
-            RadioButton {
+            RadioButton
+            {
                 id: btn2
                 text: "Meditation"
                 checked: false
