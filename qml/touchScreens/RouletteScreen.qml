@@ -19,7 +19,9 @@ Item
         {
             if(rouletteModule.state == RouletteState.Roll)
             {
-                rollAnim.start();
+                rouletteModule.createRollParams(100);
+               // console.log("roll");
+               // rollAnim.start();
             }
         }
     }
@@ -36,7 +38,7 @@ Item
             id:rollAnim;
             loops: 1;
             from: 0;
-            to: 360;
+            to: 360 + 90;
             duration: 2000;
             running: false;
             easing.type: "InOutCubic"
@@ -65,10 +67,24 @@ Item
 
             if(rouletteModule.state != RouletteState.CarStarting)
             {
-                ctx.strokeStyle = "#999999";
-                ctx.fillStyle = "#999999";
+                ctx.strokeStyle = "#000099";
+                ctx.fillStyle = "#000099";
                 ctx.beginPath();
                 ctx.arc(canvas.width * 0.5, canvas.height * 0.5 - 200, 20, 0, 2*Math.PI);
+                ctx.stroke();
+                ctx.fill();
+
+                ctx.strokeStyle = "#990000";
+                ctx.fillStyle = "#990000";
+                ctx.beginPath();
+                ctx.arc(canvas.width * 0.5 - 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
+                ctx.stroke();
+                ctx.fill();
+
+                ctx.strokeStyle = "#009900";
+                ctx.fillStyle = "#009900";
+                ctx.beginPath();
+                ctx.arc(canvas.width * 0.5 + 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
                 ctx.stroke();
                 ctx.fill();
             }
@@ -239,10 +255,10 @@ Item
             }
         }
 
-        onLocationStopped:
+        onRollParamsUpdate:
         {
-            rollAnim.stop();
-            canvas.rotation = 0;
+            rollAnim.to = degrees;
+            rollAnim.start();
         }
     }
 

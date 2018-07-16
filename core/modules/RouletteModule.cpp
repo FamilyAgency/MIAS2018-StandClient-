@@ -49,6 +49,7 @@ void RouletteModule::setMindwave(QSharedPointer<MindwaveComponent> value)
 
 void RouletteModule::start()
 {
+    choosenCategory = 0;
     setState(RouletteState::Intro);
     setCarY(carInitialPosition);
     carStartTimer->start(carStartTimerMills);
@@ -91,6 +92,36 @@ void RouletteModule::setState(RouletteState state)
     {
         mindwaveTimer->start(mindwaveTimerMills);
     }
+}
+
+void RouletteModule::createRollParams(float rollSpeed)
+{
+    if(choosenCategory != 0)
+    {
+        return;
+    }
+
+    int min = 1;
+    int max = 3;
+    choosenCategory = qrand() % ((max + 1) - min) + min;
+    float degrees = 360;
+
+    switch(choosenCategory)
+    {
+    case 1:
+        degrees = 360 + 90;
+        break;
+    case 2:
+        degrees = 360 + 270;
+        break;
+    case 3:
+        degrees = 360;
+        break;
+    }
+
+    qDebug()<<"choosenCategory============= "<<choosenCategory;
+
+    emit rollParamsUpdate(degrees);
 }
 
 void RouletteModule::onPrepareTimerComplete()

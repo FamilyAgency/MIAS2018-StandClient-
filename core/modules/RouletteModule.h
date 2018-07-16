@@ -26,6 +26,8 @@ public:
     explicit RouletteModule(QObject *parent = nullptr);
     virtual ~RouletteModule();
 
+    Q_INVOKABLE void createRollParams(float rollSpeed);
+
     void setState(RouletteState state);
     RouletteState state() const;
 
@@ -59,19 +61,19 @@ private:
      RouletteState _state = RouletteState::Intro;
 
      float _carY = 0;
-
+     int choosenCategory = 0;
 
 signals:
      void carYChanged();
      void stateChanged();
      void locationStopped();
      void carStarting();
+     void rollParamsUpdate(float degrees);
 
 private slots:
      void onUpdate();
      void onPrepareTimerComplete();
      void onMindwaveUpdate();
-
 };
 
 
