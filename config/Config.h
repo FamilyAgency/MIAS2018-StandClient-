@@ -96,6 +96,17 @@ private:
 Q_DECLARE_METATYPE(MainConfig)
 
 
+struct ServerAPI
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(QString testUser MEMBER testUser)
+
+public:
+    QString testUser = 0;
+};
+Q_DECLARE_METATYPE(ServerAPI)
+
 struct ServerConfig
 {
 private:
@@ -108,6 +119,7 @@ public:
     QString url = "http://mindwave.family.creative";
     int requestTimemoutInterval = 5000;
     int requestTryCount = 2;
+    ServerAPI serverAPI;
 };
 Q_DECLARE_METATYPE(ServerConfig)
 

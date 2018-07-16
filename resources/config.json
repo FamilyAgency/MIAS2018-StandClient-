@@ -63,6 +63,10 @@
     {
         "url": "http://mias2018.familyagency.ru",
         "requestTimemoutInterval": 5000,
-        "requestCount": 3
+        "requestCount": 3,
+        "api":
+        {
+            "testUser": "1"
+        }
     }
 }

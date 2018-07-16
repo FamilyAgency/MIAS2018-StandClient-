@@ -182,8 +182,8 @@ Item
             onClicked:
             {
                 server.clearBaseUserInfo();
-                server.createUserRequest("Юрий", "Попов", "yurik@gmail.com", "89067784587", true);
-                server.createUserRequest(true);
+                //server.createUserRequest("Юрий", "Попов", "yurik@gmail.com", "89067784587");
+                server.createUserRequest();
             }
         }
         RowLayout

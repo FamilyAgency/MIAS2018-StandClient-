@@ -95,6 +95,7 @@ void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, 
     serverConfig->url = jsonObj["url"].toString();
     serverConfig->requestTimemoutInterval = jsonObj["requestTimemoutInterval"].toInt();
     serverConfig->requestTryCount = jsonObj["requestCount"].toInt();
+    serverConfig->serverAPI.testUser = jsonObj["api"].toObject()["testUser"].toString();
 }
 
 void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj)

@@ -19,12 +19,11 @@ public:
 
     Q_INVOKABLE void healthLogRequest(int deviceId);
     Q_INVOKABLE void allUsersRequest();
-    Q_INVOKABLE void createUserRequest(bool isTestUser);
+    Q_INVOKABLE void createUserRequest();
     Q_INVOKABLE void createUserRequest(const QString& name,
                                        const QString& surname,
                                        const QString& email,
-                                       const QString& phone,
-                                       bool test);
+                                       const QString& phone);
 
     Q_INVOKABLE void searchUserRequest(const QString& email, const QString& phone);
     Q_INVOKABLE void searchUserByIdRequest(int userId);

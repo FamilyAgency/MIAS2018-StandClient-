@@ -70,8 +70,7 @@ void ServerRemoteComponent::allUsersRequest()
 void ServerRemoteComponent::createUserRequest(const QString& name,
                                               const QString& surname,
                                               const QString& email,
-                                              const QString& phone,
-                                              bool test)
+                                              const QString& phone)
 {
     if(!canRunRequest())
     {
@@ -91,25 +90,24 @@ void ServerRemoteComponent::createUserRequest(const QString& name,
     query.addQueryItem("surname", surname);
     query.addQueryItem("email", email);
     query.addQueryItem("phone", phone);
-    query.addQueryItem("test", test ? "1" : "0");
+    query.addQueryItem("test", _serverConfig.serverAPI.testUser);
 
     qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
+    qDebug()<<"_serverConfig.serverAPI.testUser "<<_serverConfig.serverAPI.testUser;
     httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
-void ServerRemoteComponent::createUserRequest(bool isTestUser)
+void ServerRemoteComponent::createUserRequest()
 {
     createUserRequest("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ",
                       "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
                       "яндекс@почта.рф",
-                      "+79067704595",
-                      isTestUser ? "1" : "0");
+                      "+79067704595");
 
     //    createUserRequest("Вика",
     //                      "Журавлева",
     //                      "vika@gmail.com",
-    //                      "+89151546522",
-    //                      isTestUser ? "1" : "0");
+    //                      "+89151546522");
 }
 
 void ServerRemoteComponent::searchUserRequest(const QString& email, const QString& phone)
