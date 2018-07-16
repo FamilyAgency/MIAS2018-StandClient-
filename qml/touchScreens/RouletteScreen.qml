@@ -19,7 +19,7 @@ Item
         {
             if(rouletteModule.state == RouletteState.Roll)
             {
-                rollAnim.running = true;
+                rollAnim.start();
             }
         }
     }
@@ -40,11 +40,12 @@ Item
             duration: 2000;
             running: false;
             easing.type: "InOutCubic"
-            onRunningChanged:
+
+            onStopped:
             {
-                if(!rollAnim.running)
+                if(rouletteModule.state == RouletteState.Roll)
                 {
-                    console.log("End of transition!");
+                    console.log("::::::::::::::::::::End of transition!");
                     rouletteModule.state = (RouletteState.RollFinished);
                 }
             }
@@ -200,7 +201,7 @@ Item
         target:rouletteModule;
         onStateChanged:
         {
-            console.log("state changed::::::::::::",rouletteModule.state )
+            console.log(":::::::::::: state changed::::::::::::", rouletteModule.state )
             canvas.requestPaint();
 
             switch(rouletteModule.state)
@@ -269,5 +270,16 @@ Item
         {
 
         }
+    }
+
+    function start()
+    {
+
+    }
+
+    function stop()
+    {
+        rollAnim.stop();
+        canvas.rotation = 0;
     }
 }

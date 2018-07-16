@@ -110,7 +110,7 @@ Item
         }
     }
 
-    function reset()
+    function stop()
     {
         mainText.text =  "Привет. Приложи браслет, чтобы начать";
         erroText.visible = false;

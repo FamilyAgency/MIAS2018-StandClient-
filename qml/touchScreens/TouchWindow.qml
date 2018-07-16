@@ -119,9 +119,10 @@ Window
         resultScreen.visible = false;
         rouletteScreen.visible = false;
 
-        introScreen.reset();
-        instructionScreen.reset();
-        gameScreen.reset();
-        resultScreen.reset();
+        introScreen.stop();
+        instructionScreen.stop();
+        gameScreen.stop();
+        resultScreen.stop();
+        rouletteScreen.stop();
     }
 }

@@ -50,12 +50,13 @@ void RouletteModule::setMindwave(QSharedPointer<MindwaveComponent> value)
 void RouletteModule::start()
 {
     setState(RouletteState::Intro);
-    setCarY(0);
-    carStartTimer->start(100/60.);
+    setCarY(carInitialPosition);
+    carStartTimer->start(carStartTimerMills);
 }
 
 void RouletteModule::stop()
 {
+    setState(RouletteState::Intro);
     carStartTimer->stop();
     prepareTimer->stop();
     mindwaveTimer->stop();
@@ -64,9 +65,9 @@ void RouletteModule::stop()
 
 void RouletteModule::onUpdate()
 {
-    if(_carY > -600)
+    if(_carY > carMiddleThreshold)
     {
-        setCarY(_carY - 1);
+        setCarY(_carY + carDecriment);
     }
     else
     {
@@ -81,13 +82,13 @@ void RouletteModule::setState(RouletteState state)
     emit stateChanged();
 
     if(_state == RouletteState::RollFinished)
-    {
+    {        
         prepareTimer->setSingleShot(true);
-        prepareTimer->start(2000);
+        prepareTimer->start(prepareTimerDelay);
     }
     else if(_state == RouletteState::CarStarting)
     {
-        mindwaveTimer->start(100/60.);
+        mindwaveTimer->start(mindwaveTimerMills);
     }
 }
 
@@ -98,15 +99,15 @@ void RouletteModule::onPrepareTimerComplete()
 
 void RouletteModule::onMindwaveUpdate()
 {
-    if(mindwaveComponent->attention() > 80)
+    if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
     {
-        if(_carY > -1200)
+        if(_carY > carTopThreshold)
         {
-            setCarY(_carY - 1);
+            setCarY(_carY + carDecriment);
         }
         else
         {
-            //ready to go
+            mindwaveTimer->stop();
             emit carStarting();
         }
     }

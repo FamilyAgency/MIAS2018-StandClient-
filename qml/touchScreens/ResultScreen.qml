@@ -1,11 +1,9 @@
 import QtQuick 2.0
 
-Item {
+Item
+{
     anchors.fill: parent
-    function reset()
-    {
 
-    }
     Rectangle
     {
         anchors.fill: parent
@@ -21,5 +19,10 @@ Item {
             font.pixelSize: 25
             color: "#999999"
         }
+    }
+
+    function stop()
+    {
+
     }
 }

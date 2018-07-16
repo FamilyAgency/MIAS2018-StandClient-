@@ -107,7 +107,7 @@ Item
         }
     }
 
-    function reset()
+    function stop()
     {
       //  swipeView.currentIndex = 0;
     }

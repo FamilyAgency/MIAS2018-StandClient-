@@ -40,6 +40,17 @@ public:
     void setCarY(float value);
 
 private:
+     const float carStartTimerMills = 100./60;
+     const float mindwaveTimerMills = 100./60;
+     const float prepareTimerDelay = 2000;
+
+     const float carInitialPosition = 0.0f;
+     const int carMiddleThreshold = -600;
+     const float carDecriment = -1;
+     const float carTopThreshold = -1200;
+
+     const int mindwaveAttentionThreshold = 80;
+
      QTimer* carStartTimer = nullptr;
      QTimer* prepareTimer = nullptr;
      QTimer* mindwaveTimer = nullptr;
@@ -47,7 +58,8 @@ private:
      QSharedPointer<MindwaveComponent> mindwaveComponent;
      RouletteState _state = RouletteState::Intro;
 
-     int _carY = 0;
+     float _carY = 0;
+
 
 signals:
      void carYChanged();

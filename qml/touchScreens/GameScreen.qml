@@ -41,7 +41,7 @@ Item
         }
     }
 
-    function reset()
+    function stop()
     {
 
     }
