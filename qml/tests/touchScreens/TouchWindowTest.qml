@@ -21,11 +21,6 @@ Window
     y: standData.mainConfig.touchScreen.y;
    // color: "#1c1c1c";
 
-//    Component.onCompleted:
-//    {
-//         setState(appController.getAppState());
-//    }
-
     Connections
     {
         target:appController;

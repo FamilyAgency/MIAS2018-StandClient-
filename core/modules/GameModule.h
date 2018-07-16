@@ -16,6 +16,8 @@ public:
     explicit GameModule(QObject *parent = nullptr);
     virtual ~GameModule();
 
+    Q_INVOKABLE void continueGame();
+
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
     virtual void start() override;
@@ -39,6 +41,7 @@ private slots:
 
 signals:
     void allTaskComleteEvent();
+    void taskComleteEvent();
 };
 
 #endif // GAMEMODULE_H

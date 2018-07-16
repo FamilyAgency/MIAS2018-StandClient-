@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+import "elements"
 
 Item
 {
@@ -8,41 +9,78 @@ Item
     Rectangle
     {
         anchors.fill: parent;
+        anchors.centerIn: parent;
         color: "white"
-        width: 400;
-        height: 400;
 
-        Image
-        {
-            id: heart;
-            anchors.centerIn: parent;
-            source:"qrc:/resources/heart.png";
-        }
+        //        Image
+        //        {
+        //            id: heart;
+        //            anchors.centerIn: parent;
+        //            source:"qrc:/resources/heart.png";
+        //        }
 
         Text
         {
-            id: mainText;
+            id:promtText;
+            anchors.fill: parent;
             anchors.centerIn: parent;
-            text: "Game " + userData.currentGameId;
+            //Layout.alignment : Qt.AlignHCenter;
+            text: "КОНЦЕНТРИРУЙСЯ<br/>НА SANTA FE.<br/>ДВИГАЙСЯ К ТОЧКЕ";
             font.family: "Helvetica";
-            font.pixelSize: 25
-            color: "#ffffff";
+            font.pixelSize: 55;
+            color: "#999999";
+            textFormat: Text.StyledText;
+            horizontalAlignment :Text.AlignHCenter;
+            verticalAlignment :Text.AlignVCenter;
         }
 
-        Button
+        AdvantageDescription
         {
-            text: "Finish game"
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.top: mainText.bottom;
-            onClicked:
+            id:advatage;
+
+            onAdvantageReaded:
             {
-                 appController.startResult();
+                promtText.visible = true;
+                advatage.visible = false;
+                gameModule.continueGame();
             }
+        }
+
+        //        Text
+        //        {
+        //            id: mainText;
+        //            anchors.centerIn: parent;
+        //            text: "Game " + userData.currentGameId;
+        //            font.family: "Helvetica";
+        //            font.pixelSize: 25
+        //            color: "#ffffff";
+        //        }
+
+        //        Button
+        //        {
+        //            text: "Finish game"
+        //            anchors.horizontalCenter: parent.horizontalCenter;
+        //            anchors.top: mainText.bottom;
+        //            onClicked:
+        //            {
+        //                 appController.startResult();
+        //            }
+        //        }
+    }
+
+    Connections
+    {
+        target:gameModule;
+        onTaskComleteEvent:
+        {
+            promtText.visible = false;
+            advatage.visible = true;
         }
     }
 
     function stop()
     {
-
+        promtText.visible = true;
+        advatage.visible = false;
     }
 }
