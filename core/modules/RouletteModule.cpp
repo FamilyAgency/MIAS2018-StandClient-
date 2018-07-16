@@ -82,7 +82,8 @@ void RouletteModule::setState(RouletteState state)
     emit stateChanged();
 
     if(_state == RouletteState::RollFinished)
-    {        
+    {
+        qDebug()<<"choose user games!!!!!!";
         prepareTimer->setSingleShot(true);
         prepareTimer->start(prepareTimerDelay);
     }

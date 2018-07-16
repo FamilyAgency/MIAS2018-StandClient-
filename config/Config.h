@@ -164,6 +164,32 @@ public:
 };
 Q_DECLARE_METATYPE(LoggerConfig)
 
+struct StandOneGameConfig
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(QString category MEMBER category)
+    Q_PROPERTY(QString description MEMBER description)
+
+public:
+    QString category = "category";
+    QString description = "description";
+    QVector<QPointF> path1;
+    QVector<QPointF> path2;
+    QVector<QPointF> path3;
+    QVector<QPointF> supergame;
+};
+Q_DECLARE_METATYPE(StandOneGameConfig)
+
+struct StandGamesConfig
+{
+//private:
+ //   Q_PROPERTY(QVector<StandOneGameConfig> games MEMBER games)
+
+public:
+    QVector<StandOneGameConfig> games;
+};
+
 class Config
 {
 public:
@@ -178,6 +204,7 @@ public:
     QSharedPointer<SlackConfig> slackConfig;
     QSharedPointer<LoggerConfig> loggerConfig;
     QSharedPointer<MonitoringConfig> monitoringConfig;
+    QSharedPointer<StandGamesConfig> standGamesConfig;
 
     QString getRawData() const;
     void setRawData(const QString& value);

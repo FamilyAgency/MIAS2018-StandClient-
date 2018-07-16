@@ -9,6 +9,7 @@ Config::Config()
     slackConfig.reset(new SlackConfig);
     loggerConfig.reset(new LoggerConfig);
     monitoringConfig.reset(new MonitoringConfig);
+    standGamesConfig.reset(new StandGamesConfig);
 }
 
 Config::~Config()

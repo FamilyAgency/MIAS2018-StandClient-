@@ -45,7 +45,6 @@ Item
             {
                 if(rouletteModule.state == RouletteState.Roll)
                 {
-                    console.log("::::::::::::::::::::End of transition!");
                     rouletteModule.state = (RouletteState.RollFinished);
                 }
             }

@@ -34,6 +34,7 @@ void ConfigParser::parse(const QString& configData)
         parseSlackConfig(config->slackConfig, jsonObj["slack"].toObject());
         parseLoggerConfig(config->loggerConfig, jsonObj["logger"].toObject());
         parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
+        parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
 
         config->setRawData(configData);
         config->valid = true;
@@ -107,8 +108,8 @@ void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, con
 
 void ConfigParser::parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj)
 {
-     monitoringConfig->memoryCheckMills = jsonObj["memoryCheckMills"].toInt();
-     monitoringConfig->enabled = jsonObj["enabled"].toBool();
+    monitoringConfig->memoryCheckMills = jsonObj["memoryCheckMills"].toInt();
+    monitoringConfig->enabled = jsonObj["enabled"].toBool();
 }
 
 void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj)
@@ -116,3 +117,48 @@ void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, 
     loggerConfig->localEnabled = jsonObj["local"].toObject()["enabled"].toBool();
     loggerConfig->localPath = jsonObj["local"].toObject()["path"].toString();
 }
+
+void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray)
+{
+    for(auto jsonStandGame : jsonArray)
+    {
+        auto oneGameJsonObj = jsonStandGame.toObject();
+        if(oneGameJsonObj["appId"].toInt() == config->mainConfig->appId)
+        {
+            auto data = oneGameJsonObj["data"].toArray();
+            for(auto game : data)
+            {
+                auto gameObj = game.toObject();
+                StandOneGameConfig oneGameconfig;
+                oneGameconfig.category = gameObj["category"].toString();
+                oneGameconfig.description = gameObj["description"].toString();
+
+                qDebug()<<"==================path1==========================";
+                for(auto path1 : gameObj["path1"].toArray())
+                {
+                    oneGameconfig.path1.push_back(QPointF(path1.toObject()["x"].toDouble(), path1.toObject()["y"].toDouble()));
+                    qDebug()<<QPointF(path1.toObject()["x"].toDouble(), path1.toObject()["y"].toDouble());
+                }
+
+                qDebug()<<"==================path2==========================";
+                for(auto path2 : gameObj["path2"].toArray())
+                {
+                    oneGameconfig.path2.push_back(QPointF(path2.toObject()["x"].toDouble(), path2.toObject()["y"].toDouble()));
+                    qDebug()<<QPointF(path2.toObject()["x"].toDouble(), path2.toObject()["y"].toDouble());
+                }
+
+                qDebug()<<"==================path3==========================";
+                for(auto path3 : gameObj["path3"].toArray())
+                {
+                    oneGameconfig.path3.push_back(QPointF(path3.toObject()["x"].toDouble(), path3.toObject()["y"].toDouble()));
+                    qDebug()<<QPointF(path3.toObject()["x"].toDouble(), path3.toObject()["y"].toDouble());
+                }
+
+                standGamesConfig->games.push_back(oneGameconfig);
+            }
+            break;
+        }
+    }
+}
+
+
