@@ -51,10 +51,10 @@ void GameModule::onTaskComleteEvent(int completionTime)
     gameSession->addTaskTime(completionTime);
 
     //if(currentUser->hasGames())
-   // {
-       // start();
-       emit taskComleteEvent();
-   // }
+    // {
+    // start();
+    emit taskComleteEvent();
+    // }
 
 }
 
@@ -62,7 +62,7 @@ void GameModule::continueGame()
 {
     if(currentUser->hasGames())
     {
-       start();
+        start();
     }
     else
     {

@@ -12,6 +12,30 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+    Text
+    {
+        x: 50;
+        y: 50;
+        id:versionText;
+        Layout.alignment : Qt.AlignHCenter;
+        text: "Version: " + standData.mainConfig.version;
+        font.family: "Helvetica";
+        font.pixelSize: 20;
+        color: "#999999";
+    }
+
+    Text
+    {
+        x: 50;
+        y: 80;
+        id:memoryText;
+        Layout.alignment : Qt.AlignHCenter;
+        text: "Memory: " + monitoring.memory + " MB";
+        font.family: "Helvetica";
+        font.pixelSize: 20;
+        color: "#999999";
+    }
+
     ColumnLayout
     {
         spacing: 10;

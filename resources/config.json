@@ -9,8 +9,8 @@
     "qmlOnStart": "qrc:/qml/mainDebug.qml",
     "monitoring":
     {
-        "enabled": false,
-        "memoryCheckMills": 10000
+        "enabled": true,
+        "memoryCheckMills": 1000
     },
     "logger":
     {
