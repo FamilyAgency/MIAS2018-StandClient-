@@ -55,7 +55,10 @@ void AppController::testConstruct()
 
     rouletteModule.reset(new RouletteModule());
     rouletteModule->setMindwave(mindWaveComponent);
+
+    connect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
     connect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
+
     modules.append(rouletteModule);
 
     gameModule.reset(new GameModule());
@@ -73,6 +76,9 @@ AppController::~AppController()
     disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
     disconnect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
+
+    disconnect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
+    disconnect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
 }
 
 void AppController::releaseConstruct()
@@ -110,6 +116,7 @@ void AppController::onConfigLoaded(ConfigPtr config)
     }
 
     standData->setConfig(config);
+    userData->setConfig(config);
 
     start();
 }
@@ -148,6 +155,11 @@ void AppController::onLoginStateChanged(UserData::LoginState loginState)
         gameSession->stop();
         setAppState(AppState::Intro);
     }
+}
+
+void AppController::onGameCategoryUpdate(int id)
+{
+    userData->setGameCategory(id);
 }
 
 void AppController::onCarStarting()

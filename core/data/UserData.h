@@ -5,6 +5,7 @@
 #include <qDebug>
 #include <QQmlContext>
 #include "core/game/GameProgress.h"
+#include "config/Config.h"
 
 struct BaseUserInfo
 {
@@ -137,6 +138,10 @@ public:
     void setPlayingOnAnother(bool value);
 
     void setQmlContext(QQmlContext* value);
+    void setConfig(ConfigPtr value);
+
+    void setGameConfig(StandGamesConfig config);
+
     void setGameProgess(const GameProgress& value);
     void clearData();
 
@@ -156,6 +161,9 @@ public:
     void setLoginState(LoginState value);
     QString getStringState() const;
 
+
+    void setGameCategory(int id);
+
 private:
     QString _name = "Unknown";
     QString _surname = "Unknown";
@@ -167,6 +175,8 @@ private:
     QVariantList _prizes;
     bool _waitEnoughToPlay = false;
     bool _playingOnAnother = false;
+
+    StandGamesConfig _gameConfig;
 
     QQmlContext* qmlContext;
 
@@ -203,6 +213,7 @@ signals:
     void finishedChanged();
     void prizesChanged();
     void playingOnAnotherChanged();
+    void gameConfigChanged();
 
     void userStateChanged(UserData::UserState userState);
     void loginStateChanged(UserData::LoginState loginState);
@@ -212,6 +223,7 @@ signals:
     void gamesCountChanged();
     void gamesCompleteCountChanged();
     void cleanGameTimeChanged();
+    void descriptionChanged(QString description);
 };
 
 #endif // USERDATA_H

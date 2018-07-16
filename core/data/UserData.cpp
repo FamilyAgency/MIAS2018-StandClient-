@@ -172,6 +172,28 @@ bool UserData::hasGames() const
     return gameProgress.hasGames();
 }
 
+
+
+
+
+void UserData::setConfig(ConfigPtr value)
+{
+   setGameConfig(*value->standGamesConfig);
+}
+
+void UserData::setGameConfig(StandGamesConfig config)
+{
+    _gameConfig = config;
+    emit gameConfigChanged();
+}
+
+void UserData::setGameCategory(int id)
+{
+    qDebug()<<"setGameCategory  "<< id;
+    auto description = _gameConfig.games[id].description;
+    emit descriptionChanged(description);
+}
+
 void UserData::clearData()
 {
     gameProgress.setCleanTime(0.0f);

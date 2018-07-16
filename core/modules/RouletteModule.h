@@ -44,7 +44,7 @@ public:
 private:
      const float carStartTimerMills = 100./60;
      const float mindwaveTimerMills = 100./60;
-     const float prepareTimerDelay = 2000;
+     const float prepareTimerDelay = 2000.0;
 
      const float carInitialPosition = 0.0f;
      const int carMiddleThreshold = -600;
@@ -69,6 +69,7 @@ signals:
      void locationStopped();
      void carStarting();
      void rollParamsUpdate(float degrees);
+     void gameCategoryUpdate(int id);
 
 private slots:
      void onUpdate();

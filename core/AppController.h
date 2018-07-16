@@ -106,6 +106,8 @@ private slots:
     void onAllTaskComleteEvent();
     void onServerResponse(const ServerResponse& response);
     void onCarStarting();
+    void onGameCategoryUpdate(int id);
+
 };
 
 #endif // APPCOPCONTROLLER_H

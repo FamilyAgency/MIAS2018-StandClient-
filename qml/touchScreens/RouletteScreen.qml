@@ -264,6 +264,15 @@ Item
 
     Connections
     {
+        target:userData;
+        onDescriptionChanged:
+        {
+            taskText.text = description;
+        }
+    }
+
+    Connections
+    {
         target:mind;
         onAttentionChanged:
         {

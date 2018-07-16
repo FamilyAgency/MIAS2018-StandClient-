@@ -121,6 +121,7 @@ void RouletteModule::createRollParams(float rollSpeed)
 
     qDebug()<<"choosenCategory============= "<<choosenCategory;
 
+    emit gameCategoryUpdate(choosenCategory);
     emit rollParamsUpdate(degrees);
 }
 
