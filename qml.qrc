@@ -41,8 +41,6 @@
         <file>qml/tests/touchScreens/IntroScreenTest.qml</file>
         <file>qml/tests/touchScreens/TouchWindowTest.qml</file>
         <file>qml/touchScreens/RouletteScreen.qml</file>
-        <file>qml/touchScreens/elements/AdvantageDescription.qml</file>
-        <file>qml/touchScreens/elements/FullAdvantageDescription.qml</file>
         <file>qml/touchScreens/GameResultScreen.qml</file>
         <file>qml/touchScreens/results/GameResultFirstTime.qml</file>
         <file>qml/touchScreens/results/ConfirmExitPopup.qml</file>
@@ -50,5 +48,7 @@
         <file>qml/touchScreens/SuperGameResultScreen.qml</file>
         <file>qml/touchScreens/results/SuperGameSuccessScreen.qml</file>
         <file>qml/touchScreens/results/SuperGameFailScreen.qml</file>
+        <file>qml/touchScreens/advantages/AdvantageDescription.qml</file>
+        <file>qml/touchScreens/advantages/FullAdvantageDescription.qml</file>
     </qresource>
 </RCC>
