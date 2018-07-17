@@ -72,7 +72,13 @@ void AppController::testConstruct()
     modules.append(gameResultModule);
 
     superGameModule.reset(new SuperGameModule());
+    connect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
+    connect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
+
     modules.append(superGameModule);
+
+    superGameResultModule.reset(new SuperGameResultModule());
+    modules.append(superGameResultModule);
 }
 
 AppController::~AppController()
@@ -83,6 +89,9 @@ AppController::~AppController()
 
     disconnect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
     disconnect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
+
+    disconnect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
+    disconnect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
 }
 
 void AppController::releaseConstruct()
@@ -174,6 +183,19 @@ void AppController::onAllTaskComleteEvent()
     setAppState(AppState::GameResult);
 }
 
+void AppController::onSuperGameFailed()
+{
+    setAppState(AppState::SuperGameResult);
+}
+
+void AppController::onSuperGameSuccess(int time)
+{
+    setAppState(AppState::SuperGameResult);
+}
+
+
+
+
 void AppController::startInstruction()
 {
     setAppState(AppState::Instruction);
@@ -198,6 +220,13 @@ void AppController::startSuperGame()
 {
     setAppState(AppState::SuperGame);
 }
+
+void AppController::backToIntro()
+{
+    userData->setLoginState(UserData::LoginState::Logout);
+    setAppState(AppState::Intro);
+}
+
 
 void AppController::setAppState(AppState value)
 {
@@ -232,6 +261,7 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
         case AppState::Game: return gameModule;
         case AppState::GameResult: return gameResultModule;
         case AppState::SuperGame: return superGameModule;
+        case AppState::SuperGameResult: return superGameResultModule;
     }
 
     return nullptr;
@@ -240,12 +270,6 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 void AppController::onConfigError()
 {
     qDebug() << "config Service Error";
-}
-
-void AppController::backToIntro()
-{
-    userData->setLoginState(UserData::LoginState::Logout);
-    setAppState(AppState::Intro);
 }
 
 //===================TESTS===================

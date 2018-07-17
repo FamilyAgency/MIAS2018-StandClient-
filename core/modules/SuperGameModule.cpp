@@ -30,6 +30,7 @@ void SuperGameModule::setConfig(ConfigPtr config)
 
 void SuperGameModule::start()
 {
+    emit updateSuperGameTime(superGameTime);
     qDebug()<<"======================= SuperGameModule START =======================";
 }
 
@@ -60,6 +61,15 @@ void SuperGameModule::onUpdate()
          emit superGameFailed();
     }
 }
+
+void SuperGameModule::superGamePassedTest()
+{
+    int time = QDateTime::currentMSecsSinceEpoch() - startTime;
+
+    emit superGameSuccess(time);
+}
+
+
 
 QString SuperGameModule::getName() const
 {

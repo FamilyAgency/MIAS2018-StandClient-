@@ -19,6 +19,7 @@ public:
     virtual QString getName() const override;
 
     Q_INVOKABLE void startGame();
+    Q_INVOKABLE void superGamePassedTest();
 
 private:
     const float superGameTimerMills = 100./60;

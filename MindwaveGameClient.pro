@@ -53,7 +53,8 @@ SOURCES += main.cpp \
     tools/StringTools.cpp \
     core/modules/RouletteModule.cpp \
     core/modules/GameResultModule.cpp \
-    core/modules/SuperGameModule.cpp
+    core/modules/SuperGameModule.cpp \
+    core/modules/SuperGameResultModule.cpp
 
 RESOURCES += qml.qrc
 
@@ -129,6 +130,7 @@ HEADERS += \
     tools/StringTools.h \
     core/modules/RouletteModule.h \
     core/modules/GameResultModule.h \
-    core/modules/SuperGameModule.h
+    core/modules/SuperGameModule.h \
+    core/modules/SuperGameResultModule.h
 
 DISTFILES +=

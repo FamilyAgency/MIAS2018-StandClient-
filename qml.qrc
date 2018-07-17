@@ -47,5 +47,8 @@
         <file>qml/touchScreens/results/GameResultFirstTime.qml</file>
         <file>qml/touchScreens/results/ConfirmExitPopup.qml</file>
         <file>qml/touchScreens/SuperGameScreen.qml</file>
+        <file>qml/touchScreens/SuperGameResultScreen.qml</file>
+        <file>qml/touchScreens/results/SuperGameSuccessScreen.qml</file>
+        <file>qml/touchScreens/results/SuperGameFailScreen.qml</file>
     </qresource>
 </RCC>

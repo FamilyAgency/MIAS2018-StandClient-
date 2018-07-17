@@ -24,6 +24,7 @@
 #include "modules/GameModule.h"
 #include "modules/GameResultModule.h"
 #include "modules/SuperGameModule.h"
+#include "modules/SuperGameResultModule.h"
 
 #include "Types.h"
 
@@ -45,7 +46,8 @@ public:
         Roulette,
         Game,
         GameResult,
-        SuperGame
+        SuperGame,
+        SuperGameResult
     };
     Q_ENUMS(AppState)
 
@@ -72,7 +74,7 @@ private:
     QSharedPointer<GameResultModule> gameResultModule;
     QSharedPointer<RouletteModule> rouletteModule;
     QSharedPointer<SuperGameModule> superGameModule;
-
+    QSharedPointer<SuperGameResultModule> superGameResultModule;
     QList<QSharedPointer<BaseModule>> modules;
 
     QSharedPointer<LoggerComponent> loggerComponent;
@@ -111,6 +113,8 @@ private slots:
     void onServerResponse(const ServerResponse& response);
     void onCarStarting();
     void onGameCategoryUpdate(int id);
+    void onSuperGameFailed();
+    void onSuperGameSuccess(int time);
 
 };
 

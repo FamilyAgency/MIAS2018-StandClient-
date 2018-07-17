@@ -104,6 +104,40 @@ Item
             mainText.visible = false;
             descrText.visible = false;
             triesText.visible = false;
+            passBtn.visible = true;
+        }
+    }
+
+
+    Button
+    {
+        id: passBtn;
+
+        anchors.top: triesText.bottom;
+        anchors.topMargin: 100;
+        anchors.horizontalCenter: parent.horizontalCenter;
+
+        contentItem: Text
+        {
+            text: "ПРОЙТИ СУПЕРИГРУ";
+            font.family: "Helvetica";
+            font.pixelSize: 25;
+            color: "#ffffff"
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+
+        }
+
+        background: Rectangle
+        {
+            implicitHeight: 200;
+            implicitWidth: 400;
+            color: passBtn.down ? "#3c2755" : "#4e1a8a";
+        }
+
+        onClicked:
+        {
+            superGameModule.superGamePassedTest();
         }
     }
 
@@ -124,6 +158,7 @@ Item
         {
             console.log("onSuperGameSuccess");
         }
+
     }
 
     function stop()
@@ -132,5 +167,6 @@ Item
         mainText.visible = true;
         descrText.visible = true;
         triesText.visible = true;
+        passBtn.visible = false;
     }
 }
