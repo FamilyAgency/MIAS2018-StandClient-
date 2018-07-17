@@ -131,7 +131,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Intro);
+    setAppState(AppState::Instruction);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

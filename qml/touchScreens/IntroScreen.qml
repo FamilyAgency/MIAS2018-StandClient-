@@ -86,7 +86,7 @@ Item
             visible:false;
             contentItem: Text
             {
-                text: buttonText
+                text: buttonText;
                 font.family: "Helvetica";
                 font.pixelSize: 25;
                 color: "#ffffff"

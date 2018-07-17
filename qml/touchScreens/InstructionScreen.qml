@@ -1,96 +1,131 @@
-import QtQuick 2.0
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
+import QtQuick 2.2
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
 Item
 {
-    id:instruction
-    anchors.fill: parent
+    id:instruction;
 
+    property string mainTitleDefault: "НАДЕНЬТЕ<br/>УТСРОЙСТВО";
+    property string addTitleDefault: "ИЛИ ОБРАТИТЕСЬ ЗА ПОМОЩЬЮ<br/>К ПРОМО-ПЕРСОНАЛУ";
+    property string buttonText: "ПОГНАЛИ";
 
-    Rectangle
+    anchors.fill: parent;
+
+    Text
     {
-        anchors.fill: parent
-        color: "white"
-        width: 400;
-        height: 400;
+        id:mainText;
+        text: mainTitleDefault;
+        font.family: "Helvetica";
+        font.pixelSize: 45;
+        color: "#ffffff";
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter:  parent.verticalCenter;
+        anchors.verticalCenterOffset: -200;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
+    }
+
+    Text
+    {
+        id:addText;
+        text: addTitleDefault;
+        font.family: "Helvetica";
+        font.pixelSize: 25;
+        color: "#ffffff";
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: mainText.bottom;
+        anchors.topMargin: 20;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
+    }
+
+    RowLayout
+    {
+        id:mindWave;
+
+        spacing: 6;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: addText.bottom;
+        anchors.topMargin: 100;
+
         Text
         {
-            id:mainText3;
-            anchors.centerIn: parent
-            text: "Наденьте устройство или обратитесь к врачу";
-            font.family: "Helvetica"
-            font.pixelSize: 25
-            color: "#999999"
+            text: "signalLevel";
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#009900";
         }
 
-        RowLayout
+        ProgressBar
         {
-            spacing: 6;
-           // anchors.centerIn: parent
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.top: mainText3.bottom;
-            anchors.topMargin: 50;
-            Text
-            {
-                text: "signalLevel";
-                font.family: "Helvetica"
-                font.pixelSize: 15
-                color: "#009900"
-            }
-            ProgressBar
-            {
-                id:signalProgressBar;
-                opacity:0.2
-                value: mind.poorSignalLevel / 100.;
-                style: ProgressBarStyle
-                {
-                    background: Rectangle
-                    {
-                        radius: 2
-                        color: "lightgray"
-                        border.color: "gray"
-                        border.width: 1
-                        implicitWidth: 300
-                        implicitHeight: 24
-                    }
+            id: signalProgressBar;
+            opacity: 1.;
+            value: mind.poorSignalLevel / 100.;
 
-                    progress: Rectangle
-                    {
-                      //id:signalProgressBarColor;
-                        color:  "#009900"
-                        border.color: "steelblue"
-                    }
-                }
+            background: Rectangle
+            {
+                radius: 2;
+                color: "lightgray";
+                border.color: "gray";
+                border.width: 1;
+                implicitWidth: 300;
+                implicitHeight: 24;
+
             }
 
-            PropertyAnimation
+            contentItem: Rectangle
             {
-                id: signalAnim;
-                target: signalProgressBar;
-                property: "value";
-                to: 100;
-                duration: 500
+                color: "#009900";
             }
         }
 
-        Button
+        PropertyAnimation
         {
-            text: "StartGame";
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.top: mainText3.bottom;
-            anchors.topMargin: 100;
-            onClicked:
-            {
-                appController.startRoulette();
-            }
+            id: signalAnim;
+            target: signalProgressBar;
+            property: "value";
+            to: 100;
+            duration: 500;
+        }
+    }
+
+    Button
+    {
+        id: startBtn;
+
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: mindWave.bottom;
+        anchors.topMargin: 100;
+
+        contentItem: Text
+        {
+            text: buttonText;
+            font.family: "Helvetica";
+            font.pixelSize: 25;
+            color: "#ffffff"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+        background: Rectangle
+        {
+            implicitHeight: 100;
+            implicitWidth: 280;
+            color:  startBtn.down ? "#3c2755" : "#801bfc";
+            radius: 10;
+        }
+
+        onClicked:
+        {
+            appController.startRoulette();
         }
     }
 
     Connections
     {
         target:mind;
+
         onAttentionChanged:
         {
 
@@ -103,88 +138,12 @@ Item
 
         onPoorSignalLevelChanged:
         {
-           // signalProgressBarColor.color = mind.poorSignalColor();
+            // signalProgressBarColor.color = mind.poorSignalColor();
         }
     }
 
     function stop()
     {
-      //  swipeView.currentIndex = 0;
+
     }
-
-//    SwipeView {
-//        id: swipeView;
-
-//        currentIndex: 0
-//        anchors.fill: parent
-//        Rectangle
-//        {
-//            color: "white"
-//            width: 400;
-//            height: 400;
-//            Text
-//            {
-//                id:mainText;
-//                anchors.centerIn: parent
-//                text: "Инструкция1";
-//                font.family: "Helvetica"
-//                font.pixelSize: 25
-//                color: "#999999"
-//            }
-//        }
-
-//        Rectangle
-//        {
-//            color: "white"
-//            width: 400;
-//            height: 400;
-//            Text
-//            {
-//                id:mainText2;
-//                anchors.centerIn: parent
-//                text: "Инструкция2";
-//                font.family: "Helvetica"
-//                font.pixelSize: 25
-//                color: "#999999"
-//            }
-//        }
-
-//        Rectangle
-//        {
-//            color: "white"
-//            width: 400;
-//            height: 400;
-//            Text
-//            {
-//                id:mainText3;
-//                anchors.centerIn: parent
-//                text: "Инструкция3";
-//                font.family: "Helvetica"
-//                font.pixelSize: 25
-//                color: "#999999"
-//            }
-
-//            Button
-//            {
-//                text: "StartGame"
-//                anchors.horizontalCenter: parent.horizontalCenter
-//                anchors.top: mainText3.bottom
-//                onClicked:
-//                {
-//                    appController.startGame();
-//                }
-//            }
-//        }
-//    }
-
-//    PageIndicator
-//    {
-//        id: indicator
-
-//        count: swipeView.count
-//        currentIndex: swipeView.currentIndex
-
-//        anchors.bottom: swipeView.bottom
-//        anchors.horizontalCenter: parent.horizontalCenter
-//    }
 }
