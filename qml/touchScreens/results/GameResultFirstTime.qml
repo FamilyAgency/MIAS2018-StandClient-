@@ -6,9 +6,13 @@ import QtQuick.Controls.Styles 1.4
 Item
 {
     id: result;
+
     property string mainTitleDefault: "ПОЗДРАВЛЯЕМ";
     property string buttonTakeColaText: "ЗАБРАТЬ<br/>НАПИТОК";
     property string buttonSuperGameText: "ИГРАТЬ<br/>В СУПЕРИГРУ";
+
+    signal startSuperGame();
+    signal getColaCan();
 
 
     anchors.fill: parent;
@@ -85,7 +89,7 @@ Item
 
         onClicked:
         {
-
+            result.startSuperGame();
         }
     }
 
@@ -96,13 +100,14 @@ Item
         onReject:
         {
             confirmExitPopup.hide();
+            result.getColaCan();
         }
 
         onConfirm:
         {
             confirmExitPopup.hide();
+            result.startSuperGame();
         }
-
     }
 
     function stop()

@@ -70,6 +70,9 @@ void AppController::testConstruct()
 
     gameResultModule.reset(new GameResultModule());
     modules.append(gameResultModule);
+
+    superGameModule.reset(new SuperGameModule());
+    modules.append(superGameModule);
 }
 
 AppController::~AppController()
@@ -131,7 +134,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Roulette);
+    setAppState(AppState::GameResult);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -186,9 +189,14 @@ void AppController::startGame()
     setAppState(AppState::Game);
 }
 
-void AppController::startResult()
+void AppController::startGameResult()
 {
     setAppState(AppState::GameResult);
+}
+
+void AppController::startSuperGame()
+{
+    setAppState(AppState::SuperGame);
 }
 
 void AppController::setAppState(AppState value)
@@ -223,6 +231,7 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
         case AppState::Roulette: return rouletteModule;
         case AppState::Game: return gameModule;
         case AppState::GameResult: return gameResultModule;
+        case AppState::SuperGame: return superGameModule;
     }
 
     return nullptr;

@@ -8,6 +8,16 @@ Item
     GameResultFirstTime
     {
         id:gameResultFirstTime;
+
+        onStartSuperGame:
+        {
+            appController.startSuperGame();
+        }
+
+        onGetColaCan:
+        {
+            appController.backToIntro();
+        }
     }
 
     function stop()

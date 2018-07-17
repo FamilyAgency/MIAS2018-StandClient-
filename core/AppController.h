@@ -23,6 +23,7 @@
 #include "modules/RouletteModule.h"
 #include "modules/GameModule.h"
 #include "modules/GameResultModule.h"
+#include "modules/SuperGameModule.h"
 
 #include "Types.h"
 
@@ -43,7 +44,8 @@ public:
         Instruction,
         Roulette,
         Game,
-        GameResult
+        GameResult,
+        SuperGame
     };
     Q_ENUMS(AppState)
 
@@ -56,7 +58,8 @@ public:
     Q_INVOKABLE void startInstruction();
     Q_INVOKABLE void startRoulette();
     Q_INVOKABLE void startGame();
-    Q_INVOKABLE void startResult();
+    Q_INVOKABLE void startGameResult();
+    Q_INVOKABLE void startSuperGame();
     Q_INVOKABLE void backToIntro();
 
     Q_INVOKABLE void testCrash();
@@ -68,6 +71,7 @@ private:
     QSharedPointer<GameModule> gameModule;
     QSharedPointer<GameResultModule> gameResultModule;
     QSharedPointer<RouletteModule> rouletteModule;
+    QSharedPointer<SuperGameModule> superGameModule;
 
     QList<QSharedPointer<BaseModule>> modules;
 

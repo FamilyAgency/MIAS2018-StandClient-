@@ -59,6 +59,10 @@ Window
         case AppState.GameResult:
             gameResultScreen.visible = true;
             break;
+
+        case AppState.SuperGame:
+            superGameScreen.visible = true;
+            break
         }
     }
 
@@ -92,9 +96,15 @@ Window
         id: gameResultScreen;
     }
 
+    SuperGameScreen
+    {
+        id: superGameScreen;
+    }
+
     HealthCheckerComponent
     {
         id:health;
+        visible:  false;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 200;
         x: 50;
@@ -126,11 +136,13 @@ Window
         gameScreen.visible = false;
         gameResultScreen.visible = false;
         rouletteScreen.visible = false;
+        superGameScreen.visible = false;
 
         introScreen.stop();
         instructionScreen.stop();
         gameScreen.stop();
         gameResultScreen.stop();
         rouletteScreen.stop();
+        superGameScreen.stop();
     }
 }

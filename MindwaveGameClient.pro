@@ -52,7 +52,8 @@ SOURCES += main.cpp \
     tools/AppSettings.cpp \
     tools/StringTools.cpp \
     core/modules/RouletteModule.cpp \
-    core/modules/GameResultModule.cpp
+    core/modules/GameResultModule.cpp \
+    core/modules/SuperGameModule.cpp
 
 RESOURCES += qml.qrc
 
@@ -118,7 +119,6 @@ HEADERS += \
     core/modules/GameModule.h \
     core/modules/InstructionModule.h \
     core/modules/IntroModule.h \
-    core/modules/ResultModule.h \
     core/data/StandData.h \
     core/data/UserData.h \
     tests/RFIDComponentTest.h \
@@ -128,6 +128,7 @@ HEADERS += \
     tools/AppSettings.h \
     tools/StringTools.h \
     core/modules/RouletteModule.h \
-    core/modules/GameResultModule.h
+    core/modules/GameResultModule.h \
+    core/modules/SuperGameModule.h
 
 DISTFILES +=
