@@ -143,7 +143,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::GameResult);
+    setAppState(AppState::Roulette);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

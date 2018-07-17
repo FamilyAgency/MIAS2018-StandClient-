@@ -96,4 +96,9 @@ Item
     {
         visible = true;
     }
+
+    function hide()
+    {
+        visible = false;
+    }
 }

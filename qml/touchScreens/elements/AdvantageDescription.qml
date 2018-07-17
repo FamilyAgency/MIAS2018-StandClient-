@@ -95,4 +95,16 @@ Item
             advatage.advantageReaded();
         }
     }
+
+    function show()
+    {
+        visible = true;
+        fullAdvantageDescr.hide();
+    }
+
+    function hide()
+    {
+        visible = false;
+        fullAdvantageDescr.hide();
+    }
 }

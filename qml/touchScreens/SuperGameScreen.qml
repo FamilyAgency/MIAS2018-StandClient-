@@ -108,7 +108,6 @@ Item
         }
     }
 
-
     Button
     {
         id: passBtn;
@@ -158,11 +157,11 @@ Item
         {
             console.log("onSuperGameSuccess");
         }
-
     }
 
     function stop()
     {
+        timeText.text = timeTextDefault;
         startBtn.visible = true;
         mainText.visible = true;
         descrText.visible = true;

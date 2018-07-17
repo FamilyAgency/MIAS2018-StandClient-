@@ -29,7 +29,7 @@ Item
         onAdvantageReaded:
         {
             mainText.visible = true;
-            advatage.visible = false;
+            advatage.hide();
             gameModule.continueGame();
         }
     }
@@ -40,13 +40,13 @@ Item
         onTaskComleteEvent:
         {
             mainText.visible = false;
-            advatage.visible = true;
+            advatage.show();
         }
     }
 
     function stop()
     {
         mainText.visible = true;
-        advatage.visible = false;
+         advatage.hide();
     }
 }
