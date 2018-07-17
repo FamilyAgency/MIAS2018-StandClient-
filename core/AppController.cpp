@@ -68,8 +68,8 @@ void AppController::testConstruct()
     connect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
-    resultModule.reset(new ResultModule());
-    modules.append(resultModule);
+    gameResultModule.reset(new GameResultModule());
+    modules.append(gameResultModule);
 }
 
 AppController::~AppController()
@@ -168,7 +168,7 @@ void AppController::onCarStarting()
 
 void AppController::onAllTaskComleteEvent()
 {
-    setAppState(AppState::Result);
+    setAppState(AppState::GameResult);
 }
 
 void AppController::startInstruction()
@@ -188,7 +188,7 @@ void AppController::startGame()
 
 void AppController::startResult()
 {
-    setAppState(AppState::Result);
+    setAppState(AppState::GameResult);
 }
 
 void AppController::setAppState(AppState value)
@@ -222,7 +222,7 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
         case AppState::Instruction: return instructionModule;
         case AppState::Roulette: return rouletteModule;
         case AppState::Game: return gameModule;
-        case AppState::Result: return resultModule;
+        case AppState::GameResult: return gameResultModule;
     }
 
     return nullptr;

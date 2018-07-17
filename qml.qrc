@@ -14,7 +14,6 @@
         <file>qml/touchScreens/GameScreen.qml</file>
         <file>qml/mainScreens/MainWindow.qml</file>
         <file>qml/controlScreens/ControlsWindow.qml</file>
-        <file>qml/touchScreens/ResultScreen.qml</file>
         <file>qml/mainScreens/Consts.qml</file>
         <file>qml/mainScreens/GameScreen.qml</file>
         <file>qml/controlScreens/GameSession.qml</file>
@@ -44,5 +43,8 @@
         <file>qml/touchScreens/RouletteScreen.qml</file>
         <file>qml/touchScreens/elements/AdvantageDescription.qml</file>
         <file>qml/touchScreens/elements/FullAdvantageDescription.qml</file>
+        <file>qml/touchScreens/GameResultScreen.qml</file>
+        <file>qml/touchScreens/results/GameResultFirstTime.qml</file>
+        <file>qml/touchScreens/results/ConfirmExitPopup.qml</file>
     </qresource>
 </RCC>

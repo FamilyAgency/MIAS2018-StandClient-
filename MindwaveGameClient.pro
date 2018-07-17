@@ -43,7 +43,6 @@ SOURCES += main.cpp \
     core/modules/GameModule.cpp \
     core/modules/InstructionModule.cpp \
     core/modules/IntroModule.cpp \
-    core/modules/ResultModule.cpp \
     core/data/StandData.cpp \
     core/data/UserData.cpp \
     tests/RFIDComponentTest.cpp \
@@ -52,7 +51,8 @@ SOURCES += main.cpp \
     components/ServerRemoteComponent.cpp \
     tools/AppSettings.cpp \
     tools/StringTools.cpp \
-    core/modules/RouletteModule.cpp
+    core/modules/RouletteModule.cpp \
+    core/modules/GameResultModule.cpp
 
 RESOURCES += qml.qrc
 
@@ -127,6 +127,7 @@ HEADERS += \
     components/ServerRemoteComponent.h \
     tools/AppSettings.h \
     tools/StringTools.h \
-    core/modules/RouletteModule.h
+    core/modules/RouletteModule.h \
+    core/modules/GameResultModule.h
 
 DISTFILES +=

@@ -22,7 +22,7 @@
 #include "modules/InstructionModule.h"
 #include "modules/RouletteModule.h"
 #include "modules/GameModule.h"
-#include "modules/ResultModule.h"
+#include "modules/GameResultModule.h"
 
 #include "Types.h"
 
@@ -43,7 +43,7 @@ public:
         Instruction,
         Roulette,
         Game,
-        Result
+        GameResult
     };
     Q_ENUMS(AppState)
 
@@ -66,7 +66,7 @@ private:
     QSharedPointer<IntroModule> introModule;
     QSharedPointer<InstructionModule> instructionModule;
     QSharedPointer<GameModule> gameModule;
-    QSharedPointer<ResultModule> resultModule;
+    QSharedPointer<GameResultModule> gameResultModule;
     QSharedPointer<RouletteModule> rouletteModule;
 
     QList<QSharedPointer<BaseModule>> modules;

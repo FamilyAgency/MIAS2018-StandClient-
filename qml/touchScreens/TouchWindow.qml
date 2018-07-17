@@ -51,8 +51,8 @@ Window
             gameScreen.visible = true;
             break;
 
-        case AppState.Result:
-            resultScreen.visible = true;
+        case AppState.GameResult:
+            gameResultScreen.visible = true;
             break;
         }
     }
@@ -77,9 +77,9 @@ Window
         id: gameScreen;
     }
 
-    ResultScreen
+    GameResultScreen
     {
-        id: resultScreen;
+        id: gameResultScreen;
     }
 
     HealthCheckerComponent
@@ -114,13 +114,13 @@ Window
         introScreen.visible = false;
         instructionScreen.visible = false;
         gameScreen.visible = false;
-        resultScreen.visible = false;
+        gameResultScreen.visible = false;
         rouletteScreen.visible = false;
 
         introScreen.stop();
         instructionScreen.stop();
         gameScreen.stop();
-        resultScreen.stop();
+        gameResultScreen.stop();
         rouletteScreen.stop();
     }
 }
