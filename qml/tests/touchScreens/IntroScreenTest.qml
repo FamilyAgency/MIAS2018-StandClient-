@@ -13,9 +13,24 @@ Item
         anchors.bottom: parent.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.bottomMargin: 100;
+
         Button
         {
+            id: rfidBtn;
             text:"RFID Request";
+            contentItem: Text
+            {
+                text:"RFID Request";
+                color: "#000000"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+            background: Rectangle
+            {
+                implicitHeight: 50;
+                implicitWidth: 20;
+                color:  rfidBtn.down ? "#3c2755" : "#ffffff";
+            }
             onClicked:
             {
                 server.clearBaseUserInfo();
@@ -26,7 +41,7 @@ Item
         SpinBox
         {
             id: userId;
-            value: 0;
+            value: 41;
             editable: true;
             from:0;
             to:3000;

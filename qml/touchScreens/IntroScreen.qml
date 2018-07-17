@@ -1,13 +1,18 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
-//import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
+import QtQuick 2.2
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Styles 1.2
 import com.app 1.0
 
 Item
 {
     id:login;
+
+    property string mainTitleDefault: "УПРАВЛЯЙ<br/>SANTA FE<br/>СИЛОЙ МЫСЛИ";
+    property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ";
+    property string addTitleHelloText: "ПОЗНАКОМЬСЯ С УВЛЕКАТЕЛЬНЫМ,<br/>МИРОМ SANTA FE!<br/>ПРЕДСТАВЛЯЕШЬ,\
+ УПРАВЛЯТЬ<br/>АВТОМОБИЛЕМ SANTA FE СТАЛО<br/>ВОЗМОЖНО СИЛОЙ МЫСЛИ";
+    property string buttonText: "НАЧНЕМ?";
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -21,7 +26,7 @@ Item
         text: "Version: " + standData.mainConfig.version;
         font.family: "Helvetica";
         font.pixelSize: 20;
-        color: "#999999";
+        color: "#888888";
     }
 
     Text
@@ -33,7 +38,7 @@ Item
         text: "Memory: " + monitoring.memory + " MB";
         font.family: "Helvetica";
         font.pixelSize: 20;
-        color: "#999999";
+        color: "#888888";
     }
 
     ColumnLayout
@@ -44,39 +49,58 @@ Item
         Text
         {
             id:mainText;
-            Layout.alignment : Qt.AlignHCenter;
-            text: "Привет. Приложи браслет, чтобы начать";
+            text: mainTitleDefault;
             font.family: "Helvetica";
-            font.pixelSize: 25;
-            color: "#999999";
-        }
-
-        ProgressBar
-        {
-            indeterminate: true;
+            font.pixelSize: 45;
+            color: "#ffffff";
             anchors.horizontalCenter: parent.horizontalCenter;
-            visible:false;
+            anchors.verticalCenter:  parent.verticalCenter;
+            anchors.verticalCenterOffset: -100;
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+            Layout.preferredWidth: 500;
+            textFormat: Text.StyledText;
+           // wrapMode: Text.WordWrap;
+            elide: Text.ElideRight;
         }
 
         Text
         {
-            id:erroText;
-            Layout.alignment : Qt.AlignHCenter;
-            visible : false;
-            text: "Не знаю кто ты человек";
+            id:addText;
+            text: addTitleDefault;
             font.family: "Helvetica";
-            font.pixelSize: 20;
-            color: "#990000";
+            font.pixelSize: 25;
+            color: "#ffffff";
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.verticalCenter:  parent.verticalCenter;
+            anchors.verticalCenterOffset: 100;
+            horizontalAlignment: Text.AlignHCenter;
         }
 
         Button
         {
             id: startBtn;
-            implicitHeight: 80;
-            implicitWidth: 80;
-            Layout.alignment : Qt.AlignHCenter;
-            text:"Start";
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.top: addText.bottom;
+            anchors.topMargin: 100;
             visible:false;
+            contentItem: Text
+            {
+                text: buttonText
+                font.family: "Helvetica";
+                font.pixelSize: 25;
+                color: "#ffffff"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
+            background: Rectangle
+            {
+                implicitHeight: 100;
+                implicitWidth: 280;
+                color:  startBtn.down ? "#3c2755" : "#801bfc";
+                radius: 10;
+            }
+
             onClicked:
             {
                 appController.startInstruction();
@@ -96,23 +120,23 @@ Item
                 break;
 
             case UserState.DoesntExists:
-                mainText.text = "Похоже, что тебя не существует!";
-                startBtn.visible = false;
+                mainText.text = "Похоже, что тебя<br/>не существует!";
+                cantPlayHandler();
                 break;
 
             case UserState.Finished:
-                mainText.text = "Забирай свои призы и не приходи сюда!";
-                startBtn.visible = false;
+                mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
+                cantPlayHandler();
                 break;
 
             case UserState.WasRecently:
                 mainText.text = "Недавно же играл!";
-                startBtn.visible = false;
+                cantPlayHandler();
                 break;
 
             case UserState.YouArePlaying:
-                mainText.text = "Играешь на другом стенде хитрец!";
-                startBtn.visible = false;
+                mainText.text = "Играешь на другом<br/>стенде, хитрец!";
+                cantPlayHandler();
                 break;
             }
         }
@@ -122,7 +146,10 @@ Item
             switch(loginState)
             {
             case LoginState.Login:
-                mainText.text = "О привет, " + userData.name + "! Начнем!";
+                mainText.text = "ПРИВЕТ,<br/>" + userData.name;
+                mainText.visible = true;
+                addText.visible = true;
+                addText.text = addTitleHelloText;
                 startBtn.visible = true;
                 break;
 
@@ -136,13 +163,22 @@ Item
 
     function stop()
     {
-        mainText.text =  "Привет. Приложи браслет, чтобы начать";
-        erroText.visible = false;
+        mainText.text =  mainTitleDefault;
+        addText.text =  addTitleDefault;
+
+        mainText.visible = true;
+        addText.visible = true;
         startBtn.visible = false;
     }
 
     function setTestState(state)
     {
         reset();
+    }
+
+    function cantPlayHandler()
+    {
+        startBtn.visible = false;
+        addText.visible = false;
     }
 }

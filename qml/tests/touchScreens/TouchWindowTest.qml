@@ -19,7 +19,7 @@ Window
     height: standData.mainConfig.touchScreen.height;
     x: standData.mainConfig.touchScreen.x;
     y: standData.mainConfig.touchScreen.y;
-   // color: "#1c1c1c";
+    color: "#1c1c1c";
 
     Connections
     {

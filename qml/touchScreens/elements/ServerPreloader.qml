@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.1
-import QtQuick.Controls 2.1
 import com.app 1.0
 
 Item
@@ -17,15 +16,15 @@ Item
         target:server
         onServerStatusChanged:
         {
-            visible = (status == ServerStatus.Busy);
+            visible = (status === ServerStatus.Busy);
         }
     }
 
     Rectangle
     {
         anchors.fill: parent;
-        opacity: 0.7;
-        color: "white";
+        opacity: 0.9;
+        color: "#1c1c1c";
     }
 
     Button
@@ -42,3 +41,4 @@ Item
         implicitWidth: 200;
     }
 }
+
