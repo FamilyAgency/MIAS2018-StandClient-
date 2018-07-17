@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
@@ -7,6 +7,14 @@ import com.app 1.0
 Item
 {    
     id:roulette;
+
+    property string mainTitleDefault: "РУЛЕТКА ПОМОЖЕТ ВЫБРАТЬ МАРШРУТ<br/> ВЫХОДНОГО ДНЯ В ГОРОДЕ ВМЕСТЕ С СЕМЬЕЙ<br/>\
+В ГОРОДЕ ВМЕСТЕ С СЕМЬЕЙ";
+
+    property string rollTextDefault: "КРУТИ!";
+    property int circleSize : 300;
+
+
     anchors.fill: parent;
     anchors.centerIn: parent;
 
@@ -20,8 +28,8 @@ Item
             if(rouletteModule.state == RouletteState.Roll)
             {
                 rouletteModule.createRollParams(100);
-               // console.log("roll");
-               // rollAnim.start();
+                // console.log("roll");
+                // rollAnim.start();
             }
         }
     }
@@ -61,16 +69,16 @@ Item
             ctx.strokeStyle = "#8009fb";
             ctx.fillStyle = "#8009fb";
             ctx.beginPath();
-            ctx.arc(canvas.width * 0.5, canvas.height * 0.5, 300, 0, 2*Math.PI);
+            ctx.arc(canvas.width * 0.5, canvas.height * 0.5, circleSize, 0, 2*Math.PI);
             ctx.stroke();
             ctx.fill();
 
-            if(rouletteModule.state != RouletteState.CarStarting)
+            if(rouletteModule.state == RouletteState.Roll)
             {
                 ctx.strokeStyle = "#000099";
                 ctx.fillStyle = "#000099";
                 ctx.beginPath();
-                ctx.arc(canvas.width * 0.5, canvas.height * 0.5 - 200, 20, 0, 2*Math.PI);
+                ctx.arc(canvas.width * 0.5, canvas.height * 0.5 + 200, 20, 0, 2*Math.PI);
                 ctx.stroke();
                 ctx.fill();
 
@@ -91,15 +99,44 @@ Item
         }
     }
 
+    Canvas
+    {
+        id: canvasStatic;
+        width: parent.width;
+        height: parent.height;
+        antialiasing: true;
+        onPaint:
+        {
+            var ctx = getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.lineWidth = 10;
+            var triSide = 80;
+            var offset = 10;
+
+            //// trianle
+            ctx.strokeStyle = "#1c1c1c";
+            ctx.fillStyle = "#1c1c1c";
+            ctx.beginPath();
+            ctx.moveTo(canvas.width * 0.5, canvas.height * 0.5 - circleSize + triSide);
+            ctx.lineTo(canvas.width * 0.5 + triSide * 0.5,  canvas.height * 0.5 - circleSize - offset);
+            ctx.lineTo(canvas.width * 0.5 - triSide * 0.5, canvas.height * 0.5 - circleSize - offset);
+            ctx.fill();
+            ////
+        }
+    }
+
     Rectangle
     {
         anchors.horizontalCenter: parent.horizontalCenter;
         y: parent.height + rouletteModule.carY;
-        width: 100
-        height: 100
-        color: "red"
-        radius: 10
+        width: 150;
+        height: rouletteModule.carHeight;
+        color: "#cdcdcd";
+        radius: 10;
     }
+
+
 
     Text
     {
@@ -107,13 +144,31 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
-        text: "РУЛЕТКА ПОМОЖЕТ ВЫБРАТЬ МАРШРУТ<br/> ВЫХОДНОГО ДНЯ В ГОРОДЕ ВМЕСТЕ С СЕМЬЕЙ";
+        text: mainTitleDefault;
         font.family: "Helvetica";
         font.pixelSize: 25;
-        color: "#999999";
+        color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
     }
+
+    Text
+    {
+        id:rollText;
+        visible:true;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenterOffset: circleSize + 50;
+        text: rollTextDefault;
+        font.family: "Helvetica";
+        font.pixelSize: 25;
+        color: "#ffffff";
+        textFormat: Text.StyledText;
+        horizontalAlignment :Text.AlignHCenter;
+    }
+
+
+
 
     Text
     {
@@ -124,7 +179,7 @@ Item
         text: "НА ПИКНИК<br/>В ПАРК СОКОЛЬНИКИ";
         font.family: "Helvetica";
         font.pixelSize: 35;
-        color: "#999999";
+        color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
     }
@@ -132,38 +187,33 @@ Item
     Text
     {
         id:helpText;
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 100;
+        anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenterOffset: circleSize + 60;
         text: "А ТЕПЕРЬ ТЕБЕ НУЖНО<br/>КОНЦЕНТРИРОВАТЬСЯ<br/>НА АВТОМОБИЛЕ.<br/>ПОЕХАЛИ!";
         font.family: "Helvetica";
         font.pixelSize: 35;
-        color: "#999999";
+        color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
+        OpacityAnimator on opacity
+        {
+            id:hintOpactyAnimator;
+            from: 0;
+            to: 1;
+            running:false;
+            duration: 500
+        }
     }
 
-    Text
-    {
-        id:rollText;
-        visible:true;
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 100;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        text: "КРУТИ";
-        font.family: "Helvetica";
-        font.pixelSize: 25;
-        color: "#999999";
-        textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
-    }
+
 
     RowLayout
     {
         id:mindwaveVisual
         spacing: 6;
         anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 100;
+        anchors.bottomMargin: 10;
         anchors.horizontalCenter: parent.horizontalCenter;
         visible:false;
 
@@ -249,7 +299,11 @@ Item
                 rollText.visible = false;
                 mainText.visible = false;
                 taskText.visible = true;
-                helpText.visible = true;
+
+                helpText.opacity = 0;
+                helpText.visible = true
+                hintOpactyAnimator.start();
+
                 mindwaveVisual.visible = true;
                 break;
             }

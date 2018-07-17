@@ -11,6 +11,7 @@ class RouletteModule : public BaseModule
     Q_OBJECT
 
     Q_PROPERTY(float carY READ carY WRITE setCarY NOTIFY carYChanged)
+    Q_PROPERTY(int carHeight READ carHeight WRITE setCarHeight NOTIFY carHeightChanged)
     Q_PROPERTY(RouletteState state READ state WRITE setState NOTIFY stateChanged)
 
 public:
@@ -42,6 +43,9 @@ public:
     float carY() const;
     void setCarY(float value);
 
+    int carHeight() const;
+    void setCarHeight(int value);
+
 private:
      const float carStartTimerMills = 100./60;
      const float mindwaveTimerMills = 100./60;
@@ -63,6 +67,7 @@ private:
      RouletteState _state = RouletteState::Intro;
 
      float _carY = 0;
+     int _carHeight = 250;
      int choosenCategory = 0;
 
 signals:
@@ -72,6 +77,7 @@ signals:
      void carStarting();
      void rollParamsUpdate(float degrees);
      void gameCategoryUpdate(int id);
+     void carHeightChanged();
 
 private slots:
      void onUpdate();

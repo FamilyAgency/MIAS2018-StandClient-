@@ -7,7 +7,7 @@ Item
 {
     id:instruction;
 
-    property string mainTitleDefault: "НАДЕНЬТЕ<br/>УТСРОЙСТВО";
+    property string mainTitleDefault: "НАДЕНЬТЕ<br/>УСТРОЙСТВО";
     property string addTitleDefault: "ИЛИ ОБРАТИТЕСЬ ЗА ПОМОЩЬЮ<br/>К ПРОМО-ПЕРСОНАЛУ";
     property string buttonText: "ПОГНАЛИ";
 

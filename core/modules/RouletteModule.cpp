@@ -72,7 +72,7 @@ void RouletteModule::stop()
 
 void RouletteModule::onUpdate()
 {
-    if(_carY > carMiddleThreshold)
+    if(_carY > carMiddleThreshold - _carHeight * 0.5f)
     {
         setCarY(_carY + carDecriment);
     }
@@ -115,13 +115,13 @@ void RouletteModule::createRollParams(float rollSpeed)
     switch(choosenCategory)
     {
     case 0:
-        degrees = 360 + 90;
+        degrees = 360 + 180;
         break;
     case 1:
         degrees = 360 + 270;
         break;
     case 2:
-        degrees = 360;
+        degrees = 360 + 90;
         break;
     }
 
@@ -140,7 +140,7 @@ void RouletteModule::onMindwaveUpdate()
 {
     if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
     {
-        if(_carY > carTopThreshold)
+        if(_carY > carTopThreshold - _carHeight)
         {
             setCarY(_carY + carDecriment);
         }
@@ -166,6 +166,17 @@ void RouletteModule::setCarY(float value)
 {
     _carY = value;
     emit carYChanged();
+}
+
+int RouletteModule::carHeight() const
+{
+    return _carHeight;
+}
+
+void RouletteModule::setCarHeight(int value)
+{
+    _carHeight = value;
+    emit carHeightChanged();
 }
 
 QString RouletteModule::getName() const
