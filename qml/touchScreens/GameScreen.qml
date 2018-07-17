@@ -6,66 +6,32 @@ Item
 {
     anchors.fill: parent;
 
-    Rectangle
+    property string mainTitleDefault: "КОНЦЕНТРИРУЙСЯ<br/>НА SANTA FE.<br/>ДВИГАЙСЯ К ТОЧКЕ";
+
+    Text
     {
+        id:mainText;
         anchors.fill: parent;
         anchors.centerIn: parent;
-        color: "white"
+        text: mainTitleDefault;
+        font.family: "Helvetica";
+        font.pixelSize: 55;
+        color: "#ffffff";
+        textFormat: Text.StyledText;
+        horizontalAlignment :Text.AlignHCenter;
+        verticalAlignment :Text.AlignVCenter;
+    }
 
-        //        Image
-        //        {
-        //            id: heart;
-        //            anchors.centerIn: parent;
-        //            source:"qrc:/resources/heart.png";
-        //        }
+    AdvantageDescription
+    {
+        id:advatage;
 
-        Text
+        onAdvantageReaded:
         {
-            id:promtText;
-            anchors.fill: parent;
-            anchors.centerIn: parent;
-            //Layout.alignment : Qt.AlignHCenter;
-            text: "КОНЦЕНТРИРУЙСЯ<br/>НА SANTA FE.<br/>ДВИГАЙСЯ К ТОЧКЕ";
-            font.family: "Helvetica";
-            font.pixelSize: 55;
-            color: "#999999";
-            textFormat: Text.StyledText;
-            horizontalAlignment :Text.AlignHCenter;
-            verticalAlignment :Text.AlignVCenter;
+            mainText.visible = true;
+            advatage.visible = false;
+            gameModule.continueGame();
         }
-
-        AdvantageDescription
-        {
-            id:advatage;
-
-            onAdvantageReaded:
-            {
-                promtText.visible = true;
-                advatage.visible = false;
-                gameModule.continueGame();
-            }
-        }
-
-        //        Text
-        //        {
-        //            id: mainText;
-        //            anchors.centerIn: parent;
-        //            text: "Game " + userData.currentGameId;
-        //            font.family: "Helvetica";
-        //            font.pixelSize: 25
-        //            color: "#ffffff";
-        //        }
-
-        //        Button
-        //        {
-        //            text: "Finish game"
-        //            anchors.horizontalCenter: parent.horizontalCenter;
-        //            anchors.top: mainText.bottom;
-        //            onClicked:
-        //            {
-        //                 appController.startResult();
-        //            }
-        //        }
     }
 
     Connections
@@ -73,14 +39,14 @@ Item
         target:gameModule;
         onTaskComleteEvent:
         {
-            promtText.visible = false;
+            mainText.visible = false;
             advatage.visible = true;
         }
     }
 
     function stop()
     {
-        promtText.visible = true;
+        mainText.visible = true;
         advatage.visible = false;
     }
 }

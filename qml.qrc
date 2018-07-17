@@ -43,5 +43,6 @@
         <file>qml/tests/touchScreens/TouchWindowTest.qml</file>
         <file>qml/touchScreens/RouletteScreen.qml</file>
         <file>qml/touchScreens/elements/AdvantageDescription.qml</file>
+        <file>qml/touchScreens/elements/FullAdvantageDescription.qml</file>
     </qresource>
 </RCC>

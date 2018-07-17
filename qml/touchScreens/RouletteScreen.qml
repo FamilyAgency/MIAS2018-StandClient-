@@ -206,8 +206,6 @@ Item
         }
     }
 
-
-
     RowLayout
     {
         id:mindwaveVisual

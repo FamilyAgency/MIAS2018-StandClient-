@@ -34,6 +34,9 @@ Window
     function setState(appState)
     {
         hideAll();
+
+        //gameScreen.visible = true;
+
         switch(appState)
         {
         case AppState.Intro:

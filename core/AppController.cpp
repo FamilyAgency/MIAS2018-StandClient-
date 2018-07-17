@@ -131,7 +131,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Instruction);
+    setAppState(AppState::Roulette);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
