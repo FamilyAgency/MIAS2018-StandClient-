@@ -23,7 +23,7 @@ Item
 
     SuperGameFailScreen
     {
-       id:superGameаFailScreen;
+       id:superGameFailScreen;
        visible : false;
     }
 
@@ -34,14 +34,14 @@ Item
         onSuperGameFailed:
         {
             superGameSuccessScreen.visible = false;
-            superGameаFailScreen.visible = true;
+            superGameFailScreen.visible = true;
             console.log("SuperGameFailed");
         }
 
         onSuperGameSuccess:
         {
             superGameSuccessScreen.visible = true;
-             superGameаFailScreen.visible = false;
+            superGameFailScreen.visible = false;
             console.log("onSuperGameSuccess");
         }
     }
