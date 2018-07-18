@@ -82,6 +82,8 @@ private:
     Q_PROPERTY(QRect gameScreen MEMBER gameScreen)
     Q_PROPERTY(bool gameScreenIsSplash MEMBER gameScreenIsSplash)
     Q_PROPERTY(QString qmlOnStart MEMBER qmlOnStart)
+    Q_PROPERTY(bool release MEMBER release)
+
 
  public:
     int version;
@@ -96,6 +98,7 @@ private:
     QRect gameScreen;
     bool gameScreenIsSplash;
     QString qmlOnStart = "qrc:/qml/mainRelease.qml";
+    bool release = false;
 };
 Q_DECLARE_METATYPE(MainConfig)
 

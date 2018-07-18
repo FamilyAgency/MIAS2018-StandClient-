@@ -49,6 +49,14 @@ Item {
 
         Text
         {
+            text: "Release: " + standData.mainConfig.release;
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
+        }
+
+        Text
+        {
             text: "Screens";
             font.family: "Helvetica";
             font.pixelSize: 15;
