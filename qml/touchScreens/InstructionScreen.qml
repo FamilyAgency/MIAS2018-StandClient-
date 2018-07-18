@@ -71,14 +71,13 @@ Item
                 border.color: "gray";
                 border.width: 1;
                 implicitWidth: 300;
-                implicitHeight: 24;
-
+              //  implicitHeight: 24;
             }
 
-            contentItem: Rectangle
-            {
-                color: "#009900";
-            }
+//            contentItem: Rectangle
+//            {
+//                color: "#009900";
+//            }
         }
 
         PropertyAnimation
