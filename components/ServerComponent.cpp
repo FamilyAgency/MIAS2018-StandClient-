@@ -1,4 +1,7 @@
 #include "ServerComponent.h"
+#include <QJsonDocument.h>
+#include <QJsonObject.h>
+#include <QJsonArray.h>
 
 ServerComponent::ServerComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
@@ -74,7 +77,14 @@ void ServerComponent::logout()
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
 {
     setServerStatus(ServerStatus::Free);
-    response.body = data;    
+
+    response.body = data;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(response.body.toUtf8());
+    QJsonObject responeJson   = jsonDoc.object();
+
+    response.status = responeJson["status"].toString();
+    response.code = responeJson["code"].toInt();
+
     parse(response);   
     emit serverResponse(response);
 }
@@ -83,9 +93,15 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
 {
     qDebug()<<"server error occurs";
     setServerStatus(ServerStatus::Error);
+    response.body = data;
+
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(response.body.toUtf8());
+    QJsonObject responeJson   = jsonDoc.object();
+    response.status = responeJson["status"].toString();
+    response.code = responeJson["code"].toInt();
     response.type = ResponseType::Error;
     response.errorType = ServerGlobalErrorType::NetworkError;
-    response.body = data;
+
     emit serverGlobalError(response.errorType);
 }
 

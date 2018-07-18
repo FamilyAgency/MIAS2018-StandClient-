@@ -70,6 +70,8 @@ public:
         ResponseType type = ResponseType::None;
         ServerGlobalErrorType errorType = ServerGlobalErrorType::None;
         QString body;
+        QString status = "";
+        int code = 0;
 
         void clear()
         {
@@ -118,6 +120,7 @@ signals:
 
     void newUserEntered(const UserObject&);
     void userNotFound();    
+    void userAlreadyExists();
 
 protected slots:
    virtual void httpRequestSuccessHandler(const QString& data);

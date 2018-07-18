@@ -236,7 +236,7 @@ void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 
     QUrlQuery query;
     query.addQueryItem("status", QString::number(1));
-   // query.addQueryItem("type", QString::number(1));
+    // query.addQueryItem("type", QString::number(1));
     httpClient->runPutRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
@@ -248,13 +248,10 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     QJsonDocument jsonDoc = QJsonDocument::fromJson(response.body.toUtf8());
     QJsonObject responeJson   = jsonDoc.object();
 
-    QString status = responeJson["status"].toString();
-    int code = responeJson["code"].toInt();
+    qDebug() << "response.status: " << response.status;
+    qDebug() << "response.code: " << response.code;
 
-    qDebug() << "status: " << status;
-    qDebug() << "code: " << code;
-
-    if(status != "success" || code != 200)
+    if(response.status != "success" || response.code != 200)
     {
         handleRequestError(response);
         return;
@@ -316,14 +313,25 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     }
     else if(response.type == ResponseType::ConfirmPrizeRequest)
     {
-         qDebug()<<"=====ConfirmPrizeRequest=====";
-         emit serverRequestSuccess(response.type);
+        qDebug()<<"=====ConfirmPrizeRequest=====";
+        emit serverRequestSuccess(response.type);
     }
 }
 
 void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
 {
     qDebug() << "server error: " << (int)response.type;
+
+    if(response.type == ResponseType::CreateUserRequest)
+    {
+        if(response.code == 555)
+        {
+            qDebug() << "User already exists: ";
+            emit userAlreadyExists();
+            return;
+        }
+    }
+
     serverRequestError(response.type);
 }
 
