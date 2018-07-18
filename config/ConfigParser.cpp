@@ -31,7 +31,7 @@ void ConfigParser::parse(const QString& configData)
         parseRFIDConfig(config->rfidConfig, jsonObj["rfid"].toObject());
         parseMindwaveConfig(config->mindwaveConfig, jsonObj["mindwave"].toObject());
         parseServerConfig(config->serverConfig, jsonObj["server"].toObject());
-        parseSlackConfig(config->slackConfig, jsonObj["slack"].toObject());
+        parseSlackConfig(config->slackConfig, jsonObj["slack"].toArray());
         parseLoggerConfig(config->loggerConfig, jsonObj["logger"].toObject());
         parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
         parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
@@ -107,11 +107,19 @@ void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, 
     serverConfig->serverAPI.pinNeed = jsonObj["api"].toObject()["pinNeed"].toBool();
 }
 
-void ConfigParser::parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj)
+void ConfigParser::parseSlackConfig(QSharedPointer<SlackFullConfig> slackConfig, const QJsonArray& jsonArray)
 {
-    slackConfig->logChannel = jsonObj["logChannel"].toString();
-    slackConfig->errorChannel = jsonObj["errorChannel"].toString();
-    slackConfig->enabled = jsonObj["enabled"].toBool();
+    for(auto slackChannel : jsonArray)
+    {
+        SlackAppConfig slackChannelconfig;
+        auto slackChannelJsonObj = slackChannel.toObject();
+
+        slackChannelconfig.enabled = slackChannelJsonObj["enabled"].toBool();
+        slackChannelconfig.logChannel = slackChannelJsonObj["logChannel"].toString();
+        slackChannelconfig.errorChannel = slackChannelJsonObj["errorChannel"].toString();
+        slackChannelconfig.appId = slackChannelJsonObj["appId"].toInt();
+        slackConfig->slackMap.insert(slackChannelconfig.appId, slackChannelconfig);
+    }
 }
 
 void ConfigParser::parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj)

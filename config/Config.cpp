@@ -6,7 +6,7 @@ Config::Config()
     mindwaveConfig.reset(new MindwaveConfig);
     rfidConfig.reset(new RFIDConfig);
     serverConfig.reset(new ServerConfig);
-    slackConfig.reset(new SlackConfig);
+    slackConfig.reset(new SlackFullConfig);
     loggerConfig.reset(new LoggerConfig);
     monitoringConfig.reset(new MonitoringConfig);
     standGamesConfig.reset(new StandGamesConfig);

@@ -26,7 +26,7 @@ private:
     void parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj);
     void parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj);
     void parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj);
-    void parseSlackConfig(QSharedPointer<SlackConfig> slackConfig, const QJsonObject& jsonObj);
+    void parseSlackConfig(QSharedPointer<SlackFullConfig> slackConfig,  const QJsonArray& jsonArray);
     void parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj);
     void parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj);
     void parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray);

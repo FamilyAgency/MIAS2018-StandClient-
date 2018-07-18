@@ -3,7 +3,7 @@
     "configUpdateUrl" : "http://familyagency.ru/lab/synapse/digitalframes/config.json",
     "workingDirectory": "c:\\projects\\Qt\\MIAS2018\\AutoUpdater\\process",
     "needRemoteUpdate": false,
-    "appId": 1,
+    "appId": 100,
     "appName": "Main stand",
     "folderSeparator": "\\",
     "qmlOnStart": "qrc:/qml/mainDebug.qml",
@@ -57,11 +57,21 @@
         "initialCommand" : "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r",
         "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r"
     },
-    "slack": {
-        "enabled": false,
-        "errorChannel": "https://hooks.slack.com/services/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",
-        "logChannel": "https://hooks.slack.com/services/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"
-    },
+    "slack": 
+    [
+        {
+            "appId":100,
+            "enabled": true,
+            "errorChannel": "https://hooks.slack.com/services/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",
+            "logChannel": "https://hooks.slack.com/services/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"
+        },
+        {
+            "appId":1,
+            "enabled": true,
+            "errorChannel": "https://hooks.slack.com/services/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",
+            "logChannel": "https://hooks.slack.com/services/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"
+        }
+    ],
     "server":
     {
         "url": "http://mias2018.familyagency.ru",

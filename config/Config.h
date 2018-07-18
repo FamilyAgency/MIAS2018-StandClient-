@@ -133,20 +133,28 @@ public:
 };
 Q_DECLARE_METATYPE(ServerConfig)
 
-struct SlackConfig
+struct SlackAppConfig
 {
 private:
     Q_GADGET
     Q_PROPERTY(QString logChannel MEMBER logChannel)
     Q_PROPERTY(QString errorChannel MEMBER errorChannel)
     Q_PROPERTY(bool enabled MEMBER enabled)
+    Q_PROPERTY(int appId MEMBER appId)
 
 public:
     QString logChannel = "";
     QString errorChannel = "";
     bool enabled = false;
+    int appId = 0;
 };
-Q_DECLARE_METATYPE(SlackConfig)
+Q_DECLARE_METATYPE(SlackAppConfig)
+
+
+struct SlackFullConfig
+{
+    QMap<int, SlackAppConfig> slackMap;
+};
 
 struct MonitoringConfig
 {
@@ -211,7 +219,7 @@ public:
     QSharedPointer<MindwaveConfig> mindwaveConfig;
     QSharedPointer<RFIDConfig> rfidConfig;
     QSharedPointer<ServerConfig> serverConfig;
-    QSharedPointer<SlackConfig> slackConfig;
+    QSharedPointer<SlackFullConfig> slackConfig;
     QSharedPointer<LoggerConfig> loggerConfig;
     QSharedPointer<MonitoringConfig> monitoringConfig;
     QSharedPointer<StandGamesConfig> standGamesConfig;
