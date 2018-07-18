@@ -14,7 +14,3 @@ void BaseService::setQmlContext(QQmlContext* value)
 {
     qmlContext = value;
 }
-
-
-
-

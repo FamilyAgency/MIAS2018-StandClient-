@@ -20,10 +20,6 @@ public:
 protected:
     ConfigPtr config;
     QQmlContext* qmlContext;
-
-signals:
-
-public slots:
 };
 
 #endif // BASESERVICE_H

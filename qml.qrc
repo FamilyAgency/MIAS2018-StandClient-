@@ -27,7 +27,6 @@
         <file>qml/controlScreens/Logger.qml</file>
         <file>qml/tests/TestScreen.qml</file>
         <file>qml/components/ServerComponent.qml</file>
-        <file>resources/heart.png</file>
         <file>qml/components/RFIDComponent.qml</file>
         <file>qml/touchScreens/IntroScreen.qml</file>
         <file>qml/touchScreens/elements/ServerPreloader.qml</file>
