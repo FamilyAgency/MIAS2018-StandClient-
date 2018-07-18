@@ -20,6 +20,16 @@ void OneGameData::setDifficult(const VelocityCalculator& value)
     difficult = value;
 }
 
+void OneGameData::setAdvantage(const OneAdvantageConfig& value)
+{
+    advantage = value;
+}
+
+OneAdvantageConfig OneGameData::getAdvantage() const
+{
+    return advantage;
+}
+
 QVector<QPointF> OneGameData::getPath() const
 {
     return path;

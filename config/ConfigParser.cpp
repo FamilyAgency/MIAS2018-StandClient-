@@ -149,6 +149,15 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                 oneGameconfig.category = gameObj["category"].toString();
                 oneGameconfig.description = gameObj["description"].toString();
 
+                oneGameconfig.advantage1.title = gameObj["advantage1"].toObject()["title"].toString();
+                oneGameconfig.advantage1.description = gameObj["advantage1"].toObject()["description"].toString();
+
+                oneGameconfig.advantage2.title = gameObj["advantage2"].toObject()["title"].toString();
+                oneGameconfig.advantage2.description = gameObj["advantage2"].toObject()["description"].toString();
+
+                oneGameconfig.advantage3.title = gameObj["advantage3"].toObject()["title"].toString();
+                oneGameconfig.advantage3.description = gameObj["advantage3"].toObject()["description"].toString();
+
                 qDebug()<<"==================path1==========================";
                 for(auto path1 : gameObj["path1"].toArray())
                 {

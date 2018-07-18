@@ -182,6 +182,12 @@ public:
 };
 Q_DECLARE_METATYPE(LoggerConfig)
 
+struct OneAdvantageConfig
+{
+    QString title = "title";
+    QString description = "description";
+};
+
 struct StandOneGameConfig
 {
 private:
@@ -196,6 +202,9 @@ public:
     QVector<QPointF> path2;
     QVector<QPointF> path3;
     QVector<QPointF> supergame;
+    OneAdvantageConfig advantage1;
+    OneAdvantageConfig advantage2;
+    OneAdvantageConfig advantage3;
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)
 

@@ -38,7 +38,6 @@ void GameTaskManager::start(QSharedPointer<UserData> user)
 
 void GameTaskManager::stop()
 {
-
     setTaskState(TaskState::None);
     emit taskReset();
 }

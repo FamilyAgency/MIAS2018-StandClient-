@@ -41,7 +41,7 @@ private slots:
 
 signals:
     void allTaskComleteEvent();
-    void taskComleteEvent();
+    void taskComleteEvent(const QString& title, const QString& description);
 };
 
 #endif // GAMEMODULE_H

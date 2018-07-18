@@ -40,7 +40,7 @@ Item
 
     Text
     {
-        id:descrText;
+        id:descriptionText;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: promtText.bottom;
         anchors.topMargin: 50;
@@ -89,7 +89,7 @@ Item
     function setTexts(title, descrText)
     {
         promtText.text = title;
-        descrText.text = descrText;
+        descriptionText.text = descrText;
     }
 
     function show()

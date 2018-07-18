@@ -96,6 +96,14 @@ Item
         }
     }
 
+
+    function setTexts(title, description)
+    {
+        //promtText.text = title;
+        advatage.mainTitleDefault = title;
+        fullAdvantageDescr.setTexts(title, description);
+    }
+
     function show()
     {
         visible = true;

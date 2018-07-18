@@ -198,6 +198,7 @@ void UserData::setGameCategory(int id)
     oneGameData1.setDescription("");
     oneGameData1.setPath(choosenGame.path1);
     oneGameData1.setDifficult(VelocityCalculator(2, 3, 60));
+    oneGameData1.setAdvantage(choosenGame.advantage1);
     games.push_back(oneGameData1);
 
     OneGameData oneGameData2;
@@ -207,6 +208,7 @@ void UserData::setGameCategory(int id)
     oneGameData2.setDescription("");
     oneGameData2.setPath(choosenGame.path2);
     oneGameData2.setDifficult(VelocityCalculator(2, 2, 70));
+    oneGameData2.setAdvantage(choosenGame.advantage2);
     games.push_back(oneGameData2);
 
     OneGameData oneGameData3;
@@ -216,6 +218,7 @@ void UserData::setGameCategory(int id)
     oneGameData3.setDescription("");
     oneGameData3.setPath(choosenGame.path3);
     oneGameData3.setDifficult(VelocityCalculator(2, 2, 70));
+    oneGameData3.setAdvantage(choosenGame.advantage3);
     games.push_back(oneGameData3);
 
     GameProgress gameProgress;

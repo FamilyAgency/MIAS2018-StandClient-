@@ -47,13 +47,18 @@ void GameModule::stop()
 void GameModule::onTaskComleteEvent(int completionTime)
 {
     const float toSeconds = 1/1000.0f;
+    QString advantageDescription = currentUser->getCurrentGameData().getAdvantage().description;
+    QString advantageTitle = currentUser->getCurrentGameData().getAdvantage().title;
+
+
     currentUser->currentGameCompleted(completionTime * toSeconds);
     gameSession->addTaskTime(completionTime);
 
     //if(currentUser->hasGames())
     // {
     // start();
-    emit taskComleteEvent();
+
+    emit taskComleteEvent(advantageTitle, advantageDescription);
     // }
 
 }

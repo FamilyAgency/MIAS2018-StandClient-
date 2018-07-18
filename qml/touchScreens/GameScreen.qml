@@ -39,7 +39,8 @@ Item
         target:gameModule;
         onTaskComleteEvent:
         {
-            mainText.visible = false;
+            mainText.visible = false;           
+            advatage.setTexts(title, description);
             advatage.show();
         }
     }
