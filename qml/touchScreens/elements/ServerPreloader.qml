@@ -13,7 +13,8 @@ Item
 
     Connections
     {
-        target:server
+        target:server;
+
         onServerStatusChanged:
         {
             visible = (status === ServerStatus.Busy);

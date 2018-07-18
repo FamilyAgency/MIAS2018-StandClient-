@@ -24,8 +24,8 @@ Item
         font.pixelSize: 55;
         color: "#ffffff";
         textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
-        verticalAlignment :Text.AlignVCenter;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
     }
 
     //Video
