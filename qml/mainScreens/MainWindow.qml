@@ -12,7 +12,7 @@ Window
     title: "Main Game Window";
     visible: true;
     id: mainGameWindow;
-    flags: Qt.SplashScreen;
+    flags: standData.mainConfig.gameScreenIsSplash ? Qt.SplashScreen : Qt.Window;
     width: standData.mainConfig.gameScreen.width;
     height: standData.mainConfig.gameScreen.height;
     x: standData.mainConfig.gameScreen.x;

@@ -14,7 +14,7 @@ Window
     title: "Touch Window";
     visible: true;
     id: touchCore;
-    flags: Qt.SplashScreen;
+    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
     width: standData.mainConfig.touchScreen.width;
     height: standData.mainConfig.touchScreen.height;
     x: standData.mainConfig.touchScreen.x;

@@ -63,11 +63,17 @@ void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const 
     mainConfig->touchScreen.setWidth(touchScreenData["width"].toInt());
     mainConfig->touchScreen.setHeight(touchScreenData["height"].toInt());
 
+    mainConfig->touchScreenIsSplash = touchScreenData["splashScreen"].toBool();
+
+
     QJsonObject gameScreenData = jsonObj["screens"].toObject()["game"].toObject();
     mainConfig->gameScreen.setX(gameScreenData["x"].toInt());
     mainConfig->gameScreen.setY(gameScreenData["y"].toInt());
     mainConfig->gameScreen.setWidth(gameScreenData["width"].toInt());
     mainConfig->gameScreen.setHeight(gameScreenData["height"].toInt());
+
+    mainConfig->gameScreenIsSplash = gameScreenData["splashScreen"].toBool();
+
 
     mainConfig->qmlOnStart = jsonObj["qmlOnStart"].toString();
 }

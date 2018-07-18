@@ -78,7 +78,9 @@ private:
     Q_PROPERTY(QString folderSeparator MEMBER folderSeparator)
     Q_PROPERTY(QString appName MEMBER appName)
     Q_PROPERTY(QRect touchScreen MEMBER touchScreen)
+    Q_PROPERTY(bool touchScreenIsSplash MEMBER touchScreenIsSplash)
     Q_PROPERTY(QRect gameScreen MEMBER gameScreen)
+    Q_PROPERTY(bool gameScreenIsSplash MEMBER gameScreenIsSplash)
     Q_PROPERTY(QString qmlOnStart MEMBER qmlOnStart)
 
  public:
@@ -90,7 +92,9 @@ private:
     QString folderSeparator = "\\";
     QString appName = "None";
     QRect touchScreen;
+    bool touchScreenIsSplash;
     QRect gameScreen;
+    bool gameScreenIsSplash;
     QString qmlOnStart = "qrc:/qml/mainRelease.qml";
 };
 Q_DECLARE_METATYPE(MainConfig)

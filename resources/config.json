@@ -27,14 +27,16 @@
             "x" : 1920,
             "y" : 10,
             "width" : 756,
-            "height" : 1344
+            "height" : 1344,
+            "splashScreen": true
         },
         "game":
         {
             "x" : 2820,
             "y" : 100,
             "width" : 1920,
-            "height" : 1080
+            "height" : 1080,
+            "splashScreen": true
         }
     },
     "rfid":
