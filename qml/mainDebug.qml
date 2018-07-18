@@ -9,7 +9,7 @@ ApplicationWindow
 {
     visible: true;
     width: 1500;
-    height: 800;
+    height: 900;
     x: 420;
     y: 100;
     title: qsTr("App");
