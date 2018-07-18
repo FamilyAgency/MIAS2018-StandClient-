@@ -105,9 +105,12 @@ struct ServerAPI
 private:
     Q_GADGET
     Q_PROPERTY(QString testUser MEMBER testUser)
+    Q_PROPERTY(bool pinNeed MEMBER pinNeed)
+
 
 public:
     QString testUser = 0;
+    bool pinNeed = true;
 };
 Q_DECLARE_METATYPE(ServerAPI)
 

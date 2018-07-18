@@ -68,7 +68,8 @@
         "requestCount": 3,
         "api":
         {
-            "testUser": "1"
+            "testUser": "1",
+            "pinNeed": true
         }
     },
 
