@@ -54,9 +54,10 @@ Window
     HealthCheckerComponent
     {
         id:health;
+        visible:false;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 200;
-        x: 50;
+        x: 50;        
     }
 
     BackBtn
