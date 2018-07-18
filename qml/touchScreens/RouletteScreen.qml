@@ -357,5 +357,10 @@ Item
     {
         rollAnim.stop();
         canvas.rotation = 0;
+        rollText.visible = false;
+        mainText.visible = true;
+        taskText.visible = false;
+        helpText.visible = false;
+        mindwaveVisual.visible = false;
     }
 }
