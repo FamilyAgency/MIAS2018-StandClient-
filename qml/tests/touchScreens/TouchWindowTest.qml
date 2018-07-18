@@ -21,52 +21,6 @@ Window
     y: standData.mainConfig.touchScreen.y;
     color: "#1c1c1c";
 
-    Connections
-    {
-        target:appController;
-        onAppStateChanged:
-        {
-            console.log("touch app state changes :::::::::::::", appState);
-            setState(appState);
-        }
-    }
-
-    function setState(appState)
-    {
-        hideAll();
-
-        switch(appState)
-        {
-        case AppState.Intro:
-            introScreen.visible = true;
-            break;
-
-        case AppState.Instruction:
-            instructionScreen.visible = true;
-            break;
-
-        case AppState.Roulette:
-            rouletteScreen.visible = true;
-            break;
-
-        case AppState.Game:
-            gameScreen.visible = true;
-            break;
-
-        case AppState.GameResult:
-            gameResultScreen.visible = true;
-            break;
-
-        case AppState.SuperGame:
-            superGameScreen.visible = true;
-            break
-
-        case AppState.SuperGameResult:
-            superGameResultScreen.visible = true;
-            break
-        }
-    }
-
     IntroScreen
     {
         id: introScreen;
@@ -97,21 +51,9 @@ Window
         id: gameResultScreen;
     }
 
-    SuperGameScreen
-    {
-        id: superGameScreen;
-    }
-
-    SuperGameResultScreen
-    {
-        id: superGameResultScreen;
-    }
-
-
     HealthCheckerComponent
     {
         id:health;
-        visible:  false;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 200;
         x: 50;
@@ -136,6 +78,48 @@ Window
         id: serverErrorPopup;
     }
 
+    Component.onCompleted:
+    {
+        setState(appController.getAppState());
+    }
+
+    Connections
+    {
+        target:appController;
+        onAppStateChanged:
+        {
+            console.log("touch app state changes :::::::::::::", appState);
+            setState(appState);
+        }
+    }
+
+    function setState(appState)
+    {
+        hideAll();
+        switch(appState)
+        {
+        case AppState.Intro:
+            introScreen.visible = true;
+            break;
+
+        case AppState.Instruction:
+            instructionScreen.visible = true;
+            break;
+
+        case AppState.Roulette:
+            rouletteScreen.visible = true;
+            break;
+
+        case AppState.Game:
+            gameScreen.visible = true;
+            break;
+
+        case AppState.GameResult:
+            gameResultScreen.visible = true;
+            break;
+        }
+    }
+
     function hideAll()
     {
         introScreen.visible = false;
@@ -143,15 +127,11 @@ Window
         gameScreen.visible = false;
         gameResultScreen.visible = false;
         rouletteScreen.visible = false;
-        superGameScreen.visible = false;
-        superGameResultScreen.visible = false;
 
         introScreen.stop();
         instructionScreen.stop();
         gameScreen.stop();
         gameResultScreen.stop();
         rouletteScreen.stop();
-        superGameScreen.stop();
-        superGameResultScreen.stop();
     }
 }

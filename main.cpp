@@ -35,19 +35,19 @@ int main(int argc, char *argv[])
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
-    {    
+    {
+        appController->onConfigLoaded(conf);
+
         engine.load(QUrl(QLatin1String(conf->mainConfig->qmlOnStart.toLatin1())));
 
         if (engine.rootObjects().isEmpty())
         {
             return -1;
-        }
-
-        appController->onConfigLoaded(conf);
+        }        
     });
 
     // config load. entry point
-    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
+    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);
     configController.data()->load();
 
     return app.exec();

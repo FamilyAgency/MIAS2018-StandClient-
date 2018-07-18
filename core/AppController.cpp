@@ -246,6 +246,7 @@ void AppController::setAppState(AppState value)
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
 
+
 AppController::AppState AppController::getAppState() const
 {
     return appState;

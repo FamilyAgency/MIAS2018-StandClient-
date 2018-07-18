@@ -18,44 +18,7 @@ Window
     height: standData.mainConfig.touchScreen.height;
     x: standData.mainConfig.touchScreen.x;
     y: standData.mainConfig.touchScreen.y;
-    color: "#1c1c1c";
-
-    Connections
-    {
-        target:appController;
-        onAppStateChanged:
-        {
-            console.log("touch app state changes :::::::::::::", appState);
-            setState(appState);
-        }
-    }
-
-    function setState(appState)
-    {
-        hideAll();
-        switch(appState)
-        {
-        case AppState.Intro:
-            introScreen.visible = true;
-            break;
-
-        case AppState.Instruction:
-            instructionScreen.visible = true;
-            break;
-
-        case AppState.Roulette:
-            rouletteScreen.visible = true;
-            break;
-
-        case AppState.Game:
-            gameScreen.visible = true;
-            break;
-
-        case AppState.GameResult:
-            gameResultScreen.visible = true;
-            break;
-        }
-    }
+    color: "#1c1c1c"; 
 
     IntroScreen
     {
@@ -107,6 +70,49 @@ Window
     ServerErrorPopup
     {
         id: serverErrorPopup;
+    }
+
+    Component.onCompleted:
+    {
+        setState(appController.getAppState());
+    }
+
+    Connections
+    {
+        target:appController;
+        onAppStateChanged:
+        {
+            console.log("touch app state changes :::::::::::::", appState);
+            setState(appState);
+        }
+    }
+
+    function setState(appState)
+    {
+        hideAll();
+
+        switch(appState)
+        {
+        case AppState.Intro:
+            introScreen.visible = true;
+            break;
+
+        case AppState.Instruction:
+            instructionScreen.visible = true;
+            break;
+
+        case AppState.Roulette:
+            rouletteScreen.visible = true;
+            break;
+
+        case AppState.Game:
+            gameScreen.visible = true;
+            break;
+
+        case AppState.GameResult:
+            gameResultScreen.visible = true;
+            break;
+        }
     }
 
     function hideAll()
