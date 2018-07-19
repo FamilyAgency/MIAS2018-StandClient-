@@ -41,6 +41,7 @@ Item
         {
             mainText.visible = false;           
             advatage.setTexts(title, description);
+            advatage.setVideo(videoPath);
             advatage.show();
         }
     }

@@ -41,7 +41,7 @@ private slots:
 
 signals:
     void allTaskComleteEvent();
-    void taskComleteEvent(const QString& title, const QString& description);
+    void taskComleteEvent(const QString& title, const QString& description, const QString& videoPath);
 };
 
 #endif // GAMEMODULE_H

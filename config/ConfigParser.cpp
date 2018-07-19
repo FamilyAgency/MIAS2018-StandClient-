@@ -147,7 +147,9 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
         auto oneGameJsonObj = jsonStandGame.toObject();
         if(oneGameJsonObj["appId"].toInt() == config->mainConfig->appId)
         {
-            auto data = oneGameJsonObj["data"].toArray();
+            // cola game parsing
+
+            auto data = oneGameJsonObj["colaGame"].toArray();
             for(auto game : data)
             {
                 auto gameObj = game.toObject();
@@ -160,20 +162,33 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                 for(auto oneStageJson : stagesJson)
                 {
                     OneStageConfig oneStage;
-                    oneStage.advantage.title = oneStageJson.toObject()["advantage"].toObject()["title"].toString();
-                    oneStage.advantage.description = oneStageJson.toObject()["advantage"].toObject()["description"].toString();
-
+                    auto advantageObject = oneStageJson.toObject()["advantage"].toObject();
+                    oneStage.advantage.title = advantageObject["title"].toString();
+                    oneStage.advantage.description = advantageObject["description"].toString();
+                    oneStage.advantage.videoPath = advantageObject["videoPath"].toString();
                     for(auto path: oneStageJson.toObject()["path"].toArray())
                     {
                         oneStage.path.push_back(QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble()));
-                        qDebug()<<QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble());
                     }
 
                     oneGameconfig.stages.push_back(oneStage);
                 }
                 standGamesConfig->games.push_back(oneGameconfig);
             }
+
+            // super game parsing
+
+            auto superGameData = oneGameJsonObj["superGame"].toObject();
+            SuperGameConfig superGameConfig;
+            superGameConfig.time = superGameData["time"].toInt();
+
+            for(auto path: superGameData["path"].toArray())
+            {
+                superGameConfig.path.push_back(QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble()));
+            }
+            standGamesConfig->superGame = superGameConfig;
             isStandHasGames = true;
+
             break;
         }
     }

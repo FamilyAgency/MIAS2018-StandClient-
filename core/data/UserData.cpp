@@ -175,6 +175,12 @@ bool UserData::hasGames() const
 void UserData::setConfig(ConfigPtr value)
 {
    setGameConfig(*value->standGamesConfig);
+   superGameConfig = _gameConfig.superGame;
+}
+
+SuperGameConfig UserData::getSuperGameData() const
+{
+    return superGameConfig;
 }
 
 void UserData::setGameConfig(StandGamesConfig config)

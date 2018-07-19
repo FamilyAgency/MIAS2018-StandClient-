@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QObject>
 #include "BaseModule.h"
+#include "core/data/UserData.h"
 
 class SuperGameModule : public BaseModule
 {
@@ -18,14 +19,17 @@ public:
     virtual void stop() override;
     virtual QString getName() const override;
 
+    void setUser(QSharedPointer<UserData> value);
+
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void superGamePassedTest();
 
 private:
     const float superGameTimerMills = 100./60;
-    const int superGameTime = 1000 * 10;
+    int superGameTime = 1000 * 10;
     int startTime = 0;
     QTimer* superGameTimer = nullptr;
+    QSharedPointer<UserData> currentUser;
 
 signals:
     void updateSuperGameTime(int mills);

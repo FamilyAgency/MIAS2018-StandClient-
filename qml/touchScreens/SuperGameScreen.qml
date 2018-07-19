@@ -145,7 +145,9 @@ Item
         target: superGameModule;
         onUpdateSuperGameTime:
         {
-            timeText.text = (mills/1000.).toFixed(1);
+            var minutes = (mills/1000.).toFixed(1);
+            timeTextDefault = minutes / 60. + "<br/>МИНУТЫ";
+            timeText.text = minutes;
         }
 
         onSuperGameFailed:

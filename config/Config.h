@@ -186,13 +186,13 @@ struct OneAdvantageConfig
 {
     QString title = "title";
     QString description = "description";
+    QString videoPath = "";
 };
 
 struct OneStageConfig
 {
     OneAdvantageConfig advantage;
-     QVector<QPointF> path;
-
+    QVector<QPointF> path;
 };
 
 struct StandOneGameConfig
@@ -209,13 +209,16 @@ public:
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)
 
+struct SuperGameConfig
+{
+    int time;
+    QVector<QPointF> path;
+};
+
 struct StandGamesConfig
 {
-//private:
- //   Q_PROPERTY(QVector<StandOneGameConfig> games MEMBER games)
-
-public:
     QVector<StandOneGameConfig> games;
+    SuperGameConfig superGame;
 };
 
 class Config

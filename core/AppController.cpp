@@ -72,6 +72,7 @@ void AppController::testConstruct()
     modules.append(gameResultModule);
 
     superGameModule.reset(new SuperGameModule());
+    superGameModule->setUser(userData);
     connect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
     connect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
 
@@ -146,7 +147,17 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Roulette);
+    bool build = true;
+
+    if(build)
+    {
+        setAppState(AppState::Intro);
+    }
+    else
+    {
+        userData->setGameCategory(1);
+        setAppState(AppState::SuperGame);
+    }
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

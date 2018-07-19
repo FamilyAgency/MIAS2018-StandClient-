@@ -115,20 +115,22 @@ Item
         fullAdvantageDescr.setTexts(title, description);
     }
 
+    function setVideo(videoPath)
+    {
+       video.source = configController.getQMLFile(videoPath);
+       video.play();
+    }
+
     function show()
     {
         visible = true;
-        console.log(configController.getQMLFile("content/video/1.mp4"));
-        video.source = configController.getQMLFile("content/video/1.mp4");
-
-        video.play();
-
         fullAdvantageDescr.hide();
     }
 
     function hide()
     {
         visible = false;
+        video.stop();
         fullAdvantageDescr.hide();
     }
 }

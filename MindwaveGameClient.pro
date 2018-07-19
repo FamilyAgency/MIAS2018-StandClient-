@@ -31,8 +31,6 @@ SOURCES += main.cpp \
     components/mindwave/MindwaveParser.cpp \
     components/SlackComponent.cpp \
     services/BaseService.cpp \
-    core/game/GameProgress.cpp \
-    core/game/OneGameData.cpp \
     components/RFIDComponent.cpp \
     components/rfid/BaseRFIDDataReader.cpp \
     components/rfid/UHFDataReader.cpp \
@@ -54,7 +52,9 @@ SOURCES += main.cpp \
     core/modules/RouletteModule.cpp \
     core/modules/GameResultModule.cpp \
     core/modules/SuperGameModule.cpp \
-    core/modules/SuperGameResultModule.cpp
+    core/modules/SuperGameResultModule.cpp \
+    core/data/GameProgress.cpp \
+    core/data/OneGameData.cpp
 
 RESOURCES += qml.qrc
 
@@ -108,8 +108,6 @@ HEADERS += \
     components/mindwave/MindwaveParser.h \
     components/SlackComponent.h \
     services/BaseService.h \
-    core/game/GameProgress.h \
-    core/game/OneGameData.h \
     components/RFIDComponent.h \
     components/rfid/BaseRFIDDataReader.h \
     components/rfid/UHFDataReader.h \
@@ -131,6 +129,8 @@ HEADERS += \
     core/modules/RouletteModule.h \
     core/modules/GameResultModule.h \
     core/modules/SuperGameModule.h \
-    core/modules/SuperGameResultModule.h
+    core/modules/SuperGameResultModule.h \
+    core/data/GameProgress.h \
+    core/data/OneGameData.h
 
 DISTFILES +=

@@ -41,7 +41,7 @@ Item
         SpinBox
         {
             id: userId;
-            value: 41;
+            value: 325;
             editable: true;
             from:0;
             to:3000;

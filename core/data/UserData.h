@@ -4,7 +4,7 @@
 #include <QObject>
 #include <qDebug>
 #include <QQmlContext>
-#include "core/game/GameProgress.h"
+#include "core/data/GameProgress.h"
 #include "config/Config.h"
 
 struct BaseUserInfo
@@ -164,6 +164,8 @@ public:
 
     void setGameCategory(int id);
 
+    SuperGameConfig getSuperGameData() const;
+
 private:
     QString _name = "Unknown";
     QString _surname = "Unknown";
@@ -177,10 +179,12 @@ private:
     bool _playingOnAnother = false;
 
     StandGamesConfig _gameConfig;
+    SuperGameConfig superGameConfig;
 
     QQmlContext* qmlContext;
 
     GameProgress gameProgress;
+
     UserState userState;
     LoginState loginState = LoginState::Logout;
 
@@ -223,7 +227,7 @@ signals:
     void gamesCountChanged();
     void gamesCompleteCountChanged();
     void cleanGameTimeChanged();
-    void descriptionChanged(QString description);
+    void descriptionChanged(const QString& description);
 };
 
 #endif // USERDATA_H

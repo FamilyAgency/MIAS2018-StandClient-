@@ -23,6 +23,11 @@ void SuperGameModule::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("superGameModule", this);
 }
 
+void SuperGameModule::setUser(QSharedPointer<UserData> value)
+{
+    currentUser = value;
+}
+
 void SuperGameModule::setConfig(ConfigPtr config)
 {
     BaseModule::setConfig(config);
@@ -30,6 +35,7 @@ void SuperGameModule::setConfig(ConfigPtr config)
 
 void SuperGameModule::start()
 {
+    superGameTime = currentUser->getSuperGameData().time;
     emit updateSuperGameTime(superGameTime);
     qDebug()<<"======================= SuperGameModule START =======================";
 }
@@ -68,8 +74,6 @@ void SuperGameModule::superGamePassedTest()
 
     emit superGameSuccess(time);
 }
-
-
 
 QString SuperGameModule::getName() const
 {

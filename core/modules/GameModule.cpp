@@ -47,8 +47,10 @@ void GameModule::stop()
 void GameModule::onTaskComleteEvent(int completionTime)
 {
     const float toSeconds = 1/1000.0f;
-    QString advantageDescription = currentUser->getCurrentGameData().getAdvantage().description;
-    QString advantageTitle = currentUser->getCurrentGameData().getAdvantage().title;
+    auto userGameData = currentUser->getCurrentGameData();
+    QString advantageDescription = userGameData.getAdvantage().description;
+    QString advantageTitle = userGameData.getAdvantage().title;
+    QString videoPath = userGameData.getAdvantage().videoPath;
 
 
     currentUser->currentGameCompleted(completionTime * toSeconds);
@@ -58,7 +60,7 @@ void GameModule::onTaskComleteEvent(int completionTime)
     // {
     // start();
 
-    emit taskComleteEvent(advantageTitle, advantageDescription);
+    emit taskComleteEvent(advantageTitle, advantageDescription, videoPath);
     // }
 
 }
