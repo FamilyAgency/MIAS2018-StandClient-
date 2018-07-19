@@ -135,7 +135,10 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
 void AppController::start()
 {
-    QString message = "app started.........";
+    qDebug()<<"============================================";
+    qDebug()<<"============================================";
+    qDebug()<<"============================================";
+    QString message = "======================APP STARTED ======================";
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 
     for (auto comp : components)
@@ -143,7 +146,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::SuperGame);
+    setAppState(AppState::Roulette);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

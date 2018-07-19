@@ -6,8 +6,11 @@ import "popups"
 Item {
 
     id:gameView
+
     property int canvasWidth: 1600;
     property int canvasHeight: 900;
+
+    anchors.fill: parent;
 
     Consts
     {
@@ -29,28 +32,29 @@ Item {
         }
     }
 
+    Component.onCompleted:
+    {
+        road.source = configController.getQMLFile("content/maps/map" + standData.mainConfig.appId + ".png");
+    }
+
     Image
     {
-        id:road
-        y: consts.canvasY;
-        width:  gameView.canvasWidth;
-        height:  gameView.canvasHeight;
-        source: consts.cityMapUrl;
+        id:road      
+        anchors.fill: parent;
         smooth:true;
     }
 
     Canvas
     {
         id: canvas;
-        width: gameView.canvasWidth;
-        height: gameView.canvasHeight;
-        y: consts.canvasY;
+        anchors.fill: parent;
         antialiasing: true;
 
         onPaint:
         {
             var scaleFactor = consts.scaleFactor;
             var ctx = getContext("2d");
+            console.log(canvas.width, canvas.height);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(gameTaskManager.isPreTaskState())
@@ -130,7 +134,7 @@ Item {
         source: consts.carUrl;
         smooth:true;
         antialiasing :true;
-        transform: Translate { x: -car.width * 0.5; y: -car.height * 0.5 }
+        transform: Translate { x: -car.width* 0.5; y: -car.height * 0.5}
     }
 
     CircularProgress

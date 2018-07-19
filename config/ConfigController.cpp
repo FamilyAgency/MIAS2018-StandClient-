@@ -146,3 +146,10 @@ QString ConfigController::getErrorMessage() const
     return errorMessage;
 }
 
+QString ConfigController::getQMLFile(const QString& fileName)
+{
+    return "file:///" + qApp->applicationDirPath() + "//" + fileName;
+}
+
+
+

@@ -5,13 +5,13 @@ Item {
     property string infoTextColor: "#009999";
 
     property string cityMapUrl : "qrc:/resources/gameplay-new.jpg";
-    property int canvasY: 100;
-    property int lineWidth: 5;
+    property int canvasY: 0;
+    property int lineWidth: 10;
     property string lineCap: "round";
     property string lineJoin: "round";
 
-    property double scaleFactor: 1.25;//9375;
-    property double artScaleFactor: 0.925;
+    property double scaleFactor: 1;//1.25;//9375;
+    property double artScaleFactor: 1;//0.925;
 
     property string carUrl: "qrc:/resources/car2.png";
     property string carShadowUrl: "qrc:/resources/shadow.png";
@@ -25,7 +25,7 @@ Item {
     property var redColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
     property var finishBulletColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
     property var startBulletColor:  Qt.rgba(0., 164./255., 227.0 / 255., 1);
-    property var guideColor: Qt.rgba(0.9, 0.9, 0.9, animateHelper.opacity);
+    property var guideColor: Qt.rgba(0.9, 0.0, 0.0, animateHelper.opacity);
 
     property double toDegrees: 180 / Math.PI;
     Item {
