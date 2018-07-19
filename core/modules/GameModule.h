@@ -35,13 +35,16 @@ private:
     QSharedPointer<GameSession> gameSession;
     QSharedPointer<UserData> currentUser;
 
+    void dispatchAdvantageData();
+
 private slots:
-    void onTaskComleteEvent(int completionTime);
-    void onAllTaskComleteEvent();
+    void onStageComleteEvent(int completionTime);
 
 signals:
-    void allTaskComleteEvent();
-    void taskComleteEvent(const QString& title, const QString& description, const QString& videoPath);
+    void allStagesComleteEvent();
+    void stageComleteEvent(const QString& title, const QString& description, const QString& videoPath);
+
+
 };
 
 #endif // GAMEMODULE_H

@@ -338,11 +338,6 @@ Item
                 to: 2;
             }
         }
-
-        UserRegistrationData
-        {
-
-        }
     }
 
     Connections

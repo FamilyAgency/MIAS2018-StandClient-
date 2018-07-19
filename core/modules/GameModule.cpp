@@ -3,7 +3,7 @@
 GameModule::GameModule(QObject *parent):BaseModule(parent)
 {
     gameTaskManager.reset(new GameTaskManager);
-    connect(gameTaskManager.data(), SIGNAL(taskComleteEvent(int)), this, SLOT(onTaskComleteEvent(int)));
+    connect(gameTaskManager.data(), SIGNAL(taskComleteEvent(int)), this, SLOT(onStageComleteEvent(int)));
 }
 
 GameModule::~GameModule()
@@ -44,42 +44,32 @@ void GameModule::stop()
     gameTaskManager->stop();
 }
 
-void GameModule::onTaskComleteEvent(int completionTime)
+void GameModule::onStageComleteEvent(int completionTime)
 {
-    const float toSeconds = 1/1000.0f;
-    auto userGameData = currentUser->getCurrentGameData();
+    dispatchAdvantageData();
+    currentUser->currentStageCompleted(completionTime);
+   // gameSession->addTaskTime(completionTime);
+}
+
+void GameModule::dispatchAdvantageData()
+{
+    auto userGameData = currentUser->getCurrentStage();
     QString advantageDescription = userGameData.getAdvantage().description;
     QString advantageTitle = userGameData.getAdvantage().title;
     QString videoPath = userGameData.getAdvantage().videoPath;
-
-
-    currentUser->currentGameCompleted(completionTime * toSeconds);
-    gameSession->addTaskTime(completionTime);
-
-    //if(currentUser->hasGames())
-    // {
-    // start();
-
-    emit taskComleteEvent(advantageTitle, advantageDescription, videoPath);
-    // }
-
+    emit stageComleteEvent(advantageTitle, advantageDescription, videoPath);
 }
 
 void GameModule::continueGame()
 {
-    if(currentUser->hasGames())
+    if(currentUser->hasStages())
     {
         start();
     }
     else
     {
-        emit allTaskComleteEvent();
+        emit allStagesComleteEvent();
     }
-}
-
-void GameModule::onAllTaskComleteEvent()
-{
-    emit allTaskComleteEvent();
 }
 
 QString GameModule::getName() const

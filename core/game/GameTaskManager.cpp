@@ -5,7 +5,6 @@
 GameTaskManager::GameTaskManager()
 {    
     gamePreTask = new GamePreTask();
-    taskCreator = new TaskCreator();
     gamePostTask = new GamePostTask();
 
     connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
@@ -30,9 +29,9 @@ void GameTaskManager::setMindWaveClient(QSharedPointer<MindwaveComponent> value)
 void GameTaskManager::start(QSharedPointer<UserData> user)
 {
     qDebug()<<"Game Started";
-    auto oneGameData = user->getCurrentGameData();
+    auto game = user->getCurrentStage();
     currentUser = user;
-    setupCurrentGame(oneGameData);
+    setupCurrentGame(game);
     setTaskState(TaskState::PreGame);
 }
 

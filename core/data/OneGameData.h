@@ -13,7 +13,6 @@ class OneGameData
 public:
     explicit OneGameData();
 
-    void setDescription(const QString& description);
     void setPath(const QVector<QPointF>& path);
     void setDifficult(const VelocityCalculator& value);
     void setAdvantage(const OneAdvantageConfig& value);
@@ -34,7 +33,6 @@ public:
 
 private:
     QVector<QPointF> path;
-    QString description;
     VelocityCalculator difficult;
     OneAdvantageConfig advantage;
     int featureId = 1;

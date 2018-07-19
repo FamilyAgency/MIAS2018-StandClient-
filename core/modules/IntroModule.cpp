@@ -77,7 +77,7 @@ void IntroModule::onNewUserEntered(const UserObject& userObject)
 
 void IntroModule::onUserNotFound()
 {
-    userData->setUserDoesntExist();
+   // userData->setUserDoesntExist();
 }
 
 void IntroModule::onServerError()

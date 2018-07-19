@@ -17,25 +17,7 @@ Item {
         id:consts;
     }
 
-    Connections
-    {
-        target:gameTaskManager;
 
-        onUpdateCanvas:
-        {
-            canvas.requestPaint();
-        }
-
-        onPreTaskStartEvent:
-        {
-            consts.animateGuideColor();
-        }
-    }
-
-    Component.onCompleted:
-    {
-        road.source = configController.getQMLFile("content/maps/map" + standData.mainConfig.appId + ".png");
-    }
 
     Image
     {
@@ -148,6 +130,26 @@ Item {
         id: pretaskPopup
         x: canvas.width - 300 - 10;
         y: 100 + 10;
+    }
+
+    Component.onCompleted:
+    {
+        road.source = configController.getQMLFile("content/maps/map" + standData.mainConfig.appId + ".png");
+    }
+
+    Connections
+    {
+        target:gameTaskManager;
+
+        onUpdateCanvas:
+        {
+            canvas.requestPaint();
+        }
+
+        onPreTaskStartEvent:
+        {
+            consts.animateGuideColor();
+        }
     }
 
     function drawGuidePaths(ctx)

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <qDebug>
 #include <QQmlContext>
-#include "core/data/GameProgress.h"
+#include "core/data/OneGameData.h"
 #include "config/Config.h"
 
 struct BaseUserInfo
@@ -16,7 +16,6 @@ private:
     Q_PROPERTY(QString surname MEMBER surname)
     Q_PROPERTY(QString email MEMBER email)
     Q_PROPERTY(QString phone MEMBER phone)
-   // Q_PROPERTY(int confirmed MEMBER confirmed)
     Q_PROPERTY(int test MEMBER test)
 
 public:
@@ -64,32 +63,111 @@ public:
 };
 Q_DECLARE_METATYPE(BaseUserInfo)
 
+struct PrizesUserData
+{
+private:
+    Q_PROPERTY(bool prize1 MEMBER prize1)
+    Q_PROPERTY(bool prize2 MEMBER prize2)
+    Q_GADGET
+
+public:
+    bool prize1 = false;
+    bool prize2 = false;
+};
+Q_DECLARE_METATYPE(PrizesUserData)
+
+struct GameUserData
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(QString description MEMBER description)
+    Q_PROPERTY(QVariantList stageTimes MEMBER stageTimes)
+    Q_PROPERTY(float superGameTime MEMBER superGameTime)
+
+public:
+    QVector<OneGameData> stages;
+    int currentGameId;
+    int cleanGameTime;
+    OneGameData currentStage;
+    bool _hasGames = false;
+    QString description;
+    QVariantList stageTimes;
+
+    float superGameTime = 0.0;
+
+    void setupConfigGameData(const StandOneGameConfig& game)
+    {
+        stages.clear();
+        stageTimes.clear();
+
+        description = game.description;
+        qDebug()<<"description   "<<description;
+
+        for(int i = 0; i < game.stages.size(); i++)
+        {
+            OneGameData oneGameData;
+            oneGameData.setId(i + 1);
+            oneGameData.setComplete(false);
+            oneGameData.setTime(0.0f);
+            oneGameData.setPath(game.stages[i].path);
+            oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
+            oneGameData.setAdvantage(game.stages[i].advantage);
+            stages.push_back(oneGameData);
+            stageTimes.push_back(0.0f);
+        }
+
+        _hasGames = true;
+    }
+
+    void setCurrentGameId(int id)
+    {
+        currentGameId = id;
+        currentStage = stages[id - 1];
+    }
+
+    OneGameData getCurrentStage() const
+    {
+        return currentStage;
+    }
+
+    void currentStageCompleted(int time)
+    {
+        const float toSeconds = 1/1000.0f;
+        stageTimes[currentGameId - 1] = time * toSeconds;
+
+        currentStage.setTime(time);
+        qDebug()<<"Current game id "<<currentGameId<<stages.size();
+        if(currentGameId + 1 <= stages.size())
+        {
+            _hasGames = true;
+            setCurrentGameId(currentGameId + 1);
+        }
+        else
+        {
+            _hasGames = false;
+        }
+    }
+
+    bool hasStages() const
+    {
+        return _hasGames;
+    }
+};
+Q_DECLARE_METATYPE(GameUserData)
 
 struct UserObject
 {
     BaseUserInfo baseUserInfo;
+    PrizesUserData prizesUserData;
+    GameUserData gameUserData;
 };
-
 
 class UserData : public QObject
 {
     Q_OBJECT
-
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
-    Q_PROPERTY(QString surname READ surname WRITE setSurname NOTIFY surnameChanged)
-    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
-    Q_PROPERTY(bool exist READ exist WRITE setExist NOTIFY existChanged)
-    Q_PROPERTY(bool firstTime READ firstTime WRITE setFirstTime NOTIFY firstTimeChanged)
-    Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
-    Q_PROPERTY(bool waitEnoughToPlay READ waitEnoughToPlay WRITE setWaitEnoughToPlay NOTIFY waitEnoughToPlayChanged)
-    Q_PROPERTY(bool playingOnAnother READ playingOnAnother WRITE setPlayingOnAnother NOTIFY playingOnAnotherChanged)
-    Q_PROPERTY(QVariantList prizes READ prizes WRITE setPrizes NOTIFY prizesChanged)
-
-    Q_PROPERTY(int currentGameId READ currentGameId WRITE setCurrentGameId NOTIFY currentGameIdChanged)
-    Q_PROPERTY(int gamesCount READ gamesCount WRITE setGamesCount NOTIFY gamesCountChanged)
-    Q_PROPERTY(int gamesCompleteCount READ gamesCompleteCount WRITE setGamesCompleteCount NOTIFY gamesCompleteCountChanged)
-    Q_PROPERTY(float cleanGameTime READ cleanGameTime WRITE setCleanGameTime NOTIFY cleanGameTimeChanged)
-
+    Q_PROPERTY(BaseUserInfo baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
+    Q_PROPERTY(PrizesUserData prizesUserData READ prizesUserData WRITE setPrizesUserData NOTIFY prizesUserDataChanged)
+    Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)
 
     Q_ENUMS(UserState)
     Q_ENUMS(LoginState)
@@ -115,119 +193,56 @@ public:
         Error
     };
 
-    const int maxPrizesCount = 2;
+    void setBaseUserData(const BaseUserInfo& value);
+    BaseUserInfo baseUserData() const;
 
-    QString name() const;
-    QString surname() const;
-    int id() const;
-    bool exist() const;
-    bool firstTime() const;
-    bool finished() const;
-    QVariantList prizes() const;
-    bool waitEnoughToPlay() const;
-    bool playingOnAnother() const;
+    void setPrizesUserData(const PrizesUserData& value);
+    PrizesUserData prizesUserData() const;
 
-    void setName(const QString& value);
-    void setSurname(const QString& value);
-    void setId(int value);
-    void setExist(bool value);
-    void setFirstTime(bool value);
-    void setFinished(bool value);
-    void setPrizes(const QVariantList& value);
-    void setWaitEnoughToPlay(bool value);
-    void setPlayingOnAnother(bool value);
+    void setGameUserData(const GameUserData& value);
+    GameUserData gameUserData() const;
+
+    OneGameData getCurrentStage() const;
+    void currentStageCompleted(int time);
+
+    bool hasStages() const;
 
     void setQmlContext(QQmlContext* value);
     void setConfig(ConfigPtr value);
 
     void setGameConfig(StandGamesConfig config);
-
-    void setGameProgess(const GameProgress& value);
     void clearData();
 
-
-    void parse(const QString& userObject);
     void setNewUserData(const UserObject& userObject);
     void setUserDoesntExist();
 
-
-
-    GameProgress getGameProgess() const;
-    OneGameData getCurrentGameData() const;
-    void currentGameCompleted(int time);
-    bool hasGames() const;
-
     void setUserState(UserState value);
     void setLoginState(LoginState value);
-    QString getStringState() const;
-
 
     void setGameCategory(int id);
 
     SuperGameConfig getSuperGameData() const;
 
 private:
-    QString _name = "Unknown";
-    QString _surname = "Unknown";
-    int _id = -1;
-
-    bool _exist = false;
-    bool _firstTime = false;
-    bool _finished = false;
-    QVariantList _prizes;
-    bool _waitEnoughToPlay = false;
-    bool _playingOnAnother = false;
+    BaseUserInfo _baseUserData;
+    PrizesUserData _prizesUserData;
+    GameUserData _gameUserData;
 
     StandGamesConfig _gameConfig;
     SuperGameConfig superGameConfig;
 
     QQmlContext* qmlContext;
 
-    GameProgress gameProgress;
-
     UserState userState;
     LoginState loginState = LoginState::Logout;
 
-    int _currentGameId = 0;
-    int _gamesCount = 0;
-    int _gamesCompleteCount = 0;
-    float _cleanGameTime = 0.0f;
-
-    void updateGameProgressData();
-
-    void setCurrentGameId(int stage);
-    int currentGameId() const;
-
-    void setGamesCount(int count);
-    int gamesCount() const;
-
-    void setGamesCompleteCount(int count);
-    int gamesCompleteCount() const;
-
-    void setCleanGameTime(float count);
-    float cleanGameTime() const;
-
 signals:
-    void nameChanged();
-    void surnameChanged();
-    void idChanged();
-    void existChanged();
-    void firstTimeChanged();
-    void waitEnoughToPlayChanged();
-    void finishedChanged();
-    void prizesChanged();
-    void playingOnAnotherChanged();
-    void gameConfigChanged();
+    void baseUserDataChanged();
+    void prizesUserDataChanged();
+    void gameUserDataChanged();
 
     void userStateChanged(UserData::UserState userState);
     void loginStateChanged(UserData::LoginState loginState);
-
-signals:
-    void currentGameIdChanged();
-    void gamesCountChanged();
-    void gamesCompleteCountChanged();
-    void cleanGameTimeChanged();
-    void descriptionChanged(const QString& description);
 };
 
 #endif // USERDATA_H

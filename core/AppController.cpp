@@ -2,11 +2,11 @@
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
-    testConstruct();
-    //releaseConstruct();
+    createEngine<RFIDComponentTest, MindwaveComponentTest>();
 }
 
-void AppController::testConstruct()
+template <class RFIDComponentT, class MindwaveComponentT>
+void AppController::createEngine()
 {
     appSettings.reset(new AppSettings);
     appSettings->init();
@@ -22,10 +22,10 @@ void AppController::testConstruct()
     loggerComponent.reset(new LoggerComponent());
     components.append(loggerComponent);
 
-    rfidComponent.reset(new RFIDComponentTest());
+    rfidComponent.reset(new RFIDComponentT());
     components.append(rfidComponent);
 
-    mindWaveComponent.reset(new MindwaveComponentTest());
+    mindWaveComponent.reset(new MindwaveComponentT());
     components.append(mindWaveComponent);
 
     serverComponent.reset(new ServerRemoteComponent());
@@ -65,7 +65,7 @@ void AppController::testConstruct()
     gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
     gameModule->setUser(userData);
-    connect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+    connect(gameModule.data(), SIGNAL(allStagesComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
     gameResultModule.reset(new GameResultModule());
@@ -85,19 +85,16 @@ void AppController::testConstruct()
 AppController::~AppController()
 {
     disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
-    disconnect(gameModule.data(), SIGNAL(allTaskComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+
     disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 
     disconnect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
     disconnect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
 
+    disconnect(gameModule.data(), SIGNAL(allStagesComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
+
     disconnect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
     disconnect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
-}
-
-void AppController::releaseConstruct()
-{
-
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
@@ -147,7 +144,7 @@ void AppController::start()
         comp->start();
     }
 
-    bool build = true;
+    bool build = false;
 
     if(build)
     {
@@ -155,8 +152,8 @@ void AppController::start()
     }
     else
     {
-        userData->setGameCategory(1);
-        setAppState(AppState::SuperGame);
+       // userData->setGameCategory(1);
+        setAppState(AppState::Roulette);
     }
 }
 

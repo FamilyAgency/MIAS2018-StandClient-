@@ -37,7 +37,7 @@ Item
     Connections
     {
         target:gameModule;
-        onTaskComleteEvent:
+        onStageComleteEvent:
         {
             mainText.visible = false;           
             advatage.setTexts(title, description);

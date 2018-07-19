@@ -176,7 +176,7 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
-        text: "НА ПИКНИК<br/>В ПАРК СОКОЛЬНИКИ";
+        text: userData.gameUserData.description;
         font.family: "Helvetica";
         font.pixelSize: 35;
         color: "#ffffff";
@@ -311,15 +311,6 @@ Item
         {
             rollAnim.to = degrees;
             rollAnim.start();
-        }
-    }
-
-    Connections
-    {
-        target:userData;
-        onDescriptionChanged:
-        {
-            taskText.text = description;
         }
     }
 

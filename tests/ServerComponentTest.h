@@ -4,7 +4,6 @@
 #include <QObject>
 #include "components/ServerComponent.h"
 #include "core/game/VelocityCalculator.h"
-#include "core/data/GameProgress.h"
 
 class ServerComponentTest: public ServerComponent
 {

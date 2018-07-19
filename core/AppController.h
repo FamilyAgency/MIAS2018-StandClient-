@@ -97,8 +97,8 @@ private:
     void setAppState(AppState appState);
     QSharedPointer<BaseModule> getModuleByAppState(AppState value);
 
-    void testConstruct();
-    void releaseConstruct();
+    template <class RFIDComponentT, class MindwaveComponentT>
+    void createEngine();
 
 signals:
     void appStateChanged(AppState appState);

@@ -11,7 +11,6 @@
 #include "core/game/GamePreTask.h"
 #include "core/game/GamePostTask.h"
 
-#include "core/game/TaskCreator.h"
 #include "core/data/UserData.h"
 
 class GameTaskManager: public QObject
@@ -46,7 +45,6 @@ public:
 
 private:
     TaskState currentTaskState;
-    TaskCreator* taskCreator;
     QSharedPointer<MindwaveComponent> mindWave = nullptr;
 
     void runTask();

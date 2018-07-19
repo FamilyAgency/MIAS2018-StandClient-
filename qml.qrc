@@ -17,7 +17,6 @@
         <file>qml/mainScreens/Consts.qml</file>
         <file>qml/mainScreens/GameScreen.qml</file>
         <file>qml/controlScreens/GameSession.qml</file>
-        <file>qml/controlScreens/UserData.qml</file>
         <file>qml/mainScreens/elements/CircularProgress.qml</file>
         <file>qml/mainScreens/elements/FinishBullet.qml</file>
         <file>qml/mainScreens/elements/StartBullet.qml</file>

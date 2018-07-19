@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
-Item {
+Item
+{
     ColumnLayout
     {
         spacing: 10;
@@ -14,6 +15,7 @@ Item {
             font.pixelSize: 17
             color: "#000099"
         }
+
         Text
         {
             text: "Session time: " + gameSession.sessionTime.toFixed(1);

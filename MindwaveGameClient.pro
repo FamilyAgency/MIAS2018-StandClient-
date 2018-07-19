@@ -19,7 +19,6 @@ SOURCES += main.cpp \
     core/game/GamePreTask.cpp \
     core/game/GameTask.cpp \
     core/game/GameTaskManager.cpp \
-    core/game/TaskCreator.cpp \
     core/game/VelocityCalculator.cpp \
     core/AppController.cpp \
     core/GameSession.cpp \
@@ -53,7 +52,6 @@ SOURCES += main.cpp \
     core/modules/GameResultModule.cpp \
     core/modules/SuperGameModule.cpp \
     core/modules/SuperGameResultModule.cpp \
-    core/data/GameProgress.cpp \
     core/data/OneGameData.cpp
 
 RESOURCES += qml.qrc
@@ -96,7 +94,6 @@ HEADERS += \
     core/game/GamePreTask.h \
     core/game/GameTask.h \
     core/game/GameTaskManager.h \
-    core/game/TaskCreator.h \
     core/game/VelocityCalculator.h \
     core/AppController.h \
     core/GameSession.h \   
@@ -130,7 +127,6 @@ HEADERS += \
     core/modules/GameResultModule.h \
     core/modules/SuperGameModule.h \
     core/modules/SuperGameResultModule.h \
-    core/data/GameProgress.h \
     core/data/OneGameData.h
 
 DISTFILES +=

@@ -5,10 +5,7 @@ OneGameData::OneGameData()
 
 }
 
-void OneGameData::setDescription(const QString& value)
-{
-    description = value;
-}
+
 
 void OneGameData::setPath(const QVector<QPointF>& value)
 {

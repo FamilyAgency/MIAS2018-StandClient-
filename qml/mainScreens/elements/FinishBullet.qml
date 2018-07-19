@@ -12,7 +12,7 @@ Item
     {
         target:gameModule;
 
-        onAllTaskComleteEvent:
+        onAllStagesComleteEvent:
         {
             visible = true;
         }

@@ -9,11 +9,6 @@ Item
     property int marginTop:10;
     property int columnShift:400;
 
-    function setState(state)
-    {
-
-    }
-
     StandData
     {
         x:marginLeft;
@@ -60,13 +55,6 @@ Item
         id:health
     }
 
-//    Logger
-//    {
-//        x:marginLeft + 800;
-//        y:marginTop;
-//        id:logger;
-//    }
-
     TestScreen
     {
         x:marginLeft + 800;
@@ -74,22 +62,8 @@ Item
         id:testScreen;
     }
 
-    Window
+    UserRegistrationData
     {
-        objectName: "User window";
-        title: "User Window";
-        visible: true;
-        id: user;
-        flags: Qt.SplashScreen;
-        width: 400;
-        height: 800;
-        x: 0;
-        y: 50;
 
-        UserData
-        {
-            x:marginLeft;
-            y:marginLeft;// + 240;
-        }
     }
 }
