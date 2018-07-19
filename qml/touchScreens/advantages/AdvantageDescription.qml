@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+import QtMultimedia 5.8
 
 Item
 {
@@ -12,6 +13,17 @@ Item
     signal advantageReaded;
 
     anchors.fill: parent;
+
+    Video
+    {
+        id: video
+        width : 1080;
+        height : 600;
+        loops: MediaPlayer.Infinite;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
+        focus: true;
+    }
 
     Text
     {
@@ -106,6 +118,11 @@ Item
     function show()
     {
         visible = true;
+        console.log(configController.getQMLFile("content/video/1.mp4"));
+        video.source = configController.getQMLFile("content/video/1.mp4");
+
+        video.play();
+
         fullAdvantageDescr.hide();
     }
 

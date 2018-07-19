@@ -54,7 +54,6 @@ Item {
         {
             var scaleFactor = consts.scaleFactor;
             var ctx = getContext("2d");
-            console.log(canvas.width, canvas.height);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if(gameTaskManager.isPreTaskState())
