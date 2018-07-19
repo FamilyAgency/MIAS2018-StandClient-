@@ -20,6 +20,7 @@ Window
     Connections
     {
         target: server;
+
         onBaseUserInfoChanged:
         {
             pinToConfirmed.text = "Pin to confirmed: " + userData.baseUserData.getPinToConfirm();
@@ -30,6 +31,7 @@ Window
     {
         x: 50;
         y: 50;
+
         ColumnLayout
         {
             spacing: 15;
@@ -104,9 +106,9 @@ Window
                 {
                     id:pinToConfirmed;
                     text: "Pin to confirmed: ";
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
             }
 
@@ -116,25 +118,25 @@ Window
                 Text
                 {
                     text: "Prizes data";
-                    font.family: "Helvetica"
-                    font.pixelSize: 17
-                    color: "#000099"
+                    font.family: "Helvetica";
+                    font.pixelSize: 17;
+                    color: "#000099";
                 }
 
                 Text
                 {
                     text: "prize1: " + userData.prizesUserData.prize1;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "prize2: " + userData.prizesUserData.prize2;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
             }
 
@@ -144,41 +146,41 @@ Window
                 Text
                 {
                     text: "Game data";
-                    font.family: "Helvetica"
-                    font.pixelSize: 17
-                    color: "#000099"
+                    font.family: "Helvetica";
+                    font.pixelSize: 17;
+                    color: "#000099";
                 }
 
                 Text
                 {
                     text: "stage1: " + userData.gameUserData.stageTimes[0].toFixed(1);
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "stage2: " + userData.gameUserData.stageTimes[1].toFixed(1);
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "stage3: " + userData.gameUserData.stageTimes[2].toFixed(1);
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "super game: " + userData.gameUserData.superGameTime;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#990000"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#990000";
                 }
             }
         }

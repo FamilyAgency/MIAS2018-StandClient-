@@ -15,10 +15,11 @@ class GameSession : public QObject
 public:
     explicit GameSession(QObject *parent = nullptr);
     virtual ~GameSession();
+
     void setQmlContext(QQmlContext* value);
 
-    void start();
-    void stop();
+    virtual void start();
+    virtual void stop();
 
     void addTaskTime(float time);
     float sessionTime() const;

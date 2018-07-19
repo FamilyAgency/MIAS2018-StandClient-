@@ -4,7 +4,7 @@
 #include <QObject>
 #include <qDebug>
 #include <QQmlContext>
-#include "core/data/OneGameData.h"
+#include "core/data/OneStageData.h"
 #include "config/Config.h"
 
 struct BaseUserInfo
@@ -85,15 +85,22 @@ private:
     Q_PROPERTY(float superGameTime MEMBER superGameTime)
 
 public:
-    QVector<OneGameData> stages;
+    QVector<OneStageData> stages;
     int currentGameId;
     int cleanGameTime;
-    OneGameData currentStage;
+    OneStageData currentStage;
     bool _hasGames = false;
     QString description;
     QVariantList stageTimes;
 
     float superGameTime = 0.0;
+
+    GameUserData()
+    {
+        stageTimes.push_back(0.0f);
+        stageTimes.push_back(0.0f);
+        stageTimes.push_back(0.0f);
+    }
 
     void setupConfigGameData(const StandOneGameConfig& game)
     {
@@ -105,7 +112,7 @@ public:
 
         for(int i = 0; i < game.stages.size(); i++)
         {
-            OneGameData oneGameData;
+            OneStageData oneGameData;
             oneGameData.setId(i + 1);
             oneGameData.setComplete(false);
             oneGameData.setTime(0.0f);
@@ -125,7 +132,7 @@ public:
         currentStage = stages[id - 1];
     }
 
-    OneGameData getCurrentStage() const
+    OneStageData getCurrentStage() const
     {
         return currentStage;
     }
@@ -202,7 +209,7 @@ public:
     void setGameUserData(const GameUserData& value);
     GameUserData gameUserData() const;
 
-    OneGameData getCurrentStage() const;
+    OneStageData getCurrentStage() const;
     void currentStageCompleted(int time);
 
     bool hasStages() const;

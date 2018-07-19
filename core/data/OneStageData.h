@@ -8,10 +8,10 @@
 #include "core/game/VelocityCalculator.h"
 #include "config/Config.h"
 
-class OneGameData
+class OneStageData
 {
 public:
-    explicit OneGameData();
+    explicit OneStageData();
 
     void setPath(const QVector<QPointF>& path);
     void setDifficult(const VelocityCalculator& value);

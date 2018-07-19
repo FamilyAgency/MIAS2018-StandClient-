@@ -41,9 +41,9 @@ void GameTaskManager::stop()
     emit taskReset();
 }
 
-void GameTaskManager::setupCurrentGame(const OneGameData& oneGameData)
+void GameTaskManager::setupCurrentGame(const OneStageData& oneStageData)
 {
-    gameTask->setData(oneGameData.getPath(), oneGameData.getDifficult());
+    gameTask->setData(oneStageData.getPath(), oneStageData.getDifficult());
 }
 
 void GameTaskManager::setTaskState(TaskState taskState)

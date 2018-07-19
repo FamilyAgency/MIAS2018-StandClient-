@@ -116,7 +116,6 @@ private slots:
     void onGameCategoryUpdate(int id);
     void onSuperGameFailed();
     void onSuperGameSuccess(int time);
-
 };
 
 #endif // APPCOPCONTROLLER_H

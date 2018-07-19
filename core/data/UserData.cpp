@@ -106,7 +106,7 @@ void UserData::setGameCategory(int id)
     emit gameUserDataChanged();
 }
 
-OneGameData UserData::getCurrentStage() const
+OneStageData UserData::getCurrentStage() const
 {
     return _gameUserData.getCurrentStage();
 }

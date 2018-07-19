@@ -49,7 +49,7 @@ private:
 
     void runTask();
     void preTaskTimerComplete();
-    void setupCurrentGame(const OneGameData& gameData);
+    void setupCurrentGame(const OneStageData& gameData);
     void initCurrentTask();
 
     GamePreTask* gamePreTask = nullptr;

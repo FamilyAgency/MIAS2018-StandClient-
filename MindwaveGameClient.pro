@@ -52,7 +52,7 @@ SOURCES += main.cpp \
     core/modules/GameResultModule.cpp \
     core/modules/SuperGameModule.cpp \
     core/modules/SuperGameResultModule.cpp \
-    core/data/OneGameData.cpp
+    core/data/OneStageData.cpp
 
 RESOURCES += qml.qrc
 
@@ -127,6 +127,7 @@ HEADERS += \
     core/modules/GameResultModule.h \
     core/modules/SuperGameModule.h \
     core/modules/SuperGameResultModule.h \
-    core/data/OneGameData.h
+    core/data/OneGameData.h \
+    core/data/OneStageData.h
 
 DISTFILES +=
