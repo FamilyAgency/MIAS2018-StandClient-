@@ -44,6 +44,8 @@ void SlackComponent::setConfig(ConfigPtr value)
     {
         init = false;
     }
+
+    httpClient->setTimemoutInterval(value->serverConfig->requestTimemoutInterval);
 }
 
 void SlackComponent::sendMessage(const QString& msg, bool isError)

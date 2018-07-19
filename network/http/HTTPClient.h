@@ -38,7 +38,7 @@ private:
      QTimer* timeoutTimer;
      QNetworkReply* httpReply = nullptr;
      int requestTryCount = 1;
-     int requestTimemoutInterval = 1;
+     int requestTimemoutInterval = 3000;
 
 private slots:
      void onTimeoutHandle();

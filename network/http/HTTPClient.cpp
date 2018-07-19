@@ -15,7 +15,7 @@ HTTPClient::HTTPClient(QObject *parent) : QObject(parent)
 
     timeoutTimer = new QTimer(this);
     timeoutTimer->setSingleShot(true);
-    timeoutTimer->setInterval(requestTimemoutInterval);
+    //timeoutTimer->setInterval(requestTimemoutInterval);
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
 }
 
@@ -57,25 +57,25 @@ void HTTPClient::runGetRequest(const QString& URL)
 
     QNetworkRequest request = QNetworkRequest(QUrl(URL));
     httpReply = networkManager->get(request);
-    timeoutTimer->start();
+    timeoutTimer->start(requestTimemoutInterval);
 }
 
 void HTTPClient::runPostRequest(const QNetworkRequest& request, const QByteArray& data)
 {  
-    httpReply = networkManager->post(request, data);
-    timeoutTimer->start();
+    httpReply = networkManager->post(request, data);  
+    timeoutTimer->start(requestTimemoutInterval);
 }
 
 void HTTPClient::runPutRequest(const QNetworkRequest& request, const QByteArray& data)
 {
     httpReply = networkManager->put(request, data);
-    timeoutTimer->start();
+    timeoutTimer->start(requestTimemoutInterval);
 }
 
 void HTTPClient::runDeleteRequest(const QNetworkRequest& request)
 {    
     httpReply = networkManager->deleteResource(request);
-    timeoutTimer->start();
+    timeoutTimer->start(requestTimemoutInterval);
 }
 
 void HTTPClient::httpRequestSuccessHandler(QNetworkReply* reply)
