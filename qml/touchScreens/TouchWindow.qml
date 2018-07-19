@@ -64,8 +64,6 @@ Window
         x: 50;
     }
 
-
-
     BackBtn
     {
         id:backBtn;
@@ -127,11 +125,11 @@ Window
 
         case AppState.SuperGame:
             superGameScreen.visible = true;
-            break
+            break;
 
         case AppState.SuperGameResult:
             superGameResultScreen.visible = true;
-            break
+            break;
         }
     }
 

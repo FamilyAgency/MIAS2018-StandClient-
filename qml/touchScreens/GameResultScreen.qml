@@ -3,7 +3,7 @@ import "results"
 
 Item
 {
-    anchors.fill: parent
+    anchors.fill: parent;
 
     GameResultFirstTime
     {

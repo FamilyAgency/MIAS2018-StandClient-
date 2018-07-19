@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
     appController.data()->setQmlContext(engine.rootContext());
 
    // QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
-    QObject::connect(configController.data(), SIGNAL(configServiceError()), appController.data(), SLOT(onConfigError()));
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
@@ -46,8 +45,19 @@ int main(int argc, char *argv[])
         }        
     });
 
+    QObject::connect(configController.data(), &ConfigController::configServiceError, [&](const QString& message)
+    {
+        engine.load(QUrl(QLatin1String("qrc:/qml/ConfigErrorWindow.qml")));
+
+        if (engine.rootObjects().isEmpty())
+        {
+            return -1;
+        }
+
+    });
+
     // config load. entry point
-    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
+    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);
     configController.data()->load();
 
     return app.exec();

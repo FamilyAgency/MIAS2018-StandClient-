@@ -24,13 +24,16 @@ ConfigController::ConfigController()
     connect(configLoader.data(), SIGNAL(configLoaded(const QString&)), configParser.data(), SLOT(parse(const QString&)));
     connect(configLoader.data(), SIGNAL(configLoadingError()), this, SLOT(onConfigLoadingError()));
     connect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr )));
+    connect(configParser.data(), SIGNAL(parseError(const QString&)), this, SLOT(onConfigParsingError(const QString&)));
+
 }
 
 ConfigController::~ConfigController()
 {
     disconnect(configLoader.data(), SIGNAL(configLoaded(const QString&)), configParser.data(), SLOT(parse(const QString&)));
     disconnect(configLoader.data(), SIGNAL(configLoadingError()), this, SLOT(onConfigLoadingError()));
-    disconnect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr )));
+    disconnect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr)));
+    disconnect(configParser.data(), SIGNAL(parseError(const QString&)), this, SLOT(onConfigParsingError(const QString&)));
 }
 
 QString ConfigController::getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD method) const
@@ -59,7 +62,7 @@ void ConfigController::load()
 
 void ConfigController::onConfigParsingComplete(ConfigPtr configParsed)
 {
-    config= configParsed;
+    config = configParsed;
 
     switch(currentConfigLoadingMethod)
     {
@@ -83,10 +86,16 @@ void ConfigController::onConfigParsingComplete(ConfigPtr configParsed)
         if(saveRemote && config->valid && defaultConfigLoadingMethod!= ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE)
         {
             configWriter->save(config, getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE));
-        }        
+        }
         serviceFinished(config->valid);
         break;
     }
+}
+
+void ConfigController::onConfigParsingError(const QString& value)
+{
+    errorMessage = "Config parsing error :<br/>" + value;
+    emit configServiceError(errorMessage);
 }
 
 void ConfigController::onConfigLoadingError()
@@ -122,12 +131,18 @@ void ConfigController::serviceFinished(bool success)
     }
     else
     {
-        emit configServiceError();
+        errorMessage = "Unknown Error";
+        emit configServiceError(errorMessage);
     }
 }
 
 void ConfigController::save()
 {
     configWriter->save(config, getConfigPath(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE));
+}
+
+QString ConfigController::getErrorMessage() const
+{
+    return errorMessage;
 }
 

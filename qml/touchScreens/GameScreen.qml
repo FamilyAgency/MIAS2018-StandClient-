@@ -10,7 +10,7 @@ Item
 
     Text
     {
-        id:mainText;
+        id: mainText;
         anchors.fill: parent;
         anchors.centerIn: parent;
         text: mainTitleDefault;
@@ -18,8 +18,8 @@ Item
         font.pixelSize: 55;
         color: "#ffffff";
         textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
-        verticalAlignment :Text.AlignVCenter;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
     }
 
     AdvantageDescription

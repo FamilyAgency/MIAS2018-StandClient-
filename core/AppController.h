@@ -102,10 +102,11 @@ private:
 
 signals:
     void appStateChanged(AppState appState);
+    void configError(const QString& errorMessage);
 
 public slots:
     void onConfigLoaded(ConfigPtr config);
-    void onConfigError();
+    void onConfigError(const QString& errorMessage);
 
 private slots:
     void onLoginStateChanged(UserData::LoginState loginState);

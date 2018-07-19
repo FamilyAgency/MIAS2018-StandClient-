@@ -188,6 +188,13 @@ struct OneAdvantageConfig
     QString description = "description";
 };
 
+struct OneStageConfig
+{
+    OneAdvantageConfig advantage;
+     QVector<QPointF> path;
+
+};
+
 struct StandOneGameConfig
 {
 private:
@@ -198,13 +205,7 @@ private:
 public:
     QString category = "category";
     QString description = "description";
-    QVector<QPointF> path1;
-    QVector<QPointF> path2;
-    QVector<QPointF> path3;
-    QVector<QPointF> supergame;
-    OneAdvantageConfig advantage1;
-    OneAdvantageConfig advantage2;
-    OneAdvantageConfig advantage3;
+    QVector<OneStageConfig> stages;
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)
 

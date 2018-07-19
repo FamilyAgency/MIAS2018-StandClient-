@@ -15,13 +15,14 @@ public:
 
 signals:
     void parseComplete(ConfigPtr);
-    void parseError();
+    void parseError(const QString& errorMessage);
 
 public slots:
     void parse(const QString& configData);
 
 private:
     ConfigPtr config;
+    bool wasParsingError = false;
     void parseMainConfig(QSharedPointer<MainConfig> mainConfig, const QJsonObject& jsonObj);
     void parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj);
     void parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj);

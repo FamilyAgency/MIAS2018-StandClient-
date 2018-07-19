@@ -96,7 +96,6 @@ Item
         }
     }
 
-
     function setTexts(title, description)
     {
         //promtText.text = title;

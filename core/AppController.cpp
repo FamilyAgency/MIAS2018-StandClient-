@@ -143,7 +143,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Roulette);
+    setAppState(AppState::SuperGame);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -227,7 +227,6 @@ void AppController::backToIntro()
     setAppState(AppState::Intro);
 }
 
-
 void AppController::setAppState(AppState value)
 {
     if(currentModule)
@@ -268,9 +267,11 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
     return nullptr;
 }
 
-void AppController::onConfigError()
+void AppController::onConfigError(const QString& errorMessage)
 {
     qDebug() << "config Service Error";
+
+    emit configError(errorMessage);
 }
 
 //===================TESTS===================

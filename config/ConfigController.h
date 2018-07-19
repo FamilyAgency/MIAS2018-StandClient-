@@ -22,6 +22,8 @@ public:
     void serviceFinished(bool success);
     void setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD loadingMethod);
 
+    Q_INVOKABLE QString getErrorMessage() const;
+
 private:
     QSharedPointer<ConfigLoader> configLoader;
     QSharedPointer<ConfigParser> configParser;
@@ -32,17 +34,19 @@ private:
     QString currentConfigPath;
     bool saveRemote;
     ConfigPtr config;
+    QString errorMessage;
 
 private slots:
      void onConfigParsingComplete(ConfigPtr configParsed);
      void onConfigLoadingError();
+     void onConfigParsingError(const QString& errorMessage);
 
 public slots:
      void save();
 
 signals:
      void configServiceReady(ConfigPtr config);
-     void configServiceError();
+     void configServiceError(const QString& errorMessage);
 };
 
 #endif // CONFIGCONTROLLER_H

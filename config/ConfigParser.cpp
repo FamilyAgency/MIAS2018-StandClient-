@@ -36,9 +36,13 @@ void ConfigParser::parse(const QString& configData)
         parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
         parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
 
-        config->setRawData(configData);
-        config->valid = true;
-        emit parseComplete(config);
+
+        if(!wasParsingError)
+        {
+            config->setRawData(configData);
+            config->valid = true;
+            emit parseComplete(config);
+        }
     }
     catch(...)
     {
@@ -136,6 +140,8 @@ void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, 
 
 void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray)
 {
+    bool isStandHasGames = false;
+
     for(auto jsonStandGame : jsonArray)
     {
         auto oneGameJsonObj = jsonStandGame.toObject();
@@ -149,40 +155,33 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                 oneGameconfig.category = gameObj["category"].toString();
                 oneGameconfig.description = gameObj["description"].toString();
 
-                oneGameconfig.advantage1.title = gameObj["advantage1"].toObject()["title"].toString();
-                oneGameconfig.advantage1.description = gameObj["advantage1"].toObject()["description"].toString();
+                auto stagesJson = gameObj["stages"].toArray();
 
-                oneGameconfig.advantage2.title = gameObj["advantage2"].toObject()["title"].toString();
-                oneGameconfig.advantage2.description = gameObj["advantage2"].toObject()["description"].toString();
-
-                oneGameconfig.advantage3.title = gameObj["advantage3"].toObject()["title"].toString();
-                oneGameconfig.advantage3.description = gameObj["advantage3"].toObject()["description"].toString();
-
-                qDebug()<<"==================path1==========================";
-                for(auto path1 : gameObj["path1"].toArray())
+                for(auto oneStageJson : stagesJson)
                 {
-                    oneGameconfig.path1.push_back(QPointF(path1.toObject()["x"].toDouble(), path1.toObject()["y"].toDouble()));
-                    qDebug()<<QPointF(path1.toObject()["x"].toDouble(), path1.toObject()["y"].toDouble());
-                }
+                    OneStageConfig oneStage;
+                    oneStage.advantage.title = oneStageJson.toObject()["advantage"].toObject()["title"].toString();
+                    oneStage.advantage.description = oneStageJson.toObject()["advantage"].toObject()["description"].toString();
 
-                qDebug()<<"==================path2==========================";
-                for(auto path2 : gameObj["path2"].toArray())
-                {
-                    oneGameconfig.path2.push_back(QPointF(path2.toObject()["x"].toDouble(), path2.toObject()["y"].toDouble()));
-                    qDebug()<<QPointF(path2.toObject()["x"].toDouble(), path2.toObject()["y"].toDouble());
-                }
+                    for(auto path: oneStageJson.toObject()["path"].toArray())
+                    {
+                        oneStage.path.push_back(QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble()));
+                        qDebug()<<QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble());
+                    }
 
-                qDebug()<<"==================path3==========================";
-                for(auto path3 : gameObj["path3"].toArray())
-                {
-                    oneGameconfig.path3.push_back(QPointF(path3.toObject()["x"].toDouble(), path3.toObject()["y"].toDouble()));
-                    qDebug()<<QPointF(path3.toObject()["x"].toDouble(), path3.toObject()["y"].toDouble());
+                    oneGameconfig.stages.push_back(oneStage);
                 }
-
                 standGamesConfig->games.push_back(oneGameconfig);
             }
+            isStandHasGames = true;
             break;
         }
+    }
+
+    if(!isStandHasGames)
+    {
+        wasParsingError = true;
+        parseError("No games for this stand id = " + QString::number(config->mainConfig->appId));
     }
 }
 

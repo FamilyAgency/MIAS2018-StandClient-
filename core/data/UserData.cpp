@@ -191,35 +191,19 @@ void UserData::setGameCategory(int id)
     emit descriptionChanged(description);
 
     QVector<OneGameData> games;
-    OneGameData oneGameData1;
-    oneGameData1.setId(1);
-    oneGameData1.setComplete(false);
-    oneGameData1.setTime(0.0f);
-    oneGameData1.setDescription("");
-    oneGameData1.setPath(choosenGame.path1);
-    oneGameData1.setDifficult(VelocityCalculator(2, 3, 60));
-    oneGameData1.setAdvantage(choosenGame.advantage1);
-    games.push_back(oneGameData1);
 
-    OneGameData oneGameData2;
-    oneGameData2.setId(2);
-    oneGameData2.setComplete(false);
-    oneGameData2.setTime(0.0f);
-    oneGameData2.setDescription("");
-    oneGameData2.setPath(choosenGame.path2);
-    oneGameData2.setDifficult(VelocityCalculator(2, 2, 70));
-    oneGameData2.setAdvantage(choosenGame.advantage2);
-    games.push_back(oneGameData2);
-
-    OneGameData oneGameData3;
-    oneGameData3.setId(3);
-    oneGameData3.setComplete(false);
-    oneGameData3.setTime(0.0f);
-    oneGameData3.setDescription("");
-    oneGameData3.setPath(choosenGame.path3);
-    oneGameData3.setDifficult(VelocityCalculator(2, 2, 70));
-    oneGameData3.setAdvantage(choosenGame.advantage3);
-    games.push_back(oneGameData3);
+    for(int i = 0; i < choosenGame.stages.size(); i++)
+    {
+        OneGameData oneGameData;
+        oneGameData.setId(i + 1);
+        oneGameData.setComplete(false);
+        oneGameData.setTime(0.0f);
+        oneGameData.setDescription(choosenGame.description);
+        oneGameData.setPath(choosenGame.stages[i].path);
+        oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
+        oneGameData.setAdvantage(choosenGame.stages[i].advantage);
+        games.push_back(oneGameData);
+    }
 
     GameProgress gameProgress;
     gameProgress.setGames(games);

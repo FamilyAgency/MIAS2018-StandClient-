@@ -133,11 +133,11 @@ Window
 
         case AppState.SuperGame:
             superGameScreen.visible = true;
-            break
+            break;
 
         case AppState.SuperGameResult:
             superGameResultScreen.visible = true;
-            break
+            break;
         }
     }
 

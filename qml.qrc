@@ -49,5 +49,6 @@
         <file>qml/touchScreens/results/SuperGameFailScreen.qml</file>
         <file>qml/touchScreens/advantages/AdvantageDescription.qml</file>
         <file>qml/touchScreens/advantages/FullAdvantageDescription.qml</file>
+        <file>qml/ConfigErrorWindow.qml</file>
     </qresource>
 </RCC>

@@ -19,8 +19,6 @@ ApplicationWindow
     property int marginTop:10;
     property int columnShift:400;
 
-
-
     Item
     {
         focus: true;
@@ -47,5 +45,14 @@ ApplicationWindow
     ControlsWindow
     {
         id:controlsWindow;
+    }
+
+    Connections
+    {
+        target: appController;
+        onConfigError:
+        {
+            console.log("onConfigError ", errorMessage);
+        }
     }
 }

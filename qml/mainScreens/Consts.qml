@@ -22,7 +22,7 @@ Item {
     property int bulletSize: 10;
     property int finishBulletSize: finBulletSizeAnimateHelper.size;
 
-     property var redColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
+    property var redColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
     property var finishBulletColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
     property var startBulletColor:  Qt.rgba(0., 164./255., 227.0 / 255., 1);
     property var guideColor: Qt.rgba(0.9, 0.9, 0.9, animateHelper.opacity);
