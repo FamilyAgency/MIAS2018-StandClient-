@@ -51,20 +51,32 @@ Window
         id: gameResultScreen;
     }
 
+    SuperGameScreen
+    {
+        id: superGameScreen;
+    }
+
+    SuperGameResultScreen
+    {
+        id: superGameResultScreen;
+    }
+
     HealthCheckerComponent
     {
         id:health;
         visible:false;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 200;
-        x: 50;        
+        x: 50;
     }
+
+
 
     BackBtn
     {
         id:backBtn;
         anchors.top: parent.top;
-         anchors.topMargin: 100;
+        anchors.topMargin: 100;
         anchors.right: parent.right;
         anchors.rightMargin: 100;
     }
@@ -118,6 +130,14 @@ Window
         case AppState.GameResult:
             gameResultScreen.visible = true;
             break;
+
+        case AppState.SuperGame:
+            superGameScreen.visible = true;
+            break
+
+        case AppState.SuperGameResult:
+            superGameResultScreen.visible = true;
+            break
         }
     }
 
@@ -128,11 +148,15 @@ Window
         gameScreen.visible = false;
         gameResultScreen.visible = false;
         rouletteScreen.visible = false;
+        superGameScreen.visible = false;
+        superGameResultScreen.visible = false;
 
         introScreen.stop();
         instructionScreen.stop();
         gameScreen.stop();
         gameResultScreen.stop();
         rouletteScreen.stop();
+        superGameScreen.stop();
+        superGameResultScreen.stop();
     }
 }
