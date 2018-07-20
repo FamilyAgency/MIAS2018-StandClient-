@@ -235,7 +235,7 @@ void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     QUrlQuery query;
-    query.addQueryItem("status", QString::number(1));
+    // query.addQueryItem("status", QString::number(1));
     // query.addQueryItem("type", QString::number(1));
     httpClient->runPutRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
@@ -298,9 +298,13 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         if(!dataJson.empty())
         {
             createBaseUserInfo(dataJson);
+            createPrizesUserData(dataJson);
+            createGameUserData(dataJson);
 
             UserObject userObject;
             userObject.baseUserInfo = baseUserInfo();
+            userObject.prizesUserData = prizesUserData();
+            userObject.gameUserData = gameUserData();
 
             emit newUserEntered(userObject);
             emit serverRequestSuccess(response.type);
@@ -346,6 +350,28 @@ BaseUserInfo ServerRemoteComponent::baseUserInfo() const
     return _baseUserInfo;
 }
 
+void ServerRemoteComponent::setPrizesUserData(const PrizesUserData& prizesUserData)
+{
+    _prizesUserData = prizesUserData;
+    emit prizesUserDataChanged();
+}
+
+PrizesUserData ServerRemoteComponent::prizesUserData() const
+{
+    return _prizesUserData;
+}
+
+void ServerRemoteComponent::setGameUserData(const GameUserData& gameUserData)
+{
+    _gameUserData = gameUserData;
+    emit gameUserDataChanged();
+}
+
+GameUserData ServerRemoteComponent::gameUserData() const
+{
+    return _gameUserData;
+}
+
 void ServerRemoteComponent::clearBaseUserInfo()
 {
     _baseUserInfo.clear();
@@ -364,6 +390,32 @@ void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
     baseUserInfo.test = object["test"].toInt();
     baseUserInfo.print();
     setBaseUserInfo(baseUserInfo);
+}
+
+void ServerRemoteComponent::createPrizesUserData(const QJsonObject& object)
+{
+    PrizesUserData prizesUserData;
+    QJsonArray prizesJson = object["prizes"].toArray();
+
+    for(auto prize : prizesJson)
+    {
+        auto prizeObj = prize.toObject();
+        if(prizeObj["type"].toInt() == 1)
+        {
+            prizesUserData.prize1 = prizeObj["status"].toInt() == 1;
+            //qDebug()<<"cola status"<<prizesUserData.prize1 ;
+        }
+        else if(prizeObj["type"].toInt() == 2)
+        {
+            prizesUserData.prize2 = prizeObj["status"].toInt() == 1;
+            //qDebug()<<"car status"<<prizesUserData.prize2;
+        }
+    }
+}
+
+void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
+{
+    // GameUserData
 }
 
 void ServerRemoteComponent::simulateServerError()

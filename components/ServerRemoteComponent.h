@@ -39,17 +39,31 @@ public:
     void setBaseUserInfo(const BaseUserInfo& baseUserInfo);
     BaseUserInfo baseUserInfo() const;
 
+    void setPrizesUserData(const PrizesUserData& baseUserInfo);
+    PrizesUserData prizesUserData() const;
+
+    void setGameUserData(const GameUserData& baseUserInfo);
+    GameUserData gameUserData() const;
+
     //test
     Q_INVOKABLE void simulateServerError();
     Q_INVOKABLE void simulateServerTimeout();
 
 private:
     BaseUserInfo _baseUserInfo;
+    PrizesUserData _prizesUserData;
+    GameUserData _gameUserData;
+
     void createBaseUserInfo(const QJsonObject& object);
+    void createPrizesUserData(const QJsonObject& object);
+    void createGameUserData(const QJsonObject& object);
+
     void handleRequestError(const ServerResponse&  response);
 
 signals:
     void baseUserInfoChanged();
+    void prizesUserDataChanged();
+    void gameUserDataChanged();
 };
 
 #endif // SERVERREMOTECOMPONENT_H

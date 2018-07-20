@@ -46,8 +46,8 @@ void HTTPClient::onTimeoutHandle()
 {
     qDebug()<<"==============  onTimeoutHandle ============= ";
     if(httpReply)
-    {
-        httpReply->abort();
+    {        
+        httpReply->close();
     }
 }
 
