@@ -25,8 +25,7 @@ int main(int argc, char *argv[])
    // QObject::connect(configController.data(), SIGNAL(configServiceReady(ConfigPtr)), appController.data(), SLOT(onConfigLoaded(ConfigPtr)));
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
-    qmlRegisterType<UserData>("com.app", 1, 0, "LoginState");
-    qmlRegisterType<UserData>("com.app", 1, 0, "UserState");
+    qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "RegistrationError");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");

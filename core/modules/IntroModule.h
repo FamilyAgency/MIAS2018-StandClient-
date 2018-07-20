@@ -32,17 +32,21 @@ private:
     QSharedPointer<UserData> userData = nullptr;
     QSharedPointer<StandData> standData = nullptr;
 
-    bool canFetchUser() const;
-
     void connectComponents();
     void disconnectComponents();
+
+signals:
+    void userCantStartReason(UserData::CantPlayReason reason);
+    void userStartPlay();
+    void userNotFound();
+
 
 private slots:
     void onRFIDRecieve(int id);
     void onRFIDConnectedChanged();
     void onNewUserEntered(const UserObject& userObject);
     void onUserNotFound();
-    void onServerError();      
+    void onServerError();
 };
 
 #endif // LOGINMODULE_H

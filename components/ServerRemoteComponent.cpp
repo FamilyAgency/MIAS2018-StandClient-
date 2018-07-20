@@ -411,11 +411,15 @@ void ServerRemoteComponent::createPrizesUserData(const QJsonObject& object)
             //qDebug()<<"car status"<<prizesUserData.prize2;
         }
     }
+
+    setPrizesUserData(prizesUserData);
 }
 
 void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
 {
     // GameUserData
+
+    // setGameUserData(prizesUserData);
 }
 
 void ServerRemoteComponent::simulateServerError()

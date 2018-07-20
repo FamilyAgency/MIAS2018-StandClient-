@@ -60,7 +60,7 @@ Item
             verticalAlignment: Text.AlignVCenter;
             Layout.preferredWidth: 500;
             textFormat: Text.StyledText;
-           // wrapMode: Text.WordWrap;
+            // wrapMode: Text.WordWrap;
             elide: Text.ElideRight;
         }
 
@@ -110,52 +110,37 @@ Item
 
     Connections
     {
-        target:userData;
+        target:introModule;
 
-        onUserStateChanged:
+        onUserStartPlay:
         {
-            switch(userState)
-            {
-            case UserState.None:
-                break;
-
-            case UserState.DoesntExists:
-                mainText.text = "Похоже, что тебя<br/>не существует!";
-                cantPlayHandler();
-                break;
-
-            case UserState.Finished:
-                mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
-                cantPlayHandler();
-                break;
-
-            case UserState.WasRecently:
-                mainText.text = "Недавно же играл!";
-                cantPlayHandler();
-                break;
-
-            case UserState.YouArePlaying:
-                mainText.text = "Играешь на другом<br/>стенде, хитрец!";
-                cantPlayHandler();
-                break;
-            }
+            mainText.text = "ПРИВЕТ,<br/>" + userData.baseUserData.name;
+            mainText.visible = true;
+            addText.visible = true;
+            addText.text = addTitleHelloText;
+            startBtn.visible = true;
         }
 
-        onLoginStateChanged:
+        onUserNotFound:
         {
-            switch(loginState)
+            mainText.text = "Похоже, что тебя<br/>не существует!";
+            cantPlayHandler();
+        }
+
+        onUserCantStartReason:
+        {
+            switch(reason)
             {
-            case LoginState.Login:
-                mainText.text = "ПРИВЕТ,<br/>" + userData.name;
-                mainText.visible = true;
-                addText.visible = true;
-                addText.text = addTitleHelloText;
-                startBtn.visible = true;
+            case CantPlayReason.WasRecently:
+                mainText.text = "Недавно же играл!";
                 break;
 
-            case LoginState.Error:
-                mainText.text = "Ошибка сервера";
-                startBtn.visible = false;
+            case CantPlayReason.YouArePlaying:
+                mainText.text = "Играешь на другом<br/>стенде, хитрец!";
+                break;
+
+            case CantPlayReason.Finished:
+                mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
                 break;
             }
         }

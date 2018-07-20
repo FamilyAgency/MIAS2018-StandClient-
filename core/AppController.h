@@ -109,13 +109,15 @@ public slots:
     void onConfigError(const QString& errorMessage);
 
 private slots:
-    void onLoginStateChanged(UserData::LoginState loginState);
+    //void onLoginStateChanged(UserData::LoginState loginState);
     void onAllTaskComleteEvent();
     void onServerResponse(const ServerResponse& response);
     void onCarStarting();
     void onGameCategoryUpdate(int id);
     void onSuperGameFailed();
     void onSuperGameSuccess(int time);
+    void onUserStartPlay();
+
 };
 
 #endif // APPCOPCONTROLLER_H

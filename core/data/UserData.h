@@ -176,29 +176,24 @@ class UserData : public QObject
     Q_PROPERTY(PrizesUserData prizesUserData READ prizesUserData WRITE setPrizesUserData NOTIFY prizesUserDataChanged)
     Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)
 
-    Q_ENUMS(UserState)
-    Q_ENUMS(LoginState)
+    Q_ENUMS(CantPlayReason)
 
 public:
     explicit UserData(QObject *parent = nullptr);
     virtual ~UserData();
 
-    enum class UserState
+    enum class CantPlayReason
     {
         None,
-        CanPlay,
-        DoesntExists,
-        Finished,
         WasRecently,
-        YouArePlaying
+        YouArePlaying,
+        Finished
     };
 
-    enum class LoginState
-    {
-        Login,
-        Logout,
-        Error
-    };
+    CantPlayReason getReasonCantPlay() const;
+    CantPlayReason cantPlayReason;
+
+    bool canPlay() const;
 
     void setBaseUserData(const BaseUserInfo& value);
     BaseUserInfo baseUserData() const;
@@ -223,9 +218,6 @@ public:
     void setNewUserData(const UserObject& userObject);
     void setUserDoesntExist();
 
-    void setUserState(UserState value);
-    void setLoginState(LoginState value);
-
     void setGameCategory(int id);
 
     SuperGameConfig getSuperGameData() const;
@@ -239,17 +231,12 @@ private:
     SuperGameConfig superGameConfig;
 
     QQmlContext* qmlContext;
-
-    UserState userState;
-    LoginState loginState = LoginState::Logout;
+    bool _canPlay = false;
 
 signals:
     void baseUserDataChanged();
     void prizesUserDataChanged();
     void gameUserDataChanged();
-
-    void userStateChanged(UserData::UserState userState);
-    void loginStateChanged(UserData::LoginState loginState);
 };
 
 #endif // USERDATA_H

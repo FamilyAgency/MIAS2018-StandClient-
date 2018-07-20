@@ -21,26 +21,28 @@ void UserData::setQmlContext(QQmlContext* value)
     qmlContext->setContextProperty("userData", this);
 }
 
+UserData::CantPlayReason UserData::getReasonCantPlay() const
+{
+    return cantPlayReason;
+}
+
+bool UserData::canPlay() const
+{
+    return _canPlay;
+}
+
 void UserData::setNewUserData(const UserObject& userObject)
 {
     setBaseUserData(userObject.baseUserInfo);
     setPrizesUserData(userObject.prizesUserData);
     setGameUserData(userObject.gameUserData);
-
-
-
-
   //  setPrizes();
   //  setGames();
 
-    setUserState(UserData::UserState::CanPlay);
-    setLoginState(UserData::LoginState::Login);
+    _canPlay = false;
 
-//    if(!exist())
-//    {
-//        setUserState(UserData::UserState::DoesntExists);
-//        return;
-//    }
+
+   // setLoginState(UserData::LoginState::Login);
 
 //    if(!waitEnoughToPlay())
 //    {
@@ -122,17 +124,17 @@ bool UserData::hasStages() const
     return _gameUserData.hasStages();
 }
 
-void UserData::setUserState(UserState value)
-{
-    userState = value;
-    emit userStateChanged(value);
-}
+//void UserData::setUserState(UserState value)
+//{
+//    userState = value;
+//    emit userStateChanged(value);
+//}
 
-void UserData::setLoginState(LoginState value)
-{
-    loginState = value;
-    emit loginStateChanged(value);
-}
+//void UserData::setLoginState(LoginState value)
+//{
+//    loginState = value;
+//    emit loginStateChanged(value);
+//}
 
 void UserData::setConfig(ConfigPtr value)
 {

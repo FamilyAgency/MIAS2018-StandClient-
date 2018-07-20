@@ -12,7 +12,7 @@ void AppController::createEngine()
     appSettings->init();
 
     userData.reset(new UserData());
-    connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
+   // connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
     standData.reset(new StandData());
     gameSession.reset(new GameSession());
@@ -48,6 +48,8 @@ void AppController::createEngine()
     introModule->setUserData(userData);
     introModule->setServerComponent(serverComponent);
     introModule->setStandData(standData);
+    connect(introModule.data(), SIGNAL(userStartPlay()), this, SLOT(onUserStartPlay()));
+
     modules.append(introModule);
 
     instructionModule.reset(new InstructionModule());
@@ -84,7 +86,7 @@ void AppController::createEngine()
 
 AppController::~AppController()
 {
-    disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
+   // disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
     disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 
@@ -95,6 +97,8 @@ AppController::~AppController()
 
     disconnect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
     disconnect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
+
+    disconnect(introModule.data(), SIGNAL(userStartPlay()), this, SLOT(onUserStartPlay()));
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
@@ -161,23 +165,28 @@ void AppController::onServerResponse(const ServerResponse& response)
 {
     if(response.type == ServerComponent::ResponseType::Logout)
     {
-        userData->setLoginState(UserData::LoginState::Logout);
+        //userData->setLoginState(UserData::LoginState::Logout);
     }
 }
 
-void AppController::onLoginStateChanged(UserData::LoginState loginState)
-{ 
-    if(loginState == UserData::LoginState::Login)
-    {
-        gameSession->start();
-    }
-    else if(loginState == UserData::LoginState::Logout)
-    {
-        userData->clearData();
-        gameSession->stop();
-        setAppState(AppState::Intro);
-    }
+void AppController::onUserStartPlay()
+{
+
 }
+
+//void AppController::onLoginStateChanged(UserData::LoginState loginState)
+//{
+//    if(loginState == UserData::LoginState::Login)
+//    {
+//        gameSession->start();
+//    }
+//    else if(loginState == UserData::LoginState::Logout)
+//    {
+//        userData->clearData();
+//        gameSession->stop();
+//        setAppState(AppState::Intro);
+//    }
+//}
 
 void AppController::onGameCategoryUpdate(int id)
 {
@@ -203,9 +212,6 @@ void AppController::onSuperGameSuccess(int time)
 {
     setAppState(AppState::SuperGameResult);
 }
-
-
-
 
 void AppController::startInstruction()
 {
@@ -234,7 +240,7 @@ void AppController::startSuperGame()
 
 void AppController::backToIntro()
 {
-    userData->setLoginState(UserData::LoginState::Logout);
+    //userData->setLoginState(UserData::LoginState::Logout);
     setAppState(AppState::Intro);
 }
 

@@ -63,26 +63,30 @@ void IntroModule::onRFIDRecieve(int id)
    // serverComponent->searchuser
 }
 
-bool IntroModule::canFetchUser() const
-{
-    //server busy, main screen
-    return true;
-}
-
 void IntroModule::onNewUserEntered(const UserObject& userObject)
 {
     userData->clearData();
     userData->setNewUserData(userObject);
+
+    if(userData->canPlay())
+    {
+        emit userCantStartReason(userData->getReasonCantPlay());
+    }
+    else
+    {
+        emit userStartPlay();
+    }
 }
 
 void IntroModule::onUserNotFound()
 {
+    emit userNotFound();
    // userData->setUserDoesntExist();
 }
 
 void IntroModule::onServerError()
 {
-    userData->setLoginState(UserData::LoginState::Error);
+    //userData->setLoginState(UserData::LoginState::Error);
 }
 
 QString IntroModule::getName() const
