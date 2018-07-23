@@ -46,10 +46,6 @@ void ServerRemoteComponent::healthLogRequest(int deviceId)
         qDebug()<<"wait for server please";
         return;
     }
-
-    //    response.clear();
-    //    response.type = ResponseType::HealthLogRequest;
-    //    setServerStatus(ServerStatus::Busy);
 }
 
 void ServerRemoteComponent::allUsersRequest()
@@ -392,20 +388,18 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
 
     if(response.type == ResponseType::CreateUserRequest)
     {
-        if(response.code == 555)
+        if(response.code == (int)RegErrorType::UserAlreadyExists)
         {
             qDebug() << "User already exists: ";
             emit userAlreadyExists();
-            //return;
         }
-    }    
+    }
     else if(response.type == ResponseType::ConfirmUserRequest)
     {
-        if(response.code == 556)
+        if(response.code == (int)RegErrorType::UserAlreadyConfirmed)
         {
             qDebug() << "User already confirmed: ";
             emit userAlreadyConfirmed();
-            //return;
         }
     }
 
@@ -492,16 +486,20 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
 {
     GameUserData gameUserData;
     QJsonArray gamesJson = object["games"].toArray();
-    QJsonObject gameJson = gamesJson[0].toObject();
+
+    if(gamesJson.size() > 0)
+    {
+        QJsonObject gameJson = gamesJson[0].toObject();
 
 
-    gameUserData.startGame = gameJson["start_game"].toString();
-    gameUserData.stage1 = gameJson["stage_1"].toString();
-    gameUserData.stage2 = gameJson["stage_2"].toString();
-    gameUserData.stage3 = gameJson["stage_3"].toString();
-    gameUserData.finishGame = gameJson["finish_game"].toString();
+        gameUserData.startGame = gameJson["start_game"].toString();
+        gameUserData.stage1 = gameJson["stage_1"].toString();
+        gameUserData.stage2 = gameJson["stage_2"].toString();
+        gameUserData.stage3 = gameJson["stage_3"].toString();
+        gameUserData.finishGame = gameJson["finish_game"].toString();
 
-    setGameUserData(gameUserData);
+        setGameUserData(gameUserData);
+    }
 }
 
 void ServerRemoteComponent::simulateServerError()

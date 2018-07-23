@@ -11,8 +11,6 @@ class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
     Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
-
-    Q_ENUMS(LoginError)
     Q_ENUMS(ServerStatus)
 
 public:
@@ -26,21 +24,10 @@ public:
         Error
     };
 
-    enum class LoginError
-    {
-        UserDoesntExist,
-        WasRecently,
-        ServerError,
-        ArduinoError,
-        Undefined
-    };
-
     enum class ResponseType
     {
         None,
         Error,
-        UserFetched,
-        Logout,
 
         SearchUserByIdRequest,
         ConfigRequest,
@@ -59,6 +46,12 @@ public:
         FinishGameRequest
     };
     Q_ENUMS(ResponseType)
+
+    enum class RegErrorType
+    {
+        UserAlreadyExists = 555,
+        UserAlreadyConfirmed = 556
+    };
 
     enum class ServerGlobalErrorType
     {
@@ -104,9 +97,6 @@ public:
     virtual void parse(const ServerResponse& response);
     virtual void logout();
 
-
-    friend class ServerComponentTest;
-
 protected:
     ServerResponse response;
     ServerConfig _serverConfig;
@@ -114,10 +104,9 @@ protected:
     ServerStatus _serverStatus = ServerStatus::Free;
     bool canRunRequest() const;
 
-
-
 signals:
     void serverConfigChanged();
+
     void serverStatusChanged(const ServerStatus& status);
     void serverResponse(const ServerResponse& response);
 
@@ -143,5 +132,6 @@ protected slots:
 };
 
 typedef ServerComponent::ServerResponse ServerResponse;
+typedef ServerComponent::RegErrorType RegErrorType;
 
 #endif // SERVERCOMPONENT_H

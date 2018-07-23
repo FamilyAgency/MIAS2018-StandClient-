@@ -20,16 +20,16 @@ ServerComponent::~ServerComponent()
 
 void ServerComponent::setQmlContext(QQmlContext* value)
 {
-   BaseComponent::setQmlContext(value);
-   qmlContext->setContextProperty("server", this);
+    BaseComponent::setQmlContext(value);
+    qmlContext->setContextProperty("server", this);
 }
 
 void ServerComponent::setConfig(ConfigPtr config)
 {
-   BaseComponent::setConfig(config);
-   setServerConfig(*config->serverConfig);
-   httpClient->setTimemoutInterval(_serverConfig.requestTimemoutInterval);
-   httpClient->setRequestTryCount(_serverConfig.requestTryCount);
+    BaseComponent::setConfig(config);
+    setServerConfig(*config->serverConfig);
+    httpClient->setTimemoutInterval(_serverConfig.requestTimemoutInterval);
+    httpClient->setRequestTryCount(_serverConfig.requestTryCount);
 }
 
 ServerConfig ServerComponent::serverConfig() const
@@ -66,7 +66,7 @@ bool ServerComponent::isHealthy()
 
 bool ServerComponent::canRunRequest() const
 {
- return _serverStatus == ServerStatus::Free;
+    return _serverStatus == ServerStatus::Free;
 }
 
 void ServerComponent::logout()
@@ -85,7 +85,7 @@ void ServerComponent::httpRequestSuccessHandler(const QString& data)
     response.status = responeJson["status"].toString();
     response.code = responeJson["code"].toInt();
 
-    parse(response);   
+    parse(response);
     emit serverResponse(response);
 }
 

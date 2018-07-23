@@ -29,7 +29,6 @@
 #include "Types.h"
 
 #include "tests/MindwaveComponentTest.h"
-#include "tests/ServerComponentTest.h"
 #include "tests/RFIDComponentTest.h"
 
 #include "tools/AppSettings.h"

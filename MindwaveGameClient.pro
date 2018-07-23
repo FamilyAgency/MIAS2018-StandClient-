@@ -34,7 +34,6 @@ SOURCES += main.cpp \
     components/rfid/BaseRFIDDataReader.cpp \
     components/rfid/UHFDataReader.cpp \
     components/rfid/UHFJsonDataReader.cpp \
-    tests/ServerComponentTest.cpp \
     components/LoggerComponent.cpp \
     core/modules/BaseModule.cpp \
     core/modules/GameModule.cpp \
@@ -109,7 +108,6 @@ HEADERS += \
     components/rfid/BaseRFIDDataReader.h \
     components/rfid/UHFDataReader.h \
     components/rfid/UHFJsonDataReader.h \
-    tests/ServerComponentTest.h \
     components/LoggerComponent.h \
     core/modules/BaseModule.h \
     core/modules/GameModule.h \

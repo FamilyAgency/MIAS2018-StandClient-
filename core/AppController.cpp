@@ -12,8 +12,6 @@ void AppController::createEngine()
     appSettings->init();
 
     userData.reset(new UserData());
-    // connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
-
     standData.reset(new StandData());
     gameSession.reset(new GameSession());
 
@@ -90,8 +88,6 @@ void AppController::createEngine()
 
 AppController::~AppController()
 {
-    // disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
-
     disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 
     disconnect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
