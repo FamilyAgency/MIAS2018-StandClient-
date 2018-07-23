@@ -174,7 +174,6 @@ signals:
     void prizesUserDataChanged();
     void gameUserDataChanged();
     void userCantStartReason(CantPlayReason reason);
-
 };
 
 #endif // USERDATA_H

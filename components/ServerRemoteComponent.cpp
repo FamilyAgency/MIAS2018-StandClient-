@@ -396,7 +396,16 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
         {
             qDebug() << "User already exists: ";
             emit userAlreadyExists();
-            return;
+            //return;
+        }
+    }    
+    else if(response.type == ResponseType::ConfirmUserRequest)
+    {
+        if(response.code == 556)
+        {
+            qDebug() << "User already confirmed: ";
+            emit userAlreadyConfirmed();
+            //return;
         }
     }
 
