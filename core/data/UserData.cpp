@@ -100,8 +100,6 @@ bool UserData::canPlay() const
     return _canPlay;
 }
 
-
-
 BaseUserInfo UserData::baseUserData() const
 {
     return _baseUserData;

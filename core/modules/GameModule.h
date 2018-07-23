@@ -5,6 +5,7 @@
 #include <QString>
 #include "BaseModule.h"
 #include "components/MindwaveComponent.h"
+#include "components/ServerComponent.h"
 #include "core/game/GameTaskManager.h"
 #include "core/data/UserData.h"
 #include "core/GameSession.h"
@@ -27,6 +28,7 @@ public:
 
     void setGameSession(QSharedPointer<GameSession> value);
     void setMindwave(QSharedPointer<MindwaveComponent> value);
+    void setServerComponent(QSharedPointer<ServerComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
 private:
@@ -34,6 +36,7 @@ private:
     QScopedPointer<GameTaskManager> gameTaskManager;
     QSharedPointer<GameSession> gameSession;
     QSharedPointer<UserData> currentUser;
+    QSharedPointer<ServerComponent> serverComponent;
 
     void dispatchAdvantageData();
 

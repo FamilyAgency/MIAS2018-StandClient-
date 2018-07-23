@@ -240,6 +240,55 @@ void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
     httpClient->runPutRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
 }
 
+
+void ServerRemoteComponent::startGameRequest(int userId)
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::StartGameRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/start";
+    httpClient->runGetRequest(fullRequest);
+}
+
+void ServerRemoteComponent::updateGameRequest(int userId)
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::StartGameRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/update";
+    httpClient->runGetRequest(fullRequest);
+}
+
+void ServerRemoteComponent::finishGameRequest(int userId)
+{
+    if(!canRunRequest())
+    {
+        qDebug()<<"wait for server please";
+        return;
+    }
+
+    response.clear();
+    response.type = ResponseType::FinishGameRequest;
+    setServerStatus(ServerStatus::Busy);
+
+    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/finish";
+    httpClient->runGetRequest(fullRequest);
+}
+
 void ServerRemoteComponent::parse(const ServerResponse& response)
 {
     qDebug() << "ServerRemoteComponent " << response.body;
@@ -417,9 +466,18 @@ void ServerRemoteComponent::createPrizesUserData(const QJsonObject& object)
 
 void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
 {
-    // GameUserData
+    GameUserData gameUserData;
+    QJsonArray gamesJson = object["games"].toArray();
+    QJsonObject gameJson = gamesJson[0].toObject();
 
-    // setGameUserData(prizesUserData);
+
+    gameUserData.startGame = gameJson["start_game"].toString();
+    gameUserData.stage1 = gameJson["stage_1"].toString();
+    gameUserData.stage2 = gameJson["stage_2"].toString();
+    gameUserData.stage3 = gameJson["stage_3"].toString();
+    gameUserData.finishGame = gameJson["finish_game"].toString();
+
+    setGameUserData(gameUserData);
 }
 
 void ServerRemoteComponent::simulateServerError()

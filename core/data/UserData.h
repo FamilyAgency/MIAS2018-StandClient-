@@ -93,6 +93,12 @@ public:
     QString description;
     QVariantList stageTimes;
 
+    QString startGame;
+    QString stage1;
+    QString stage2;
+    QString stage3;
+    QString finishGame;
+
     float superGameTime = 0.0;
 
     GameUserData()

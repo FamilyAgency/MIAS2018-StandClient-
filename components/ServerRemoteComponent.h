@@ -30,7 +30,11 @@ public:
     Q_INVOKABLE void deleteAllTestUsersRequest();
     Q_INVOKABLE void verifyUserRequest(int userId);
     Q_INVOKABLE void confirmUserRequest(int userId, int code);
-    Q_INVOKABLE void confirmPrizeRequest(int userId, int prizeid);
+    Q_INVOKABLE void confirmPrizeRequest(int userId, int prizeid); 
+
+    Q_INVOKABLE virtual void startGameRequest(int userId) override;
+    Q_INVOKABLE virtual void updateGameRequest(int userId) override;
+    Q_INVOKABLE virtual void finishGameRequest(int userId) override;
 
     virtual void parse(const ServerResponse& response) override;
 

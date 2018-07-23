@@ -57,6 +57,8 @@ void AppController::createEngine()
 
     rouletteModule.reset(new RouletteModule());
     rouletteModule->setMindwave(mindWaveComponent);
+    rouletteModule->setServerComponent(serverComponent);
+    rouletteModule->setUser(userData);
 
     connect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
     connect(rouletteModule.data(), SIGNAL(carStarting()), this, SLOT(onCarStarting()));
@@ -67,6 +69,7 @@ void AppController::createEngine()
     gameModule->setMindwave(mindWaveComponent);
     gameModule->setGameSession(gameSession);
     gameModule->setUser(userData);
+    gameModule->setServerComponent(serverComponent);
     connect(gameModule.data(), SIGNAL(allStagesComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 

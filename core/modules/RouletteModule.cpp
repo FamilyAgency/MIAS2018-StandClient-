@@ -47,6 +47,16 @@ void RouletteModule::setMindwave(QSharedPointer<MindwaveComponent> value)
     mindwaveComponent = value;
 }
 
+void RouletteModule::setServerComponent(QSharedPointer<ServerComponent> value)
+{
+    serverComponent = value;
+}
+
+void RouletteModule::setUser(QSharedPointer<UserData> value)
+{
+    currentUser = value;
+}
+
 void RouletteModule::setConfig(ConfigPtr config)
 {
     carMiddleThreshold = -config->mainConfig->touchScreen.height() / 2.;
@@ -91,6 +101,8 @@ void RouletteModule::setState(RouletteState state)
     if(_state == RouletteState::RollFinished)
     {
         qDebug()<<"choose user games!!!!!!";
+        qDebug()<<"================ GAME STARTED!!!!!! ================";
+        serverComponent->startGameRequest(currentUser->baseUserData().id);
         prepareTimer->setSingleShot(true);
         prepareTimer->start(prepareTimerDelay);
     }

@@ -52,7 +52,11 @@ public:
         DeleteAllTestUsersRequest,
         VerifyUserRequest,
         ConfirmUserRequest,
-        ConfirmPrizeRequest
+        ConfirmPrizeRequest,
+
+        StartGameRequest,
+        UpdateGameRequest,
+        FinishGameRequest
     };
     Q_ENUMS(ResponseType)
 
@@ -82,11 +86,15 @@ public:
     };
 
     virtual void setQmlContext(QQmlContext* value) override;
-    virtual void setConfig(ConfigPtr config) override;   
+    virtual void setConfig(ConfigPtr config) override;
 
     virtual void start() override;
     virtual void stop() override;
     virtual bool isHealthy() override;
+
+    virtual void startGameRequest(int userId){};
+    virtual void updateGameRequest(int userId){};
+    virtual void finishGameRequest(int userId){};
 
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
@@ -100,11 +108,13 @@ public:
     friend class ServerComponentTest;
 
 protected:
-     ServerResponse response;
-     ServerConfig _serverConfig;
-     QSharedPointer<HTTPClient> httpClient;
-     ServerStatus _serverStatus = ServerStatus::Free;
-     bool canRunRequest() const;
+    ServerResponse response;
+    ServerConfig _serverConfig;
+    QSharedPointer<HTTPClient> httpClient;
+    ServerStatus _serverStatus = ServerStatus::Free;
+    bool canRunRequest() const;
+
+
 
 signals:
     void serverConfigChanged();
@@ -119,12 +129,12 @@ signals:
 
 
     void newUserEntered(const UserObject&);
-    void userNotFound();    
+    void userNotFound();
     void userAlreadyExists();
 
 protected slots:
-   virtual void httpRequestSuccessHandler(const QString& data);
-   virtual void httpRequestFailedHandler(const QString& data);
+    virtual void httpRequestSuccessHandler(const QString& data);
+    virtual void httpRequestFailedHandler(const QString& data);
 };
 
 typedef ServerComponent::ServerResponse ServerResponse;

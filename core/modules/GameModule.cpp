@@ -17,6 +17,11 @@ void GameModule::setMindwave(QSharedPointer<MindwaveComponent> value)
     gameTaskManager->setMindWaveClient(mindWaveComponent);
 }
 
+void GameModule::setServerComponent(QSharedPointer<ServerComponent> value)
+{
+    serverComponent = value;
+}
+
 void GameModule::setGameSession(QSharedPointer<GameSession> value)
 {
     gameSession = value;
@@ -27,6 +32,11 @@ void GameModule::setQmlContext(QQmlContext* value)
     BaseModule::setQmlContext(value);
     qmlContext->setContextProperty("gameModule", this);
     gameTaskManager->setQmlContext(value);
+}
+
+void GameModule::setUser(QSharedPointer<UserData> value)
+{
+    currentUser = value;
 }
 
 void GameModule::setConfig(ConfigPtr config)
@@ -48,6 +58,7 @@ void GameModule::onStageComleteEvent(int completionTime)
 {
     dispatchAdvantageData();
     currentUser->currentStageCompleted(completionTime);
+    serverComponent->updateGameRequest(currentUser->baseUserData().id);
    // gameSession->addTaskTime(completionTime);
 }
 
@@ -77,7 +88,4 @@ QString GameModule::getName() const
     return "Game location";
 }
 
-void GameModule::setUser(QSharedPointer<UserData> value)
-{
-    currentUser = value;
-}
+
