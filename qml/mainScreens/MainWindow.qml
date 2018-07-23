@@ -18,6 +18,7 @@ Window
     x: standData.mainConfig.gameScreen.x;
     y: standData.mainConfig.gameScreen.y;
 
+
     Connections
     {
         target:appController;
@@ -32,16 +33,40 @@ Window
         id:mainGameScreen;
     }
 
+    MouseArea
+    {
+        anchors.fill: parent;
+        onClicked:
+        {
+            focusedId.forceActiveFocus();
+        }
+    }
+
+    Item
+    {
+        id:focusedId;
+        focus: true;
+        anchors.fill: parent;
+
+        Keys.onPressed:
+        {
+            if (event.key === Qt.Key_Escape)
+            {
+                Qt.quit();
+            }
+        }
+    }
+
     function setState(appState)
-    {       
+    {
         switch(appState)
         {
         case AppState.Intro:
-             mainGameScreen.gameStop();
+            mainGameScreen.gameStop();
             break;
 
         case AppState.Instruction:
-             mainGameScreen.gameStop();
+            mainGameScreen.gameStop();
             break;
 
         case AppState.Roulette:

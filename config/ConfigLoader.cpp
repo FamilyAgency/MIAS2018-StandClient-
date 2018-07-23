@@ -49,7 +49,7 @@ void ConfigLoader::httpRequestSuccessHandler(const QString& data)
 
 void ConfigLoader::httpRequestFailedHandler(const QString& error)
 {
-    qDebug()<<"httpRequestFailed";
+    qDebug()<<"httpRequestFailed"<<error;
     configLoadingError();
 }
 

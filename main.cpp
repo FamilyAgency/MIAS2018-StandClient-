@@ -38,7 +38,10 @@ int main(int argc, char *argv[])
         if (engine.rootObjects().isEmpty())
         {
             return -1;
-        }        
+        }
+
+        return 1;
+
     });
 
     QObject::connect(configController.data(), &ConfigController::configServiceError, [&](const QString& message)
@@ -49,6 +52,8 @@ int main(int argc, char *argv[])
         {
             return -1;
         }
+
+        return 1;
 
     });
 

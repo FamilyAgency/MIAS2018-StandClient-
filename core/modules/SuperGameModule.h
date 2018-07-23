@@ -29,7 +29,7 @@ public:
 
 
 private:
-    const float superGameTimerMills = 100./60;
+    const float superGameTimerMills = 100.0f/60.0f;
     int superGameTime = 1000 * 10;
     int startTime = 0;
     int superGameWinTime = 0;

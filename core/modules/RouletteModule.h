@@ -52,14 +52,14 @@ public:
     void setCarHeight(int value);
 
 private:
-     const float carStartTimerMills = 100./60;
-     const float mindwaveTimerMills = 100./60;
-     const float prepareTimerDelay = 2000.0;
+     const float carStartTimerMills = 100.0f/60.0f;
+     const float mindwaveTimerMills = 100.0f/60.0f;
+     const float prepareTimerDelay = 2000.0f;
 
      const float carInitialPosition = 0.0f;
      int carMiddleThreshold = -600;
-     float carTopThreshold = -1200;
-     const float carDecriment = -1;
+     int carTopThreshold = -1200;
+     const float carDecriment = -1.0f;
 
 
      const int mindwaveAttentionThreshold = 80;
