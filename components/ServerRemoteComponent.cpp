@@ -266,7 +266,7 @@ void ServerRemoteComponent::updateGameRequest(int userId)
     }
 
     response.clear();
-    response.type = ResponseType::StartGameRequest;
+    response.type = ResponseType::UpdateGameRequest;
     setServerStatus(ServerStatus::Busy);
 
     QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/update";
@@ -367,6 +367,21 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     else if(response.type == ResponseType::ConfirmPrizeRequest)
     {
         qDebug()<<"=====ConfirmPrizeRequest=====";
+        emit serverRequestSuccess(response.type);
+    }
+    else if(response.type == ResponseType::StartGameRequest)
+    {
+        emit userStartedGame();
+        emit serverRequestSuccess(response.type);
+    }
+    else if(response.type == ResponseType::UpdateGameRequest)
+    {
+        emit userUpdatedGame();
+        emit serverRequestSuccess(response.type);
+    }
+    else if(response.type == ResponseType::FinishGameRequest)
+    {
+        emit userFinishedGame();
         emit serverRequestSuccess(response.type);
     }
 }

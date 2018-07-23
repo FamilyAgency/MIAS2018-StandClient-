@@ -79,6 +79,9 @@ private:
      int _carHeight = 250;
      int choosenCategory = 0;
 
+     void connectComponents();
+     void disconnectComponents();
+
 signals:
      void carYChanged();
      void stateChanged();
@@ -92,6 +95,7 @@ private slots:
      void onUpdate();
      void onPrepareTimerComplete();
      void onMindwaveUpdate();
+     void onUserStartedGame();
 };
 
 

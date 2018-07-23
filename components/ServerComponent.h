@@ -132,6 +132,10 @@ signals:
     void userNotFound();
     void userAlreadyExists();
 
+    void userStartedGame();
+    void userUpdatedGame();
+    void userFinishedGame();
+
 protected slots:
     virtual void httpRequestSuccessHandler(const QString& data);
     virtual void httpRequestFailedHandler(const QString& data);

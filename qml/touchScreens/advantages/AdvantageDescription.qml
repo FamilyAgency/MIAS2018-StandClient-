@@ -73,6 +73,7 @@ Item
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 20;
         anchors.horizontalCenter: parent.horizontalCenter;
+        enabled: gameModule.canContinue;
 
         contentItem: Text
         {

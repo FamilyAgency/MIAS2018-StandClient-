@@ -12,7 +12,7 @@ void AppController::createEngine()
     appSettings->init();
 
     userData.reset(new UserData());
-   // connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
+    // connect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
     standData.reset(new StandData());
     gameSession.reset(new GameSession());
@@ -89,7 +89,7 @@ void AppController::createEngine()
 
 AppController::~AppController()
 {
-   // disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
+    // disconnect(userData.data(), SIGNAL(loginStateChanged(UserData::LoginState)), this, SLOT(onLoginStateChanged(UserData::LoginState)));
 
     disconnect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
 
@@ -159,37 +159,20 @@ void AppController::start()
     }
     else
     {
-       // userData->setGameCategory(1);
+        // userData->setGameCategory(1);
         setAppState(AppState::Intro);
     }
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
 {
-    if(response.type == ServerComponent::ResponseType::Logout)
-    {
-        //userData->setLoginState(UserData::LoginState::Logout);
-    }
+
 }
 
 void AppController::onUserStartPlay()
 {
 
 }
-
-//void AppController::onLoginStateChanged(UserData::LoginState loginState)
-//{
-//    if(loginState == UserData::LoginState::Login)
-//    {
-//        gameSession->start();
-//    }
-//    else if(loginState == UserData::LoginState::Logout)
-//    {
-//        userData->clearData();
-//        gameSession->stop();
-//        setAppState(AppState::Intro);
-//    }
-//}
 
 void AppController::onGameCategoryUpdate(int id)
 {
@@ -243,7 +226,7 @@ void AppController::startSuperGame()
 
 void AppController::backToIntro()
 {
-    //userData->setLoginState(UserData::LoginState::Logout);
+    //logout
     setAppState(AppState::Intro);
 }
 
@@ -275,13 +258,13 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
 {
     switch(value)
     {
-        case AppState::Intro: return introModule;
-        case AppState::Instruction: return instructionModule;
-        case AppState::Roulette: return rouletteModule;
-        case AppState::Game: return gameModule;
-        case AppState::GameResult: return gameResultModule;
-        case AppState::SuperGame: return superGameModule;
-        case AppState::SuperGameResult: return superGameResultModule;
+    case AppState::Intro: return introModule;
+    case AppState::Instruction: return instructionModule;
+    case AppState::Roulette: return rouletteModule;
+    case AppState::Game: return gameModule;
+    case AppState::GameResult: return gameResultModule;
+    case AppState::SuperGame: return superGameModule;
+    case AppState::SuperGameResult: return superGameResultModule;
     }
 
     return nullptr;

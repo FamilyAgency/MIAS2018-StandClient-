@@ -65,6 +65,9 @@ void RouletteModule::setConfig(ConfigPtr config)
 
 void RouletteModule::start()
 {
+    qDebug()<<"======================= RouletteModule START =======================";
+
+    connectComponents();
     choosenCategory = 0;
     setState(RouletteState::Intro);
     setCarY(carInitialPosition);
@@ -73,6 +76,9 @@ void RouletteModule::start()
 
 void RouletteModule::stop()
 {
+    qDebug()<<"======================= RouletteModule STOP =======================";
+
+    disconnectComponents();
     setState(RouletteState::Intro);
     carStartTimer->stop();
     prepareTimer->stop();
@@ -101,15 +107,21 @@ void RouletteModule::setState(RouletteState state)
     if(_state == RouletteState::RollFinished)
     {
         qDebug()<<"choose user games!!!!!!";
-        qDebug()<<"================ GAME STARTED!!!!!! ================";
+
         serverComponent->startGameRequest(currentUser->baseUserData().id);
-        prepareTimer->setSingleShot(true);
-        prepareTimer->start(prepareTimerDelay);
     }
     else if(_state == RouletteState::CarStarting)
     {
         mindwaveTimer->start(mindwaveTimerMills);
     }
+}
+
+void RouletteModule::onUserStartedGame()
+{
+    qDebug()<<"================ GAME STARTED!!!!!! ================";
+
+    prepareTimer->setSingleShot(true);
+    prepareTimer->start(prepareTimerDelay);
 }
 
 void RouletteModule::createRollParams(float rollSpeed)
@@ -194,4 +206,20 @@ void RouletteModule::setCarHeight(int value)
 QString RouletteModule::getName() const
 {
     return "Roulette location";
+}
+
+void RouletteModule::connectComponents()
+{
+    if(serverComponent)
+    {
+        connect(serverComponent.data(), SIGNAL(userStartedGame()), this, SLOT(onUserStartedGame()));
+    }
+}
+
+void RouletteModule::disconnectComponents()
+{
+    if(serverComponent)
+    {
+        disconnect(serverComponent.data(), SIGNAL(userStartedGame()), this, SLOT(onUserStartedGame()));
+     }
 }

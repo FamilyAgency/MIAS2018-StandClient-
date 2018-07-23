@@ -45,21 +45,28 @@ void GameModule::setConfig(ConfigPtr config)
 }
 
 void GameModule::start()
-{     
+{
+    qDebug()<<"======================= GameModule START =======================";
+
+    connectComponents();
     gameTaskManager->start(currentUser);
 }
 
 void GameModule::stop()
 { 
+    qDebug()<<"======================= GameModule STOP =======================";
+
+    disconnectComponents();
     gameTaskManager->stop();
 }
 
 void GameModule::onStageComleteEvent(int completionTime)
 {
+    setCanContinue(false);
     dispatchAdvantageData();
     currentUser->currentStageCompleted(completionTime);
     serverComponent->updateGameRequest(currentUser->baseUserData().id);
-   // gameSession->addTaskTime(completionTime);
+    // gameSession->addTaskTime(completionTime);
 }
 
 void GameModule::dispatchAdvantageData()
@@ -71,21 +78,56 @@ void GameModule::dispatchAdvantageData()
     emit stageComleteEvent(advantageTitle, advantageDescription, videoPath);
 }
 
+void GameModule::onUserUpdatedGame()
+{
+    setCanContinue(true);
+}
+
 void GameModule::continueGame()
 {
-    if(currentUser->hasStages())
+    if(canContinue())
     {
-        start();
-    }
-    else
-    {
-        emit allStagesComleteEvent();
+        if(currentUser->hasStages())
+        {
+            start();
+        }
+        else
+        {
+            emit allStagesComleteEvent();
+        }
     }
 }
 
 QString GameModule::getName() const
 {
     return "Game location";
+}
+
+bool GameModule::canContinue() const
+{
+    return _canContinue;
+}
+
+void GameModule::setCanContinue(bool value)
+{
+    _canContinue = value;
+    emit canContinueChanged();
+}
+
+void GameModule::connectComponents()
+{
+    if(serverComponent)
+    {
+        connect(serverComponent.data(), SIGNAL(userUpdatedGame()), this, SLOT(onUserUpdatedGame()));
+    }
+}
+
+void GameModule::disconnectComponents()
+{
+    if(serverComponent)
+    {
+        disconnect(serverComponent.data(), SIGNAL(userUpdatedGame()), this, SLOT(onUserUpdatedGame()));
+    }
 }
 
 

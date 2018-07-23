@@ -4,6 +4,9 @@ import com.app 1.0
 
 Item
 {
+    property var lastStatus: ServerStatus.None;
+    property int minimumShowTime: 1000;
+
     anchors.fill: parent;
 
     Component.onCompleted:
@@ -17,14 +20,20 @@ Item
 
         onServerStatusChanged:
         {
-            visible = (status === ServerStatus.Busy);
+            lastStatus = status;
+
+            if(ServerStatus.Busy)
+            {
+                preloderTimer.start();
+                visible = true;
+            }
         }
     }
 
     Rectangle
     {
         anchors.fill: parent;
-        opacity: 0.9;
+        opacity: 0.0;
         color: "#1c1c1c";
     }
 
@@ -36,10 +45,34 @@ Item
 
     BusyIndicator
     {
-        anchors.centerIn: parent;
+        anchors.left: parent.left;
+        anchors.top: parent.top;
+        anchors.topMargin: 50;
+        anchors.leftMargin: 50;
         running: true;
-        implicitHeight: 200;
-        implicitWidth: 200;
+        implicitHeight: 100;
+        implicitWidth: 100;
+    }
+
+    Timer
+    {
+        id:preloderTimer;
+        interval: minimumShowTime;
+        running: false;
+        repeat: false
+        onTriggered:
+        {
+            if(lastStatus != ServerStatus.Busy)
+            {
+                preloderTimer.stop();
+                visible = false;
+            }
+            else
+            {
+                preloderTimer.start();
+                visible = true;
+            }
+        }
     }
 }
 

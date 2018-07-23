@@ -13,11 +13,17 @@
 class GameModule : public BaseModule
 {
     Q_OBJECT
+
+    Q_PROPERTY(bool canContinue READ canContinue WRITE setCanContinue NOTIFY canContinueChanged)
+
 public:
     explicit GameModule(QObject *parent = nullptr);
     virtual ~GameModule();
 
     Q_INVOKABLE void continueGame();
+
+    bool canContinue() const;
+    void setCanContinue(bool value);
 
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
@@ -31,6 +37,8 @@ public:
     void setServerComponent(QSharedPointer<ServerComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
+
+
 private:
     QSharedPointer<MindwaveComponent> mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
@@ -38,16 +46,21 @@ private:
     QSharedPointer<UserData> currentUser;
     QSharedPointer<ServerComponent> serverComponent;
 
+    bool _canContinue = false;
+
     void dispatchAdvantageData();
+
+    void connectComponents();
+    void disconnectComponents();
 
 private slots:
     void onStageComleteEvent(int completionTime);
+    void onUserUpdatedGame();
 
 signals:
     void allStagesComleteEvent();
     void stageComleteEvent(const QString& title, const QString& description, const QString& videoPath);
-
-
+    void canContinueChanged();
 };
 
 #endif // GAMEMODULE_H
