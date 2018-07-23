@@ -36,7 +36,6 @@ private:
     void disconnectComponents();
 
 signals:
-    void userCantStartReason(UserData::CantPlayReason reason);
     void userStartPlay();
     void userNotFound();
 

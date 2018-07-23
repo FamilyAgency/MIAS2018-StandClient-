@@ -126,9 +126,16 @@ Item
             mainText.text = "Похоже, что тебя<br/>не существует!";
             cantPlayHandler();
         }
+    }
+
+    Connections
+    {
+        target:userData;
 
         onUserCantStartReason:
         {
+            console.log("cant start reason ::: ", userData.getReasonCantPlay(), reason);
+
             switch(reason)
             {
             case CantPlayReason.WasRecently:
@@ -143,6 +150,23 @@ Item
                 mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
                 break;
             }
+
+            cantPlayHandler();
+        }
+    }
+
+    Connections
+    {
+        target:server;
+
+        onServerGlobalError:
+        {
+
+        }
+
+        onServerRequestError:
+        {
+
         }
     }
 

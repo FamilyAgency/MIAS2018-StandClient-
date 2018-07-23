@@ -188,12 +188,7 @@ public:
         WasRecently,
         YouArePlaying,
         Finished
-    };
-
-    CantPlayReason getReasonCantPlay() const;
-    CantPlayReason cantPlayReason;
-
-    bool canPlay() const;
+    };  
 
     void setBaseUserData(const BaseUserInfo& value);
     BaseUserInfo baseUserData() const;
@@ -220,6 +215,12 @@ public:
 
     void setGameCategory(int id);
 
+    Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
+    bool canPlay() const;
+    bool allPrizesGot() const;
+    bool wasRecently() const;
+    bool playingOnAnotherStand() const;
+
     SuperGameConfig getSuperGameData() const;
 
 private:
@@ -231,12 +232,18 @@ private:
     SuperGameConfig superGameConfig;
 
     QQmlContext* qmlContext;
+
     bool _canPlay = false;
+    CantPlayReason cantPlayReason;
+
+    void checkCanUserPlay();
 
 signals:
     void baseUserDataChanged();
     void prizesUserDataChanged();
     void gameUserDataChanged();
+    void userCantStartReason(CantPlayReason reason);
+
 };
 
 #endif // USERDATA_H

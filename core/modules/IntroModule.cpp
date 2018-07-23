@@ -60,7 +60,7 @@ void IntroModule::onRFIDConnectedChanged()
 
 void IntroModule::onRFIDRecieve(int id)
 {
-   // serverComponent->searchuser
+    // serverComponent->searchuser
 }
 
 void IntroModule::onNewUserEntered(const UserObject& userObject)
@@ -70,10 +70,6 @@ void IntroModule::onNewUserEntered(const UserObject& userObject)
 
     if(userData->canPlay())
     {
-        emit userCantStartReason(userData->getReasonCantPlay());
-    }
-    else
-    {
         emit userStartPlay();
     }
 }
@@ -81,7 +77,6 @@ void IntroModule::onNewUserEntered(const UserObject& userObject)
 void IntroModule::onUserNotFound()
 {
     emit userNotFound();
-   // userData->setUserDoesntExist();
 }
 
 void IntroModule::onServerError()

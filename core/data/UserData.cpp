@@ -21,6 +21,75 @@ void UserData::setQmlContext(QQmlContext* value)
     qmlContext->setContextProperty("userData", this);
 }
 
+void UserData::setNewUserData(const UserObject& userObject)
+{
+    setBaseUserData(userObject.baseUserInfo);
+    setPrizesUserData(userObject.prizesUserData);
+    setGameUserData(userObject.gameUserData);
+
+    checkCanUserPlay();
+}
+
+void UserData::setBaseUserData(const BaseUserInfo& value)
+{
+    _baseUserData = value;
+    emit baseUserDataChanged();
+}
+
+void UserData::setPrizesUserData(const PrizesUserData& value)
+{
+    _prizesUserData = value;
+    emit prizesUserDataChanged();
+}
+
+void UserData::setGameUserData(const GameUserData& value)
+{
+    _gameUserData = value;
+    emit gameUserDataChanged();
+}
+
+void UserData::checkCanUserPlay()
+{
+    cantPlayReason = CantPlayReason::None;
+    _canPlay = true;
+
+    if(allPrizesGot())
+    {
+        _canPlay = false;
+        cantPlayReason = CantPlayReason::Finished;
+    }
+    else if(wasRecently())
+    {
+        _canPlay = false;
+        cantPlayReason = CantPlayReason::WasRecently;
+    }
+    else if(playingOnAnotherStand())
+    {
+        _canPlay = false;
+        cantPlayReason = CantPlayReason::YouArePlaying;
+    }
+
+    if(!_canPlay)
+    {
+        emit userCantStartReason(cantPlayReason);
+    }
+}
+
+bool UserData::allPrizesGot() const
+{
+    return false;
+}
+
+bool UserData::wasRecently() const
+{
+    return false;
+}
+
+bool UserData::playingOnAnotherStand() const
+{
+    return false;
+}
+
 UserData::CantPlayReason UserData::getReasonCantPlay() const
 {
     return cantPlayReason;
@@ -31,67 +100,16 @@ bool UserData::canPlay() const
     return _canPlay;
 }
 
-void UserData::setNewUserData(const UserObject& userObject)
-{
-    setBaseUserData(userObject.baseUserInfo);
-    setPrizesUserData(userObject.prizesUserData);
-    setGameUserData(userObject.gameUserData);
-  //  setPrizes();
-  //  setGames();
 
-    _canPlay = false;
-
-
-   // setLoginState(UserData::LoginState::Login);
-
-//    if(!waitEnoughToPlay())
-//    {
-//        setUserState(UserData::UserState::WasRecently);
-//        return;
-//    }
-
-//    if(playingOnAnother())
-//    {
-//        setUserState(UserData::UserState::YouArePlaying);
-//        return;
-//    }
-
-//    if(finished())
-//    {
-//        setUserState(UserData::UserState::Finished);
-//        return;
-//    }
-
-//    setUserState(UserData::UserState::CanPlay);
-//    setLoginState(UserData::LoginState::Login);
-}
-
-void UserData::setBaseUserData(const BaseUserInfo& value)
-{
-    _baseUserData = value;
-    emit baseUserDataChanged();
-}
 
 BaseUserInfo UserData::baseUserData() const
 {
     return _baseUserData;
 }
 
-void UserData::setPrizesUserData(const PrizesUserData& value)
-{
-    _prizesUserData = value;
-    emit prizesUserDataChanged();
-}
-
 PrizesUserData UserData::prizesUserData() const
 {
     return _prizesUserData;
-}
-
-void UserData::setGameUserData(const GameUserData& value)
-{
-    _gameUserData = value;
-    emit gameUserDataChanged();
 }
 
 GameUserData UserData::gameUserData() const
@@ -124,22 +142,10 @@ bool UserData::hasStages() const
     return _gameUserData.hasStages();
 }
 
-//void UserData::setUserState(UserState value)
-//{
-//    userState = value;
-//    emit userStateChanged(value);
-//}
-
-//void UserData::setLoginState(LoginState value)
-//{
-//    loginState = value;
-//    emit loginStateChanged(value);
-//}
-
 void UserData::setConfig(ConfigPtr value)
 {
-   setGameConfig(*value->standGamesConfig);
-   superGameConfig = _gameConfig.superGame;
+    setGameConfig(*value->standGamesConfig);
+    superGameConfig = _gameConfig.superGame;
 }
 
 SuperGameConfig UserData::getSuperGameData() const
