@@ -49,7 +49,7 @@ void GameModule::start()
     qDebug()<<"======================= GameModule START =======================";
 
     connectComponents();
-    gameTaskManager->start(currentUser);
+    startGame();
 }
 
 void GameModule::stop()
@@ -58,6 +58,11 @@ void GameModule::stop()
 
     disconnectComponents();
     gameTaskManager->stop();
+}
+
+void GameModule::startGame()
+{
+     gameTaskManager->start(currentUser);
 }
 
 void GameModule::onStageComleteEvent(int completionTime)
@@ -89,7 +94,7 @@ void GameModule::continueGame()
     {
         if(currentUser->hasStages())
         {
-            start();
+           startGame();
         }
         else
         {

@@ -177,7 +177,7 @@ Window
 
                 Text
                 {
-                    text: "super game: " + userData.gameUserData.superGameTime;
+                    text: "super game: " + userData.gameUserData.superGameTime.toFixed(1);
                     font.family: "Helvetica";
                     font.pixelSize: 15;
                     color: "#990000";

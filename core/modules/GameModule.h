@@ -37,8 +37,6 @@ public:
     void setServerComponent(QSharedPointer<ServerComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
-
-
 private:
     QSharedPointer<MindwaveComponent> mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
@@ -48,6 +46,7 @@ private:
 
     bool _canContinue = false;
 
+     void startGame();
     void dispatchAdvantageData();
 
     void connectComponents();

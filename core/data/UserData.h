@@ -27,39 +27,11 @@ public:
     int test = 0;
     int confirmed = 0;
 
-    Q_INVOKABLE bool isPinConfirmed() const
-    {
-        return confirmed == 1;
-    }
+    Q_INVOKABLE bool isPinConfirmed() const;
+    Q_INVOKABLE int getPinToConfirm() const;
 
-    Q_INVOKABLE int getPinToConfirm() const
-    {
-        return confirmed;
-    }
-
-    void print()
-    {
-        qDebug()<<"===== User Info =====";
-        qDebug()<<"id = "<<id;
-        qDebug()<<"name = "<<name;
-        qDebug()<<"surname = "<<surname;
-        qDebug()<<"email = "<<email;
-        qDebug()<<"phone = "<<phone;
-        qDebug()<<"confirmed = "<<confirmed;
-        qDebug()<<"test = "<<test;
-        qDebug()<<"====================";
-    }
-
-    void clear()
-    {
-        id = 0;
-        name = "";
-        surname = "";
-        email = "";
-        phone = "";
-        confirmed = 0;
-        test = 0;
-    }
+    void print();
+    void clear();
 };
 Q_DECLARE_METATYPE(BaseUserInfo)
 
@@ -86,7 +58,7 @@ private:
 
 public:
     QVector<OneStageData> stages;
-    int currentGameId;
+    int currentStageId;
     int cleanGameTime;
     OneStageData currentStage;
     bool _hasGames = false;
@@ -101,70 +73,19 @@ public:
 
     float superGameTime = 0.0;
 
-    GameUserData()
-    {
-        stageTimes.push_back(0.0f);
-        stageTimes.push_back(0.0f);
-        stageTimes.push_back(0.0f);
-    }
+    GameUserData();
 
-    void setupConfigGameData(const StandOneGameConfig& game)
-    {
-        stages.clear();
-        stageTimes.clear();
+    void setupConfigGameData(const StandOneGameConfig& game);
+    void setCurrentStageId(int id);
 
-        description = game.description;
-        qDebug()<<"description   "<<description;
+    OneStageData getCurrentStage() const;
+    int getCurrentStageId() const;
 
-        for(int i = 0; i < game.stages.size(); i++)
-        {
-            OneStageData oneGameData;
-            oneGameData.setId(i + 1);
-            oneGameData.setComplete(false);
-            oneGameData.setTime(0.0f);
-            oneGameData.setPath(game.stages[i].path);
-            oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
-            oneGameData.setAdvantage(game.stages[i].advantage);
-            stages.push_back(oneGameData);
-            stageTimes.push_back(0.0f);
-        }
+    void currentStageCompleted(int time);
 
-        _hasGames = true;
-    }
+    void superGameCompleted(int time);
 
-    void setCurrentGameId(int id)
-    {
-        currentGameId = id;
-        currentStage = stages[id - 1];
-    }
-
-    OneStageData getCurrentStage() const
-    {
-        return currentStage;
-    }
-
-    void currentStageCompleted(int time)
-    {
-        const float toSeconds = 1/1000.0f;
-        stageTimes[currentGameId - 1] = time * toSeconds;
-
-        currentStage.setTime(time);
-        qDebug()<<"Current game id "<<currentGameId<<stages.size();
-        if(currentGameId + 1 <= stages.size())
-        {
-            _hasGames = true;
-            setCurrentGameId(currentGameId + 1);
-        }
-        else
-        {
-            _hasGames = false;
-        }
-    }
-
-    bool hasStages() const
-    {
-        return _hasGames;
-    }
+    bool hasStages() const;
 };
 Q_DECLARE_METATYPE(GameUserData)
 
@@ -194,7 +115,10 @@ public:
         WasRecently,
         YouArePlaying,
         Finished
-    };  
+    };
+
+    Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
+    Q_INVOKABLE int getCurrentStageId() const;
 
     void setBaseUserData(const BaseUserInfo& value);
     BaseUserInfo baseUserData() const;
@@ -206,7 +130,9 @@ public:
     GameUserData gameUserData() const;
 
     OneStageData getCurrentStage() const;
-    void currentStageCompleted(int time);
+    void currentStageCompleted(int time);    
+
+    void superGameCompleted(int time);
 
     bool hasStages() const;
 
@@ -221,7 +147,6 @@ public:
 
     void setGameCategory(int id);
 
-    Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
     bool canPlay() const;
     bool allPrizesGot() const;
     bool wasRecently() const;

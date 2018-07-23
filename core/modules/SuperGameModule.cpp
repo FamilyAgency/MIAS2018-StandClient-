@@ -35,9 +35,9 @@ void SuperGameModule::setConfig(ConfigPtr config)
 
 void SuperGameModule::start()
 {
-    superGameTime = currentUser->getSuperGameData().time;
-    emit updateSuperGameTime(superGameTime);
     qDebug()<<"======================= SuperGameModule START =======================";
+    superGameTime = currentUser->getSuperGameData().time;
+    emit updateSuperGameTime(superGameTime);   
 }
 
 void SuperGameModule::stop()
@@ -71,6 +71,7 @@ void SuperGameModule::onUpdate()
 void SuperGameModule::superGamePassedTest()
 {
     int time = QDateTime::currentMSecsSinceEpoch() - startTime;
+    currentUser->superGameCompleted(time);
 
     emit superGameSuccess(time);
 }

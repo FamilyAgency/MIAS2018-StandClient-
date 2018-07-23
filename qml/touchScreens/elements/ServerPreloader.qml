@@ -22,7 +22,7 @@ Item
         {
             lastStatus = status;
 
-            if(ServerStatus.Busy)
+            if(status == ServerStatus.Busy)
             {
                 preloderTimer.start();
                 visible = true;

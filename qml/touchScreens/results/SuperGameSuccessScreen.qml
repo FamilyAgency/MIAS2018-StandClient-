@@ -35,7 +35,7 @@ Item
         anchors.top: mainTitle.bottom;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
-        text: "00:00";
+        text: userData.gameUserData.superGameTime.toFixed(1);
         font.family: "Helvetica";
         font.pixelSize: 55;
         color: "#ffffff";

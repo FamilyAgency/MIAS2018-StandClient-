@@ -1,7 +1,10 @@
 import QtQuick 2.0
 
-Item {
-    visible:false
+Item
+{
+    property int currentStageId: 0;
+
+    visible:false;
 
     Connections
     {
@@ -10,6 +13,7 @@ Item {
 
         onPreTaskStartEvent:
         {
+            currentStageId = userData.getCurrentStageId();
             visible = true;
         }
 
@@ -48,7 +52,7 @@ Item {
         {
             anchors.centerIn: parent
             id: roundText
-            text: "Round " + userData.currentGameId;
+            text: "Round " + currentStageId;
             font.family: "Helvetica";
             font.pixelSize: 35;
             color: "#ffffff";

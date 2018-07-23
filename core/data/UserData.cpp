@@ -95,6 +95,11 @@ UserData::CantPlayReason UserData::getReasonCantPlay() const
     return cantPlayReason;
 }
 
+int UserData::getCurrentStageId() const
+{
+    return _gameUserData.getCurrentStageId();
+}
+
 bool UserData::canPlay() const
 {
     return _canPlay;
@@ -120,7 +125,7 @@ void UserData::setGameCategory(int id)
     qDebug()<<"setGameCategory  "<< id;
     StandOneGameConfig choosenGame = _gameConfig.games[id];
     _gameUserData.setupConfigGameData(choosenGame);
-    _gameUserData.setCurrentGameId(1);
+    _gameUserData.setCurrentStageId(1);
     emit gameUserDataChanged();
 }
 
@@ -132,6 +137,12 @@ OneStageData UserData::getCurrentStage() const
 void UserData::currentStageCompleted(int time)
 {
     _gameUserData.currentStageCompleted(time);
+    emit gameUserDataChanged();
+}
+
+void UserData::superGameCompleted(int time)
+{
+    _gameUserData.superGameCompleted(time);
     emit gameUserDataChanged();
 }
 
@@ -161,3 +172,116 @@ void UserData::clearData()
 
 }
 
+//======================================================//
+
+
+bool BaseUserInfo::isPinConfirmed() const
+{
+    return confirmed == 1;
+}
+
+int BaseUserInfo::getPinToConfirm() const
+{
+    return confirmed;
+}
+
+void BaseUserInfo::print()
+{
+    qDebug()<<"===== User Info =====";
+    qDebug()<<"id = "<<id;
+    qDebug()<<"name = "<<name;
+    qDebug()<<"surname = "<<surname;
+    qDebug()<<"email = "<<email;
+    qDebug()<<"phone = "<<phone;
+    qDebug()<<"confirmed = "<<confirmed;
+    qDebug()<<"test = "<<test;
+    qDebug()<<"====================";
+}
+
+void BaseUserInfo::clear()
+{
+    id = 0;
+    name = "";
+    surname = "";
+    email = "";
+    phone = "";
+    confirmed = 0;
+    test = 0;
+}
+
+
+GameUserData::GameUserData()
+{
+    stageTimes.push_back(0.0f);
+    stageTimes.push_back(0.0f);
+    stageTimes.push_back(0.0f);
+}
+
+void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
+{
+    stages.clear();
+    stageTimes.clear();
+
+    description = game.description;
+    qDebug()<<"description   "<<description;
+
+    for(int i = 0; i < game.stages.size(); i++)
+    {
+        OneStageData oneGameData;
+        oneGameData.setId(i + 1);
+        oneGameData.setComplete(false);
+        oneGameData.setTime(0.0f);
+        oneGameData.setPath(game.stages[i].path);
+        oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
+        oneGameData.setAdvantage(game.stages[i].advantage);
+        stages.push_back(oneGameData);
+        stageTimes.push_back(0.0f);
+    }
+
+    _hasGames = true;
+}
+
+void GameUserData::setCurrentStageId(int id)
+{
+    currentStageId = id;
+    currentStage = stages[id - 1];
+}
+
+OneStageData GameUserData::getCurrentStage() const
+{
+    return currentStage;
+}
+
+int GameUserData::getCurrentStageId() const
+{
+    return currentStageId;
+}
+
+void GameUserData::currentStageCompleted(int time)
+{
+    const float toSeconds = 1/1000.0f;
+    stageTimes[currentStageId - 1] = time * toSeconds;
+
+    currentStage.setTime(time);
+    qDebug()<<"Current game id "<<currentStageId<<stages.size();
+    if(currentStageId + 1 <= stages.size())
+    {
+        _hasGames = true;
+        setCurrentStageId(currentStageId + 1);
+    }
+    else
+    {
+        _hasGames = false;
+    }
+}
+
+void GameUserData::superGameCompleted(int time)
+{
+    const float toSeconds = 1/1000.0f;
+    superGameTime = time * toSeconds;
+}
+
+bool GameUserData::hasStages() const
+{
+    return _hasGames;
+}
