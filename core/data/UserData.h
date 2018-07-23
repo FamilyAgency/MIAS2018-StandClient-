@@ -7,7 +7,7 @@
 #include "core/data/OneStageData.h"
 #include "config/Config.h"
 
-struct BaseUserInfo
+struct BaseUserData
 {
 private:
     Q_GADGET
@@ -33,7 +33,7 @@ public:
     void print();
     void clear();
 };
-Q_DECLARE_METATYPE(BaseUserInfo)
+Q_DECLARE_METATYPE(BaseUserData)
 
 struct PrizesUserData
 {
@@ -91,7 +91,7 @@ Q_DECLARE_METATYPE(GameUserData)
 
 struct UserObject
 {
-    BaseUserInfo baseUserInfo;
+    BaseUserData baseUserData;
     PrizesUserData prizesUserData;
     GameUserData gameUserData;
 };
@@ -99,7 +99,7 @@ struct UserObject
 class UserData : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(BaseUserInfo baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
+    Q_PROPERTY(BaseUserData baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
     Q_PROPERTY(PrizesUserData prizesUserData READ prizesUserData WRITE setPrizesUserData NOTIFY prizesUserDataChanged)
     Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)
 
@@ -120,8 +120,8 @@ public:
     Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
     Q_INVOKABLE int getCurrentStageId() const;
 
-    void setBaseUserData(const BaseUserInfo& value);
-    BaseUserInfo baseUserData() const;
+    void setBaseUserData(const BaseUserData& value);
+    BaseUserData baseUserData() const;
 
     void setPrizesUserData(const PrizesUserData& value);
     PrizesUserData prizesUserData() const;
@@ -155,7 +155,7 @@ public:
     SuperGameConfig getSuperGameData() const;
 
 private:
-    BaseUserInfo _baseUserData;
+    BaseUserData _baseUserData;
     PrizesUserData _prizesUserData;
     GameUserData _gameUserData;
 

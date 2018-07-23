@@ -347,7 +347,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
             createGameUserData(dataJson);
 
             UserObject userObject;
-            userObject.baseUserInfo = baseUserInfo();
+            userObject.baseUserData = baseUserData();
             userObject.prizesUserData = prizesUserData();
             userObject.gameUserData = gameUserData();
 
@@ -406,15 +406,15 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
     serverRequestError(response.type);
 }
 
-void ServerRemoteComponent::setBaseUserInfo(const BaseUserInfo& baseUserInfo)
+void ServerRemoteComponent::setBaseUserData(const BaseUserData& value)
 {
-    _baseUserInfo = baseUserInfo;
-    emit baseUserInfoChanged();
+    _baseUserData = value;
+    emit baseUserDataChanged();
 }
 
-BaseUserInfo ServerRemoteComponent::baseUserInfo() const
+BaseUserData ServerRemoteComponent::baseUserData() const
 {
-    return _baseUserInfo;
+    return _baseUserData;
 }
 
 void ServerRemoteComponent::setPrizesUserData(const PrizesUserData& prizesUserData)
@@ -441,22 +441,22 @@ GameUserData ServerRemoteComponent::gameUserData() const
 
 void ServerRemoteComponent::clearBaseUserInfo()
 {
-    _baseUserInfo.clear();
-    emit baseUserInfoChanged();
+    _baseUserData.clear();
+    emit baseUserDataChanged();
 }
 
 void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
 {
-    BaseUserInfo baseUserInfo;
-    baseUserInfo.id = object["id"].toInt();
-    baseUserInfo.name = object["name"].toString();
-    baseUserInfo.surname = object["surname"].toString();
-    baseUserInfo.email = object["email"].toString();
-    baseUserInfo.phone = object["phone"].toString();
-    baseUserInfo.confirmed = object["confirmed"].toInt();
-    baseUserInfo.test = object["test"].toInt();
-    baseUserInfo.print();
-    setBaseUserInfo(baseUserInfo);
+    BaseUserData baseUserData;
+    baseUserData.id = object["id"].toInt();
+    baseUserData.name = object["name"].toString();
+    baseUserData.surname = object["surname"].toString();
+    baseUserData.email = object["email"].toString();
+    baseUserData.phone = object["phone"].toString();
+    baseUserData.confirmed = object["confirmed"].toInt();
+    baseUserData.test = object["test"].toInt();
+    baseUserData.print();
+    setBaseUserData(baseUserData);
 }
 
 void ServerRemoteComponent::createPrizesUserData(const QJsonObject& object)

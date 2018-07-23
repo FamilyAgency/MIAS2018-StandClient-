@@ -21,7 +21,7 @@ Window
     {
         target: server;
 
-        onBaseUserInfoChanged:
+        onBaseUserDataChanged:
         {
             pinToConfirmed.text = "Pin to confirmed: " + userData.baseUserData.getPinToConfirm();
         }

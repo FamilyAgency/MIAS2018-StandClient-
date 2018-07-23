@@ -23,14 +23,14 @@ void UserData::setQmlContext(QQmlContext* value)
 
 void UserData::setNewUserData(const UserObject& userObject)
 {
-    setBaseUserData(userObject.baseUserInfo);
+    setBaseUserData(userObject.baseUserData);
     setPrizesUserData(userObject.prizesUserData);
     setGameUserData(userObject.gameUserData);
 
     checkCanUserPlay();
 }
 
-void UserData::setBaseUserData(const BaseUserInfo& value)
+void UserData::setBaseUserData(const BaseUserData& value)
 {
     _baseUserData = value;
     emit baseUserDataChanged();
@@ -105,7 +105,7 @@ bool UserData::canPlay() const
     return _canPlay;
 }
 
-BaseUserInfo UserData::baseUserData() const
+BaseUserData UserData::baseUserData() const
 {
     return _baseUserData;
 }
@@ -176,17 +176,17 @@ void UserData::clearData()
 //======================================================//
 //======================================================//
 
-bool BaseUserInfo::isPinConfirmed() const
+bool BaseUserData::isPinConfirmed() const
 {
     return confirmed == 1;
 }
 
-int BaseUserInfo::getPinToConfirm() const
+int BaseUserData::getPinToConfirm() const
 {
     return confirmed;
 }
 
-void BaseUserInfo::print()
+void BaseUserData::print()
 {
     qDebug()<<"===== User Info =====";
     qDebug()<<"id = "<<id;
@@ -199,7 +199,7 @@ void BaseUserInfo::print()
     qDebug()<<"====================";
 }
 
-void BaseUserInfo::clear()
+void BaseUserData::clear()
 {
     id = 0;
     name = "";

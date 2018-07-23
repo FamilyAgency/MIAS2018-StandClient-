@@ -9,7 +9,7 @@
 class ServerRemoteComponent : public ServerComponent
 {
     Q_OBJECT
-    Q_PROPERTY(BaseUserInfo baseUserInfo READ baseUserInfo WRITE setBaseUserInfo NOTIFY baseUserInfoChanged)
+    Q_PROPERTY(BaseUserData baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
 
 public:
     explicit ServerRemoteComponent(QObject *parent = nullptr);
@@ -40,13 +40,13 @@ public:
 
     Q_INVOKABLE void clearBaseUserInfo();
 
-    void setBaseUserInfo(const BaseUserInfo& baseUserInfo);
-    BaseUserInfo baseUserInfo() const;
+    void setBaseUserData(const BaseUserData& value);
+    BaseUserData baseUserData() const;
 
-    void setPrizesUserData(const PrizesUserData& baseUserInfo);
+    void setPrizesUserData(const PrizesUserData& value);
     PrizesUserData prizesUserData() const;
 
-    void setGameUserData(const GameUserData& baseUserInfo);
+    void setGameUserData(const GameUserData& value);
     GameUserData gameUserData() const;
 
     //test
@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE void simulateServerTimeout();
 
 private:
-    BaseUserInfo _baseUserInfo;
+    BaseUserData _baseUserData;
     PrizesUserData _prizesUserData;
     GameUserData _gameUserData;
 
@@ -65,7 +65,7 @@ private:
     void handleRequestError(const ServerResponse&  response);
 
 signals:
-    void baseUserInfoChanged();
+    void baseUserDataChanged();
     void prizesUserDataChanged();
     void gameUserDataChanged();
 };
