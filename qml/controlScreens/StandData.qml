@@ -3,10 +3,12 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
-Item {
+Item
+{
     ColumnLayout
     {
         spacing: 10;
+
         Text
         {
             text: "Stand data";
@@ -65,16 +67,17 @@ Item {
 
         ListView
         {
-            width: 180; height: 200
+            width: 180;
+            height: 200;
 
-            model: standData.getScreensInfo()
+            model: standData.getScreensInfo();
             spacing: 2;
             delegate: Text
             {
-                text: modelData
-                font.family: "Helvetica"
-                font.pixelSize: 15
-                color: "#999999"
+                text: modelData;
+                font.family: "Helvetica";
+                font.pixelSize: 15;
+                color: "#999999";
             }
         }
     }

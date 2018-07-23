@@ -11,6 +11,7 @@ Item {
         font.pixelSize: 18;
         color: "#990000";
     }
+
     ServerRemoteTest
     {
         y: 50;

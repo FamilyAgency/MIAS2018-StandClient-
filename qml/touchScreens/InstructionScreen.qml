@@ -11,6 +11,9 @@ Item
     property string addTitleDefault: "ИЛИ ОБРАТИТЕСЬ ЗА ПОМОЩЬЮ<br/>К ПРОМО-ПЕРСОНАЛУ";
     property string buttonText: "ПОГНАЛИ";
 
+    signal animComplete();
+    signal animStart();
+
     anchors.fill: parent;
 
     Text
@@ -71,13 +74,13 @@ Item
                 border.color: "gray";
                 border.width: 1;
                 implicitWidth: 300;
-              //  implicitHeight: 24;
+                //  implicitHeight: 24;
             }
 
-//            contentItem: Rectangle
-//            {
-//                color: "#009900";
-//            }
+            //            contentItem: Rectangle
+            //            {
+            //                color: "#009900";
+            //            }
         }
 
         PropertyAnimation
@@ -141,8 +144,32 @@ Item
         }
     }
 
+    function start()
+    {
+        opacity = 0;
+        visible = true;
+        opacityAnim.start();
+    }
+
     function stop()
     {
+        visible = false;
+    }
 
+    OpacityAnimator on opacity
+    {
+        id:opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 1000
+        running:false;
+
+        onRunningChanged:
+        {
+            if (!opacityAnim.running)
+            {
+                instruction.animComplete();
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ RFIDComponent::RFIDComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Rfid";
 
-    rfidDataReader.reset(new UHFJsonDataReader());
+    rfidDataReader.reset(new BaseRFIDDataReader());
     connect(rfidDataReader.data(), SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
     connect(rfidDataReader.data(), SIGNAL(readError()), this, SLOT(onReadError()));
 }

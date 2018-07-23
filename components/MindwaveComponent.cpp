@@ -6,18 +6,18 @@ MindwaveComponent::MindwaveComponent(QObject *parent) : ExternalSystemComponent(
     name = "Mindwave";
 
     mindwaveReader.reset(new MindwaveReader());
-//    connect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
-//    connect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-//    connect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+    //  connect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
+    //  connect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+    //  connect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
 
     mindwaveParser.reset(new MindwaveParser());
 }
 
 MindwaveComponent::~MindwaveComponent()
 {
-   // disconnect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
-   // disconnect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
-   // disconnect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
+    // disconnect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), this, SLOT(onDataRecieve(const QString&)));
+    // disconnect(mindwaveReader.data(), SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+    // disconnect(mindwaveReader.data(), SIGNAL(disconnectionSuccess()), this, SLOT(onDisconnectionSuccess()));
 }
 
 void MindwaveComponent::setQmlContext(QQmlContext* value)
@@ -30,10 +30,9 @@ void MindwaveComponent::setConfig(ConfigPtr config)
 {
     BaseComponent::setConfig(config);
 
-    //    setMindwaveConfig(*config->mindwaveConfig);
-
-    //    mindwaveReader->setConfig(_mindwaveConfig);
-    //    mindwaveParser->setConfig(_mindwaveConfig);
+    // setMindwaveConfig(*config->mindwaveConfig);
+    // mindwaveReader->setConfig(_mindwaveConfig);
+    // mindwaveParser->setConfig(_mindwaveConfig);
 }
 
 void MindwaveComponent::setMindwaveConfig(const MindwaveConfig& value)

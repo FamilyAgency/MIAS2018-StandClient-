@@ -48,5 +48,6 @@
         <file>qml/touchScreens/advantages/FullAdvantageDescription.qml</file>
         <file>qml/ConfigErrorWindow.qml</file>
         <file>qml/controlScreens/UserRegistrationData.qml</file>
+        <file>qml/touchScreens/AnimationControllerLayer.qml</file>
     </qresource>
 </RCC>

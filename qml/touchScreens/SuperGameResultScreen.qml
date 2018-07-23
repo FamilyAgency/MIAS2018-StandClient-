@@ -8,6 +8,9 @@ Item
 {
     id: result;
 
+    signal animComplete();
+    signal animStart();
+
     anchors.fill: parent;
     anchors.centerIn: parent;
 
@@ -46,8 +49,14 @@ Item
         }
     }
 
+    function start()
+    {
+        visible = true;
+        result.animComplete();
+    }
+
     function stop()
     {
-
+        visible = false;
     }
 }

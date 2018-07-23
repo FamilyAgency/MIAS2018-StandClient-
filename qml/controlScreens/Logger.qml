@@ -6,8 +6,7 @@ Item
 {
     ColumnLayout
     {
-        spacing: 30
-//       // anchors.fill: parent
+        spacing: 30;
 
         Text
         {

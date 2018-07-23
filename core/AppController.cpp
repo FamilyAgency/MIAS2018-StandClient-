@@ -168,7 +168,7 @@ void AppController::onServerResponse(const ServerResponse& response)
 
 void AppController::onUserStartPlay()
 {
-
+    gameSession->start();
 }
 
 void AppController::onGameCategoryUpdate(int id)
@@ -223,7 +223,8 @@ void AppController::startSuperGame()
 
 void AppController::backToIntro()
 {
-    //logout
+    gameSession->stop();
+    userData->clearData();
     setAppState(AppState::Intro);
 }
 

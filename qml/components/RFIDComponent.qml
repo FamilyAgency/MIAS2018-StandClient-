@@ -33,6 +33,7 @@ Item {
                 width: 200
                 model: rfid.getPortsAvailable();
                 onCurrentIndexChanged: {
+                    rfid.startReading(1);
                     //com.text = "Selected: " + currentText;
                    }
             }

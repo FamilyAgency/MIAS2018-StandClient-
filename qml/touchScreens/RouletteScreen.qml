@@ -13,12 +13,13 @@ Item
 
     property string rollTextDefault: "КРУТИ!";
     property int circleSize : 300;
+    property double nextAttentionValue: 0.0;
 
+    signal animComplete();
+    signal animStart();
 
     anchors.fill: parent;
     anchors.centerIn: parent;
-
-    property double nextAttentionValue: 0.0;
 
     MouseArea
     {
@@ -283,6 +284,7 @@ Item
                 taskText.visible = false;
                 helpText.visible = false;
                 mindwaveVisual.visible = false;
+                roulette.animComplete();
                 break;
 
             case RouletteState.RollFinished:
@@ -291,17 +293,16 @@ Item
                 taskText.visible = true;
                 helpText.visible = false;
                 mindwaveVisual.visible = false;
+                roulette.animStart();
                 break;
 
             case RouletteState.CarStarting:
                 rollText.visible = false;
                 mainText.visible = false;
                 taskText.visible = true;
-
                 helpText.opacity = 0;
-                helpText.visible = true
+                helpText.visible = true;
                 hintOpactyAnimator.start();
-
                 mindwaveVisual.visible = true;
                 break;
             }
@@ -341,11 +342,13 @@ Item
 
     function start()
     {
-
+        visible = true;
     }
 
     function stop()
     {
+        visible = false;
+
         rollAnim.stop();
         canvas.rotation = 0;
         rollText.visible = false;

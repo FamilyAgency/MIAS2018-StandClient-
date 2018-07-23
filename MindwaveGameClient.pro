@@ -125,7 +125,6 @@ HEADERS += \
     core/modules/GameResultModule.h \
     core/modules/SuperGameModule.h \
     core/modules/SuperGameResultModule.h \
-    core/data/OneGameData.h \
     core/data/OneStageData.h
 
 DISTFILES +=

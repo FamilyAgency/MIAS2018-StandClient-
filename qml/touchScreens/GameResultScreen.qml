@@ -3,6 +3,11 @@ import "results"
 
 Item
 {
+    id: gameResultScreen;
+
+    signal animComplete();
+    signal animStart();
+
     anchors.fill: parent;
 
     GameResultFirstTime
@@ -20,8 +25,14 @@ Item
         }
     }
 
+    function start()
+    {
+        visible = true;
+        gameResultScreen.animComplete();
+    }
+
     function stop()
     {
-
+        visible = false;
     }
 }

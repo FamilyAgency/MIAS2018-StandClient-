@@ -170,7 +170,7 @@ Item
 
         Text
         {
-            text: "Registraton Tests";
+            text: "Registration Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
             color: consts.infoTextColor;

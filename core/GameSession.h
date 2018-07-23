@@ -9,37 +9,28 @@ class GameSession : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(float sessionTime READ sessionTime WRITE setSessionTime NOTIFY sessionTimeChanged)
-    Q_PROPERTY(float cleanTime READ cleanTime WRITE setCleanTime NOTIFY cleanTimeChanged)
-
+    Q_PROPERTY(float sessionTime READ sessionTime WRITE setSessionTime NOTIFY sessionTimeChanged) 
 public:
     explicit GameSession(QObject *parent = nullptr);
     virtual ~GameSession();
 
-    void setQmlContext(QQmlContext* value);
-
-    virtual void start();
-    virtual void stop();
-
-    void addTaskTime(float time);
-    float sessionTime() const;
-    float cleanTime() const;
-
-    void setSessionTime(float value);
-    void setCleanTime(float value);
-
     const int sessionTimerMills = 10;
     const float toSeconds = 1/1000.0f;
 
+    virtual void start();
+    virtual void stop();
+    virtual void setQmlContext(QQmlContext* value);
+
+    float sessionTime() const;
+    void setSessionTime(float value);
+
 private:
     float _sessionTime = 0.0;
-    float _cleanTime = 0.0;
-    int sessionStartTime, gameCleanTime;
+    int sessionStartTime;
     QTimer* sessionTimer;
 
 signals:
     void sessionTimeChanged();
-    void cleanTimeChanged();
 
 public slots:
     void onSessionTimerUpdate();

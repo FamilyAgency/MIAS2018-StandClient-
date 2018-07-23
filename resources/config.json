@@ -3,15 +3,14 @@
     "configUpdateUrl" : "http://familyagency.ru/lab/synapse/digitalframes/config.json",
     "workingDirectory": "c:\\projects\\Qt\\MIAS2018\\AutoUpdater\\process",
     "needRemoteUpdate": false,
-    "appId": 2,
+    "appId": 1,
     "appName": "Main stand",
     "folderSeparator": "\\",
     "qmlOnStart": "qrc:/qml/mainDebug.qml",
     "release": false,
-    "monitoring":
-    {
-        "enabled": false,
-        "memoryCheckMills": 1000
+    "monitoring": {
+        "enabled": true,
+        "memoryCheckMills": 600000
     },
     "logger":
     {
@@ -26,17 +25,17 @@
         "touch":
         {
             "x" : 1920,
-            "y" : 10,
-            "width" : 756,
-            "height" : 1344,
+            "y" : 0,
+            "width" : 720,
+            "height" : 1280,
             "splashScreen": true
         },
         "game":
         {
-            "x" : 2820,
-            "y" : 100,
-            "width" : 1920,
-            "height" : 1080,
+            "x" : 3200,
+            "y" : 0,
+            "width" : 720,
+            "height" : 1280,
             "splashScreen": true
         }
     },
@@ -58,7 +57,7 @@
         "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r"
     },
     "slack":
-        [
+    [
         {
             "appId":100,
             "enabled": true,
@@ -84,11 +83,22 @@
         }
     },
 
+
     "games":
         [
         {
-            "appId": 2,
-            "data":
+            "appId": 1,
+            "superGame":
+            {
+                "time": 20000,
+                "path":
+                [
+                    {"x":668,"y":1647},
+                    {"x":517,"y":1293},
+                    {"x":246,"y":1065}
+                ]
+            },
+            "colaGame":
                 [{
                     "category": "КУЛЬТУРНЫЙ ОТДЫХ",
                     "description": "НА ПИКНИК<br/>В ПАРК СОКОЛЬНИКИ",
@@ -98,41 +108,39 @@
                             "advantage":
                             {
                                 "title":"Название преимущества1",
-                                "description":"Описание преимущества1"
+                                "description":"Описание преимущества1",
+                                "videoPath":"content/video/1.mp4"
                             },
                             "path":[
-                                {"x":223,"y":222},
-                                {"x":467,"y":264},
-                                {"x":511,"y":357},
-                                {"x":690,"y":300},
-                                {"x":735,"y":458},
-                                {"x":917,"y":495}
+                                {"x":668,"y":1647},
+                                {"x":517,"y":1293},
+                                {"x":246,"y":1065}
                             ]
                         },
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества2",
-                                "description":"Описание преимущества2"
+                                "description":"Описание преимущества2",
+                                "videoPath":"content/video/2.mp4"
                             },
                             "path":[
-                                {"x":917,"y":495},
-                                {"x":1002,"y":316},
-                                {"x":970,"y":114},
-                                {"x":621,"y":71}
+                                {"x":246,"y":1065},
+                                {"x":290,"y":684},
+                                {"x":663,"y":891},
+                                {"x":890,"y":485}
                             ]},
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества3",
-                                "description":"Описание преимущества3"
+                                "description":"Описание преимущества3",
+                                "videoPath":"content/video/3.mp4"
                             },
                             "path":[
-                                {"x":621,"y":71},
-                                {"x":388,"y":88},
-                                {"x":467,"y":264},
-                                {"x":347,"y":243},
-                                {"x":218,"y":422}
+                                {"x":890,"y":485},
+                                {"x":520,"y":279},
+                                {"x":364,"y":556}
                             ]}
                     ]
                 },
@@ -145,44 +153,40 @@
                             "advantage":
                             {
                                 "title":"Название преимущества1",
-                                "description":"Описание преимущества1"
+                                "description":"Описание преимущества1",
+                                "videoPath":"content/video/1.mp4"
                             },
-                            "path":[
-                                {"x":223,"y":222},
-                                {"x":467,"y":264},
-                                {"x":511,"y":357},
-                                {"x":690,"y":300},
-                                {"x":735,"y":458},
-                                {"x":917,"y":495}
+                             "path":[
+                                {"x":668,"y":1647},
+                                {"x":517,"y":1293},
+                                {"x":246,"y":1065}
                             ]
                         },
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества2",
-                                "description":"Описание преимущества2"
+                                "description":"Описание преимущества2",
+                                "videoPath":"content/video/2.mp4"
                             },
                             "path":[
-                                {"x":917,"y":495},
-                                {"x":1002,"y":316},
-                                {"x":970,"y":114},
-                                {"x":621,"y":71}
-                            ]
-                        },
+                                {"x":246,"y":1065},
+                                {"x":290,"y":684},
+                                {"x":663,"y":891},
+                                {"x":890,"y":485}
+                            ]},
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества3",
-                                "description":"Описание преимущества3"
+                                "description":"Описание преимущества3",
+                                "videoPath":"content/video/3.mp4"
                             },
                             "path":[
-                                {"x":621,"y":71},
-                                {"x":388,"y":88},
-                                {"x":467,"y":264},
-                                {"x":347,"y":243},
-                                {"x":218,"y":422}
-                            ]
-                        }
+                                {"x":890,"y":485},
+                                {"x":520,"y":279},
+                                {"x":364,"y":556}
+                            ]}
                     ]
                 },
                 {
@@ -194,44 +198,40 @@
                             "advantage":
                             {
                                 "title":"Название преимущества1",
-                                "description":"Описание преимущества1"
+                                "description":"Описание преимущества1",
+                                "videoPath":"content/video/1.mp4"
                             },
-                            "path":[
-                                {"x":223,"y":222},
-                                {"x":467,"y":264},
-                                {"x":511,"y":357},
-                                {"x":690,"y":300},
-                                {"x":735,"y":458},
-                                {"x":917,"y":495}
+                             "path":[
+                                {"x":668,"y":1647},
+                                {"x":517,"y":1293},
+                                {"x":246,"y":1065}
                             ]
                         },
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества2",
-                                "description":"Описание преимущества2"
+                                "description":"Описание преимущества2",
+                                "videoPath":"content/video/2.mp4"
                             },
                             "path":[
-                                {"x":917,"y":495},
-                                {"x":1002,"y":316},
-                                {"x":970,"y":114},
-                                {"x":621,"y":71}
-                            ]
-                        } ,
+                                {"x":246,"y":1065},
+                                {"x":290,"y":684},
+                                {"x":663,"y":891},
+                                {"x":890,"y":485}
+                            ]},
                         {
                             "advantage":
                             {
                                 "title":"Название преимущества3",
-                                "description":"Описание преимущества3"
+                                "description":"Описание преимущества3",
+                                "videoPath":"content/video/3.mp4"
                             },
                             "path":[
-                                {"x":621,"y":71},
-                                {"x":388,"y":88},
-                                {"x":467,"y":264},
-                                {"x":347,"y":243},
-                                {"x":218,"y":422}
-                            ]
-                        }
+                                {"x":890,"y":485},
+                                {"x":520,"y":279},
+                                {"x":364,"y":556}
+                            ]}
 
                     ]
 

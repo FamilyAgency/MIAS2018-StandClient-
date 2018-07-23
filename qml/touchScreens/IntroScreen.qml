@@ -6,13 +6,16 @@ import com.app 1.0
 
 Item
 {
-    id:login;
+    id:intro;
 
     property string mainTitleDefault: "УПРАВЛЯЙ<br/>SANTA FE<br/>СИЛОЙ МЫСЛИ";
     property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ";
     property string addTitleHelloText: "ПОЗНАКОМЬСЯ С УВЛЕКАТЕЛЬНЫМ,<br/>МИРОМ SANTA FE!<br/>ПРЕДСТАВЛЯЕШЬ,\
  УПРАВЛЯТЬ<br/>АВТОМОБИЛЕМ SANTA FE СТАЛО<br/>ВОЗМОЖНО СИЛОЙ МЫСЛИ";
     property string buttonText: "НАЧНЕМ?";
+
+    signal animComplete();
+    signal animStart();
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -170,8 +173,16 @@ Item
         }
     }
 
+    function start()
+    {
+        visible = true;
+        intro.animComplete();
+    }
+
     function stop()
     {
+        visible = false;
+
         mainText.text =  mainTitleDefault;
         addText.text =  addTitleDefault;
 

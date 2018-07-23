@@ -5,13 +5,16 @@ import QtQuick.Controls.Styles 1.4
 
 Item
 {
-    id: result;
+    id: superGame;
 
     property string mainTitleDefault: "СУПЕР ИГРА";
     property string descrTitleDefault: "МАКСИМАЛЬНАЯ<br/>КОНЦЕНТРАЦИЯ<br/>И СКОРОСТЬ!";
     property string buttonText: "ПОЕХАЛИ";
     property string timeTextDefault: "2<br/>МИНУТЫ";
     property string triesTextDefault: "1<br/>ПОПЫТКА";
+
+    signal animComplete();
+    signal animStart();
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -157,12 +160,19 @@ Item
 
         onSuperGameSuccess:
         {
-            console.log("onSuperGameSuccess");
+            console.log("onSuperGameSuccess");      
         }
+    }
+
+    function start()
+    {
+        visible = true;
+        superGame.animComplete();
     }
 
     function stop()
     {
+        visible = false;
         timeText.text = timeTextDefault;
         startBtn.visible = true;
         mainText.visible = true;

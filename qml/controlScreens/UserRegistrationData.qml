@@ -12,20 +12,10 @@ Window
     title: "User Window";
     visible: true;
     flags: Qt.SplashScreen;
-    width: 400;
-    height: 600;
     x: 0;
     y: 0;
-
-    Connections
-    {
-        target: server;
-
-        onBaseUserDataChanged:
-        {
-            pinToConfirmed.text = "Pin to confirmed: " + userData.baseUserData.getPinToConfirm();
-        }
-    }
+    width: 400;
+    height: 600;
 
     Item
     {
@@ -35,71 +25,73 @@ Window
         ColumnLayout
         {
             spacing: 15;
+
             ColumnLayout
             {
                 spacing: 10;
+
                 Text
                 {
                     text: "User data";
-                    font.family: "Helvetica"
-                    font.pixelSize: 17
-                    color: "#000099"
+                    font.family: "Helvetica";
+                    font.pixelSize: 17;
+                    color: "#000099";
                 }
 
                 Text
                 {
                     text: "Id: " + userData.baseUserData.id;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Name: " + userData.baseUserData.name;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Surname: " + userData.baseUserData.surname;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Email: " + userData.baseUserData.email;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Phone: " + userData.baseUserData.phone;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Confirmed pin: " + userData.baseUserData.isPinConfirmed();
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
                 {
                     text: "Is test user: " + userData.baseUserData.test;
-                    font.family: "Helvetica"
-                    font.pixelSize: 15
-                    color: "#999999"
+                    font.family: "Helvetica";
+                    font.pixelSize: 15;
+                    color: "#999999";
                 }
 
                 Text
@@ -183,6 +175,16 @@ Window
                     color: "#990000";
                 }
             }
+        }
+    }
+
+    Connections
+    {
+        target: server;
+
+        onBaseUserDataChanged:
+        {
+           // pinToConfirmed.text = "Pin to confirmed: " + userData.baseUserData.getPinToConfirm();
         }
     }
 }

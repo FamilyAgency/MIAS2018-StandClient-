@@ -4,9 +4,14 @@ import "advantages"
 
 Item
 {
-    anchors.fill: parent;
+    id:gameScreen;
 
     property string mainTitleDefault: "КОНЦЕНТРИРУЙСЯ<br/>НА SANTA FE.<br/>ДВИГАЙСЯ К ТОЧКЕ";
+
+    signal animComplete();
+    signal animStart();
+
+    anchors.fill: parent;
 
     Text
     {
@@ -39,16 +44,23 @@ Item
         target:gameModule;
         onStageComleteEvent:
         {
-            mainText.visible = false;           
+            mainText.visible = false;
             advatage.setTexts(title, description);
             advatage.setVideo(videoPath);
             advatage.show();
         }
     }
 
+    function start()
+    {
+        visible = true;
+        gameScreen.animComplete();
+    }
+
     function stop()
     {
+        visible = false;
         mainText.visible = true;
-         advatage.hide();
+        advatage.hide();
     }
 }

@@ -22,7 +22,7 @@ void ConfigParser::parse(const QString& configData)
     try
     {
         //        qDebug()<<"configData................"<<endl;
-        //        qDebug()<<configData <<endl;
+        //        qDebug()<<configData<<endl;
         //        qDebug()<<"configData................"<<endl;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(configData.toUtf8());
         QJsonObject jsonObj   = jsonDoc.object();
@@ -78,8 +78,6 @@ void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const 
     mainConfig->gameScreen.setHeight(gameScreenData["height"].toInt());
 
     mainConfig->gameScreenIsSplash = gameScreenData["splashScreen"].toBool();
-
-
     mainConfig->qmlOnStart = jsonObj["qmlOnStart"].toString();
 }
 

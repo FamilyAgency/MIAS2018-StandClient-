@@ -8,38 +8,21 @@ Item
     ColumnLayout
     {
         spacing: 10;
+
         Text
         {
             text: "Game session";
-            font.family: "Helvetica"
-            font.pixelSize: 17
-            color: "#000099"
+            font.family: "Helvetica";
+            font.pixelSize: 17;
+            color: "#000099";
         }
 
         Text
         {
             text: "Session time: " + gameSession.sessionTime.toFixed(1);
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
-
-        Text
-        {
-            id:cleanTimeText;
-            text: "Clean game task-time: " + gameSession.cleanTime.toFixed(1);
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
-
-        Text
-        {
-            id:nonActiveText;
-            text: "User non-active time: 0";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
-        }
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
+        }     
     }
 }
