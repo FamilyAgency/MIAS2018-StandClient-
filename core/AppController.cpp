@@ -2,7 +2,7 @@
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
-    createEngine<RFIDComponentTest, MindwaveComponentTest>();
+    createEngine<RFIDComponent, MindwaveComponentTest>();
 }
 
 template <class RFIDComponentT, class MindwaveComponentT>
@@ -78,6 +78,7 @@ void AppController::createEngine()
 
     superGameModule.reset(new SuperGameModule());
     superGameModule->setUser(userData);
+    superGameModule->setServerComponent(serverComponent);
     connect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
     connect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
 

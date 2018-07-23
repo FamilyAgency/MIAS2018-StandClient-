@@ -5,6 +5,7 @@
 #include <QObject>
 #include "BaseModule.h"
 #include "core/data/UserData.h"
+#include "components/ServerComponent.h"
 
 class SuperGameModule : public BaseModule
 {
@@ -24,20 +25,30 @@ public:
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void superGamePassedTest();
 
+    void setServerComponent(QSharedPointer<ServerComponent> value);
+
+
 private:
     const float superGameTimerMills = 100./60;
     int superGameTime = 1000 * 10;
     int startTime = 0;
+    int superGameWinTime = 0;
     QTimer* superGameTimer = nullptr;
     QSharedPointer<UserData> currentUser;
+    QSharedPointer<ServerComponent> serverComponent;
+
+    void connectComponents();
+    void disconnectComponents();
 
 signals:
     void updateSuperGameTime(int mills);
     void superGameFailed();
     void superGameSuccess(int time);
 
-public slots:
+private slots:
     void onUpdate();
+    void onUserFinishedGame();
+
 };
 
 #endif // SUPERGAMEMODULE_H

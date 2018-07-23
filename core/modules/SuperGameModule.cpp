@@ -33,21 +33,29 @@ void SuperGameModule::setConfig(ConfigPtr config)
     BaseModule::setConfig(config);
 }
 
+void SuperGameModule::setServerComponent(QSharedPointer<ServerComponent> value)
+{
+    serverComponent = value;
+}
+
 void SuperGameModule::start()
 {
     qDebug()<<"======================= SuperGameModule START =======================";
+    connectComponents();
     superGameTime = currentUser->getSuperGameData().time;
-    emit updateSuperGameTime(superGameTime);   
+    emit updateSuperGameTime(superGameTime);
 }
 
 void SuperGameModule::stop()
 {
     qDebug()<<"======================= SuperGameModule STOP =======================";
+    disconnectComponents();
     superGameTimer->stop();
 }
 
 void SuperGameModule::startGame()
 {
+    superGameWinTime = 0;
     startTime = QDateTime::currentMSecsSinceEpoch();
     superGameTimer->start(superGameTimerMills);
 }
@@ -62,22 +70,44 @@ void SuperGameModule::onUpdate()
     }
     else
     {
-         superGameTimer->stop();
-         emit updateSuperGameTime(0.0f);
-         emit superGameFailed();
+        superGameTimer->stop();
+        emit updateSuperGameTime(0.0f);
+        emit superGameFailed();
     }
 }
 
 void SuperGameModule::superGamePassedTest()
 {
-    int time = QDateTime::currentMSecsSinceEpoch() - startTime;
-    currentUser->superGameCompleted(time);
+    superGameTimer->stop();
+    superGameWinTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+    serverComponent->finishGameRequest(currentUser->baseUserData().id);
+}
 
-    emit superGameSuccess(time);
+void SuperGameModule::onUserFinishedGame()
+{
+    currentUser->superGameCompleted(superGameWinTime);
+    emit superGameSuccess(superGameWinTime);
 }
 
 QString SuperGameModule::getName() const
 {
     return "Super Game location";
 }
+
+void SuperGameModule::connectComponents()
+{
+    if(serverComponent)
+    {
+        connect(serverComponent.data(), SIGNAL(userFinishedGame()), this, SLOT(onUserFinishedGame()));
+    }
+}
+
+void SuperGameModule::disconnectComponents()
+{
+    if(serverComponent)
+    {
+        disconnect(serverComponent.data(), SIGNAL(userFinishedGame()), this, SLOT(onUserFinishedGame()));
+    }
+}
+
 
