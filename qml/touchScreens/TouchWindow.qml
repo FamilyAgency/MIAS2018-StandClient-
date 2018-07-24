@@ -32,15 +32,6 @@ Window
         anchors.bottomMargin: 200;
     }
 
-    BackBtn
-    {
-        id:backBtn;
-        anchors.top: parent.top;
-        anchors.topMargin: 100;
-        anchors.right: parent.right;
-        anchors.rightMargin: 100;
-    }
-
     ServerPreloader
     {
         id: serverPreloader;
@@ -49,6 +40,15 @@ Window
     ServerErrorPopup
     {
         id: serverErrorPopup;
+    }
+
+    BackBtn
+    {
+        id:backBtn;
+        anchors.top: parent.top;
+        anchors.topMargin: 100;
+        anchors.right: parent.right;
+        anchors.rightMargin: 100;
     }
 
     AnimationControllerLayer

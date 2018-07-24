@@ -23,7 +23,7 @@ public:
     void setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD loadingMethod);
 
     Q_INVOKABLE QString getErrorMessage() const;
-    Q_INVOKABLE QString getQMLFile(const QString& fileName);
+    Q_INVOKABLE QString getFileInAppDir(const QString& fileName);
 
 private:
     QSharedPointer<ConfigLoader> configLoader;

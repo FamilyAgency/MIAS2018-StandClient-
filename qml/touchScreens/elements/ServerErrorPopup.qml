@@ -7,6 +7,7 @@ Item
 {
     id:error;
     anchors.fill: parent;
+    z:9999;
 
     Component.onCompleted:
     {

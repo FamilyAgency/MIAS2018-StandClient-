@@ -134,7 +134,7 @@ Item {
 
     Component.onCompleted:
     {
-        road.source = configController.getQMLFile("content/maps/map" + standData.mainConfig.appId + ".png");
+        road.source = configController.getFileInAppDir("content/maps/map" + standData.mainConfig.appId + ".png");
     }
 
     Connections

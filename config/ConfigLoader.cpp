@@ -37,7 +37,7 @@ void ConfigLoader::load(CONFIG_LOAD_METHOD method, const QString& path)
     else if(method == CONFIG_LOAD_METHOD::URL)
     {
         qDebug()<<"config url " << path;
-        httpClient->runGetRequest(path);
+        httpClient->runGetRequest(QNetworkRequest(QUrl(path)));
     }
 }
 

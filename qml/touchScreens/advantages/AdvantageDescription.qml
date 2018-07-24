@@ -118,7 +118,7 @@ Item
 
     function setVideo(videoPath)
     {
-       video.source = configController.getQMLFile(videoPath);
+       video.source = configController.getFileInAppDir(videoPath);
        video.play();
     }
 
