@@ -27,14 +27,14 @@ public:
     virtual void setConfig(const MindwaveConfig& value);
     virtual MindwaveData parse(const QString& data);
 
-protected:
-     MindwaveConfig mindwaveConfig;
+    QString getPoorSignalColor(int value) const;
 
-     QString getPoorSignalColor(int value) const;
-     virtual MindwaveData parseOneDataChunck(const QString& data);
+protected:
+    MindwaveConfig mindwaveConfig;
+    virtual MindwaveData parseOneDataChunck(const QString& data);
 
 signals:
-     void notScanning();
+    void notScanning();
 };
 
 #endif // MINDWAVEPARSER_H

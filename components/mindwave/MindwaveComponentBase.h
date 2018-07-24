@@ -22,6 +22,7 @@ public:
 
     enum class DeviceState
     {
+        None,
         Scanning,
         NotScanning,
         Reading
@@ -58,6 +59,8 @@ protected:
     QSharedPointer<MindwaveReaderBase> mindwaveReader;
     QSharedPointer<MindwaveParserBase> mindwaveParser;
 
+    QTimer* timeoutTimer = nullptr;
+
     int _attention = 0;
     int _meditation = 0;
     int _poorSignalLevel = 0;
@@ -66,6 +69,10 @@ protected:
 
     void parse(const QString& data);
 
+    void setDeviceState(DeviceState value);
+
+    DeviceState deviceState = DeviceState::None;
+
 signals:
     void attentionChanged();
     void meditationChanged();
@@ -73,9 +80,12 @@ signals:
     void mindwaveConfigChanged();
     void connectedChanged();
 
+    void deviceStateChanged(DeviceState state);
+
 private slots:
     virtual void onDataRecieve(const QString& data);
     virtual void onScanningInfo(int , const QString&);
+    virtual void onTimeoutHandle();
 
 
     void onConnectionSuccess();

@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
-    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
+    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
+    qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {

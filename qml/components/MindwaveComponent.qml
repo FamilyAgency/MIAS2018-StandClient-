@@ -1,39 +1,16 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import com.app 1.0
 
-Item {
+Item
+{
     id:root;
 
     property double nextAttentionValue: 0.0;
     property double nextMeditationValue: 0.0;
     property double alphaInvis: 0.2;
-
-    Connections
-    {
-        target:mind;
-        onAttentionChanged:
-        {
-            nextAttentionValue = mind.attention / 100.0;
-            attentionAnim.to = nextAttentionValue;
-            attentionAnim.duration = 1000;
-            attentionAnim.start();
-        }
-
-        onMeditationChanged:
-        {
-            nextMeditationValue = mind.meditation / 100.0;
-            meditationAnim.to = nextMeditationValue;
-            meditationAnim.duration = 1000;
-            meditationAnim.start();
-        }
-
-        onPoorSignalLevelChanged:
-        {
-            // signalProgressBarColor.color = mind.poorSignalColor();
-        }
-    }
 
     ColumnLayout
     {
@@ -248,6 +225,78 @@ Item {
                 exclusiveGroup: tabPositionGroup
             }
 
+        }
+
+
+        Text
+        {
+            id:deviceState;
+            text: "Device State: ";
+            font.family: "Helvetica"
+            font.pixelSize: 15
+            color: "#999999"
+
+            OpacityAnimator on opacity
+            {
+                id: opacityAnim;
+                from: 0;
+                to: 1;
+                duration: 1000;
+                running: true;
+                loops: Animation.Infinite;
+            }
+        }
+    }
+
+
+    Connections
+    {
+        target:mind;
+        onAttentionChanged:
+        {
+            nextAttentionValue = mind.attention / 100.0;
+            attentionAnim.to = nextAttentionValue;
+            attentionAnim.duration = 1000;
+            attentionAnim.start();
+        }
+
+        onMeditationChanged:
+        {
+            nextMeditationValue = mind.meditation / 100.0;
+            meditationAnim.to = nextMeditationValue;
+            meditationAnim.duration = 1000;
+            meditationAnim.start();
+        }
+
+        onPoorSignalLevelChanged:
+        {
+            // signalProgressBarColor.color = mind.poorSignalColor();
+        }
+
+        onDeviceStateChanged:
+        {
+            switch(state)
+            {
+            case DeviceState.Scanning:
+                deviceState.text = "Device State: Scanning";
+                deviceState.color = "#999900";
+                break;
+
+            case DeviceState.NotScanning:
+                deviceState.text = "Device State: Not Scanning";
+                deviceState.color = "#990000";
+                break;
+
+            case DeviceState.Reading:
+                deviceState.text = "Device State: Reading";
+                deviceState.color = "#009900";
+                break;
+
+            case DeviceState.None:
+                deviceState.text = "Device State: None";
+                deviceState.color = "#990000";
+                break;
+            }
         }
     }
 }

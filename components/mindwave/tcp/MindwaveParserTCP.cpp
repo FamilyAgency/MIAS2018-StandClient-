@@ -21,7 +21,7 @@ MindwaveData MindwaveParserTCP::parse(const QString& data)
         if(json[i].indexOf("eSense") != -1)
         {
             count++;
-            qDebug()<<json[i];
+            // qDebug()<<json[i];
             mindwaveData = parseOneDataChunck(json[i]);
             break;
         }
@@ -31,7 +31,7 @@ MindwaveData MindwaveParserTCP::parse(const QString& data)
     {
         if(json.length() > 0)
         {
-            qDebug()<<"inside   "<<json[0];
+            // qDebug()<<"inside   "<<json[0];
             QJsonDocument jsonDoc = QJsonDocument::fromJson(json[0].toUtf8());
             QJsonObject jsonObj   = jsonDoc.object();
 
@@ -39,7 +39,7 @@ MindwaveData MindwaveParserTCP::parse(const QString& data)
             mindwaveData.poorSignalLevel = remapPoorSignalLevel(signalValue);
 
             QString status = jsonObj.value("status").toString();
-            emit scanningInfo(signalValue, status);
+            emit scanningInfo(mindwaveData.poorSignalLevel, status);
         }
     }
 

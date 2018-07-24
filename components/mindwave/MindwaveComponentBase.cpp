@@ -4,11 +4,20 @@
 MindwaveComponentBase::MindwaveComponentBase(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Mindwave";
+
+    timeoutTimer = new QTimer(this);
+    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
+
+    setDeviceState(DeviceState::None);
 }
 
 MindwaveComponentBase::~MindwaveComponentBase()
 {
-
+    if(timeoutTimer)
+    {
+        disconnect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
+        delete timeoutTimer;
+    }
 }
 
 void MindwaveComponentBase::setQmlContext(QQmlContext* value)
@@ -49,12 +58,13 @@ void MindwaveComponentBase::onDisconnectionSuccess()
 
 void MindwaveComponentBase::start()
 {
+    timeoutTimer->start(_mindwaveConfig.timeoutMills);
     mindwaveReader->start();
 }
 
 void MindwaveComponentBase::stop()
 {
-
+    timeoutTimer->stop();
 }
 
 void MindwaveComponentBase::onDataRecieve(const QString& data)
@@ -66,8 +76,11 @@ void MindwaveComponentBase::onDataRecieve(const QString& data)
         setMeditation(mindwaveData.meditation);
         setAttention(mindwaveData.attention);
 
-        _poorSignalColor = mindwaveData.poorSignalColor;
+        _poorSignalColor = mindwaveParser->getPoorSignalColor(mindwaveData.poorSignalLevel);
         setPoorSignalLevel(mindwaveData.poorSignalLevel);
+
+        setDeviceState(DeviceState::Reading);
+        timeoutTimer->start(_mindwaveConfig.timeoutMills);
     }
 }
 
@@ -76,7 +89,33 @@ void MindwaveComponentBase::onScanningInfo(int signalValue, const QString& statu
     setMeditation(0);
     setAttention(0);
     setPoorSignalLevel(signalValue);
-  //  _poorSignalColor = mindwaveData.poorSignalColor;
+    _poorSignalColor = mindwaveParser->getPoorSignalColor(signalValue);
+
+    timeoutTimer->stop();
+
+    if(status == "scanning")
+    {
+        setDeviceState(DeviceState::Scanning);
+    }
+    else if(status == "notscanning")
+    {
+        setDeviceState(DeviceState::NotScanning);
+    }
+}
+
+void MindwaveComponentBase::onTimeoutHandle()
+{
+    if(deviceState == DeviceState::Reading)
+    {
+        qDebug()<<"==================onTimeoutHandle==================";
+        setDeviceState(DeviceState::None);
+    }
+}
+
+void MindwaveComponentBase::setDeviceState(DeviceState value)
+{
+    deviceState = value;
+    emit deviceStateChanged(deviceState);
 }
 
 void MindwaveComponentBase::setPoorSignalLevel(int value)
