@@ -3,10 +3,10 @@
 
 #include <QObject>
 #include "components/ExternalSystemComponent.h"
-#include "mindwave/MindwaveReader.h"
-#include "mindwave/MindwaveParser.h"
+#include "MindwaveReaderBase.h"
+#include "MindwaveParserBase.h"
 
-class MindwaveComponent : public ExternalSystemComponent
+class MindwaveComponentBase : public ExternalSystemComponent
 {    
     Q_OBJECT
 
@@ -17,8 +17,16 @@ class MindwaveComponent : public ExternalSystemComponent
     Q_PROPERTY(int poorSignalLevel READ poorSignalLevel WRITE setPoorSignalLevel NOTIFY poorSignalLevelChanged)
 
 public:
-    explicit MindwaveComponent(QObject *parent = nullptr);
-    virtual ~MindwaveComponent();
+    explicit MindwaveComponentBase(QObject *parent = nullptr);
+    virtual ~MindwaveComponentBase();
+
+    enum class DeviceState
+    {
+        Scanning,
+        NotScanning,
+        Reading
+    };
+    Q_ENUMS(DeviceState)
 
     Q_INVOKABLE QString poorSignalColor() const;
 
@@ -45,10 +53,10 @@ public:
 
     friend class MindwaveComponentTest;    
 
-private:
+protected:
     MindwaveConfig _mindwaveConfig;
-    QSharedPointer<MindwaveReader> mindwaveReader;
-    QSharedPointer<MindwaveParser> mindwaveParser;
+    QSharedPointer<MindwaveReaderBase> mindwaveReader;
+    QSharedPointer<MindwaveParserBase> mindwaveParser;
 
     int _attention = 0;
     int _meditation = 0;
@@ -66,7 +74,10 @@ signals:
     void connectedChanged();
 
 private slots:
-    void onDataRecieve(const QString& data);
+    virtual void onDataRecieve(const QString& data);
+    virtual void onScanningInfo(int , const QString&);
+
+
     void onConnectionSuccess();
     void onDisconnectionSuccess();
 };

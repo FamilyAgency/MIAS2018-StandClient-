@@ -45,6 +45,7 @@ public:
     QString delimeter = "\r";
     QString initialCommand = "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r";
     QString authCommand = "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r";
+    QString type = "serial";
 };
 Q_DECLARE_METATYPE(MindwaveConfig)
 
@@ -63,6 +64,7 @@ public:
     int baudRate = 9600;
     bool useKeyword = true;
     bool autoConnect = true;
+    QString type;
 };
 Q_DECLARE_METATYPE(RFIDConfig)
 

@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
 
     QScopedPointer<AppController> appController(new AppController());
     engine.rootContext()->setContextProperty("appController", appController.data());
-    appController.data()->setQmlContext(engine.rootContext());
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
@@ -32,6 +31,7 @@ int main(int argc, char *argv[])
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {
         appController->onConfigLoaded(conf);
+        appController.data()->setQmlContext(engine.rootContext());
 
         engine.load(QUrl(QLatin1String(conf->mainConfig->qmlOnStart.toLatin1())));
 

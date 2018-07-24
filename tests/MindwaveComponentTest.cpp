@@ -1,7 +1,7 @@
 #include "MindwaveComponentTest.h"
 #include "tools/MathTools.h"
 
-MindwaveComponentTest::MindwaveComponentTest(QObject *parent) : MindwaveComponent(parent)
+MindwaveComponentTest::MindwaveComponentTest(QObject *parent) : MindwaveComponentBase(parent)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(simulateMindwaveRead()));
@@ -23,6 +23,11 @@ void MindwaveComponentTest::start()
 }
 
 void MindwaveComponentTest::stop()
+{
+
+}
+
+void MindwaveComponentTest::setConfig(ConfigPtr config)
 {
 
 }

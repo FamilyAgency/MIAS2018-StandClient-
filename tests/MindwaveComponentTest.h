@@ -2,9 +2,9 @@
 #define MINDWAVECOMPONENTTEST_H
 
 #include <QObject>
-#include "components/MindwaveComponent.h"
+#include "components/mindwave/MindwaveComponentBase.h"
 
-class MindwaveComponentTest : public MindwaveComponent
+class MindwaveComponentTest : public MindwaveComponentBase
 {
     Q_OBJECT
 public:
@@ -13,6 +13,8 @@ public:
 
     virtual void start() override;
     virtual void stop() override;
+    virtual void setConfig(ConfigPtr value) override;
+
 
 private:
     QTimer* timer;

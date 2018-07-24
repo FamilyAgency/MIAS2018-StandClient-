@@ -14,7 +14,6 @@ SOURCES += main.cpp \
     network/http/HTTPClient.cpp \
     tools/MathTools.cpp \
     components/HealthCheckerComponent.cpp \
-    components/MindwaveComponent.cpp \
     core/game/GamePostTask.cpp \
     core/game/GamePreTask.cpp \
     core/game/GameTask.cpp \
@@ -26,8 +25,6 @@ SOURCES += main.cpp \
     components/ServerComponent.cpp \
     components/ExternalSystemComponent.cpp \
     tests/MindwaveComponentTest.cpp \
-    components/mindwave/MindwaveReader.cpp \
-    components/mindwave/MindwaveParser.cpp \
     components/SlackComponent.cpp \
     services/BaseService.cpp \
     components/RFIDComponent.cpp \
@@ -51,7 +48,13 @@ SOURCES += main.cpp \
     core/modules/GameResultModule.cpp \
     core/modules/SuperGameModule.cpp \
     core/modules/SuperGameResultModule.cpp \
-    core/data/OneStageData.cpp
+    core/data/OneStageData.cpp \
+    components/mindwave/MindwaveParserBase.cpp \
+    components/mindwave/MindwaveReaderBase.cpp \
+    components/mindwave/MindwaveComponentBase.cpp \
+    components/mindwave/tcp/MindwaveComponentTCP.cpp \
+    components/mindwave/tcp/MindwaveReaderTCP.cpp \
+    components/mindwave/tcp/MindwaveParserTCP.cpp
 
 RESOURCES += qml.qrc
 
@@ -125,6 +128,12 @@ HEADERS += \
     core/modules/GameResultModule.h \
     core/modules/SuperGameModule.h \
     core/modules/SuperGameResultModule.h \
-    core/data/OneStageData.h
+    core/data/OneStageData.h \
+    components/mindwave/MindwaveParserBase.h \
+    components/mindwave/MindwaveReaderBase.h \
+    components/mindwave/MindwaveComponentBase.h \
+    components/mindwave/tcp/MindwaveComponentTCP.h \
+    components/mindwave/tcp/MindwaveReaderTCP.h \
+    components/mindwave/tcp/MindwaveParserTCP.h
 
 DISTFILES +=

@@ -45,7 +45,9 @@
         "portKeyWord": "FTDI",
         "baudRate": 115200,
         "autoConnect": false,
-        "useKeyword": false
+        "useKeyword": false,
+        "types_example": ["arduino"],
+        "type": "arduino"
     },
     "mindwave":
     {
@@ -53,8 +55,11 @@
         "port": 13854,
         "autoConnect": true,
         "delimeter" : "\r",
-        "initialCommand" : "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r",
-        "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r"
+        "initialCommand" : "{\"enableRawOutput\": false, \"format\": \"Json\"}\\r",
+        "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
+        "timeout": 4000,
+        "types_example": ["serial", "tcp", "simulation"],
+        "type": "tcp"
     },
     "slack":
     [

@@ -2,8 +2,7 @@
 #define HEALTHCHECKERCOMPONENT_H
 
 #include <QObject>
-#include "RFIDComponent.h"
-#include "MindwaveComponent.h"
+#include "components/ExternalSystemComponent.h"
 
 class HealthCheckerComponent : public BaseComponent
 {

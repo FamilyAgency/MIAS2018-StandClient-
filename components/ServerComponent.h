@@ -124,7 +124,6 @@ signals:
 
     void serverLogged(const QString& log);
 
-
     void newUserEntered(const UserObject&);
     void userNotFound();
     void userAlreadyExists();

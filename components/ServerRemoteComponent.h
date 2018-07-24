@@ -38,6 +38,7 @@ public:
 
     virtual void parse(const ServerResponse& response) override;
 
+
     Q_INVOKABLE void clearBaseUserInfo();
 
     void setBaseUserData(const BaseUserData& value);

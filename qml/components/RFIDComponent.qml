@@ -33,7 +33,7 @@ Item {
                 width: 200
                 model: rfid.getPortsAvailable();
                 onCurrentIndexChanged: {
-                    rfid.startReading(1);
+                   // rfid.startReading(1);
                     //com.text = "Selected: " + currentText;
                    }
             }
@@ -54,7 +54,7 @@ Item {
                 text: "connect"
                 onClicked:
                 {
-                    rfid.startReading(comComboBox.currentIndex);
+                    //rfid.startReading(comComboBox.currentIndex);
                 }
             }
 

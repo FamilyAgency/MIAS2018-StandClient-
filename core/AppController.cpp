@@ -2,7 +2,7 @@
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
-    createEngine<RFIDComponent, MindwaveComponentTest>();
+    //createEngine<RFIDComponent, MindwaveComponentTest>();
 }
 
 template <class RFIDComponentT, class MindwaveComponentT>
@@ -120,6 +120,18 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
 
 void AppController::onConfigLoaded(ConfigPtr config)
 {
+    if(config->mindwaveConfig->type == "simulation")
+    {
+        qDebug()<<"Mindwave simulation true";
+        createEngine<RFIDComponent, MindwaveComponentTest>();
+    }
+    else if(config->mindwaveConfig->type == "tcp")
+    {
+        qDebug()<<"Mindwave simulation false";
+        createEngine<RFIDComponent, MindwaveComponentTCP>();
+    }
+
+
     for (auto comp : components)
     {
         comp->setConfig(config);

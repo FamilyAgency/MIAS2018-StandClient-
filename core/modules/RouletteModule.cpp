@@ -42,7 +42,7 @@ void RouletteModule::setQmlContext(QQmlContext* qmlContext)
     qmlContext->setContextProperty("rouletteModule", this);
 }
 
-void RouletteModule::setMindwave(QSharedPointer<MindwaveComponent> value)
+void RouletteModule::setMindwave(QSharedPointer<MindwaveComponentBase> value)
 {
     mindwaveComponent = value;
 }

@@ -5,17 +5,17 @@
 #include "core/Types.h"
 #include "network/socketClient/TCPSocketClient.h"
 
-class MindwaveReader : public QObject
+class MindwaveReaderBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit MindwaveReader(QObject *parent = nullptr);
-    virtual ~MindwaveReader();
+    explicit MindwaveReaderBase(QObject *parent = nullptr);
+    virtual ~MindwaveReaderBase();
 
     virtual void setConfig(const MindwaveConfig& value);
     virtual void start();
 
-private:
+protected:
     MindwaveConfig mindwaveConfig;
     void setConnected(bool value);
 
@@ -27,9 +27,9 @@ signals:
     void disconnectionSuccess();
     void dataRecieve(const QString&);
 
-private slots:
+protected slots:
+    virtual void onConnectionSuccess();
     void onItemDataRecieve(const QString& data);
-    void onConnectionSuccess();
     void onDisconnectionSuccess();
 };
 

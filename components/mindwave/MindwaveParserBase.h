@@ -18,20 +18,23 @@ struct MindwaveData
     QString poorSignalColor = "#999999";
 };
 
-class MindwaveParser : public QObject
+class MindwaveParserBase : public QObject
 {
     Q_OBJECT
 public:
-    explicit MindwaveParser(QObject *parent = nullptr);
+    explicit MindwaveParserBase(QObject *parent = nullptr);
 
     virtual void setConfig(const MindwaveConfig& value);
     virtual MindwaveData parse(const QString& data);
 
-private:
+protected:
      MindwaveConfig mindwaveConfig;
 
      QString getPoorSignalColor(int value) const;
-     MindwaveData parseOneDataChunck(const QString& data);
+     virtual MindwaveData parseOneDataChunck(const QString& data);
+
+signals:
+     void notScanning();
 };
 
 #endif // MINDWAVEPARSER_H

@@ -7,7 +7,8 @@
 
 #include "components/HealthCheckerComponent.h"
 #include "components/RFIDComponent.h"
-#include "components/MindwaveComponent.h"
+#include "components/mindwave/MindwaveComponentBase.h"
+#include "components/mindwave/tcp/MindwaveComponentTCP.h"
 #include "components/ServerComponent.h"
 #include "components/ServerRemoteComponent.h"
 #include "components/SlackComponent.h"
@@ -38,6 +39,9 @@ class AppController : public QObject
     Q_OBJECT
 
 public:
+    explicit AppController(QObject *parent = nullptr);
+    virtual ~AppController();
+
     enum class AppState
     {
         Intro,
@@ -49,9 +53,6 @@ public:
         SuperGameResult
     };
     Q_ENUMS(AppState)
-
-    explicit AppController(QObject *parent = nullptr);
-    virtual ~AppController();
 
     void setQmlContext(QQmlContext* qmlContext);
 
@@ -79,7 +80,7 @@ private:
     QSharedPointer<LoggerComponent> loggerComponent;
     QSharedPointer<HealthCheckerComponent> healthCheckerComponent;
     QSharedPointer<RFIDComponent> rfidComponent;
-    QSharedPointer<MindwaveComponent> mindWaveComponent;
+    QSharedPointer<MindwaveComponentBase> mindWaveComponent;
     QSharedPointer<ServerComponent> serverComponent;
     QSharedPointer<MonitoringComponent> monitoringComponent;
     QList<QSharedPointer<BaseComponent>> components;

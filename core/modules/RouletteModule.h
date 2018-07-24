@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include "BaseModule.h"
-#include "components/MindwaveComponent.h"
+#include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
 
 class RouletteModule : public BaseModule
@@ -36,7 +36,7 @@ public:
     virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void setConfig(ConfigPtr config) override;
 
-    void setMindwave(QSharedPointer<MindwaveComponent> value);
+    void setMindwave(QSharedPointer<MindwaveComponentBase> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
@@ -68,7 +68,7 @@ private:
      QTimer* prepareTimer = nullptr;
      QTimer* mindwaveTimer = nullptr;
 
-     QSharedPointer<MindwaveComponent> mindwaveComponent;
+     QSharedPointer<MindwaveComponentBase> mindwaveComponent;
      QSharedPointer<ServerComponent> serverComponent;
 
      RouletteState _state = RouletteState::Intro;

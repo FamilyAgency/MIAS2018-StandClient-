@@ -5,7 +5,7 @@
 #include <QList>
 #include <QTimer>
 #include <QVariantList>
-#include "components/MindwaveComponent.h"
+#include "components/mindwave/MindwaveComponentBase.h"
 
 #include "core/game/GameTask.h"
 #include "core/game/GamePreTask.h"
@@ -39,13 +39,13 @@ public:
 
     void start(QSharedPointer<UserData> value);
     void stop();
-    void setMindWaveClient(QSharedPointer<MindwaveComponent> mindWave);
+    void setMindWaveClient(QSharedPointer<MindwaveComponentBase> mindWave);
     void setTaskState(TaskState taskState);
     void setQmlContext(QQmlContext* value);
 
 private:
     TaskState currentTaskState;
-    QSharedPointer<MindwaveComponent> mindWave = nullptr;
+    QSharedPointer<MindwaveComponentBase> mindWave = nullptr;
 
     void runTask();
     void preTaskTimerComplete();

@@ -88,6 +88,7 @@ void ConfigParser::parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const 
     rfidConfig->autoConnect = jsonObj["autoConnect"].toBool();
     rfidConfig->portKeyWord = jsonObj["portKeyWord"].toString();
     rfidConfig->useKeyword = jsonObj["useKeyword"].toBool();
+    rfidConfig->type = jsonObj["type"].toString();
 }
 
 void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj)
@@ -98,6 +99,7 @@ void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveCo
     mindwaveConfig->delimeter = jsonObj["delimeter"].toString();
     mindwaveConfig->initialCommand = jsonObj["initialCommand"].toString();
     mindwaveConfig->authCommand = jsonObj["authCommand"].toString();
+    mindwaveConfig->type = jsonObj["type"].toString();
 }
 
 void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj)

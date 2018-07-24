@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include "BaseModule.h"
-#include "components/MindwaveComponent.h"
+#include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
 #include "core/game/GameTaskManager.h"
 #include "core/data/UserData.h"
@@ -33,12 +33,12 @@ public:
     virtual QString getName() const override;
 
     void setGameSession(QSharedPointer<GameSession> value);
-    void setMindwave(QSharedPointer<MindwaveComponent> value);
+    void setMindwave(QSharedPointer<MindwaveComponentBase> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);
     void setUser(QSharedPointer<UserData> value);
 
 private:
-    QSharedPointer<MindwaveComponent> mindWaveComponent;
+    QSharedPointer<MindwaveComponentBase> mindWaveComponent;
     QScopedPointer<GameTaskManager> gameTaskManager;
     QSharedPointer<GameSession> gameSession;
     QSharedPointer<UserData> currentUser;
