@@ -10,15 +10,15 @@ import com.app 1.0
 
 Item
 {
-    anchors.fill: parent;
+    id:screens;
 
-    IntroScreenTest
-    {
-        id: introScreenTest;
-    }
+    property var locations: [];
+
+    anchors.fill: parent;
 
     Component.onCompleted:
     {
+        addLocation(AppState.Intro, "IntroScreenTest");
         setState(appController.getAppState());
     }
 
@@ -32,43 +32,32 @@ Item
         }
     }
 
+    function addLocation(type, component)
+    {
+        var componentQML = Qt.createComponent(component + ".qml");
+        var location = componentQML.createObject(screens);
+        locations.push({"loc": location, "type": type});
+    }
+
     function setState(appState)
     {
         hideAll();
 
-        switch(appState)
+        for(var i = 0; i < locations.length; i++)
         {
-        case AppState.Intro:
-            introScreenTest.visible = true;
-            break;
-
-        case AppState.Instruction:
-
-            break;
-
-        case AppState.Roulette:
-
-            break;
-
-        case AppState.Game:
-
-            break;
-
-        case AppState.GameResult:
-
-            break;
-
-        case AppState.SuperGame:
-
-            break;
-
-        case AppState.SuperGameResult:
-            break;
+            if(locations[i].type === appState)
+            {
+                locations[i].loc.visible = true;
+                break;
+            }
         }
     }
 
     function hideAll()
     {
-        introScreenTest.visible = false;
+        for(var i = 0; i < locations.length; i++)
+        {
+            locations[i].loc.visible = false;
+        }
     }
 }

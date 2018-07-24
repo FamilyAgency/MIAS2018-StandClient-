@@ -22,6 +22,11 @@ Window
 
     property var locations: [];
 
+    Item
+    {
+        id:screens;
+        anchors.fill: parent;
+    }
 
     HealthCheckerComponent
     {
@@ -35,6 +40,11 @@ Window
     ServerPreloader
     {
         id: serverPreloader;
+    }    
+
+    AnimationControllerLayer
+    {
+        id: animationController;
     }
 
     ServerErrorPopup
@@ -49,11 +59,6 @@ Window
         anchors.topMargin: 100;
         anchors.right: parent.right;
         anchors.rightMargin: 100;
-    }
-
-    AnimationControllerLayer
-    {
-        id: animationController;
     }
 
     Component.onCompleted:
@@ -83,7 +88,7 @@ Window
     function addLocation(type, component)
     {
         var componentQML = Qt.createComponent(component + ".qml");
-        var location = componentQML.createObject(touchCore);
+        var location = componentQML.createObject(screens);
         location["onAnimComplete"].connect(function() { onAnimComplete() });
         location["onAnimStart"].connect(function() { onAnimStart() });
         locations.push({"loc": location, "type": type});
@@ -118,7 +123,6 @@ Window
     {
         for(var i = 0; i < locations.length; i++)
         {
-            locations[i].visible = false;
             locations[i].loc.stop();
         }
     }

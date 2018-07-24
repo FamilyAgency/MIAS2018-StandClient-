@@ -6,11 +6,10 @@ Item
 {
     id:anim;
     anchors.fill: parent;
-    z:1000;
 
     Rectangle
     {
-        color: "red";
+        color: "white";
         anchors.fill: parent;
         opacity: 0.3;
     }
