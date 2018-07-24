@@ -312,6 +312,8 @@ Item
         {
             rollAnim.to = degrees;
             rollAnim.start();
+            roulette.animStart();
+
         }
     }
 

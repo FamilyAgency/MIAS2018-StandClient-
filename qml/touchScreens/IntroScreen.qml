@@ -63,7 +63,6 @@ Item
             verticalAlignment: Text.AlignVCenter;
             Layout.preferredWidth: 500;
             textFormat: Text.StyledText;
-            // wrapMode: Text.WordWrap;
             elide: Text.ElideRight;
         }
 
@@ -117,6 +116,10 @@ Item
 
         onUserStartPlay:
         {
+            intro.animStart();
+            opacity = 0;
+            opacityAnim.start();
+
             mainText.text = "ПРИВЕТ,<br/>" + userData.baseUserData.name;
             mainText.visible = true;
             addText.visible = true;
@@ -155,6 +158,23 @@ Item
             }
 
             cantPlayHandler();
+        }
+    }
+
+    OpacityAnimator on opacity
+    {
+        id:opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 1000
+        running:false;
+
+        onRunningChanged:
+        {
+            if (!opacityAnim.running)
+            {
+                intro.animComplete();
+            }
         }
     }
 

@@ -124,6 +124,23 @@ Item
         }
     }
 
+    OpacityAnimator on opacity
+    {
+        id:opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 1000
+        running:false;
+
+        onRunningChanged:
+        {
+            if (!opacityAnim.running)
+            {
+                instruction.animComplete();
+            }
+        }
+    }
+
     Connections
     {
         target:mind;
@@ -156,20 +173,5 @@ Item
         visible = false;
     }
 
-    OpacityAnimator on opacity
-    {
-        id:opacityAnim;
-        from: 0;
-        to: 1;
-        duration: 1000
-        running:false;
 
-        onRunningChanged:
-        {
-            if (!opacityAnim.running)
-            {
-                instruction.animComplete();
-            }
-        }
-    }
 }
