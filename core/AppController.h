@@ -8,7 +8,6 @@
 #include "components/HealthCheckerComponent.h"
 #include "components/RFIDComponent.h"
 #include "components/mindwave/MindwaveComponentBase.h"
-#include "components/mindwave/tcp/MindwaveComponentTCP.h"
 #include "components/ServerComponent.h"
 #include "components/ServerRemoteComponent.h"
 #include "components/SlackComponent.h"

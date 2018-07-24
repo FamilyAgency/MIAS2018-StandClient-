@@ -25,16 +25,23 @@ public:
     explicit MindwaveParserBase(QObject *parent = nullptr);
 
     virtual void setConfig(const MindwaveConfig& value);
-    virtual MindwaveData parse(const QString& data);
+    virtual void parse(const QString& data);
+    virtual void parse(const QByteArray& data);
 
     QString getPoorSignalColor(int value) const;
 
 protected:
     MindwaveConfig mindwaveConfig;
-    virtual MindwaveData parseOneDataChunck(const QString& data);
+    int remapPoorSignalLevel(int signalValue) const;
 
 signals:
-    void notScanning();
+     void scanningInfo(int signalValue, const QString& status);
+     void mindwaveDataParsed(const MindwaveData& data);
+
+public slots:
+    virtual void onDataRecieve(const QString& data);
+    virtual void onDataRecieve(const QByteArray& data);
+
 };
 
 #endif // MINDWAVEPARSER_H

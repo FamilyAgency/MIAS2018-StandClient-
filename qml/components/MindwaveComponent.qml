@@ -224,9 +224,7 @@ Item
                 checked: false
                 exclusiveGroup: tabPositionGroup
             }
-
         }
-
 
         Text
         {
@@ -248,6 +246,10 @@ Item
         }
     }
 
+    Component.onCompleted:
+    {
+        deviceStateChanged(mind.getDeviceState());
+    }
 
     Connections
     {
@@ -275,28 +277,33 @@ Item
 
         onDeviceStateChanged:
         {
-            switch(state)
-            {
-            case DeviceState.Scanning:
-                deviceState.text = "Device State: Scanning";
-                deviceState.color = "#999900";
-                break;
+            deviceStateChanged(state);
+        }
+    }
 
-            case DeviceState.NotScanning:
-                deviceState.text = "Device State: Not Scanning";
-                deviceState.color = "#990000";
-                break;
+    function deviceStateChanged(state)
+    {
+        switch(state)
+        {
+        case DeviceState.Scanning:
+            deviceState.text = "Device State: Scanning";
+            deviceState.color = "#999900";
+            break;
 
-            case DeviceState.Reading:
-                deviceState.text = "Device State: Reading";
-                deviceState.color = "#009900";
-                break;
+        case DeviceState.NotScanning:
+            deviceState.text = "Device State: Not Scanning";
+            deviceState.color = "#990000";
+            break;
 
-            case DeviceState.None:
-                deviceState.text = "Device State: None";
-                deviceState.color = "#990000";
-                break;
-            }
+        case DeviceState.Reading:
+            deviceState.text = "Device State: Reading";
+            deviceState.color = "#009900";
+            break;
+
+        case DeviceState.None:
+            deviceState.text = "Device State: None";
+            deviceState.color = "#990000";
+            break;
         }
     }
 }

@@ -30,6 +30,7 @@ public:
     Q_ENUMS(DeviceState)
 
     Q_INVOKABLE QString poorSignalColor() const;
+    Q_INVOKABLE DeviceState getDeviceState() const;
 
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr value) override;
@@ -69,7 +70,7 @@ protected:
 
     void parse(const QString& data);
 
-    void setDeviceState(DeviceState value);
+    void setDeviceState(DeviceState value);    
 
     DeviceState deviceState = DeviceState::None;
 
@@ -83,10 +84,13 @@ signals:
     void deviceStateChanged(DeviceState state);
 
 private slots:
-    virtual void onDataRecieve(const QString& data);
-    virtual void onScanningInfo(int , const QString&);
+    virtual void onDataParsed(const MindwaveData& mindwaveData);
+    virtual void onScanningInfo(int, const QString&);
     virtual void onTimeoutHandle();
 
+    void onSignalLevelParsed(int value);
+    void onMeditationParsed(int value);
+    void onAttentionParsed(int value);
 
     void onConnectionSuccess();
     void onDisconnectionSuccess();

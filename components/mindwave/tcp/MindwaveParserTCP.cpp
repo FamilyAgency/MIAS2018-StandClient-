@@ -1,15 +1,16 @@
 #include "MindwaveParserTCP.h"
 #include <QJsonDocument.h>
 #include <QJsonObject.h>
-#include "tools/MathTools.h"
 
 MindwaveParserTCP::MindwaveParserTCP(QObject *parent) : MindwaveParserBase(parent)
 {
 
 }
 
-MindwaveData MindwaveParserTCP::parse(const QString& data)
+void MindwaveParserTCP::parse(const QString& data)
 {
+    qDebug()<<"income data"<<data;
+
     MindwaveData mindwaveData;
     auto delimeter = mindwaveConfig.delimeter;
 
@@ -43,7 +44,7 @@ MindwaveData MindwaveParserTCP::parse(const QString& data)
         }
     }
 
-    return mindwaveData;
+    emit mindwaveDataParsed(mindwaveData);
 }
 
 MindwaveData MindwaveParserTCP::parseOneDataChunck(const QString& data)
@@ -62,9 +63,4 @@ MindwaveData MindwaveParserTCP::parseOneDataChunck(const QString& data)
     mindwaveData.poorSignalColor = getPoorSignalColor(signalValue);
     mindwaveData.valid = true;
     return mindwaveData;
-}
-
-int MindwaveParserTCP::remapPoorSignalLevel(int signalValue) const
-{
-    return MathTools::map<float>(signalValue, 0,  200, 100,  0);
 }

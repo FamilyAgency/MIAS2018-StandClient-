@@ -1,5 +1,5 @@
 #include "MindwaveParserBase.h"
-
+#include "tools/MathTools.h"
 
 MindwaveParserBase::MindwaveParserBase(QObject *parent) : QObject(parent)
 {
@@ -11,16 +11,24 @@ void MindwaveParserBase::setConfig(const MindwaveConfig& config)
     mindwaveConfig = config;
 }
 
-MindwaveData MindwaveParserBase::parse(const QString& data)
+void MindwaveParserBase::onDataRecieve(const QString& data)
 {
-    MindwaveData mindwaveData;  
-    return mindwaveData;
+    parse(data);
 }
 
-MindwaveData MindwaveParserBase::parseOneDataChunck(const QString& data)
+void MindwaveParserBase::onDataRecieve(const QByteArray& data)
 {
-   MindwaveData mindwaveData;
-   return mindwaveData;
+    parse(data);
+}
+
+void MindwaveParserBase::parse(const QString& data)
+{
+
+}
+
+void MindwaveParserBase::parse(const QByteArray& data)
+{
+
 }
 
 QString MindwaveParserBase::getPoorSignalColor(int value) const
@@ -42,3 +50,9 @@ QString MindwaveParserBase::getPoorSignalColor(int value) const
 
     return color;
 }
+
+int MindwaveParserBase::remapPoorSignalLevel(int signalValue) const
+{
+    return MathTools::map<float>(signalValue, 0,  200, 100,  0);
+}
+

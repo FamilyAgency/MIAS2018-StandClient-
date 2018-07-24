@@ -1,7 +1,6 @@
 #ifndef MINDWAVEREADERTCP_H
 #define MINDWAVEREADERTCP_H
 
-#include <QObject>
 #include "components/mindwave/MindwaveReaderBase.h"
 
 class MindwaveReaderTCP : public MindwaveReaderBase

@@ -54,7 +54,10 @@ SOURCES += main.cpp \
     components/mindwave/MindwaveComponentBase.cpp \
     components/mindwave/tcp/MindwaveComponentTCP.cpp \
     components/mindwave/tcp/MindwaveReaderTCP.cpp \
-    components/mindwave/tcp/MindwaveParserTCP.cpp
+    components/mindwave/tcp/MindwaveParserTCP.cpp \
+    components/mindwave/serial/MindwaveComponentSerial.cpp \
+    components/mindwave/serial/MindwaveReaderSerial.cpp \
+    components/mindwave/serial/MindwaveParserSerial.cpp
 
 RESOURCES += qml.qrc
 
@@ -91,7 +94,6 @@ HEADERS += \
     network/http/HTTPClient.h \
     tools/MathTools.h \
     components/HealthCheckerComponent.h \
-    components/MindwaveComponent.h \
     core/game/GamePostTask.h \
     core/game/GamePreTask.h \
     core/game/GameTask.h \
@@ -103,8 +105,6 @@ HEADERS += \
     components/ServerComponent.h \
     components/ExternalSystemComponent.h \
     tests/MindwaveComponentTest.h \
-    components/mindwave/MindwaveReader.h \
-    components/mindwave/MindwaveParser.h \
     components/SlackComponent.h \
     services/BaseService.h \
     components/RFIDComponent.h \
@@ -134,6 +134,10 @@ HEADERS += \
     components/mindwave/MindwaveComponentBase.h \
     components/mindwave/tcp/MindwaveComponentTCP.h \
     components/mindwave/tcp/MindwaveReaderTCP.h \
-    components/mindwave/tcp/MindwaveParserTCP.h
+    components/mindwave/tcp/MindwaveParserTCP.h \
+    components/mindwave/serial/MindwaveComponentSerial.h \
+    components/mindwave/serial/MindwaveReaderSerial.h \
+    components/mindwave/serial/MindwaveParserSerial.h \
+    components/mindwave/serial/MindwaveSerialData.h
 
 DISTFILES +=

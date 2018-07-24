@@ -26,8 +26,8 @@ QVariantList BaseRFIDDataReader::getPortsAvailable() const
          qDebug()<<"port manufacturer: " +  port.manufacturer();
          qDebug()<<"port systemLocation: " +  port.systemLocation();
          qDebug()<<"port serialNumber: " +  port.serialNumber();
-         //qDebug()<<"port vendorIdentifier: " +  port.vendorIdentifier();
-         //qDebug()<<"port productIdentifier: " +  port.productIdentifier();
+         qDebug()<<"port vendorIdentifier: " +  port.vendorIdentifier();
+         qDebug()<<"port productIdentifier: " +  port.productIdentifier();
     }
     qDebug()<<"======================";
 

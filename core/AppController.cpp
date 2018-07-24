@@ -1,4 +1,6 @@
 #include "AppController.h"
+#include "components/mindwave/tcp/MindwaveComponentTCP.h"
+#include "components/mindwave/serial/MindwaveComponentSerial.h"
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
@@ -130,7 +132,11 @@ void AppController::onConfigLoaded(ConfigPtr config)
         qDebug()<<"Mindwave simulation false";
         createEngine<RFIDComponent, MindwaveComponentTCP>();
     }
-
+    else if(config->mindwaveConfig->type == "serial")
+    {
+        qDebug()<<"Mindwave simulation false";
+        createEngine<RFIDComponent, MindwaveComponentSerial>();
+    }
 
     for (auto comp : components)
     {

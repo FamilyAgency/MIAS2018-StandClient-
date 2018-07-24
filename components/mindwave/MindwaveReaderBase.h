@@ -26,6 +26,7 @@ signals:
     void connectionSuccess();
     void disconnectionSuccess();
     void dataRecieve(const QString&);
+    void dataRecieve(const QByteArray&);
 
 protected slots:
     virtual void onConnectionSuccess();
