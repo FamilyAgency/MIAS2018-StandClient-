@@ -12,6 +12,10 @@ public:
 
 protected:
     virtual MindwaveData parseOneDataChunck(const QString& data);
+
+signals:
+     void scanningInfo(int signalValue, const QString& status);
+     void mindwaveDataParsed(const MindwaveData& data);
 };
 
 #endif // MINDWAVEPARSERTCP_H

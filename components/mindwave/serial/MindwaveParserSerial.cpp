@@ -215,25 +215,25 @@ void MindwaveParserSerial::parseSerialData(uchar extendedCodeLevel,
             break;
 
         case 0x81:
-//            eegPowerData.delta    = ( (value[0]&0xFF)<<24)  |  ((value[1]&0xFF)<<16) |  ((value[2]&0xFF)<<8) |  (value[3]&0xFF);
-//            eegPowerData.theta    = ( (value[4]&0xFF)<<24)  |  ((value[5]&0xFF)<<16) |  ((value[6]&0xFF)<<8) |  (value[7]&0xFF);
-//            eegPowerData.lowAlpha = ( (value[8]&0xFF)<<24)  |  ((value[9]&0xFF)<<16) | ((value[10]&0xFF)<<8) | (value[11]&0xFF);
-//            eegPowerData.highAlpha= ((value[12]&0xFF)<<24)  | ((value[13]&0xFF)<<16) | ((value[14]&0xFF)<<8) | (value[15]&0xFF);
-//            eegPowerData.lowBeta  = ((value[16]&0xFF)<<24)  | ((value[17]&0xFF)<<16) | ((value[18]&0xFF)<<8) | (value[19]&0xFF);
-//            eegPowerData.highBeta = ((value[20]&0xFF)<<24)  | ((value[21]&0xFF)<<16) | ((value[22]&0xFF)<<8) | (value[23]&0xFF);
-//            eegPowerData.lowGamma = ((value[24]&0xFF)<<24)  | ((value[25]&0xFF)<<16) | ((value[26]&0xFF)<<8) | (value[27]&0xFF);
-//            eegPowerData.midGamma = ((value[28]&0xFF)<<24)  | ((value[29]&0xFF)<<16) | ((value[30]&0xFF)<<8) | (value[31]&0xFF);
+            //            eegPowerData.delta    = ((value[0]&0xFF)<<24)   | ((value[1]&0xFF)<<16)  | ((value[2]&0xFF)<<8)  | (value[3]&0xFF);
+            //            eegPowerData.theta    = ((value[4]&0xFF)<<24)   | ((value[5]&0xFF)<<16)  | ((value[6]&0xFF)<<8)  | (value[7]&0xFF);
+            //            eegPowerData.lowAlpha = ((value[8]&0xFF)<<24)   | ((value[9]&0xFF)<<16)  | ((value[10]&0xFF)<<8) | (value[11]&0xFF);
+            //            eegPowerData.highAlpha= ((value[12]&0xFF)<<24)  | ((value[13]&0xFF)<<16) | ((value[14]&0xFF)<<8) | (value[15]&0xFF);
+            //            eegPowerData.lowBeta  = ((value[16]&0xFF)<<24)  | ((value[17]&0xFF)<<16) | ((value[18]&0xFF)<<8) | (value[19]&0xFF);
+            //            eegPowerData.highBeta = ((value[20]&0xFF)<<24)  | ((value[21]&0xFF)<<16) | ((value[22]&0xFF)<<8) | (value[23]&0xFF);
+            //            eegPowerData.lowGamma = ((value[24]&0xFF)<<24)  | ((value[25]&0xFF)<<16) | ((value[26]&0xFF)<<8) | (value[27]&0xFF);
+            //            eegPowerData.midGamma = ((value[28]&0xFF)<<24)  | ((value[29]&0xFF)<<16) | ((value[30]&0xFF)<<8) | (value[31]&0xFF);
             break;
 
         case 0x083:
-//            asicEegData.delta    = ( (value[0]&0xFF)<<16) |  ((value[1]&0xFF)<<8) |  (value[2]&0xFF);
-//            asicEegData.theta    = ( (value[3]&0xFF)<<16) |  ((value[4]&0xFF)<<8) |  (value[5]&0xFF);
-//            asicEegData.lowAlpha = ( (value[8]&0xFF)<<16) |  ((value[9]&0xFF)<<8) | (value[10]&0xFF);
-//            asicEegData.highAlpha= ((value[12]&0xFF)<<16) | ((value[13]&0xFF)<<8) | (value[14]&0xFF);
-//            asicEegData.lowBeta  = ((value[16]&0xFF)<<16) | ((value[17]&0xFF)<<8) | (value[18]&0xFF);
-//            asicEegData.highBeta = ((value[20]&0xFF)<<16) | ((value[21]&0xFF)<<8) | (value[22]&0xFF);
-//            asicEegData.lowGamma = ((value[24]&0xFF)<<16) | ((value[25]&0xFF)<<8) | (value[26]&0xFF);
-//            asicEegData.midGamma = ((value[28]&0xFF)<<16) | ((value[29]&0xFF)<<8) | (value[30]&0xFF);
+            //            asicEegData.delta    = ((value[0]&0xFF)<<16)  | ((value[1]&0xFF)<<8)  | (value[2]&0xFF);
+            //            asicEegData.theta    = ((value[3]&0xFF)<<16)  | ((value[4]&0xFF)<<8)  | (value[5]&0xFF);
+            //            asicEegData.lowAlpha = ((value[8]&0xFF)<<16)  | ((value[9]&0xFF)<<8)  | (value[10]&0xFF);
+            //            asicEegData.highAlpha= ((value[12]&0xFF)<<16) | ((value[13]&0xFF)<<8) | (value[14]&0xFF);
+            //            asicEegData.lowBeta  = ((value[16]&0xFF)<<16) | ((value[17]&0xFF)<<8) | (value[18]&0xFF);
+            //            asicEegData.highBeta = ((value[20]&0xFF)<<16) | ((value[21]&0xFF)<<8) | (value[22]&0xFF);
+            //            asicEegData.lowGamma = ((value[24]&0xFF)<<16) | ((value[25]&0xFF)<<8) | (value[26]&0xFF);
+            //            asicEegData.midGamma = ((value[28]&0xFF)<<16) | ((value[29]&0xFF)<<8) | (value[30]&0xFF);
             break;
 
         case 0x86:
@@ -247,7 +247,8 @@ void MindwaveParserSerial::parseSerialData(uchar extendedCodeLevel,
                    <<" vLength: "<< valueLength;
 
             qDebug() << "DataValues: ";
-            for (int i = 0; i!= valueLength; i++) {
+            for (int i = 0; i!= valueLength; i++)
+            {
                 qDebug() << (value[i] & 0xFF);
             }
             break;

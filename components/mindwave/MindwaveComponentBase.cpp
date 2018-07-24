@@ -53,6 +53,7 @@ void MindwaveComponentBase::onConnectionSuccess()
 
 void MindwaveComponentBase::onDisconnectionSuccess()
 {
+    setDeviceState(DeviceState::None);
     setConnected(false);
 }
 

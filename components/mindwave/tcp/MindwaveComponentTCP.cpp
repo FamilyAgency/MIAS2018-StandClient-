@@ -12,7 +12,7 @@ MindwaveComponentTCP::MindwaveComponentTCP(QObject *parent) : MindwaveComponentB
     connect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), mindwaveParser.data(), SLOT(onDataRecieve(const QString&)));
 
     connect(mindwaveParser.data(), SIGNAL(scanningInfo(int , const QString&)), this, SLOT(onScanningInfo(int , const QString&)));
-    connect(mindwaveParser.data(), SIGNAL(dataParsed(const MindwaveData& data)), this, SLOT(onDataParsed(const MindwaveData& data)));
+    connect(mindwaveParser.data(), SIGNAL(mindwaveDataParsed(const MindwaveData&)), this, SLOT(onDataParsed(const MindwaveData&)));
 }
 
 MindwaveComponentTCP::~MindwaveComponentTCP()
@@ -22,5 +22,5 @@ MindwaveComponentTCP::~MindwaveComponentTCP()
 
     disconnect(mindwaveReader.data(), SIGNAL(dataRecieve(const QString&)), mindwaveParser.data(), SLOT(onDataRecieve(const QString&)));
     disconnect(mindwaveParser.data(), SIGNAL(scanningInfo(int , const QString&)), this, SLOT(onScanningInfo(int , const QString&)));
-    disconnect(mindwaveParser.data(), SIGNAL(dataParsed(const MindwaveData& data)), this, SLOT(onDataParsed(const MindwaveData& data)));
+    disconnect(mindwaveParser.data(), SIGNAL(mindwaveDataParsed(const MindwaveData&)), this, SLOT(onDataParsed(const MindwaveData&)));
 }

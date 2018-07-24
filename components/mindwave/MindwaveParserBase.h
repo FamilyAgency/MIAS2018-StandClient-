@@ -34,10 +34,6 @@ protected:
     MindwaveConfig mindwaveConfig;
     int remapPoorSignalLevel(int signalValue) const;
 
-signals:
-     void scanningInfo(int signalValue, const QString& status);
-     void mindwaveDataParsed(const MindwaveData& data);
-
 public slots:
     virtual void onDataRecieve(const QString& data);
     virtual void onDataRecieve(const QByteArray& data);
