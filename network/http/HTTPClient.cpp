@@ -51,11 +51,8 @@ void HTTPClient::onTimeoutHandle()
     }
 }
 
-void HTTPClient::runGetRequest(const QString& URL)
+void HTTPClient::runGetRequest(const QNetworkRequest& request)
 {
-    qDebug()<<"runGetRequest: "<<URL;
-
-    QNetworkRequest request = QNetworkRequest(QUrl(URL));
     httpReply = networkManager->get(request);
     timeoutTimer->start(requestTimemoutInterval);
 }

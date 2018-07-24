@@ -58,6 +58,8 @@ private:
     PrizesUserData _prizesUserData;
     GameUserData _gameUserData;
 
+    void commonRequest(ResponseType type, const QNetworkRequest& request, HTTPMethod httpMethod, const QByteArray& data = 0);
+
     void createBaseUserInfo(const QJsonObject& object);
     void createPrizesUserData(const QJsonObject& object);
     void createGameUserData(const QJsonObject& object);

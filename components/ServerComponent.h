@@ -17,6 +17,14 @@ public:
     explicit ServerComponent(QObject *parent = nullptr);
     virtual ~ServerComponent();
 
+    enum class HTTPMethod
+    {
+        GET,
+        POST,
+        PUT,
+        DELETE
+    };
+
     enum class ServerStatus
     {
         Free,

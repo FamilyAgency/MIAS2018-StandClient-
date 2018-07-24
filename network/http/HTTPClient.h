@@ -15,7 +15,7 @@ public:
     explicit HTTPClient(QObject *parent = nullptr);
     virtual ~HTTPClient();
     bool getRequestStatus() const;
-    void runGetRequest(const QString& url);
+    void runGetRequest(const QNetworkRequest& request);
     void runPostRequest(const QNetworkRequest& request, const QByteArray& data);
     void runDeleteRequest(const QNetworkRequest& request);
     void runPutRequest(const QNetworkRequest& request, const QByteArray& data);

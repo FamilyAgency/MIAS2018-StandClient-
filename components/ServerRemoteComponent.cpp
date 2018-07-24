@@ -9,7 +9,7 @@ ServerRemoteComponent::ServerRemoteComponent(QObject *parent) : ServerComponent(
     name = "Server Remote";
 }
 
-void ServerRemoteComponent::configRequest(int deviceId)
+void ServerRemoteComponent::commonRequest(ResponseType type, const QNetworkRequest& request, HTTPMethod httpMethod, const QByteArray& data)
 {
     if(!canRunRequest())
     {
@@ -18,49 +18,50 @@ void ServerRemoteComponent::configRequest(int deviceId)
     }
 
     response.clear();
-    response.type = ResponseType::ConfigRequest;
+    response.type = type;
     setServerStatus(ServerStatus::Busy);
-    QString fullRequest = serverConfig().url + "/config/" + QString::number(deviceId);
-    httpClient->runGetRequest(fullRequest);
+
+    switch(httpMethod)
+    {
+    case HTTPMethod::GET:
+        httpClient->runGetRequest(request);
+        break;
+
+    case HTTPMethod::POST:
+        httpClient->runPostRequest(request, data);
+        break;
+
+    case HTTPMethod::PUT:
+        httpClient->runPutRequest(request, data);
+        break;
+
+    case HTTPMethod::DELETE:
+        httpClient->runDeleteRequest(request);
+        break;
+    }
+}
+
+void ServerRemoteComponent::configRequest(int deviceId)
+{    
+    QNetworkRequest request(serverConfig().url + "/config/" + QString::number(deviceId));
+    commonRequest(ResponseType::ConfigRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::updatesRequest(int deviceId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::UpdatesRequest;
-    setServerStatus(ServerStatus::Busy);
-    QString fullRequest = serverConfig().url + "/config/" + QString::number(deviceId) + "/updates";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/config/" + QString::number(deviceId) + "/updates");
+    commonRequest(ResponseType::UpdatesRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::healthLogRequest(int deviceId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
+
 }
 
 void ServerRemoteComponent::allUsersRequest()
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::AllUsersRequest;
-    setServerStatus(ServerStatus::Busy);
-    QString fullRequest = serverConfig().url + "/users";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users");
+    commonRequest(ResponseType::AllUsersRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::createUserRequest(const QString& name,
@@ -68,15 +69,6 @@ void ServerRemoteComponent::createUserRequest(const QString& name,
                                               const QString& email,
                                               const QString& phone)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::CreateUserRequest;
-    setServerStatus(ServerStatus::Busy);
 
     QNetworkRequest request(serverConfig().url + "/users/register");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
@@ -90,7 +82,10 @@ void ServerRemoteComponent::createUserRequest(const QString& name,
 
     qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
     qDebug()<<"_serverConfig.serverAPI.testUser "<<_serverConfig.serverAPI.testUser;
-    httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
+
+    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+
+    commonRequest(ResponseType::CreateUserRequest, request, HTTPMethod::POST, data);
 }
 
 void ServerRemoteComponent::createUserRequest()
@@ -99,11 +94,6 @@ void ServerRemoteComponent::createUserRequest()
                       "абвгдеёжзийклмнопрстуфхцчшщъыьэюя",
                       "яндекс@почта.рф",
                       "+79067704595");
-
-    //    createUserRequest("Вика",
-    //                      "Журавлева",
-    //                      "vika@gmail.com",
-    //                      "+89151546522");
 }
 
 void ServerRemoteComponent::searchUserRequest(const QString& email, const QString& phone)
@@ -113,17 +103,7 @@ void ServerRemoteComponent::searchUserRequest(const QString& email, const QStrin
         return;
     }
 
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::SearchUserRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/search/?";
+    QString URL( serverConfig().url + "/users/search/?");
 
     QUrlQuery query;
     if(!email.isEmpty())
@@ -134,156 +114,75 @@ void ServerRemoteComponent::searchUserRequest(const QString& email, const QStrin
     {
         query.addQueryItem("phone", phone);
     }
-    else
-    {
-        // empty fields
-        return;
-    }
-    fullRequest.append(query.toString(QUrl::FullyEncoded).toUtf8());
-    httpClient->runGetRequest(fullRequest);
+
+    URL.append(query.toString(QUrl::FullyEncoded).toUtf8());
+    QNetworkRequest request(URL);
+    commonRequest(ResponseType::SearchUserRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::searchUserByIdRequest(int userId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::SearchUserByIdRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId);
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId));
+    commonRequest(ResponseType::SearchUserByIdRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::deleteAllTestUsersRequest()
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::DeleteAllTestUsersRequest;
-    setServerStatus(ServerStatus::Busy);
-
     QNetworkRequest request(serverConfig().url + "/users/0");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    qDebug()<<"fullRequest ";//<<fullRequest;
-    httpClient->runDeleteRequest(request);
+    commonRequest(ResponseType::DeleteAllTestUsersRequest, request, HTTPMethod::DELETE);
 }
 
 void ServerRemoteComponent::verifyUserRequest(int userId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::VerifyUserRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/verify";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/verify");
+    commonRequest(ResponseType::VerifyUserRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::confirmUserRequest(int userId, int code)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::ConfirmUserRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/confirm";
-    QNetworkRequest request(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/confirm");
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     QUrlQuery query;
     query.addQueryItem("code", QString::number(code));
-    httpClient->runPostRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
+
+    auto data =  query.toString(QUrl::FullyEncoded).toUtf8();
+    commonRequest(ResponseType::ConfirmUserRequest, request, HTTPMethod::POST, data);
 }
 
 void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::ConfirmPrizeRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid);
-    QNetworkRequest request(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-
     QUrlQuery query;
     // query.addQueryItem("status", QString::number(1));
     // query.addQueryItem("type", QString::number(1));
-    httpClient->runPutRequest(request, query.toString(QUrl::FullyEncoded).toUtf8());
+    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+    commonRequest(ResponseType::ConfirmPrizeRequest, request, HTTPMethod::PUT);
 }
-
 
 void ServerRemoteComponent::startGameRequest(int userId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::StartGameRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/start";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/games/start");
+    commonRequest(ResponseType::StartGameRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::updateGameRequest(int userId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::UpdateGameRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/update";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/games/update");
+    commonRequest(ResponseType::UpdateGameRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::finishGameRequest(int userId)
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::FinishGameRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = serverConfig().url + "/users/" + QString::number(userId) + "/games/finish";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/games/finish");
+    commonRequest(ResponseType::FinishGameRequest, request, HTTPMethod::GET);
 }
+
+//======================== PARSING ========================//
+//=========================================================//
+//=========================================================//
 
 void ServerRemoteComponent::parse(const ServerResponse& response)
 {
@@ -406,44 +305,6 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
     serverRequestError(response.type);
 }
 
-void ServerRemoteComponent::setBaseUserData(const BaseUserData& value)
-{
-    _baseUserData = value;
-    emit baseUserDataChanged();
-}
-
-BaseUserData ServerRemoteComponent::baseUserData() const
-{
-    return _baseUserData;
-}
-
-void ServerRemoteComponent::setPrizesUserData(const PrizesUserData& prizesUserData)
-{
-    _prizesUserData = prizesUserData;
-    emit prizesUserDataChanged();
-}
-
-PrizesUserData ServerRemoteComponent::prizesUserData() const
-{
-    return _prizesUserData;
-}
-
-void ServerRemoteComponent::setGameUserData(const GameUserData& gameUserData)
-{
-    _gameUserData = gameUserData;
-    emit gameUserDataChanged();
-}
-
-GameUserData ServerRemoteComponent::gameUserData() const
-{
-    return _gameUserData;
-}
-
-void ServerRemoteComponent::clearBaseUserInfo()
-{
-    _baseUserData.clear();
-    emit baseUserDataChanged();
-}
 
 void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
 {
@@ -502,34 +363,61 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
     }
 }
 
+//======================== SET/GET ========================//
+//=========================================================//
+//=========================================================//
+
+void ServerRemoteComponent::setBaseUserData(const BaseUserData& value)
+{
+    _baseUserData = value;
+    emit baseUserDataChanged();
+}
+
+BaseUserData ServerRemoteComponent::baseUserData() const
+{
+    return _baseUserData;
+}
+
+void ServerRemoteComponent::setPrizesUserData(const PrizesUserData& prizesUserData)
+{
+    _prizesUserData = prizesUserData;
+    emit prizesUserDataChanged();
+}
+
+PrizesUserData ServerRemoteComponent::prizesUserData() const
+{
+    return _prizesUserData;
+}
+
+void ServerRemoteComponent::setGameUserData(const GameUserData& gameUserData)
+{
+    _gameUserData = gameUserData;
+    emit gameUserDataChanged();
+}
+
+GameUserData ServerRemoteComponent::gameUserData() const
+{
+    return _gameUserData;
+}
+
+void ServerRemoteComponent::clearBaseUserInfo()
+{
+    _baseUserData.clear();
+    emit baseUserDataChanged();
+}
+
+//========================= TESTS =========================//
+//=========================================================//
+//=========================================================//
+
 void ServerRemoteComponent::simulateServerError()
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::VerifyUserRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = "http://mias2018.familyagency.ru";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(QString("http://mias2018.familyagency.ru"));
+    commonRequest(ResponseType::VerifyUserRequest, request, HTTPMethod::GET);
 }
 
 void ServerRemoteComponent::simulateServerTimeout()
 {
-    if(!canRunRequest())
-    {
-        qDebug()<<"wait for server please";
-        return;
-    }
-
-    response.clear();
-    response.type = ResponseType::VerifyUserRequest;
-    setServerStatus(ServerStatus::Busy);
-
-    QString fullRequest = "http://familyagency.ru/lab/infloop.php";
-    httpClient->runGetRequest(fullRequest);
+    QNetworkRequest request(QString("http://familyagency.ru/lab/infloop.php"));
+    commonRequest(ResponseType::VerifyUserRequest, request, HTTPMethod::GET);
 }
