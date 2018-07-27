@@ -20,13 +20,17 @@ void ACR122CardHandler::fillBlockAdresses()
         }
         else
         {
-            QString hex = QString::number( i, 16 );
+            QString hex = QString::number(i, 16);
             bool ok;
             const unsigned int parsedValue = hex.toUInt(&ok, 16);
             blockAdresses.push_back(parsedValue);
             // qDebug()<<hex<<parsedValue;
         }
     }
+    blockAdresses.pop_front();
+    // blockAdresses.clear();
+    /// blockAdresses.push_back(0x04);
+    //  blockAdresses.push_back(0x05);
 
     blockAdress = blockAdresses[0];
 }
@@ -40,10 +44,10 @@ void ACR122CardHandler::startReading()
     connectTimer->start(checkMills);
 }
 
-void ACR122CardHandler::startWriting(int value)
+void ACR122CardHandler::startWriting(const QString& data)
 {
     setCardReaderState(CardReaderState::Writing);
-    userId = value;
+    userData = data;
     disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
     disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
     connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
@@ -82,14 +86,18 @@ void ACR122CardHandler::onWritingUpdate()
         return;
     }
 
-    if(!blockAuthenticate(blockAdress))
+    connectTimer->stop();
+
+    if(SCardBeginTransaction(card_context_) == SCARD_S_SUCCESS)
     {
-        emit authError();
+        qDebug()<<"transaction started: ";
         return;
     }
 
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-    QByteArray cardData = "1230000000000000";
+  //  QByteArray cardData = "99999,Константин,Константин,Константин,Константин,Константин,Константин,9056784575,yurikblech@gmail.com/t";
+    QByteArray cardData = "/t" + userData.toUtf8() + "/t";
+
     qDebug()<<"write bytes: "<<cardData.size();
 
     int addBlock = cardData.size() % 16 != 0 ? 1 : 0;
@@ -102,6 +110,11 @@ void ACR122CardHandler::onWritingUpdate()
     {
         blockAdress = blockAdresses[i];
 
+        if(!blockAuthenticate(blockAdress))
+        {
+            emit authError();
+            return;
+        }
 
         QByteArray blockData;
         for(int i = 0; i < 16; i++)
@@ -118,35 +131,19 @@ void ACR122CardHandler::onWritingUpdate()
         }
     }
 
-    //    QString data = "";
-    //    QString fulldata = "";
-    //    for(int i = 0; i < blocksNeeded; i++)
-    //    {
-    //        blockNumber = blocks[i];
+    if(SCardEndTransaction(card_context_, SCARD_LEAVE_CARD)== SCARD_S_SUCCESS)
+    {
+        qDebug()<<"transaction closed: ";
+        return;
+    }
 
-    //        if(!loadKey() || !blockAuthenticate(blockNumber))
-    //        {
-    //            emit authError();
-    //            return;
-    //        }
-
-    //        if(!readBlockData(blockNumber, data))
-    //        {
-    //            emit userWriteError();
-    //            return;
-    //        }
-    //        fulldata += data;
-    //        qDebug()<<"readed from block "<<blockNumber<<": "<<data;
-    //    }
-    //    qDebug()<<"fulldata "<<fulldata;
-    //    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-
-    SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
+    SCardDisconnect(card_handle_, SCARD_UNPOWER_CARD);
+    //  LPCWSTR cardReaderName = reinterpret_cast<LPCWSTR>(rfidConfig().type.unicode());
+    //  SCardFreeMemory(card_context_, cardReaderName);
+    // SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
     SCardReleaseContext(card_context_);
     userWriteSuccess();
     connectTimer->stop();
-
-
 }
 
 void ACR122CardHandler::onReadingUpdate()
@@ -169,39 +166,57 @@ void ACR122CardHandler::onReadingUpdate()
         return;
     }
 
-    if(!loadKey() || !blockAuthenticate(blockAdress))
+    if(!loadKey())
     {
-        emit authError();
+        emit loadKeyError();
         return;
     }
 
-    if(!loadKey() || !blockAuthenticate(blockAdress))
+    connectTimer->stop();
+
+    if(SCardBeginTransaction(card_context_) == SCARD_S_SUCCESS)
     {
-        emit authError();
+        qDebug()<<"transaction started: ";
         return;
     }
 
-    QString data = "";
-    QString fulldata = "";
-    for(int i = 0; i < 1; i++)
+    QByteArray data = "";
+    QByteArray fulldata;
+    for(int i = 0; i < blockAdresses.size(); i++)
     {
         blockAdress = blockAdresses[i];
+
+        if(!blockAuthenticate(blockAdress))
+        {
+            emit authError();
+            return;
+        }
+
         if(!readBlockData(blockAdress, data))
         {
             emit userWriteError();
             return;
         }
-        fulldata += data;
-        qDebug()<<"readed from block "<<blockAdress<<": "<<data;
+        fulldata.append(data);
+       // qDebug()<<"readed from block "<<blockAdress<<": "<<data;
     }
-    qDebug()<<"fulldata "<<fulldata;
+    qDebug()<<"fulldata "<<QString(fulldata);
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    //rv = SCardDisconnect(hCard, SCARD_UNPOWER_CARD);
+    if(SCardEndTransaction(card_context_, SCARD_LEAVE_CARD)== SCARD_S_SUCCESS)
+    {
+        qDebug()<<"transaction closed: ";
+        return;
+    }
 
-    SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
+    SCardDisconnect(card_handle_, SCARD_UNPOWER_CARD);
+    //  LPCWSTR cardReaderName = reinterpret_cast<LPCWSTR>(rfidConfig().type.unicode());
+    //  SCardFreeMemory(card_context_, cardReaderName);
+    // SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
     SCardReleaseContext(card_context_);
-    emit newData(fulldata);
-    connectTimer->stop();
 
+
+    emit newData(fulldata);
 
     //    QString data;
     //    if(readBlockData(blockNumber, data))
@@ -237,17 +252,8 @@ bool ACR122CardHandler::establishContext()
 bool ACR122CardHandler::cardConnect()
 {
     DWORD dwAP = 0;
-    return SCardConnect(card_context_, reinterpret_cast<LPCWSTR>(rfidConfig().type.unicode()), SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, &card_handle_, &dwAP) == SCARD_S_SUCCESS;
-    // return SCardConnect(card_context_, L"ACS ACR122 0", SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, &card_handle_, &dwAP) == SCARD_S_SUCCESS;
-}
-
-bool ACR122CardHandler::beepCommand(bool enabled)
-{
-    BYTE pbRecv[MAX_APDU_SIZE];
-    DWORD cbRecv = MAX_APDU_SIZE;
-    //   uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
-    uint8_t bytes[5] = {0xff, 0x00, 0x52, 0x00, 0x00};
-    return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
+    LPCWSTR cardReaderName = reinterpret_cast<LPCWSTR>(rfidConfig().type.unicode());
+    return SCardConnect(card_context_, cardReaderName, SCARD_SHARE_SHARED, SCARD_PROTOCOL_Tx, &card_handle_, &dwAP) == SCARD_S_SUCCESS;
 }
 
 bool ACR122CardHandler::checkIsDeviceConnected()
@@ -264,55 +270,13 @@ bool ACR122CardHandler::checkIsDeviceConnected()
         buffer.append(QChar(*it));
         *it++;
     }
-
     QString cardReaderName(buffer);
-
     return cardReaderName.contains(rfidConfig().type);
-}
-
-bool ACR122CardHandler::getFirmVer(QString& ver)
-{
-    DWORD cbRecv = MAX_APDU_SIZE;
-    BYTE pbRecv[MAX_APDU_SIZE];
-    uint8_t bytes[5] = {0xff, 0x00, 0x48, 0x00, 0x00};
-
-    if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
-    {
-        return false;
-    }
-
-    ver = "";
-    for (int i = 0; i < cbRecv - 2; i++)
-    {
-        ver += QString("%02").arg(pbRecv[i]);
-    }
-
-    return true;
-}
-
-bool ACR122CardHandler::getCardUid(QString& uid)
-{
-    DWORD  cbRecv = MAX_APDU_SIZE;
-    BYTE pbRecv[MAX_APDU_SIZE];
-    uint8_t bytes[5] = {0xff, 0xCA, 0x00, 0x00, 0x00};
-
-    if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
-    {
-        return false;
-    }
-
-    uid = "";
-    for (int i = 0; i < cbRecv - 2; i++)
-    {
-        uid += QString("%02").arg(pbRecv[i]);
-    }
-
-    return true;
 }
 
 bool ACR122CardHandler::loadKey()
 {
-    uint8_t bytes[11] = {0xff, 0x82, 0x00, 0x00 /* key location */, 0x06/* key length */, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+    uint8_t bytes[11] = {0xff, 0x82, 0x00, keyLocation, 0x06/* key length */, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
     return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
@@ -320,21 +284,48 @@ bool ACR122CardHandler::loadKey()
 
 bool ACR122CardHandler::blockAuthenticate(uint8_t blockNumber)
 {
-    uint8_t bytes[10] = {0xff, 0x86, 0x00, 0x00, 0x05, 0x01, 0x00, blockNumber/* Block number */, 0x60 /*TypeA */, 0x00 /*key number*/};
+    uint8_t bytes[10] = {0xff, 0x86, 0x00, 0x00, 0x05, 0x01, 0x00, blockNumber/* Block number */,keyType, keyLocation};
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
     return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
 }
 
-bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QString& data)
+void ACR122CardHandler::resetCard()
+{
+    establishContext();
+
+    cardConnect();
+
+    uint8_t bytes[21] = {0xFF, 0xD6, 0x00, 0x03, 0x10, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x07, 0x80, 0x69, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,0xFF};
+
+    DWORD cbRecv = MAX_APDU_SIZE;
+    BYTE pbRecv[MAX_APDU_SIZE];
+    if(SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS)
+    {
+        qDebug()<<"success";
+    }
+    else
+    {
+        qDebug()<<"FAILLLLL";
+    }
+}
+
+//bool ACR122CardHandler::cardStatus()
+//{
+//    printf("SCardStatus : ");
+//       dwReaderLen = MAX_READER_NAME_SIZE;
+//       pcReaders = (LPWSTR)malloc(sizeof(char) * MAX_READER_NAME_SIZE);
+
+//       rv = SCardStatus(hCard, pcReaders, &dwReaderLen, &dwState,
+//           &dwProt, pbAtr, &dwAtrLen);
+//}
+
+bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QByteArray& data)
 {
     uint8_t bytesNum = 0x010;
     QString str = QString::number(bytesNum);
-
-
-    qDebug()<<"-------------------------------";
-    qDebug()<<"read bytes :" << str.toInt();
-
+   // qDebug()<<"-------------------------------";
+   // qDebug()<<"read bytes :" << str.toInt();
 
     uint8_t bytes[5] = {0xff, 0xB0, 0x00, blockNumber/* Block number */,bytesNum/* bytes */};
     DWORD cbRecv = MAX_APDU_SIZE;
@@ -343,24 +334,18 @@ bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QString& data)
     {
         return false;
     }
-    qDebug()<<"size:  "<<cbRecv;
+   // qDebug()<<"size:  "<<cbRecv;
     QByteArray recieve;
-
     for (int i = 0; i < cbRecv - 2; i++)
     {
         recieve.append(pbRecv[i]);
-        // data += QString("%02").arg(pbRecv[i]) + " ";
     }
-    data = QString(recieve);
-    // qDebug()<<"readed "<<data;
-    // qDebug()<<"readed  ba "<<
-
+    data = recieve;
     return true;
 }
 
 bool ACR122CardHandler::writeBlockData(uint8_t blockNumber, const QByteArray& data)
 {
-
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
     const int size = 5 + 16;
@@ -428,6 +413,56 @@ bool ACR122CardHandler::writeBlockId(uint8_t blockNumber, int id)
         bytes[i] = cardData[i-5];//userIdHex[i-5];
     }
 
+    return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
+}
+
+bool ACR122CardHandler::getFirmVer(QString& ver)
+{
+    DWORD cbRecv = MAX_APDU_SIZE;
+    BYTE pbRecv[MAX_APDU_SIZE];
+    uint8_t bytes[5] = {0xff, 0x00, 0x48, 0x00, 0x00};
+
+    if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
+    ver = "";
+    for (int i = 0; i < cbRecv - 2; i++)
+    {
+        ver += QString("%02").arg(pbRecv[i]);
+    }
+
+    return true;
+}
+
+bool ACR122CardHandler::getCardUid(QString& uid)
+{
+    DWORD cbRecv = MAX_APDU_SIZE;
+    BYTE pbRecv[MAX_APDU_SIZE];
+    uint8_t bytes[5] = {0xff, 0xCA, 0x00, 0x00, 0x00};
+
+    if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
+    uid = "";
+    for (int i = 0; i < cbRecv - 2; i++)
+    {
+        uid += QString("%02").arg(pbRecv[i]);
+    }
+
+    return true;
+}
+
+
+bool ACR122CardHandler::beepCommand(bool enabled)
+{
+    BYTE pbRecv[MAX_APDU_SIZE];
+    DWORD cbRecv = MAX_APDU_SIZE;
+    //   uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
+    uint8_t bytes[5] = {0xff, 0x00, 0x52, 0x00, 0x00};
     return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
 }
 

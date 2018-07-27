@@ -12,10 +12,11 @@ class ACR122CardHandler : public RFIDComponent
 public:
     explicit ACR122CardHandler(QObject *parent = nullptr);
     Q_INVOKABLE virtual void startReading() override;
-    Q_INVOKABLE virtual void startWriting(int userId) override;
+    Q_INVOKABLE virtual void startWriting(const QString& data) override;
     Q_INVOKABLE virtual void stopAll() override;
     Q_INVOKABLE bool beepCommand(bool enabled);
     Q_INVOKABLE void getCardAttributes();
+    Q_INVOKABLE void resetCard();
 
 private:
     QTimer* connectTimer;
@@ -23,10 +24,13 @@ private:
     LPCSCARD_IO_REQUEST protocol = SCARD_PCI_T1;
     SCARDCONTEXT card_context_;
     SCARDHANDLE card_handle_;
-    QVector<uint8_t> blockAdresses;//[11];// = {0x01,  0x01,  0x02,  0x04,  0x05,  0x06,  0x08,  0x09,  0x010,  0x012,  0x013};
+
+    QVector<uint8_t> blockAdresses;
     uint8_t blockAdress = 0x01;
-    int userId = 100;
-   // QString deviceName = "ACS ACR122 0";
+    const uint8_t keyType = 0x60; //0x60 /*TypeA */
+    uint8_t keyLocation = 0x00;//0x01
+    QString userData = "";
+
     void fillBlockAdresses();
 
     bool establishContext();
@@ -38,14 +42,14 @@ private:
 
     bool loadKey();
     bool blockAuthenticate(uint8_t blockNumber);
-    bool readBlockData(uint8_t blockNumber, QString& data);
+    bool readBlockData(uint8_t blockNumber, QByteArray& data);
     bool writeBlockData(uint8_t blockNumber, const QByteArray& data);
     bool writeBlockId(uint8_t blockNumber, int id);
 
     QVector<int> getDigitsArrayFromInt(int id) const;
 
     int readerTimeout = 2000;
-    int checkMills = 500;
+    int checkMills = 100;
 
     CardReaderState cardReaderState;
     void setCardReaderState(CardReaderState state);   

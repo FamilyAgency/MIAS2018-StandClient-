@@ -49,7 +49,7 @@ void RFIDComponent::startReading()
 
 }
 
-void RFIDComponent::startWriting(int userId)
+void RFIDComponent::startWriting(const QString& data)
 {
 
 }

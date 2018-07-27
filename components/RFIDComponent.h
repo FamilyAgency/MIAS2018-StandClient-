@@ -26,7 +26,7 @@ public:
     Q_ENUMS(CardReaderState)
 
     Q_INVOKABLE virtual void startReading();
-    Q_INVOKABLE virtual void startWriting(int userId);
+    Q_INVOKABLE virtual void startWriting(const QString& data);
     Q_INVOKABLE virtual void stopAll();
 
     virtual void setConfig(ConfigPtr config) override;

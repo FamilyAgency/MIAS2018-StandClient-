@@ -42,8 +42,23 @@ Item
             }
         }
 
+        TextArea
+        {
+            implicitWidth: 400;
+            implicitHeight: 60;
+            id:inputtext;
+            width: 310;
+            height: 200;
+            wrapMode: TextEdit.Wrap;
+            selectByMouse: true;
+            clip: true;
+           // textFormat: Text.RichText;
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+        }
         RowLayout
         {
+
 
             Button
             {
@@ -51,8 +66,7 @@ Item
                 text: "Start Writing"
                 onClicked:
                 {
-
-                    rfid.startWriting(rfidBox.value);
+                    rfid.startWriting(inputtext.text);
                 }
             }
             
@@ -89,10 +103,10 @@ Item
         Button
         {
             id:attr;
-            text: "Get attributes"
+            text: "Format card"
             onClicked:
             {
-                rfid.getCardAttributes();
+                rfid.resetCard();
             }
         }
 

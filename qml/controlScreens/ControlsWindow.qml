@@ -44,16 +44,16 @@ Item
     ServerComponent
     {
         x:marginLeft + 300;
-        y:marginTop + 580;
+        y:marginTop + 680;
         id:serverComp;
     }
 
-    HealthCheckerComponent
-    {
-        x:marginLeft + 300;
-        y:marginTop + 700;
-        id:health
-    }
+//    HealthCheckerComponent
+//    {
+//        x:marginLeft + 300;
+//        y:marginTop + 700;
+//        id:health
+//    }
 
     TestScreen
     {
