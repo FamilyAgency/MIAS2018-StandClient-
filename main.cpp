@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
+    qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {
@@ -55,7 +56,6 @@ int main(int argc, char *argv[])
         }
 
         return 1;
-
     });
 
     // config load. entry point

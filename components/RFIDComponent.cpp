@@ -1,19 +1,14 @@
 #include "RFIDComponent.h"
+#include "rfid/ACR122CardHandler.h"
 #include <QSerialPortInfo>
 
 RFIDComponent::RFIDComponent(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Rfid";
-
-    rfidDataReader.reset(new BaseRFIDDataReader());
-    connect(rfidDataReader.data(), SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
-    connect(rfidDataReader.data(), SIGNAL(readError()), this, SLOT(onReadError()));
 }
 
 RFIDComponent::~RFIDComponent()
 {
-    disconnect(rfidDataReader.data(), SIGNAL(dataReaded(const QString&)), this, SLOT(onDataReaded(const QString&)));
-    disconnect(rfidDataReader.data(), SIGNAL(readError()), this, SLOT(onReadError()));
 }
 
 void RFIDComponent::setQmlContext(QQmlContext* value)
@@ -41,7 +36,7 @@ RFIDConfig RFIDComponent::rfidConfig() const
 
 void RFIDComponent::start()
 {
-   //arduinoDataReader->start();
+
 }
 
 void RFIDComponent::stop()
@@ -49,22 +44,17 @@ void RFIDComponent::stop()
 
 }
 
-void RFIDComponent::startReading(int modelIndex)
-{
-   rfidDataReader->startReading(modelIndex);
-}
-
-QVariantList RFIDComponent::getPortsAvailable() const
-{
-    return rfidDataReader->getPortsAvailable();
-}
-
-void RFIDComponent::onDataReaded(const QString&)
+void RFIDComponent::startReading()
 {
 
 }
 
-void RFIDComponent::onReadError()
+void RFIDComponent::startWriting(int userId)
+{
+
+}
+
+void RFIDComponent::stopAll()
 {
 
 }

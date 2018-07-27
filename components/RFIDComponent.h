@@ -6,7 +6,6 @@
 
 #include "config/Config.h"
 #include "components/ExternalSystemComponent.h"
-#include "rfid/UHFJsonDataReader.h"
 
 class RFIDComponent : public ExternalSystemComponent
 {
@@ -18,8 +17,17 @@ public:
     explicit RFIDComponent(QObject *parent = nullptr);
     virtual ~RFIDComponent();
 
-    Q_INVOKABLE QVariantList getPortsAvailable() const;
-    Q_INVOKABLE void startReading(int modelIndex);
+    enum class CardReaderState
+    {
+        Reading,
+        Writing,
+        Stopped
+    };
+    Q_ENUMS(CardReaderState)
+
+    Q_INVOKABLE virtual void startReading();
+    Q_INVOKABLE virtual void startWriting(int userId);
+    Q_INVOKABLE virtual void stopAll();
 
     virtual void setConfig(ConfigPtr config) override;
     virtual void start() override;
@@ -36,16 +44,20 @@ public:
 private:
      RFIDConfig _rfidConfig;
      bool _connected = false;
-     QSharedPointer<BaseRFIDDataReader> rfidDataReader;
 
 signals:
     void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);
 
-public slots:
-    void onDataReaded(const QString&);
-    void onReadError();
+
+//signals:
+//    void userWriteStatus(bool status);
+//    void newTag(int id);
+//    void noCard();
+//    void noCardReader();
+//    void authError();
+
 };
 
 #endif // RFIDCOMPONENT_H

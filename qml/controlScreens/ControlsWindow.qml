@@ -34,7 +34,7 @@ Item
         id:mindWaveComp;
     }
 
-    RFIDComponent
+    ACR122Card
     {
         x:marginLeft + 300;
         y:marginTop + 280;
@@ -44,14 +44,14 @@ Item
     ServerComponent
     {
         x:marginLeft + 300;
-        y:marginTop + 480;
+        y:marginTop + 580;
         id:serverComp;
     }
 
     HealthCheckerComponent
     {
         x:marginLeft + 300;
-        y:marginTop + 600;
+        y:marginTop + 700;
         id:health
     }
 

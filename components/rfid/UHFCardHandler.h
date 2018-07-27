@@ -2,15 +2,15 @@
 #define UHFDATAREADER_H
 
 #include <QObject>
-#include "components/rfid/BaseRFIDDataReader.h"
+#include "components/RFIDComponent.h"
 
-class UHFDataReader : public BaseRFIDDataReader
+class UHFCardHandler : public RFIDComponent
 {
     Q_OBJECT
 public:
-    explicit UHFDataReader(QObject *parent = nullptr);
+    explicit UHFCardHandler(QObject *parent = nullptr);
 
-    virtual void startReading(int modelIndex) override;
+    virtual void startReading() override;
 
 private:
     const int taskTimerMills = 100;
@@ -27,7 +27,7 @@ signals:
 
 private slots:
     void onUpdate();
-    virtual void onReadyRead() override;
+    virtual void onReadyRead();
 };
 
 #endif // UHFDATAREADER_H

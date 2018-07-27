@@ -6,7 +6,6 @@
 #include <QList>
 
 #include "components/HealthCheckerComponent.h"
-#include "components/RFIDComponent.h"
 #include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
 #include "components/ServerRemoteComponent.h"
@@ -96,8 +95,13 @@ private:
     void setAppState(AppState appState);
     QSharedPointer<BaseModule> getModuleByAppState(AppState value);
 
-    template <class RFIDComponentT, class MindwaveComponentT>
     void createEngine();
+
+    template <class MindwaveComponentT>
+    void createMindwave();
+
+    template <class RFIDComponentT>
+    void createRFID();
 
 signals:
     void appStateChanged(AppState appState);

@@ -28,9 +28,6 @@ SOURCES += main.cpp \
     components/SlackComponent.cpp \
     services/BaseService.cpp \
     components/RFIDComponent.cpp \
-    components/rfid/BaseRFIDDataReader.cpp \
-    components/rfid/UHFDataReader.cpp \
-    components/rfid/UHFJsonDataReader.cpp \
     components/LoggerComponent.cpp \
     core/modules/BaseModule.cpp \
     core/modules/GameModule.cpp \
@@ -57,7 +54,9 @@ SOURCES += main.cpp \
     components/mindwave/tcp/MindwaveParserTCP.cpp \
     components/mindwave/serial/MindwaveComponentSerial.cpp \
     components/mindwave/serial/MindwaveReaderSerial.cpp \
-    components/mindwave/serial/MindwaveParserSerial.cpp
+    components/mindwave/serial/MindwaveParserSerial.cpp \
+    components/rfid/ACR122CardHandler.cpp \
+    components/rfid/UHFCardHandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -77,6 +76,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+INCLUDEPATH += winscard/include
+
+LIBS += -L"$$PWD/winscard/lib" -lWinscard
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -108,9 +111,6 @@ HEADERS += \
     components/SlackComponent.h \
     services/BaseService.h \
     components/RFIDComponent.h \
-    components/rfid/BaseRFIDDataReader.h \
-    components/rfid/UHFDataReader.h \
-    components/rfid/UHFJsonDataReader.h \
     components/LoggerComponent.h \
     core/modules/BaseModule.h \
     core/modules/GameModule.h \
@@ -138,6 +138,8 @@ HEADERS += \
     components/mindwave/serial/MindwaveComponentSerial.h \
     components/mindwave/serial/MindwaveReaderSerial.h \
     components/mindwave/serial/MindwaveParserSerial.h \
-    components/mindwave/serial/MindwaveSerialData.h
+    components/mindwave/serial/MindwaveSerialData.h \
+    components/rfid/ACR122CardHandler.h \
+    components/rfid/UHFCardHandler.h
 
 DISTFILES +=

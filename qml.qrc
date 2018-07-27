@@ -49,5 +49,6 @@
         <file>qml/ConfigErrorWindow.qml</file>
         <file>qml/controlScreens/UserRegistrationData.qml</file>
         <file>qml/touchScreens/AnimationControllerLayer.qml</file>
+        <file>qml/components/ACR122Card.qml</file>
     </qresource>
 </RCC>

@@ -1,13 +1,27 @@
 #include "AppController.h"
 #include "components/mindwave/tcp/MindwaveComponentTCP.h"
 #include "components/mindwave/serial/MindwaveComponentSerial.h"
+#include "components/rfid/ACR122CardHandler.h"
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
-    //createEngine<RFIDComponent, MindwaveComponentTest>();
+
 }
 
-template <class RFIDComponentT, class MindwaveComponentT>
+template <class MindwaveComponentT>
+void AppController::createMindwave()
+{
+    mindWaveComponent.reset(new MindwaveComponentT());
+    components.append(mindWaveComponent);
+}
+
+template <class RFIDComponentT>
+void AppController::createRFID()
+{
+    rfidComponent.reset(new RFIDComponentT());
+    components.append(rfidComponent);
+}
+
 void AppController::createEngine()
 {
     appSettings.reset(new AppSettings);
@@ -21,12 +35,6 @@ void AppController::createEngine()
 
     loggerComponent.reset(new LoggerComponent());
     components.append(loggerComponent);
-
-    rfidComponent.reset(new RFIDComponentT());
-    components.append(rfidComponent);
-
-    mindWaveComponent.reset(new MindwaveComponentT());
-    components.append(mindWaveComponent);
 
     serverComponent.reset(new ServerRemoteComponent());
     connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
@@ -125,18 +133,22 @@ void AppController::onConfigLoaded(ConfigPtr config)
     if(config->mindwaveConfig->type == "simulation")
     {
         qDebug()<<"Mindwave simulation true";
-        createEngine<RFIDComponent, MindwaveComponentTest>();
+        createMindwave<MindwaveComponentTest>();
     }
     else if(config->mindwaveConfig->type == "tcp")
     {
         qDebug()<<"Mindwave simulation false";
-        createEngine<RFIDComponent, MindwaveComponentTCP>();
+        createMindwave<MindwaveComponentTCP>();
     }
     else if(config->mindwaveConfig->type == "serial")
     {
         qDebug()<<"Mindwave simulation false";
-        createEngine<RFIDComponent, MindwaveComponentSerial>();
+        createMindwave<MindwaveComponentSerial>();
     }
+
+    createRFID<ACR122CardHandler>();
+    createEngine();
+
 
     for (auto comp : components)
     {

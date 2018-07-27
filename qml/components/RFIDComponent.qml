@@ -54,7 +54,17 @@ Item {
                 text: "connect"
                 onClicked:
                 {
-                    //rfid.startReading(comComboBox.currentIndex);
+                    rfid.startReading(comComboBox.currentIndex);
+                }
+            }
+
+            Button
+            {
+                id:read;
+                text: "Start Reading"
+                onClicked:
+                {
+                    rfid.startReading();
                 }
             }
 

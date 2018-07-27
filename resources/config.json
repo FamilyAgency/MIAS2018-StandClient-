@@ -47,7 +47,7 @@
         "autoConnect": false,
         "useKeyword": false,
         "types_example": ["arduino"],
-        "type": "arduino"
+        "type": "ACS ACR122 0"
     },
     "mindwave":
     {
@@ -59,26 +59,26 @@
         "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
         "timeout": 4000,
         "types_example": ["serial", "tcp", "simulation"],
-        "type": "tcp"
+        "type": "simulation"
     },
     "slack":
     [
         {
             "appId":100,
-            "enabled": true,
+            "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
             "appId":1,
-            "enabled": true,
+            "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         }
     ],
     "server":
     {
-        "url": "http://mias2018.familyagency.ru",
+        "url": "http://mias2018.familyagency.ru/api/v1/ADABF4D5AE73D5FD479E8E76A34E1",
         "requestTimemoutInterval": 5000,
         "requestCount": 3,
         "api":
