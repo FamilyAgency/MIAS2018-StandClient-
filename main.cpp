@@ -8,6 +8,7 @@
 #include "config/ConfigController.h"
 #include "core/AppController.h"
 #include "core/modules/IntroModule.h"
+#include "components/rfid/ACR122CardHandler.h"
 
 int main(int argc, char *argv[])
 { 
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
     qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
+    qmlRegisterType<ACR122CardHandler>("com.app", 1, 0, "CardReaderError");
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
     });
 
     // config load. entry point
-    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);
+    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
     configController.data()->load();
 
     return app.exec();

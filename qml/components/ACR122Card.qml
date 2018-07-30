@@ -7,10 +7,10 @@ ApplicationWindow
 {
     visible: true;
     width: 500;
-    height: 600;
-    x: 420;
-    y: 60;
-    title: qsTr("App");
+    height: 700;
+    x: 20;
+    y: 0;
+    title: qsTr("RFID");
     id: core;
 
     Component.onCompleted:
@@ -27,24 +27,42 @@ ApplicationWindow
         Text
         {
             text: "ACR122Card component";
-            font.family: "Helvetica"
-            font.pixelSize: 17
-            color: "#008800"
+            font.family: "Helvetica";
+            font.pixelSize: 17;
+            color: "#008800";
         }
 
         Text
         {
             id:deviceState;
             text: "State: stopped";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#008800"
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#008800";
+        }
+
+        Text
+        {
+            id:errorText;
+            text: "Last error: ";
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#008800";
+        }
+
+        Text
+        {
+            id:validation;
+            text: "Validation: ";
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#008800";
         }
 
         Button
         {
             id:readId;
-            text: "Start Reading Id only"
+            text: "Start Reading Id only";
             onClicked:
             {
                 rfid.startReadingId();
@@ -54,50 +72,64 @@ ApplicationWindow
         Button
         {
             id:readAll;
-            text: "Start Reading All data"
+            text: "Start Reading All data";
             onClicked:
             {
                 rfid.startReadingAllData();
             }
         }
 
-        TextArea
+        TextField
         {
-            implicitWidth: 400;
-            implicitHeight: 60;
-            id:inputtext;
-            width: 310;
-            height: 200;
-            wrapMode: TextEdit.Wrap;
-            selectByMouse: true;
-            clip: true;
-           // textFormat: Text.RichText;
-            font.family: "Helvetica";
-            font.pixelSize: 14;
+            id: name;
+            placeholderText: "name";
+            text: "Иван";
+            implicitWidth:200;
+        }
+
+        TextField
+        {
+            id:surname;
+            placeholderText: "surname";
+            text: "Иванов";
+            implicitWidth:200;
+        }
+
+        TextField
+        {
+            id:phone;
+            placeholderText: "phone";
+            text: "89067895699";
+            implicitWidth:200;
+        }
+
+        TextField
+        {
+            id:mail;
+            placeholderText: "mail";
+            text: "почта@яндекс.ру";
+            implicitWidth:200;
+        }
+
+        SpinBox
+        {
+            id: rfidBox;
+            value: 1000;
+            from: 0;
+            to: 2000;
+            editable: true;
         }
 
         RowLayout
         {
-
-
             Button
             {
                 id:write;
                 text: "Start Writing"
                 onClicked:
                 {
-                    rfid.startWriting(9910, "юрий", "попович", "79065678789", "яндекс@мейл.ру");
-                    //rfid.startWriting(inputtext.text);
+                    rfid.startWriting(rfidBox.value, name.text, surname.text, phone.text, mail.text);
                 }
-            }
-            
-            SpinBox
-            {
-                id: rfidBox
-                value: 1000
-                from: 0
-                to: 2000
-                editable: true
             }
         }
 
@@ -110,24 +142,23 @@ ApplicationWindow
                 rfid.stopAll();
             }
         }
-
-        Button
+        RowLayout
         {
-            id:beepCommand;
-            text: "Beep off"
-            onClicked:
+            Button
             {
-                rfid.beepCommand(false);
+                id:beepCommand;
+                text: "Beep"
+                onClicked:
+                {
+                    rfid.beepCommand(beepEnabled.checked);
+                }
             }
-        }
 
-        Button
-        {
-            id:attr;
-            text: "Format card"
-            onClicked:
+            CheckBox
             {
-                rfid.resetCard();
+                id:beepEnabled;
+                text: qsTr("enabled")
+                checked: false
             }
         }
 
@@ -141,9 +172,14 @@ ApplicationWindow
             wrapMode: TextEdit.Wrap;
             selectByMouse: true;
             clip: true;
-           // textFormat: Text.RichText;
+            // textFormat: Text.RichText;
             font.family: "Helvetica";
             font.pixelSize: 14;
+        }
+
+        Component.onCompleted:
+        {
+            clearError();
         }
 
         Connections
@@ -155,66 +191,78 @@ ApplicationWindow
                 switch(state)
                 {
                 case CardReaderState.Reading:
-                    deviceState.text = "State : reading";
+                    deviceState.text = "State: reading";
                     break;
                 case CardReaderState.Writing:
-                    deviceState.text = "State : writing";
+                    deviceState.text = "State: writing";
                     break;
                 case CardReaderState.Stopped:
-                    deviceState.text = "State : stopped";
+                    deviceState.text = "State: stopped";
+                    break;
+                case CardReaderState.Validating:
+                    deviceState.text = "State: validating";
+                    break;
+                }
+            }
+            
+            onCardReaderError:
+            {
+                console.log("Card ReaderError", error);
+                errorText.text = "Last error: " + error;
+                errorText.color = "#990000";
+
+                switch(state)
+                {
+                case CardReaderError.CantStartTransaction:
+                    break;
+                case CardReaderError.CantEndTransaction:
+                    break;
+                case CardReaderError.LoadKeyError:
+                    break;
+                case CardReaderError.NoCardReader:
+                    break;
+                case CardReaderError.NoCard:
+                    break;
+                case CardReaderError.AuthError:
+                    break;
+                case CardReaderError.WriteError:
+                    break;
+                case CardReaderError.ReadError:
+                    break;
+                case CardReaderError.UnknownError:
                     break;
                 }
             }
 
-//            onNoCard:
-//            {
-//                status.text = "Status: no card";
-//            }
-
-//            onNoCardReader:
-//            {
-//                status.text = "Status: no card reader";
-//            }
-
-//            onAuthError:
-//            {
-//                status.text = "Status: on auth error";
-//            }
-
-//            onUnknownError:
-//            {
-//                 status.text = "Status: unknown error";
-//            }
-
-//            onReadingCardError:
-//            {
-//                 status.text = "Status: on reading card error";
-//            }
-
             onValidationSuccess:
             {
-                console.log("validation success");
+                clearError();
+                validation.text = "Validation: success";
             }
 
             onValidationFailed:
             {
-                console.log("validation failed");
+                clearError();
+                validation.text = "Validation: failed";
             }
 
             onUserReadSuccess:
             {
-                 outputtext.text = "Status: new data " + data;
+                clearError();
+                outputtext.text = "New data: " + data;
             }
 
             onUserWriteSuccess:
             {
-                 outputtext.text = "Status: on User Write Status: Success";
+                clearError();
+                outputtext.text = "Status: on write success";
             }
-
-//            onUserWriteError:
-//            {
-//                status.text = "Status: on User Write Status: Error";
-//            }
         }
+    }
+
+    function clearError()
+    {
+        errorText.text = "Error: no error";
+        errorText.color = "#009900";
     }
 }

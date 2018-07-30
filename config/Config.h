@@ -58,6 +58,7 @@ private:
     Q_PROPERTY(QString serialPort MEMBER serialPort)
     Q_PROPERTY(int baudRate MEMBER baudRate)
     Q_PROPERTY(bool autoConnect MEMBER autoConnect)
+    Q_PROPERTY(QString writeValidation MEMBER writeValidation)
 
 public:
     QString serialPort = "COM1";
@@ -66,6 +67,7 @@ public:
     bool useKeyword = true;
     bool autoConnect = true;
     QString type;
+    QString writeValidation = "none";
 };
 Q_DECLARE_METATYPE(RFIDConfig)
 

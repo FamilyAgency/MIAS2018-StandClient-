@@ -44,18 +44,16 @@ public:
 
 protected:
     CardReaderState cardReaderState;
-    void setCardReaderState(CardReaderState state);
+    RFIDConfig _rfidConfig;
+    bool _connected = false;
 
-private:
-     RFIDConfig _rfidConfig;
-     bool _connected = false;
+    void setCardReaderState(CardReaderState state);
 
 signals:
     void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);
     void cardReaderStateChanged(CardReaderState state);
-
 };
 
 #endif // RFIDCOMPONENT_H

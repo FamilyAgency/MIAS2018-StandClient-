@@ -13,6 +13,8 @@ public:
     explicit ACR122CardHandler(QObject *parent = nullptr);
     ~ACR122CardHandler();
 
+    virtual void setConfig(ConfigPtr config) override;
+
     virtual void startReading() override;
     Q_INVOKABLE void startReadingId();
     Q_INVOKABLE void startReadingAllData();
@@ -47,6 +49,9 @@ public:
 
 private:
     const int ONE_BLOCK_SIZE = 16;
+    const char DELIM = ',';
+    const char BRACKET_1 = '{';
+    const char BRACKET_2 = '}';
     QTimer* connectTimer;
     WriteValidation writeValidation = WriteValidation::AllData;
 
@@ -88,11 +93,13 @@ private:
     bool readBlockData(uint8_t blockNumber, QByteArray& data);
     bool writeBlockData(uint8_t blockNumber, const QByteArray& data);
 
+    void blockZeroDataInit();
+
     int readerTimeout = 2000;
     int checkMills = 100;
 
 signals:
-    void cardReaderError(CardReaderError);
+    void cardReaderError(CardReaderError error);
     void userWriteSuccess();
     void userReadSuccess(const QString& data);
     void validationSuccess();

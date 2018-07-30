@@ -22,6 +22,21 @@ ACR122CardHandler::~ACR122CardHandler()
     disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
 }
 
+void ACR122CardHandler::setConfig(ConfigPtr config)
+{
+    RFIDComponent::setConfig(config);
+    writeValidation = WriteValidation::None;
+
+    if(_rfidConfig.writeValidation == "idOnly")
+    {
+        writeValidation = WriteValidation::IdOnly;
+    }
+    else if(_rfidConfig.writeValidation == "allData")
+    {
+        writeValidation = WriteValidation::AllData;
+    }
+}
+
 void ACR122CardHandler::startReading()
 {
     setCardReaderState(CardReaderState::Reading);
@@ -54,9 +69,10 @@ void ACR122CardHandler::startWriting(int id, const QString& name, const QString&
     setCardReaderState(CardReaderState::Writing);
 
     lastUserId = QString::number(id);
-    QString userId = "{" + lastUserId + "}";
+    blockZeroDataInit();
+    QString userId = BRACKET_1 + lastUserId + BRACKET_2;
     userId = blockZeroData.replace(0, userId.size(), userId);
-    lastUserData = userId + "{" + name + "," + surname + "," + phone + "," + email + "}";
+    lastUserData = userId + BRACKET_1 + name + DELIM + surname + DELIM + phone + DELIM + email + BRACKET_2;
 
     startWriting(lastUserData);
 }
@@ -84,19 +100,19 @@ bool ACR122CardHandler::cardPreparedSuccess()
         cardPrepared = false;
     }
     
-    if(!checkIsDeviceConnected())
+    else if(!checkIsDeviceConnected())
     {
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
     
-    if(!cardConnect())
+    else if(!cardConnect())
     {
         emit cardReaderError(CardReaderError::NoCard);
         cardPrepared = false;
     }
     
-    if(!loadKey())
+    else if(!loadKey())
     {
         emit cardReaderError(CardReaderError::LoadKeyError);
         cardPrepared = false;
@@ -136,7 +152,7 @@ void ACR122CardHandler::onWritingUpdate()
         return;
     }
 
-    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"<< beepCommand(true);
     QByteArray cardData = lastUserData.toUtf8();
     int blocksNeeded = getBlocksNeedForWriting(cardData);
     alignData(cardData);
@@ -189,6 +205,7 @@ void ACR122CardHandler::onUserWriteSuccess()
 {
     if(writeValidation == WriteValidation::None)
     {
+        emit validationSuccess();
         return;
     }
     else if(writeValidation == WriteValidation::IdOnly)
@@ -278,8 +295,8 @@ void ACR122CardHandler::readId()
     }
 
     QString id = QString(data);
-    int startIndex = id.indexOf('{');
-    int endIndex = id.indexOf('}');
+    int startIndex = id.indexOf(BRACKET_1);
+    int endIndex = id.indexOf(BRACKET_2);
     if(startIndex != -1 && endIndex != -1)
     {
         id = id.mid(startIndex + 1, endIndex-1);
@@ -340,7 +357,7 @@ void ACR122CardHandler::readAllData()
         }
         fulldata.append(data);
 
-        int lastSymbol = data.indexOf('}');
+        int lastSymbol = data.indexOf(BRACKET_2);
         if(lastSymbol != -1)
         {
             lastSymbolCount++;
@@ -469,11 +486,15 @@ bool ACR122CardHandler::writeBlockData(uint8_t blockNumber, const QByteArray& da
 
 bool ACR122CardHandler::beepCommand(bool enabled)
 {
+    if(!cardPreparedSuccess())
+    {
+        return false;
+    }
+
     BYTE pbRecv[MAX_APDU_SIZE];
     DWORD cbRecv = MAX_APDU_SIZE;
-    //   uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
-    uint8_t bytes[5] = {0xff, 0x00, 0x52, 0x00, 0x00};
-    return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
+    uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
+    return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
 }
 
 void ACR122CardHandler::fillBlockAdresses()
@@ -503,6 +524,11 @@ void ACR122CardHandler::fillBlockAdresses()
     blockAdresses.pop_front();//don't use 0x00 block
     blockAdress = blockAdresses[0];
 
+    blockZeroDataInit();
+}
+
+void ACR122CardHandler::blockZeroDataInit()
+{
     blockZeroData.clear();
     blockZeroData.fill('0', ONE_BLOCK_SIZE);
 }

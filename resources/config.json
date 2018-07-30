@@ -48,8 +48,8 @@
         "useKeyword": false,
         "types_example": ["arduino", "ACS ACR122 0"],
         "type": "ACS ACR122 0",
-        "checkOnWrite_example":["full", "idOnly", "nonCheck"],
-        "checkOnWrite":"full"
+        "validation_example":["none", "idOnly", "allData"],
+        "validation":"idOnly"
     },
     "mindwave":
     {
