@@ -10,26 +10,26 @@ ApplicationWindow
 {
     visible: true;
     width: 1500;
-    height: 700;
+    height: 900;
     x: 420;
-    y: 100;
+    y: 20;
     title: qsTr("App");
     id: core;
 
-//    TouchWindow
-//    {
-//        id:touchWindow;
+    TouchWindow
+    {
+        id:touchWindow;
 
-//        TouchWindowTest
-//        {
+        TouchWindowTest
+        {
 
-//        }
-//    }
+        }
+    }
 
-//    MainWindow
-//    {
-//        id:mainWindow;
-//    }
+    MainWindow
+    {
+        id:mainWindow;
+    }
 
     ControlsWindow
     {

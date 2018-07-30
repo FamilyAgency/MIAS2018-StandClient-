@@ -126,7 +126,6 @@ bool ACR122CardHandler::cardPreparedSuccess()
     return cardPrepared;
 }
 
-
 void ACR122CardHandler::releaseCardReader()
 {
     SCardDisconnect(card_handle_, SCARD_UNPOWER_CARD);
