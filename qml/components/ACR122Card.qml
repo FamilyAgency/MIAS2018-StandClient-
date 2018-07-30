@@ -265,4 +265,25 @@ ApplicationWindow
         errorText.text = "Error: no error";
         errorText.color = "#009900";
     }
+
+
+
+
+    Connections
+    {
+        target:server;
+        onServerRequestSuccess:
+        {
+            switch(responseType)
+            {
+            case ResponseType.CreateUserRequest:
+                rfidBox.value = server.baseUserData.id;
+                name.text = server.baseUserData.name;
+                surname.text = server.baseUserData.surname;
+                phone.text = server.baseUserData.phone;
+                mail.text = server.baseUserData.email;
+                break;
+           }
+        }
+    }
 }

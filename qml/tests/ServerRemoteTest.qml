@@ -3,8 +3,10 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
-import "../mainScreens"
+
 import com.app 1.0
+import ".."
+import "../mainScreens"
 
 Item
 {
@@ -182,8 +184,7 @@ Item
             onClicked:
             {
                 server.clearBaseUserInfo();
-                //server.createUserRequest("Юрий", "Попов", "yurik@gmail.com", "89067784587");
-                server.createUserRequest();
+                server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone());
             }
         }
         RowLayout
@@ -338,6 +339,11 @@ Item
                 to: 2;
             }
         }
+    }
+
+    Tools
+    {
+        id:tools;
     }
 
     Connections

@@ -50,5 +50,6 @@
         <file>qml/controlScreens/UserRegistrationData.qml</file>
         <file>qml/touchScreens/AnimationControllerLayer.qml</file>
         <file>qml/components/ACR122Card.qml</file>
+        <file>qml/Tools.qml</file>
     </qresource>
 </RCC>

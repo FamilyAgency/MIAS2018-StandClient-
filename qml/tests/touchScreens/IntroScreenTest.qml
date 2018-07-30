@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 import com.app 1.0
+import ".."
 
 Item
 {
@@ -35,7 +36,7 @@ Item
             onClicked:
             {
                 server.clearBaseUserInfo();
-                server.createUserRequest("Юрий", "Попов", randomEmail(), "8" + randomPhone());
+                server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone());
             }
         }
 
@@ -73,6 +74,11 @@ Item
         }
     }
 
+    Tools
+    {
+        id:tools;
+    }
+
     Connections
     {
         target: server;
@@ -83,31 +89,5 @@ Item
                 userId.value = server.baseUserData.id;
             }
         }
-
-    }
-
-    function randomPhone()
-    {
-        return Math.random() * (9999999999 - 1111111111) + 1111111111;
-    }
-
-    function randomEmail()
-    {
-        var email = "";
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-        for (var i = 0; i < 5; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-        email = text + "@";
-
-        var text = "";
-        for (var i = 0; i < 4; i++)
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-         email += text + ".com";
-
-        return email;
     }
 }

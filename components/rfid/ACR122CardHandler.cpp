@@ -152,7 +152,7 @@ void ACR122CardHandler::onWritingUpdate()
         return;
     }
 
-    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"<< beepCommand(true);
+    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     QByteArray cardData = lastUserData.toUtf8();
     int blocksNeeded = getBlocksNeedForWriting(cardData);
     alignData(cardData);
