@@ -16,8 +16,8 @@ public:
     virtual void setConfig(ConfigPtr config) override;
 
     virtual void startReading() override;
-    Q_INVOKABLE void startReadingId();
-    Q_INVOKABLE void startReadingAllData();
+    Q_INVOKABLE void startReadingId() override;
+    Q_INVOKABLE void startReadingAllData() override;
 
     Q_INVOKABLE virtual void startWriting(const QString& data) override;
     Q_INVOKABLE void startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
@@ -100,8 +100,7 @@ private:
 
 signals:
     void cardReaderError(CardReaderError error);
-    void userWriteSuccess();
-    void userReadSuccess(const QString& data);
+    void userWriteSuccess();   
     void validationSuccess();
     void validationFailed();
 

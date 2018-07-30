@@ -28,7 +28,7 @@ void IntroModule::setRFIDComponent(QSharedPointer<RFIDComponent> value)
 
 void IntroModule::setServerComponent(QSharedPointer<ServerComponent> value)
 {
-    serverComponent = value;
+    serverComponent = qobject_cast<QSharedPointer<ServerRemoteComponent>>(value);
 }
 
 void IntroModule::setUserData(QSharedPointer<UserData> value)
@@ -44,7 +44,7 @@ void IntroModule::setStandData(QSharedPointer<StandData> value)
 void IntroModule::start()
 {
     qDebug()<<"======================= IntroModule START =======================";
-    //rfidComponent->getPortsAvailable();
+    rfidComponent->startReadingId();
     connectComponents();
 }
 
@@ -54,14 +54,12 @@ void IntroModule::stop()
     disconnectComponents();
 }
 
-void IntroModule::onRFIDConnectedChanged()
+void IntroModule::onUserReadSuccess(const QString& data)
 {
+    qDebug()<<"id readed "<<data;
 
-}
-
-void IntroModule::onRFIDRecieve(int id)
-{
-    // serverComponent->searchuser
+    serverComponent->clearBaseUserInfo();
+    serverComponent->searchUserByIdRequest(data.toInt());
 }
 
 void IntroModule::onNewUserEntered(const UserObject& userObject)
@@ -100,8 +98,7 @@ void IntroModule::connectComponents()
 
     if(rfidComponent)
     {
-        connect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
-        connect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
+       connect(rfidComponent.data(), SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
     }
 }
 
@@ -115,7 +112,6 @@ void IntroModule::disconnectComponents()
 
     if(rfidComponent)
     {
-        disconnect(rfidComponent.data(), SIGNAL(connectedChanged()), this, SLOT(onRFIDConnectedChanged()));
-        disconnect(rfidComponent.data(), SIGNAL(onRFIDRecieve(int)), this, SLOT(onRFIDRecieve(int)));
+        disconnect(rfidComponent.data(), SIGNAL(userReadSuccess(const QString& )), this, SLOT(onUserReadSuccess(const QString&)));
     }
 }

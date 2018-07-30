@@ -257,8 +257,7 @@ void ACR122CardHandler::onCardReaderError(CardReaderError error)
 }
 
 void ACR122CardHandler::onReadingUpdate()
-{
-    connectTimer->stop();
+{   
     readIdOnly ? readId() : readAllData();
 }
 
@@ -268,6 +267,7 @@ void ACR122CardHandler::readId()
     {
         return;
     }
+    connectTimer->stop();
 
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
     {
@@ -275,6 +275,8 @@ void ACR122CardHandler::readId()
         releaseCardReader();
         return;
     }
+
+
 
     QByteArray data = "";
     blockAdress = blockAdresses[0];
@@ -326,6 +328,7 @@ void ACR122CardHandler::readAllData()
     {
         return;
     }
+    connectTimer->stop();
 
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
     {

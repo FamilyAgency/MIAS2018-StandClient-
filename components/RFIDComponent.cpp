@@ -44,6 +44,16 @@ void RFIDComponent::stop()
 
 }
 
+void RFIDComponent::startReadingId()
+{
+
+}
+
+void RFIDComponent::startReadingAllData()
+{
+
+}
+
 void RFIDComponent::startReading()
 {
 

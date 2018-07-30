@@ -27,6 +27,8 @@ public:
     Q_ENUMS(CardReaderState)
 
     Q_INVOKABLE virtual void startReading();
+    Q_INVOKABLE virtual void startReadingId();
+    Q_INVOKABLE virtual void startReadingAllData();
     Q_INVOKABLE virtual void startWriting(const QString& data);
     Q_INVOKABLE virtual void stopAll();
 
@@ -50,6 +52,7 @@ protected:
     void setCardReaderState(CardReaderState state);
 
 signals:
+    void userReadSuccess(const QString& data);
     void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);

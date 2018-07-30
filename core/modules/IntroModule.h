@@ -5,7 +5,7 @@
 #include "BaseModule.h"
 #include "core/data/UserData.h"
 #include "components/RFIDComponent.h"
-#include "components/ServerComponent.h"
+#include "components/ServerRemoteComponent.h"
 #include "core/data/StandData.h"
 
 class IntroModule : public BaseModule
@@ -28,7 +28,7 @@ public:
 
 private:
     QSharedPointer<RFIDComponent> rfidComponent = nullptr;
-    QSharedPointer<ServerComponent> serverComponent = nullptr;
+    QSharedPointer<ServerRemoteComponent> serverComponent = nullptr;
     QSharedPointer<UserData> userData = nullptr;
     QSharedPointer<StandData> standData = nullptr;
 
@@ -41,8 +41,8 @@ signals:
 
 
 private slots:
-    void onRFIDRecieve(int id);
-    void onRFIDConnectedChanged();
+    void onUserReadSuccess(const QString& data);
+
     void onNewUserEntered(const UserObject& userObject);
     void onUserNotFound();
     void onServerError();
