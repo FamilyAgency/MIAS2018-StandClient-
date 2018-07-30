@@ -46,8 +46,10 @@
         "baudRate": 115200,
         "autoConnect": false,
         "useKeyword": false,
-        "types_example": ["arduino"],
-        "type": "ACS ACR122 0"
+        "types_example": ["arduino", "ACS ACR122 0"],
+        "type": "ACS ACR122 0",
+        "checkOnWrite_example":["full", "idOnly", "nonCheck"],
+        "checkOnWrite":"full"
     },
     "mindwave":
     {

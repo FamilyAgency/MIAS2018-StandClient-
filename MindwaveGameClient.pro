@@ -56,7 +56,61 @@ SOURCES += main.cpp \
     components/mindwave/serial/MindwaveReaderSerial.cpp \
     components/mindwave/serial/MindwaveParserSerial.cpp \
     components/rfid/ACR122CardHandler.cpp \
-    components/rfid/UHFCardHandler.cpp
+    components/rfid/UHFCardHandler.cpp \
+    components/mindwave/serial/MindwaveComponentSerial.cpp \
+    components/mindwave/serial/MindwaveParserSerial.cpp \
+    components/mindwave/serial/MindwaveReaderSerial.cpp \
+    components/mindwave/tcp/MindwaveComponentTCP.cpp \
+    components/mindwave/tcp/MindwaveParserTCP.cpp \
+    components/mindwave/tcp/MindwaveReaderTCP.cpp \
+    components/mindwave/MindwaveComponentBase.cpp \
+    components/mindwave/MindwaveParserBase.cpp \
+    components/mindwave/MindwaveReaderBase.cpp \
+    components/monitoring/MemoryChecker.cpp \
+    components/rfid/ACR122CardHandler.cpp \
+    components/rfid/UHFCardHandler.cpp \
+    components/BaseComponent.cpp \
+    components/ExternalSystemComponent.cpp \
+    components/HealthCheckerComponent.cpp \
+    components/LoggerComponent.cpp \
+    components/MonitoringComponent.cpp \
+    components/RFIDComponent.cpp \
+    components/ServerComponent.cpp \
+    components/ServerRemoteComponent.cpp \
+    components/SlackComponent.cpp \
+    config/Config.cpp \
+    config/ConfigController.cpp \
+    config/ConfigLoader.cpp \
+    config/ConfigParser.cpp \
+    config/ConfigWriter.cpp \
+    core/data/OneStageData.cpp \
+    core/data/StandData.cpp \
+    core/data/UserData.cpp \
+    core/game/GamePostTask.cpp \
+    core/game/GamePreTask.cpp \
+    core/game/GameTask.cpp \
+    core/game/GameTaskManager.cpp \
+    core/game/VelocityCalculator.cpp \
+    core/modules/BaseModule.cpp \
+    core/modules/GameModule.cpp \
+    core/modules/GameResultModule.cpp \
+    core/modules/InstructionModule.cpp \
+    core/modules/IntroModule.cpp \
+    core/modules/RouletteModule.cpp \
+    core/modules/SuperGameModule.cpp \
+    core/modules/SuperGameResultModule.cpp \
+    core/AppController.cpp \
+    core/GameSession.cpp \
+    core/Types.cpp \
+    network/http/HTTPClient.cpp \
+    network/socketClient/TCPSocketClient.cpp \
+    services/BaseService.cpp \
+    tests/MindwaveComponentTest.cpp \
+    tests/RFIDComponentTest.cpp \
+    tools/AppSettings.cpp \
+    tools/MathTools.cpp \
+    tools/StringTools.cpp \
+    main.cpp
 
 RESOURCES += qml.qrc
 
@@ -140,6 +194,62 @@ HEADERS += \
     components/mindwave/serial/MindwaveParserSerial.h \
     components/mindwave/serial/MindwaveSerialData.h \
     components/rfid/ACR122CardHandler.h \
-    components/rfid/UHFCardHandler.h
+    components/rfid/UHFCardHandler.h \
+    components/mindwave/serial/MindwaveComponentSerial.h \
+    components/mindwave/serial/MindwaveParserSerial.h \
+    components/mindwave/serial/MindwaveReaderSerial.h \
+    components/mindwave/serial/mindwaveserialdata.h \
+    components/mindwave/tcp/MindwaveComponentTCP.h \
+    components/mindwave/tcp/MindwaveParserTCP.h \
+    components/mindwave/tcp/MindwaveReaderTCP.h \
+    components/mindwave/MindwaveComponentBase.h \
+    components/mindwave/MindwaveParserBase.h \
+    components/mindwave/MindwaveReaderBase.h \
+    components/monitoring/MemoryChecker.h \
+    components/rfid/ACR122CardHandler.h \
+    components/rfid/UHFCardHandler.h \
+    components/BaseComponent.h \
+    components/ExternalSystemComponent.h \
+    components/HealthCheckerComponent.h \
+    components/LoggerComponent.h \
+    components/MonitoringComponent.h \
+    components/RFIDComponent.h \
+    components/ServerComponent.h \
+    components/ServerRemoteComponent.h \
+    components/SlackComponent.h \
+    config/Config.h \
+    config/ConfigController.h \
+    config/ConfigLoader.h \
+    config/ConfigParser.h \
+    config/ConfigWriter.h \
+    core/data/OneStageData.h \
+    core/data/StandData.h \
+    core/data/UserData.h \
+    core/game/GamePostTask.h \
+    core/game/GamePreTask.h \
+    core/game/GameTask.h \
+    core/game/GameTaskManager.h \
+    core/game/VelocityCalculator.h \
+    core/modules/BaseModule.h \
+    core/modules/GameModule.h \
+    core/modules/GameResultModule.h \
+    core/modules/InstructionModule.h \
+    core/modules/IntroModule.h \
+    core/modules/RouletteModule.h \
+    core/modules/SuperGameModule.h \
+    core/modules/SuperGameResultModule.h \
+    core/AppController.h \
+    core/GameSession.h \
+    core/Types.h \
+    debug/moc_predefs.h \
+    network/http/HTTPClient.h \
+    network/socketClient/TCPSocketClient.h \
+    services/BaseService.h \
+    tests/MindwaveComponentTest.h \
+    tests/RFIDComponentTest.h \
+    tools/AppSettings.h \
+    tools/MathTools.h \
+    tools/StringTools.h
 
-DISTFILES +=
+DISTFILES += \
+    modules/components/components.pri

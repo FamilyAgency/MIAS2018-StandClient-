@@ -21,7 +21,8 @@ public:
     {
         Reading,
         Writing,
-        Stopped
+        Stopped,
+        Validating
     };
     Q_ENUMS(CardReaderState)
 

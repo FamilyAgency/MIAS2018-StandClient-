@@ -1,11 +1,18 @@
-import QtQuick 2.6
-import QtQuick.Controls 2.1
+import QtQuick 2.0
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Controls.Styles 1.4
 import com.app 1.0
 
-Item
+ApplicationWindow
 {
+    visible: true;
+    width: 500;
+    height: 600;
+    x: 420;
+    y: 60;
+    title: qsTr("App");
+    id: core;
+
     Component.onCompleted:
     {
         // console.log("arduino component  ", rfid.config)
@@ -13,6 +20,8 @@ Item
 
     ColumnLayout
     {
+        x: 50;
+        y: 50;
         spacing: 10;
 
         Text
@@ -56,6 +65,7 @@ Item
             font.family: "Helvetica";
             font.pixelSize: 14;
         }
+
         RowLayout
         {
 
@@ -66,7 +76,8 @@ Item
                 text: "Start Writing"
                 onClicked:
                 {
-                    rfid.startWriting(inputtext.text);
+                    rfid.startWriting(9910, "юрий", "попович", "79065678789", "яндекс@мейл.ру");
+                    //rfid.startWriting(inputtext.text);
                 }
             }
             
@@ -110,13 +121,19 @@ Item
             }
         }
 
-        Text
+        TextArea
         {
-            id:status;
-            text: "Status: ";
-            font.family: "Helvetica"
-            font.pixelSize: 17
-            color: "#008800"
+            implicitWidth: 400;
+            implicitHeight: 60;
+            id:outputtext;
+            width: 310;
+            height: 200;
+            wrapMode: TextEdit.Wrap;
+            selectByMouse: true;
+            clip: true;
+           // textFormat: Text.RichText;
+            font.family: "Helvetica";
+            font.pixelSize: 14;
         }
 
         Connections
@@ -139,50 +156,50 @@ Item
                 }
             }
 
-            onNoCard:
-            {
-                status.text = "Status: no card";
-            }
+//            onNoCard:
+//            {
+//                status.text = "Status: no card";
+//            }
 
-            onNoCardReader:
-            {
-                status.text = "Status: no card reader";
-            }
+//            onNoCardReader:
+//            {
+//                status.text = "Status: no card reader";
+//            }
 
-            onAuthError:
-            {
-                status.text = "Status: on auth error";
-            }
+//            onAuthError:
+//            {
+//                status.text = "Status: on auth error";
+//            }
 
-            onUnknownError:
-            {
-                 status.text = "Status: unknown error";
-            }
+//            onUnknownError:
+//            {
+//                 status.text = "Status: unknown error";
+//            }
 
-            onReadingCardError:
-            {
-                 status.text = "Status: on reading card error";
-            }
+//            onReadingCardError:
+//            {
+//                 status.text = "Status: on reading card error";
+//            }
 
             onNewData:
             {
-                 status.text = "Status: new data " + data;
+                 outputtext.text = "Status: new data " + data;
             }
 
             onNewTag:
             {
-                 status.text = "Status: new tag " + id;
+                 outputtext.text = "Status: new tag " + id;
             }
 
             onUserWriteSuccess:
             {
-                 status.text = "Status: on User Write Status: Success";
+                 outputtext.text = "Status: on User Write Status: Success";
             }
 
-            onUserWriteError:
-            {
-                status.text = "Status: on User Write Status: Error";
-            }
+//            onUserWriteError:
+//            {
+//                status.text = "Status: on User Write Status: Error";
+//            }
         }
     }
 }
