@@ -11,7 +11,12 @@ class ACR122CardHandler : public RFIDComponent
     Q_OBJECT
 public:
     explicit ACR122CardHandler(QObject *parent = nullptr);
-    Q_INVOKABLE virtual void startReading() override;
+    ~ACR122CardHandler();
+
+    virtual void startReading() override;
+    Q_INVOKABLE void startReadingId();
+    Q_INVOKABLE void startReadingAllData();
+
     Q_INVOKABLE virtual void startWriting(const QString& data) override;
     Q_INVOKABLE void startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
     Q_INVOKABLE virtual void stopAll() override;
@@ -53,8 +58,13 @@ private:
     uint8_t blockAdress = 0x01;
     const uint8_t keyType = 0x60; //0x60 /*TypeA */
     uint8_t keyLocation = 0x00;//0x01
-    QString userData = "";
+    //QString userData = "";
     QString blockZeroData = "";
+
+    bool readIdOnly = true;
+
+    QString lastUserId;
+    QString lastUserData;
 
     void readId();
     void readAllData();
@@ -81,28 +91,21 @@ private:
     int readerTimeout = 2000;
     int checkMills = 100;
 
-    CardReaderState cardReaderState;
-    void setCardReaderState(CardReaderState state);   
-
 signals:
     void cardReaderError(CardReaderError);
-
-    void unknownError();
-    void readingCardError();
-
-    void newData(const QString& data);
-    void newTag(int id);
-
     void userWriteSuccess();
-    void userWriteError();
-
-    void cardReaderStateChanged(CardReaderState state);
+    void userReadSuccess(const QString& data);
+    void validationSuccess();
+    void validationFailed();
 
 private slots:
     void onReadingUpdate();
     void onWritingUpdate();
     void resetReadingState();
     void onUserWriteSuccess();
+    void onUserReadSuccess(const QString& data);
+    void onCardReaderError(CardReaderError);
+
 };
 
 #endif // ACR122CARDHANDLER_H

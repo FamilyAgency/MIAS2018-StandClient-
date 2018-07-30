@@ -43,11 +43,21 @@ ApplicationWindow
 
         Button
         {
-            id:read;
-            text: "Start Reading"
+            id:readId;
+            text: "Start Reading Id only"
             onClicked:
             {
-                rfid.startReading();
+                rfid.startReadingId();
+            }
+        }
+
+        Button
+        {
+            id:readAll;
+            text: "Start Reading All data"
+            onClicked:
+            {
+                rfid.startReadingAllData();
             }
         }
 
@@ -181,14 +191,19 @@ ApplicationWindow
 //                 status.text = "Status: on reading card error";
 //            }
 
-            onNewData:
+            onValidationSuccess:
             {
-                 outputtext.text = "Status: new data " + data;
+                console.log("validation success");
             }
 
-            onNewTag:
+            onValidationFailed:
             {
-                 outputtext.text = "Status: new tag " + id;
+                console.log("validation failed");
+            }
+
+            onUserReadSuccess:
+            {
+                 outputtext.text = "Status: new data " + data;
             }
 
             onUserWriteSuccess:

@@ -74,3 +74,10 @@ bool RFIDComponent::isHealthy()
 {
     return true;
 }
+
+void RFIDComponent::setCardReaderState(CardReaderState state)
+{
+    cardReaderState = state;
+    emit cardReaderStateChanged(state);
+}
+

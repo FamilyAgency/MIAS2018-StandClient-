@@ -9,6 +9,17 @@ ACR122CardHandler::ACR122CardHandler(QObject *parent) : RFIDComponent(parent)
     fillBlockAdresses();
 
     connect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
+    connect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
+    connect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+}
+
+ACR122CardHandler::~ACR122CardHandler()
+{
+    disconnect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
+    disconnect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
+    disconnect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+    disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
+    disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
 }
 
 void ACR122CardHandler::startReading()
@@ -18,10 +29,22 @@ void ACR122CardHandler::startReading()
     connect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
 }
 
+void ACR122CardHandler::startReadingId()
+{
+    readIdOnly = true;
+    startReading();
+}
+
+void ACR122CardHandler::startReadingAllData()
+{
+    readIdOnly = false;
+    startReading();
+}
+
 void ACR122CardHandler::startWriting(const QString& data)
 {
     setCardReaderState(CardReaderState::Writing);
-    userData = data;
+    lastUserData = data;
     timerRestart();
     connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
 }
@@ -30,11 +53,12 @@ void ACR122CardHandler::startWriting(int id, const QString& name, const QString&
 {
     setCardReaderState(CardReaderState::Writing);
 
-    QString userId = "{" + QString::number(id) + "}";
+    lastUserId = QString::number(id);
+    QString userId = "{" + lastUserId + "}";
     userId = blockZeroData.replace(0, userId.size(), userId);
-    userData = userId + "{" + name + "," + surname + "," + phone + "," + email + "}";
+    lastUserData = userId + "{" + name + "," + surname + "," + phone + "," + email + "}";
 
-    startWriting(userData);
+    startWriting(lastUserData);
 }
 
 void ACR122CardHandler::timerRestart()
@@ -86,6 +110,7 @@ bool ACR122CardHandler::cardPreparedSuccess()
     return cardPrepared;
 }
 
+
 void ACR122CardHandler::releaseCardReader()
 {
     SCardDisconnect(card_handle_, SCARD_UNPOWER_CARD);
@@ -93,7 +118,6 @@ void ACR122CardHandler::releaseCardReader()
     //  SCardFreeMemory(card_context_, cardReaderName);
     // SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
     SCardReleaseContext(card_context_);
-    setCardReaderState(CardReaderState::Stopped);
 }
 
 void ACR122CardHandler::onWritingUpdate()
@@ -113,10 +137,10 @@ void ACR122CardHandler::onWritingUpdate()
     }
 
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-    QByteArray cardData = userData.toUtf8();
+    QByteArray cardData = lastUserData.toUtf8();
     int blocksNeeded = getBlocksNeedForWriting(cardData);
     alignData(cardData);
-    qDebug()<<"fullCardData: "<<userData;
+    qDebug()<<"fullCardData: "<<lastUserData;
     qDebug()<<"write bytes: "<<cardData.size();
     qDebug()<<"blocksNeeded: "<<blocksNeeded;
     int blockOffset = 0;
@@ -179,11 +203,47 @@ void ACR122CardHandler::onUserWriteSuccess()
     }
 }
 
+void ACR122CardHandler::onUserReadSuccess(const QString& data)
+{
+    if(cardReaderState == CardReaderState::Validating)
+    {
+        if(writeValidation == WriteValidation::IdOnly)
+        {
+            if(data == lastUserId)
+            {
+                emit validationSuccess();
+            }
+            else
+            {
+                emit validationFailed();
+            }
+        }
+        else if(writeValidation == WriteValidation::AllData)
+        {
+            if(data == lastUserData)
+            {
+                emit validationSuccess();
+            }
+            else
+            {
+                emit validationFailed();
+            }
+        }
+    }
+
+    setCardReaderState(CardReaderState::Stopped);
+}
+
+void ACR122CardHandler::onCardReaderError(CardReaderError error)
+{
+
+    setCardReaderState(CardReaderState::Stopped);
+}
+
 void ACR122CardHandler::onReadingUpdate()
 {
     connectTimer->stop();
-
-
+    readIdOnly ? readId() : readAllData();
 }
 
 void ACR122CardHandler::readId()
@@ -218,7 +278,20 @@ void ACR122CardHandler::readId()
     }
 
     QString id = QString(data);
-    qDebug()<<"id "<<id;
+    int startIndex = id.indexOf('{');
+    int endIndex = id.indexOf('}');
+    if(startIndex != -1 && endIndex != -1)
+    {
+        id = id.mid(startIndex + 1, endIndex-1);
+        emit userReadSuccess(id);
+    }
+    else
+    {
+        emit cardReaderError(CardReaderError::ReadError);
+        releaseCardReader();
+        return;
+    }
+
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
@@ -229,7 +302,6 @@ void ACR122CardHandler::readId()
     }
 
     releaseCardReader();
-    emit newData(id);
 }
 
 void ACR122CardHandler::readAllData()
@@ -248,6 +320,7 @@ void ACR122CardHandler::readAllData()
 
     QByteArray data = "";
     QByteArray fulldata;
+    int lastSymbolCount = 0;
     for(int i = 0; i < blockAdresses.size(); i++)
     {
         blockAdress = blockAdresses[i];
@@ -266,6 +339,17 @@ void ACR122CardHandler::readAllData()
             return;
         }
         fulldata.append(data);
+
+        int lastSymbol = data.indexOf('}');
+        if(lastSymbol != -1)
+        {
+            lastSymbolCount++;
+            if(lastSymbolCount == 2)
+            {
+                break;
+            }
+        }
+
     }
     qDebug()<<"fulldata "<<QString(fulldata);
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
@@ -278,13 +362,7 @@ void ACR122CardHandler::readAllData()
     }
 
     releaseCardReader();
-    emit newData(fulldata);
-}
-
-void ACR122CardHandler::setCardReaderState(CardReaderState state)
-{
-    cardReaderState = state;
-    emit cardReaderStateChanged(state);
+    emit userReadSuccess(fulldata);
 }
 
 void ACR122CardHandler::resetReadingState()
@@ -346,8 +424,9 @@ bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QByteArray& data)
 {
     uint8_t bytesNum = 0x010;
     QString str = QString::number(bytesNum);
-    // qDebug()<<"-------------------------------";
-    // qDebug()<<"read bytes :" << str.toInt();
+    qDebug()<<"-------------------------------";
+    qDebug()<<"read blockNumber :" <<blockNumber;
+    qDebug()<<"read bytes :" << str.toInt();
 
     uint8_t bytes[5] = {0xff, 0xB0, 0x00, blockNumber/* Block number */,bytesNum/* bytes */};
     DWORD cbRecv = MAX_APDU_SIZE;
@@ -362,6 +441,7 @@ bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QByteArray& data)
     {
         recieve.append(pbRecv[i]);
     }
+    qDebug()<<"bytes :" << data;
     data = recieve;
     return true;
 }

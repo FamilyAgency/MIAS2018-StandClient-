@@ -42,6 +42,10 @@ public:
     void setConnected(bool value);
     bool connected() const;
 
+protected:
+    CardReaderState cardReaderState;
+    void setCardReaderState(CardReaderState state);
+
 private:
      RFIDConfig _rfidConfig;
      bool _connected = false;
@@ -50,14 +54,7 @@ signals:
     void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);
-
-
-//signals:
-//    void userWriteStatus(bool status);
-//    void newTag(int id);
-//    void noCard();
-//    void noCardReader();
-//    void authError();
+    void cardReaderStateChanged(CardReaderState state);
 
 };
 
