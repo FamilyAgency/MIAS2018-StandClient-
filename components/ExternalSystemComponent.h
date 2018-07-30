@@ -10,7 +10,7 @@ class ExternalSystemComponent : public BaseComponent
 public:
     explicit ExternalSystemComponent(QObject *parent = nullptr);
     virtual ~ExternalSystemComponent();
-    virtual bool isHealthy() = 0;
+    virtual bool isHealthy();
 };
 
 #endif // EXTERNALSYSTEMCOMPONENT_H

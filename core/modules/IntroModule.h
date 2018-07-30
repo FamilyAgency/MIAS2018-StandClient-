@@ -5,7 +5,7 @@
 #include "BaseModule.h"
 #include "core/data/UserData.h"
 #include "components/RFIDComponent.h"
-#include "components/ServerRemoteComponent.h"
+#include "components/server/ServerRemoteComponent.h"
 #include "core/data/StandData.h"
 
 class IntroModule : public BaseModule

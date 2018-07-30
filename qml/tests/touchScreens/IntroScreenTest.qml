@@ -86,7 +86,7 @@ Item
         {
             if(responseType == ResponseType.CreateUserRequest)
             {
-                userId.value = server.baseUserData.id;
+                userId.value = userData.baseUserData.id;
             }
         }
     }

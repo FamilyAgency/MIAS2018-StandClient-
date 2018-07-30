@@ -38,7 +38,6 @@ SOURCES += main.cpp \
     tests/RFIDComponentTest.cpp \
     components/MonitoringComponent.cpp \
     components/monitoring/MemoryChecker.cpp \
-    components/ServerRemoteComponent.cpp \
     tools/AppSettings.cpp \
     tools/StringTools.cpp \
     core/modules/RouletteModule.cpp \
@@ -76,7 +75,6 @@ SOURCES += main.cpp \
     components/MonitoringComponent.cpp \
     components/RFIDComponent.cpp \
     components/ServerComponent.cpp \
-    components/ServerRemoteComponent.cpp \
     components/SlackComponent.cpp \
     config/Config.cpp \
     config/ConfigController.cpp \
@@ -110,7 +108,10 @@ SOURCES += main.cpp \
     tools/AppSettings.cpp \
     tools/MathTools.cpp \
     tools/StringTools.cpp \
-    main.cpp
+    main.cpp \
+    components/server/ServerTypes.cpp \
+    components/server/ServerRemoteComponent.cpp \
+    tests/ServerRemoteComponentTest.cpp
 
 RESOURCES += qml.qrc
 
@@ -175,7 +176,6 @@ HEADERS += \
     tests/RFIDComponentTest.h \
     components/MonitoringComponent.h \
     components/monitoring/MemoryChecker.h \
-    components/ServerRemoteComponent.h \
     tools/AppSettings.h \
     tools/StringTools.h \
     core/modules/RouletteModule.h \
@@ -215,7 +215,6 @@ HEADERS += \
     components/MonitoringComponent.h \
     components/RFIDComponent.h \
     components/ServerComponent.h \
-    components/ServerRemoteComponent.h \
     components/SlackComponent.h \
     config/Config.h \
     config/ConfigController.h \
@@ -241,7 +240,6 @@ HEADERS += \
     core/AppController.h \
     core/GameSession.h \
     core/Types.h \
-    debug/moc_predefs.h \
     network/http/HTTPClient.h \
     network/socketClient/TCPSocketClient.h \
     services/BaseService.h \
@@ -249,7 +247,10 @@ HEADERS += \
     tests/RFIDComponentTest.h \
     tools/AppSettings.h \
     tools/MathTools.h \
-    tools/StringTools.h
+    tools/StringTools.h \
+    components/server/ServerTypes.h \
+    components/server/ServerRemoteComponent.h \
+    tests/ServerRemoteComponentTest.h
 
 DISTFILES += \
     modules/components/components.pri

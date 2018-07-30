@@ -152,8 +152,12 @@ Item
                 mainText.text = "Играешь на другом<br/>стенде, хитрец!";
                 break;
 
-            case CantPlayReason.Finished:
+            case CantPlayReason.FinishedPrizesNotGot:
                 mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
+                break;
+
+            case CantPlayReason.FinishedPrizesGot:
+                mainText.text = "Вы забрали призы. Удачи!";
                 break;
             }
 

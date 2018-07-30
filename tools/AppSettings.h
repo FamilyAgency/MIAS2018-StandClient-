@@ -1,13 +1,11 @@
 #ifndef APPSETTINGS_H
 #define APPSETTINGS_H
 
-#include <QObject>
-
-class AppSettings : public QObject
+class AppSettings
 {
-    Q_OBJECT
+
 public:
-    explicit AppSettings(QObject *parent = nullptr);
+    AppSettings();
 
     void init();
 };

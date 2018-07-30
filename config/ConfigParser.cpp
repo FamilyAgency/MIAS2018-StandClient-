@@ -201,5 +201,3 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
         parseError("No games for this stand id = " + QString::number(config->mainConfig->appId));
     }
 }
-
-

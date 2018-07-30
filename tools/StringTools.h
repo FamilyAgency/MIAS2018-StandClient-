@@ -8,6 +8,7 @@ class StringTools
 {
 public:
     StringTools();
+
     QChar toCyrConverter(const QString& unicode);
     QString convertUnicodeToCyrillic(const QByteArray& unicodeBytes);
 

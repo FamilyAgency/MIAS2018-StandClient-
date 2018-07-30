@@ -25,7 +25,6 @@ ConfigController::ConfigController()
     connect(configLoader.data(), SIGNAL(configLoadingError()), this, SLOT(onConfigLoadingError()));
     connect(configParser.data(), SIGNAL(parseComplete(ConfigPtr )), this, SLOT(onConfigParsingComplete(ConfigPtr )));
     connect(configParser.data(), SIGNAL(parseError(const QString&)), this, SLOT(onConfigParsingError(const QString&)));
-
 }
 
 ConfigController::~ConfigController()

@@ -172,7 +172,6 @@ ApplicationWindow
             wrapMode: TextEdit.Wrap;
             selectByMouse: true;
             clip: true;
-            // textFormat: Text.RichText;
             font.family: "Helvetica";
             font.pixelSize: 14;
         }
@@ -211,7 +210,7 @@ ApplicationWindow
                 errorText.text = "Last error: " + error;
                 errorText.color = "#990000";
 
-                switch(state)
+                switch(error)
                 {
                 case CardReaderError.CantStartTransaction:
                     break;
@@ -222,6 +221,7 @@ ApplicationWindow
                 case CardReaderError.NoCardReader:
                     break;
                 case CardReaderError.NoCard:
+                    errorText.text = "Last error: no card near";
                     break;
                 case CardReaderError.AuthError:
                     break;
@@ -266,9 +266,6 @@ ApplicationWindow
         errorText.color = "#009900";
     }
 
-
-
-
     Connections
     {
         target:server;
@@ -277,13 +274,13 @@ ApplicationWindow
             switch(responseType)
             {
             case ResponseType.CreateUserRequest:
-                rfidBox.value = server.baseUserData.id;
-                name.text = server.baseUserData.name;
-                surname.text = server.baseUserData.surname;
-                phone.text = server.baseUserData.phone;
-                mail.text = server.baseUserData.email;
+                rfidBox.value = userData.baseUserData.id;
+                name.text = userData.baseUserData.name;
+                surname.text = userData.baseUserData.surname;
+                phone.text = userData.baseUserData.phone;
+                mail.text = userData.baseUserData.email;
                 break;
-           }
+            }
         }
     }
 }

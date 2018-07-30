@@ -6,16 +6,27 @@
 #include "config/Config.h"
 #include "network/http/HTTPClient.h"
 #include "core/data/UserData.h"
+#include "components/server/ServerTypes.h"
 
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
+
     Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
+    Q_ENUMS(ResponseType)
+    Q_ENUMS(ServerGlobalErrorType)
     Q_ENUMS(ServerStatus)
 
 public:
     explicit ServerComponent(QObject *parent = nullptr);
     virtual ~ServerComponent();
+
+    enum class ServerStatus
+    {
+        Free,
+        Busy,
+        Error
+    };
 
     enum class HTTPMethod
     {
@@ -25,11 +36,10 @@ public:
         DELETE
     };
 
-    enum class ServerStatus
+    enum class RegErrorType
     {
-        Free,
-        Busy,
-        Error
+        UserAlreadyExists = 555,
+        UserAlreadyConfirmed = 556
     };
 
     enum class ResponseType
@@ -53,13 +63,6 @@ public:
         UpdateGameRequest,
         FinishGameRequest
     };
-    Q_ENUMS(ResponseType)
-
-    enum class RegErrorType
-    {
-        UserAlreadyExists = 555,
-        UserAlreadyConfirmed = 556
-    };
 
     enum class ServerGlobalErrorType
     {
@@ -68,7 +71,6 @@ public:
         NetworkError,
         ServerIsDown
     };
-    Q_ENUMS(ServerGlobalErrorType)
 
     struct ServerResponse
     {
@@ -86,31 +88,27 @@ public:
         }
     };
 
+    Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
 
-    virtual void start() override;
-    virtual void stop() override;
-    virtual bool isHealthy() override;
-
-    virtual void startGameRequest(int userId){};
-    virtual void updateGameRequest(int userId){};
-    virtual void finishGameRequest(int userId){};
+    virtual void startGameRequest(int userId){};// = 0;
+    virtual void updateGameRequest(int userId){};//= 0;
+    virtual void finishGameRequest(int userId){};//= 0;
+    virtual void start() override{};//= 0;
+    virtual void stop() override{};//= 0;
 
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
-
-    Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
-
-    virtual void parse(const ServerResponse& response);
-    virtual void logout();
 
 protected:
     ServerResponse response;
     ServerConfig _serverConfig;
     QSharedPointer<HTTPClient> httpClient;
     ServerStatus _serverStatus = ServerStatus::Free;
+
     bool canRunRequest() const;
+    virtual void parse(const ServerResponse& response){};//= 0;
 
 signals:
     void serverConfigChanged();
@@ -122,8 +120,6 @@ signals:
     void serverRequestSuccess(ResponseType responseType);
     void serverGlobalError(ServerGlobalErrorType globalErrorType);
 
-    void serverLogged(const QString& log);
-
     void newUserEntered(const UserObject&);
     void userNotFound();
     void userAlreadyExists();
@@ -133,12 +129,14 @@ signals:
     void userUpdatedGame();
     void userFinishedGame();
 
+    void serverLogged(const QString& log);//for QML
+
 protected slots:
     virtual void httpRequestSuccessHandler(const QString& data);
     virtual void httpRequestFailedHandler(const QString& data);
 };
 
+
 typedef ServerComponent::ServerResponse ServerResponse;
-typedef ServerComponent::RegErrorType RegErrorType;
 
 #endif // SERVERCOMPONENT_H

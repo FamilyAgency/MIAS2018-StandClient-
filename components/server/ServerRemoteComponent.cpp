@@ -9,6 +9,21 @@ ServerRemoteComponent::ServerRemoteComponent(QObject *parent) : ServerComponent(
     name = "Server Remote";
 }
 
+void ServerRemoteComponent::logout()
+{
+
+}
+
+void ServerRemoteComponent::start()
+{
+
+}
+
+void ServerRemoteComponent::stop()
+{
+
+}
+
 void ServerRemoteComponent::commonRequest(ResponseType type, const QNetworkRequest& request, HTTPMethod httpMethod, const QByteArray& data)
 {
     if(!canRunRequest())
@@ -404,20 +419,4 @@ void ServerRemoteComponent::clearBaseUserInfo()
 {
     _baseUserData.clear();
     emit baseUserDataChanged();
-}
-
-//========================= TESTS =========================//
-//=========================================================//
-//=========================================================//
-
-void ServerRemoteComponent::simulateServerError()
-{
-    QNetworkRequest request(QString("http://mias2018.familyagency.ru"));
-    commonRequest(ResponseType::VerifyUserRequest, request, HTTPMethod::GET);
-}
-
-void ServerRemoteComponent::simulateServerTimeout()
-{
-    QNetworkRequest request(QString("http://familyagency.ru/lab/infloop.php"));
-    commonRequest(ResponseType::VerifyUserRequest, request, HTTPMethod::GET);
 }

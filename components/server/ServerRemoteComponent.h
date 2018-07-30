@@ -9,7 +9,6 @@
 class ServerRemoteComponent : public ServerComponent
 {
     Q_OBJECT
-    Q_PROPERTY(BaseUserData baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
 
 public:
     explicit ServerRemoteComponent(QObject *parent = nullptr);
@@ -30,16 +29,27 @@ public:
     Q_INVOKABLE void deleteAllTestUsersRequest();
     Q_INVOKABLE void verifyUserRequest(int userId);
     Q_INVOKABLE void confirmUserRequest(int userId, int code);
-    Q_INVOKABLE void confirmPrizeRequest(int userId, int prizeid); 
+    Q_INVOKABLE void confirmPrizeRequest(int userId, int prizeid);
 
     Q_INVOKABLE virtual void startGameRequest(int userId) override;
     Q_INVOKABLE virtual void updateGameRequest(int userId) override;
     Q_INVOKABLE virtual void finishGameRequest(int userId) override;
 
+    Q_INVOKABLE void clearBaseUserInfo();
+    Q_INVOKABLE virtual void logout();
+
+    virtual void start() override;
+    virtual void stop() override;
+
+    friend class ServerRemoteComponentTest;
+
+protected:
     virtual void parse(const ServerResponse& response) override;
 
-
-    Q_INVOKABLE void clearBaseUserInfo();
+private:
+    BaseUserData _baseUserData;
+    PrizesUserData _prizesUserData;
+    GameUserData _gameUserData;
 
     void setBaseUserData(const BaseUserData& value);
     BaseUserData baseUserData() const;
@@ -50,21 +60,11 @@ public:
     void setGameUserData(const GameUserData& value);
     GameUserData gameUserData() const;
 
-    //test
-    Q_INVOKABLE void simulateServerError();
-    Q_INVOKABLE void simulateServerTimeout();
-
-private:
-    BaseUserData _baseUserData;
-    PrizesUserData _prizesUserData;
-    GameUserData _gameUserData;
-
     void commonRequest(ResponseType type, const QNetworkRequest& request, HTTPMethod httpMethod, const QByteArray& data = 0);
 
     void createBaseUserInfo(const QJsonObject& object);
     void createPrizesUserData(const QJsonObject& object);
     void createGameUserData(const QJsonObject& object);
-
     void handleRequestError(const ServerResponse&  response);
 
 signals:

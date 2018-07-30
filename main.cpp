@@ -9,6 +9,7 @@
 #include "core/AppController.h"
 #include "core/modules/IntroModule.h"
 #include "components/rfid/ACR122CardHandler.h"
+#include "components/server/ServerTypes.h"
 
 int main(int argc, char *argv[])
 { 
@@ -24,13 +25,19 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
+
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
+   // qmlRegisterType("com.app", 1, 0, "ServerStatus");
+
+
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");
     qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
+
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
     qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
     qmlRegisterType<ACR122CardHandler>("com.app", 1, 0, "CardReaderError");
+
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {

@@ -53,10 +53,17 @@ void UserData::checkCanUserPlay()
     cantPlayReason = CantPlayReason::None;
     _canPlay = true;
 
-    if(allPrizesGot())
+    if(finished())
     {
         _canPlay = false;
-        cantPlayReason = CantPlayReason::Finished;
+        if(allPrizesGot())
+        {
+            cantPlayReason = CantPlayReason::FinishedPrizesGot;
+        }
+        else
+        {
+            cantPlayReason = CantPlayReason::FinishedPrizesNotGot;
+        }
     }
     else if(wasRecently())
     {
@@ -75,9 +82,14 @@ void UserData::checkCanUserPlay()
     }
 }
 
-bool UserData::allPrizesGot() const
+bool UserData::finished() const
 {
     return false;
+}
+
+bool UserData::allPrizesGot() const
+{    
+    return _prizesUserData.prize1 == true;
 }
 
 bool UserData::wasRecently() const

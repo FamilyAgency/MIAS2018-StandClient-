@@ -9,3 +9,8 @@ ExternalSystemComponent::~ExternalSystemComponent()
 {
 
 }
+
+bool ExternalSystemComponent::isHealthy()
+{
+    return true;
+}

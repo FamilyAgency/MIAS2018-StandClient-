@@ -46,7 +46,6 @@ void MonitoringComponent::onUpdate()
 {
     setMemory(memoryChecker.memoryUsed());
     QString outMemory = "check memory: " +  QString::number(memoryChecker.memoryUsed()) + " MB";
-
     loggerComponent->log(outMemory, LogType::Verbose, LogRemoteType::Slack, true);
 }
 

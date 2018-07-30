@@ -114,7 +114,8 @@ public:
         None,
         WasRecently,
         YouArePlaying,
-        Finished
+        FinishedPrizesGot,
+        FinishedPrizesNotGot
     };
 
     Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
@@ -151,6 +152,7 @@ public:
     bool allPrizesGot() const;
     bool wasRecently() const;
     bool playingOnAnotherStand() const;
+    bool finished() const;
 
     SuperGameConfig getSuperGameData() const;
 

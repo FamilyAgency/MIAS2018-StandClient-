@@ -1,7 +1,10 @@
 #include "AppController.h"
 #include "components/mindwave/tcp/MindwaveComponentTCP.h"
 #include "components/mindwave/serial/MindwaveComponentSerial.h"
+
 #include "components/rfid/ACR122CardHandler.h"
+#include "components/server/ServerRemoteComponent.h"
+#include "tests/ServerRemoteComponentTest.h"
 
 AppController::AppController(QObject *parent) : QObject(parent)
 {
@@ -24,8 +27,7 @@ void AppController::createRFID()
 
 void AppController::createEngine()
 {
-    appSettings.reset(new AppSettings);
-    appSettings->init();
+    appSettings.init();
 
     userData.reset(new UserData());
     standData.reset(new StandData());
@@ -36,7 +38,8 @@ void AppController::createEngine()
     loggerComponent.reset(new LoggerComponent());
     components.append(loggerComponent);
 
-    serverComponent.reset(new ServerRemoteComponent());
+    //ServerRemoteComponent
+    serverComponent.reset(new ServerRemoteComponentTest());
     connect(serverComponent.data(), SIGNAL(serverResponse(const ServerResponse&)), this, SLOT(onServerResponse(const ServerResponse&)));
     components.append(serverComponent);
 
@@ -149,7 +152,6 @@ void AppController::onConfigLoaded(ConfigPtr config)
     createRFID<ACR122CardHandler>();
     createEngine();
 
-
     for (auto comp : components)
     {
         comp->setConfig(config);
@@ -178,6 +180,9 @@ void AppController::start()
         comp->start();
     }
 
+
+
+    //todo cleaan
     bool build = false;
 
     if(build)
@@ -275,7 +280,6 @@ void AppController::setAppState(AppState value)
     QString message = "___App state changed : " + currentModule->getName();
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 }
-
 
 AppController::AppState AppController::getAppState() const
 {

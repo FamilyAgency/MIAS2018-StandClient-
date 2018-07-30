@@ -24,7 +24,7 @@ void MindwaveComponentTest::start()
 
 void MindwaveComponentTest::stop()
 {
-
+    timer->stop();
 }
 
 void MindwaveComponentTest::setConfig(ConfigPtr config)

@@ -25,15 +25,15 @@
         "touch":
         {
             "x" : 1920,
-            "y" : 0,
+            "y" : -100,
             "width" : 720,
-            "height" : 1280,
+            "height" : 1080,
             "splashScreen": true
         },
         "game":
         {
-            "x" : 3200,
-            "y" : 0,
+            "x" : 2900,
+            "y" : -100,
             "width" : 720,
             "height" : 1280,
             "splashScreen": true
@@ -46,7 +46,7 @@
         "baudRate": 115200,
         "autoConnect": false,
         "useKeyword": false,
-        "types_example": ["arduino", "ACS ACR122 0"],
+        "type_example": ["arduino", "ACS ACR122 0"],
         "type": "ACS ACR122 0",
         "validation_example":["none", "idOnly", "allData"],
         "validation":"idOnly"
@@ -60,7 +60,7 @@
         "initialCommand" : "{\"enableRawOutput\": false, \"format\": \"Json\"}\\r",
         "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
         "timeout": 4000,
-        "types_example": ["serial", "tcp", "simulation"],
+        "type_example": ["serial", "tcp", "simulation"],
         "type": "simulation"
     },
     "slack":
@@ -89,7 +89,6 @@
             "pinNeed": true
         }
     },
-
 
     "games":
         [

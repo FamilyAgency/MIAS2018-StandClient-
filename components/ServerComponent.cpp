@@ -20,7 +20,7 @@ ServerComponent::~ServerComponent()
 
 void ServerComponent::setQmlContext(QQmlContext* value)
 {
-    BaseComponent::setQmlContext(value);
+    ExternalSystemComponent::setQmlContext(value);
     qmlContext->setContextProperty("server", this);
 }
 
@@ -49,29 +49,9 @@ void ServerComponent::setServerStatus(ServerStatus serverStatus)
     emit serverStatusChanged(_serverStatus);
 }
 
-void ServerComponent::start()
-{
-
-}
-
-void ServerComponent::stop()
-{
-
-}
-
-bool ServerComponent::isHealthy()
-{
-    return true;
-}
-
 bool ServerComponent::canRunRequest() const
 {
     return _serverStatus == ServerStatus::Free;
-}
-
-void ServerComponent::logout()
-{
-
 }
 
 void ServerComponent::httpRequestSuccessHandler(const QString& data)
@@ -105,7 +85,7 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
     emit serverGlobalError(response.errorType);
 }
 
-void ServerComponent::parse(const ServerResponse& response)
-{
-    //implementation needed, inherited classes
-}
+//void ServerComponent::parse(const ServerResponse& response)
+//{
+//    //implementation needed, inherited classes
+//}

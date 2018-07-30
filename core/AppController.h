@@ -8,7 +8,6 @@
 #include "components/HealthCheckerComponent.h"
 #include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
-#include "components/ServerRemoteComponent.h"
 #include "components/SlackComponent.h"
 #include "components/LoggerComponent.h"
 #include "components/MonitoringComponent.h"
@@ -87,7 +86,7 @@ private:
     QSharedPointer<UserData> userData;
     ConfigPtr config;
     QSharedPointer<GameSession> gameSession;
-    QSharedPointer<AppSettings> appSettings;
+    AppSettings appSettings;
 
     AppState appState = AppState::Intro;
     QSharedPointer<BaseModule> currentModule = nullptr;
