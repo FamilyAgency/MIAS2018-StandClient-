@@ -62,7 +62,7 @@ Item
         repeat: false
         onTriggered:
         {
-            if(lastStatus != ServerStatus.Busy)
+            if(lastStatus !== ServerStatus.Busy)
             {
                 preloderTimer.stop();
                 visible = false;

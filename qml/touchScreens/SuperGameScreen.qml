@@ -7,6 +7,9 @@ Item
 {
     id: superGame;
 
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
     property string mainTitleDefault: "СУПЕР ИГРА";
     property string descrTitleDefault: "МАКСИМАЛЬНАЯ<br/>КОНЦЕНТРАЦИЯ<br/>И СКОРОСТЬ!";
     property string buttonText: "ПОЕХАЛИ";
@@ -16,12 +19,9 @@ Item
     signal animComplete();
     signal animStart();
 
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
     Text
     {
-        id:mainText;
+        id: mainText;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -35,7 +35,7 @@ Item
 
     Text
     {
-        id:descrText;
+        id: descrText;
         anchors.top: mainText.bottom;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -49,7 +49,7 @@ Item
 
     Text
     {
-        id:timeText;
+        id: timeText;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
         text: timeTextDefault;
@@ -62,7 +62,7 @@ Item
 
     Text
     {
-        id:triesText;
+        id: triesText;
         anchors.top: timeText.bottom;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -127,7 +127,6 @@ Item
             color: "#ffffff"
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
-
         }
 
         background: Rectangle

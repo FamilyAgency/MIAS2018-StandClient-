@@ -15,18 +15,12 @@ Item
     ServerRemoteTest
     {
         y: 50;
-    }
-
-    RFIDTest
-    {
-        y: 500;
-        visible:false;
-    }
+    }  
 
     Button
     {
         text: "Make Me Crash";
-        visible:true;
+        visible: true;
         y: 800;
         onClicked: appController.testCrash();
     }

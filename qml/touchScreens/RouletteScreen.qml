@@ -8,6 +8,9 @@ Item
 {    
     id:roulette;
 
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
     property string mainTitleDefault: "РУЛЕТКА ПОМОЖЕТ ВЫБРАТЬ МАРШРУТ<br/> ВЫХОДНОГО ДНЯ В ГОРОДЕ ВМЕСТЕ С СЕМЬЕЙ<br/>\
 В ГОРОДЕ ВМЕСТЕ С СЕМЬЕЙ";
 
@@ -17,9 +20,6 @@ Item
 
     signal animComplete();
     signal animStart();
-
-    anchors.fill: parent;
-    anchors.centerIn: parent;
 
     MouseArea
     {
@@ -44,13 +44,13 @@ Item
 
         RotationAnimation on rotation
         {
-            id:rollAnim;
+            id: rollAnim;
             loops: 1;
             from: 0;
             to: 360 + 90;
             duration: 2000;
             running: false;
-            easing.type: "InOutCubic"
+            easing.type: "InOutCubic";
 
             onStopped:
             {
@@ -137,11 +137,9 @@ Item
         radius: 10;
     }
 
-
-
     Text
     {
-        id:mainText;
+        id: mainText;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -155,7 +153,7 @@ Item
 
     Text
     {
-        id:rollText;
+        id: rollText;
         visible:true;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -168,12 +166,9 @@ Item
         horizontalAlignment :Text.AlignHCenter;
     }
 
-
-
-
     Text
     {
-        id:taskText;
+        id: taskText;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -187,7 +182,7 @@ Item
 
     Text
     {
-        id:helpText;
+        id: helpText;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenterOffset: circleSize + 60;
@@ -209,7 +204,7 @@ Item
 
     RowLayout
     {
-        id:mindwaveVisual
+        id: mindwaveVisual;
         spacing: 6;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 10;
@@ -228,24 +223,24 @@ Item
         ProgressBar
         {
             id: attentionProgressBar;
-            opacity: 0.2
+            opacity: 0.2;
             value: 0.0;
             style: ProgressBarStyle
             {
                 background: Rectangle
                 {
-                    radius: 2
-                    color: "lightgray"
-                    border.color: "gray"
-                    border.width: 1
-                    implicitWidth: 300
-                    implicitHeight: 24
+                    radius: 2;
+                    color: "lightgray";
+                    border.color: "gray";
+                    border.width: 1;
+                    implicitWidth: 300;
+                    implicitHeight: 24;
                 }
 
                 progress: Rectangle
                 {
-                    color:  "#990000"
-                    border.color: "steelblue"
+                    color: "#990000";
+                    border.color: "steelblue";
                 }
             }
         }
@@ -263,9 +258,10 @@ Item
     Connections
     {
         target:rouletteModule;
+
         onStateChanged:
         {
-            console.log(":::::::::::: state changed::::::::::::", rouletteModule.state )
+            console.log(":::::::::::: state changed::::::::::::", rouletteModule.state)
             canvas.requestPaint();
 
             switch(rouletteModule.state)
@@ -320,6 +316,7 @@ Item
     Connections
     {
         target:mind;
+
         onAttentionChanged:
         {
             if(rouletteModule.state == RouletteState.CarStarting)

@@ -87,7 +87,8 @@ public:
         }
     };
 
-    Q_INVOKABLE void setServerStatus(ServerStatus serverStatus);
+    Q_INVOKABLE void freeServer();
+
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
 
@@ -106,6 +107,7 @@ protected:
 
     bool canRunRequest() const;
     virtual void parse(const ServerResponse& response) = 0;
+    void setServerStatus(ServerStatus serverStatus);
 
 signals:
     void serverConfigChanged();

@@ -8,6 +8,9 @@ Item
 {
     id:intro;
 
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
     property string mainTitleDefault: "УПРАВЛЯЙ<br/>SANTA FE<br/>СИЛОЙ МЫСЛИ";
     property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ";
     property string addTitleHelloText: "ПОЗНАКОМЬСЯ С УВЛЕКАТЕЛЬНЫМ,<br/>МИРОМ SANTA FE!<br/>ПРЕДСТАВЛЯЕШЬ,\
@@ -17,33 +20,6 @@ Item
     signal animComplete();
     signal animStart();
 
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
-    Text
-    {
-        x: 50;
-        y: 50;
-        id:versionText;
-        Layout.alignment : Qt.AlignHCenter;
-        text: "Version: " + standData.mainConfig.version;
-        font.family: "Helvetica";
-        font.pixelSize: 20;
-        color: "#888888";
-    }
-
-    Text
-    {
-        x: 50;
-        y: 80;
-        id:memoryText;
-        Layout.alignment : Qt.AlignHCenter;
-        text: "Memory: " + monitoring.memory + " MB";
-        font.family: "Helvetica";
-        font.pixelSize: 20;
-        color: "#888888";
-    }
-
     ColumnLayout
     {
         spacing: 10;
@@ -51,7 +27,7 @@ Item
 
         Text
         {
-            id:mainText;
+            id: mainText;
             text: mainTitleDefault;
             font.family: "Helvetica";
             font.pixelSize: 45;
@@ -68,7 +44,7 @@ Item
 
         Text
         {
-            id:addText;
+            id: addText;
             text: addTitleDefault;
             font.family: "Helvetica";
             font.pixelSize: 25;
@@ -91,15 +67,15 @@ Item
                 text: buttonText;
                 font.family: "Helvetica";
                 font.pixelSize: 25;
-                color: "#ffffff"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
+                color: "#ffffff";
+                horizontalAlignment: Text.AlignHCenter;
+                verticalAlignment: Text.AlignVCenter;
             }
             background: Rectangle
             {
                 implicitHeight: 100;
                 implicitWidth: 280;
-                color:  startBtn.down ? "#3c2755" : "#801bfc";
+                color: startBtn.down ? "#3c2755" : "#801bfc";
                 radius: 10;
             }
 

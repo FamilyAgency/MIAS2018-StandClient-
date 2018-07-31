@@ -49,6 +49,12 @@ void ServerComponent::setServerStatus(ServerStatus serverStatus)
     emit serverStatusChanged(_serverStatus);
 }
 
+void ServerComponent::freeServer()
+{
+    _serverStatus = ServerStatus::Free;
+    emit serverStatusChanged(_serverStatus);
+}
+
 bool ServerComponent::canRunRequest() const
 {
     return _serverStatus == ServerStatus::Free;

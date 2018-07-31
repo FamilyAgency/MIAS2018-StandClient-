@@ -14,17 +14,17 @@ Item
 
     ColumnLayout
     {
-
         spacing: 10;
+
         RowLayout
         {
             spacing: 6;
             Text
             {
                 text: "Mindwave component";
-                font.family: "Helvetica"
-                font.pixelSize: 17
-                color: "#009900"
+                font.family: "Helvetica";
+                font.pixelSize: 17;
+                color: "#009900";
             }
         }
 
@@ -33,35 +33,35 @@ Item
             id:conServer;
             text: "Server: " + mind.mindwaveConfig.ip;
             font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            font.pixelSize: 15;
+            color: "#999999";
         }
 
         Text
         {
             id:conPort;
             text: "Port: " + mind.mindwaveConfig.port;
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
         }
 
         Text
         {
             id:auto;
             text: "Auto connection: " + mind.mindwaveConfig.autoConnect;
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
         }
 
         Text
         {
             id:conStatus;
             text: "Connection to ThinGear: " + mind.connected;
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
         }
 
         RowLayout
@@ -71,9 +71,9 @@ Item
             Text
             {
                 text: "signalLevel";
-                font.family: "Helvetica"
-                font.pixelSize: 15
-                color: "#009900"
+                font.family: "Helvetica";
+                font.pixelSize: 15;
+                color: "#009900";
             }
 
             ProgressBar
@@ -85,18 +85,18 @@ Item
                 {
                     background: Rectangle
                     {
-                        radius: 2
-                        color: "lightgray"
-                        border.color: "gray"
-                        border.width: 1
-                        implicitWidth: 300
-                        implicitHeight: 24
+                        radius: 2;
+                        color: "lightgray";
+                        border.color: "gray";
+                        border.width: 1;
+                        implicitWidth: 300;
+                        implicitHeight: 24;
                     }
                     progress: Rectangle
                     {
                         //id:signalProgressBarColor;
-                        color:  "#009900"
-                        border.color: "steelblue"
+                        color:  "#009900";
+                        border.color: "steelblue";
                     }
                 }
             }
@@ -107,7 +107,7 @@ Item
                 target: signalProgressBar;
                 property: "value";
                 to: 100;
-                duration: 500
+                duration: 500;
             }
         }
 
@@ -118,9 +118,9 @@ Item
             Text
             {
                 text: "Attention";
-                font.family: "Helvetica"
-                font.pixelSize: 15
-                color: "#990000"
+                font.family: "Helvetica";
+                font.pixelSize: 15;
+                color: "#990000";
             }
             //spacing: 6;
             ProgressBar
@@ -132,17 +132,17 @@ Item
                 {
                     background: Rectangle
                     {
-                        radius: 2
-                        color: "lightgray"
-                        border.color: "gray"
-                        border.width: 1
-                        implicitWidth: 300
-                        implicitHeight: 24
+                        radius: 2;
+                        color: "lightgray";
+                        border.color: "gray";
+                        border.width: 1;
+                        implicitWidth: 300;
+                        implicitHeight: 24;
                     }
                     progress: Rectangle
                     {
-                        color:  "#990000"
-                        border.color: "steelblue"
+                        color:  "#990000";
+                        border.color: "steelblue";
                     }
                 }
             }
@@ -153,40 +153,41 @@ Item
                 target: attentionProgressBar;
                 property: "value";
                 to: 100;
-                duration: 500
+                duration: 500;
             }
         }
 
         RowLayout
         {
-            visible: true
+            visible: true;
             opacity: 0.2;
             Text
             {
                 text: "Meditation";
-                font.family: "Helvetica"
-                font.pixelSize: 15
-                color: "#000099"
+                font.family: "Helvetica";
+                font.pixelSize: 15;
+                color: "#000099";
             }
             spacing: 6;
             ProgressBar
             {
                 id:meditationProgressBar;
-                value: 0.0
+                value: 0.0;
                 style: ProgressBarStyle
                 {
                     background: Rectangle
                     {
-                        radius: 2
-                        color: "lightgray"
-                        border.color: "gray"
-                        border.width: 1
-                        implicitWidth: 300
-                        implicitHeight: 24
+                        radius: 2;
+                        color: "lightgray";
+                        border.color: "gray";
+                        border.width: 1;
+                        implicitWidth: 300;
+                        implicitHeight: 24;
                     }
-                    progress: Rectangle {
-                        color: "#000099"
-                        border.color: "steelblue"
+                    progress: Rectangle
+                    {
+                        color: "#000099";
+                        border.color: "steelblue";
                     }
                 }
             }
@@ -196,21 +197,26 @@ Item
                 target: meditationProgressBar;
                 property: "value";
                 to: 100;
-                duration: 500
+                duration: 500;
             }
         }
 
         RowLayout
         {
-            visible: false
+            visible: false;
             spacing: 6;
-            ExclusiveGroup { id: tabPositionGroup }
+
+            ExclusiveGroup
+            {
+                id: tabPositionGroup
+            }
+
             RadioButton
             {
-                id: btn1
-                text: "Attention"
-                checked: true
-                exclusiveGroup: tabPositionGroup
+                id: btn1;
+                text: "Attention";
+                checked: true;
+                exclusiveGroup: tabPositionGroup;
                 onCheckedChanged:
                 {
                     core.gameStrategy = btn1.checked ? 1 : 2;
@@ -219,10 +225,10 @@ Item
 
             RadioButton
             {
-                id: btn2
-                text: "Meditation"
-                checked: false
-                exclusiveGroup: tabPositionGroup
+                id: btn2;
+                text: "Meditation";
+                checked: false;
+                exclusiveGroup: tabPositionGroup;
             }
         }
 
@@ -230,9 +236,9 @@ Item
         {
             id:deviceState;
             text: "Device State: ";
-            font.family: "Helvetica"
-            font.pixelSize: 15
-            color: "#999999"
+            font.family: "Helvetica";
+            font.pixelSize: 15;
+            color: "#999999";
 
             OpacityAnimator on opacity
             {
@@ -254,6 +260,7 @@ Item
     Connections
     {
         target:mind;
+
         onAttentionChanged:
         {
             nextAttentionValue = mind.attention / 100.0;

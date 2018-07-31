@@ -6,6 +6,8 @@ import QtQuick.Controls.Styles 1.4
 Item
 {
     id:fullAdvantage;
+    anchors.fill: parent;
+    visible:false;
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property string descrTitleDefault: "Если бы существовал явный механизм экстраполяции струн в низкоэнергетическую физику, то теория струн представила бы нам все фундаментальные частицы и их взаимодействия в виде ограничений на спектры возбуждений нелокальных одномерных объектов. Характерные размеры компактифицированных струн чрезвычайно малы, порядка 10−33 см (порядка планковской длины)[14], поэтому они недоступны наблюдению в эксперименте[2]. Аналогично колебаниям струн музыкальных инструментов спектральные составляющие струн возможны только для определённых частот (квантовых амплитуд). Чем больше частота, тем больше энергия, накопленная в таком колебании[15], и, в соответствии с формулой E=mc², тем больше масса частицы, в роли которой проявляет себя колеблющаяся струна в наблюдаемом мире. Параметром, аналогичным частоте для осциллятора, для струны является квадрат массы[16]"
@@ -13,9 +15,6 @@ Item
     property string buttonText: "ПОЕХАЛИ ДАЛЬШЕ";
 
     signal advantageReaded;
-
-    anchors.fill: parent;
-    visible:false;
 
     Rectangle
     {
@@ -25,7 +24,7 @@ Item
 
     Text
     {
-        id:promtText;
+        id: promtText;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: 150;
@@ -40,7 +39,7 @@ Item
 
     Text
     {
-        id:descriptionText;
+        id: descriptionText;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: promtText.bottom;
         anchors.topMargin: 50;
@@ -67,9 +66,9 @@ Item
             text: buttonText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            color: "#ffffff";
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
         }
 
         background: Rectangle

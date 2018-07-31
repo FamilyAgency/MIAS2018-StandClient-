@@ -4,11 +4,10 @@ import "results"
 Item
 {
     id: gameResultScreen;
+    anchors.fill: parent;
 
     signal animComplete();
     signal animStart();
-
-    anchors.fill: parent;
 
     GameResultFirstTime
     {

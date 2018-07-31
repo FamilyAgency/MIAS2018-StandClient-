@@ -7,6 +7,8 @@ Item
 {
     id:instruction;
 
+    anchors.fill: parent;
+
     property string mainTitleDefault: "НАДЕНЬТЕ<br/>УСТРОЙСТВО";
     property string addTitleDefault: "ИЛИ ОБРАТИТЕСЬ ЗА ПОМОЩЬЮ<br/>К ПРОМО-ПЕРСОНАЛУ";
     property string buttonText: "ПОГНАЛИ";
@@ -14,11 +16,9 @@ Item
     signal animComplete();
     signal animStart();
 
-    anchors.fill: parent;
-
     Text
     {
-        id:mainText;
+        id: mainText;
         text: mainTitleDefault;
         font.family: "Helvetica";
         font.pixelSize: 45;
@@ -32,7 +32,7 @@ Item
 
     Text
     {
-        id:addText;
+        id: addText;
         text: addTitleDefault;
         font.family: "Helvetica";
         font.pixelSize: 25;
@@ -74,7 +74,7 @@ Item
                 border.color: "gray";
                 border.width: 1;
                 implicitWidth: 300;
-                //  implicitHeight: 24;
+                //implicitHeight: 24;
             }
 
             //            contentItem: Rectangle
@@ -129,7 +129,7 @@ Item
         id:opacityAnim;
         from: 0;
         to: 1;
-        duration: 1000
+        duration: 1000;
         running:false;
 
         onRunningChanged:
@@ -172,6 +172,4 @@ Item
     {
         visible = false;
     }
-
-
 }

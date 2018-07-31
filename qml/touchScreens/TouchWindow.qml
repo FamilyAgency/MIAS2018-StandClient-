@@ -3,28 +3,29 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
+
 import "../components"
 import "elements"
 import com.app 1.0
 
 Window
-{
-    objectName: "touchWindow";
+{    
     title: "Touch Window";
-    visible: true;
-    id: touchCore;
-    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
     x: standData.mainConfig.touchScreen.x;
     y: standData.mainConfig.touchScreen.y;
     width: standData.mainConfig.touchScreen.width;
     height: standData.mainConfig.touchScreen.height;
+    visible: true;
+    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
     color: "#1c1c1c";
+
+    id: touchCore;
 
     property var locations: [];
 
     Item
     {
-        id:screens;
+        id: screens;
         anchors.fill: parent;
     }
 
@@ -32,7 +33,7 @@ Window
     {
         id:health;
         x: 50;
-        visible:false;
+        visible: false;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin: 200;
     }
@@ -40,7 +41,7 @@ Window
     ServerPreloader
     {
         id: serverPreloader;
-    }    
+    }
 
     AnimationControllerLayer
     {
@@ -54,7 +55,7 @@ Window
 
     BackBtn
     {
-        id:backBtn;
+        id: backBtn;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.right: parent.right;
@@ -76,7 +77,7 @@ Window
 
     Connections
     {
-        target:appController;
+        target: appController;
 
         onAppStateChanged:
         {

@@ -2,13 +2,21 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
+
 import com.app 1.0
 import "../.."
+import "../../components"
 
 Item
 {
     anchors.fill: parent;
     anchors.centerIn: parent;
+
+    MonitoringComponent
+    {
+
+    }
+
     RowLayout
     {
         spacing: 10;
@@ -19,10 +27,10 @@ Item
         Button
         {
             id: createBtn;
-            text:"Create User Request";
+            text: "Create User Request";
             contentItem: Text
             {
-                text:"Create User Request";
+                text: "Create User Request";
                 color: "#000000"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -31,7 +39,7 @@ Item
             {
                 implicitHeight: 50;
                 implicitWidth: 20;
-                color:  createBtn.down ? "#3c2755" : "#ffffff";
+                color: createBtn.down ? "#3c2755" : "#ffffff";
             }
             onClicked:
             {
@@ -43,10 +51,10 @@ Item
         Button
         {
             id: rfidBtn;
-            text:"RFID Request";
+            text: "RFID Request";
             contentItem: Text
             {
-                text:"RFID Request";
+                text: "RFID Request";
                 color: "#000000"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -69,14 +77,14 @@ Item
             id: userId;
             value: 325;
             editable: true;
-            from:0;
-            to:3000;
+            from: 0;
+            to: 3000;
         }
     }
 
     Tools
     {
-        id:tools;
+        id: tools;
     }
 
     Connections

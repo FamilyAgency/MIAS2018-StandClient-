@@ -14,14 +14,16 @@ Item
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         for (var i = 0; i < 5; i++)
+        {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+        }
         email = text + "@";
 
         text = "";
         for (var j = 0; j < 4; j++)
+        {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+        }
         email += text + ".com";
 
         return email;
@@ -33,8 +35,9 @@ Item
 
         var text = "";
         for (var i = 0; i < 10; i++)
+        {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
-
+        }
         return text;
     }
 }

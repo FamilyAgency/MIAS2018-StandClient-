@@ -26,11 +26,9 @@
         <file>qml/controlScreens/Logger.qml</file>
         <file>qml/tests/TestScreen.qml</file>
         <file>qml/components/ServerComponent.qml</file>
-        <file>qml/components/RFIDComponent.qml</file>
         <file>qml/touchScreens/IntroScreen.qml</file>
         <file>qml/touchScreens/elements/ServerPreloader.qml</file>
         <file>qml/touchScreens/elements/ServerErrorPopup.qml</file>
-        <file>qml/tests/RFIDTest.qml</file>
         <file>qml/tests/ServerRemoteTest.qml</file>
         <file>qml/mainRelease.qml</file>
         <file>qml/mainDebug.qml</file>
@@ -51,5 +49,6 @@
         <file>qml/touchScreens/AnimationControllerLayer.qml</file>
         <file>qml/components/ACR122Card.qml</file>
         <file>qml/Tools.qml</file>
+        <file>qml/components/MonitoringComponent.qml</file>
     </qresource>
 </RCC>

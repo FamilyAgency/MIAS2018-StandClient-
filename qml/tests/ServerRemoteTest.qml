@@ -28,7 +28,7 @@ Item
 
             TextArea
             {
-                id:ouputConsole;
+                id: ouputConsole;
                 width: 310;
                 height: 200;
                 wrapMode: TextEdit.Wrap;
@@ -54,7 +54,7 @@ Item
 
             Button
             {
-                text:"Config Request";
+                text: "Config Request";
                 onClicked:
                 {
                     server.configRequest(1);
@@ -63,7 +63,7 @@ Item
 
             Button
             {
-                text:"Update Request";
+                text: "Update Request";
                 onClicked:
                 {
                     server.updatesRequest(1);
@@ -72,7 +72,7 @@ Item
 
             Button
             {
-                text:"Health Log Request";
+                text: "Health Log Request";
                 onClicked:
                 {
                     server.healthLogRequest(1);
@@ -85,7 +85,7 @@ Item
 
             Button
             {
-                text:"All Users Request"
+                text: "All Users Request";
                 onClicked:
                 {
                     server.allUsersRequest();
@@ -107,12 +107,12 @@ Item
                     border.width: 1;
                     radius: 4;
 
-                    layer.enabled: true
+                    layer.enabled: true;
                     layer.effect: DropShadow
                     {
                         verticalOffset: 1;
                         color: "#aaaaaa";
-                        samples:4;
+                        samples: 4;
                         spread: 0.5;
                     }
                 }
@@ -125,7 +125,7 @@ Item
 
             Button
             {
-                text:"Server error";
+                text: "Server error";
                 onClicked:
                 {
                     server.simulateServerError();
@@ -134,7 +134,7 @@ Item
 
             Button
             {
-                text:"Server timeout";
+                text: "Server timeout";
                 onClicked:
                 {
                     server.simulateServerTimeout();
@@ -144,8 +144,8 @@ Item
 
         Button
         {
-            text:"LOG OUT";
-            id:logOutBtn;
+            text: "LOG OUT";
+            id: logOutBtn;
 
             onClicked:
             {
@@ -155,17 +155,17 @@ Item
             background: Rectangle
             {
                 color: logOutBtn.hovered ?  "skyblue" : "#990000";
-                border.color: "#26282a"
-                border.width: 1
-                radius: 4
+                border.color: "#26282a";
+                border.width: 1;
+                radius: 4;
 
-                layer.enabled: true
+                layer.enabled: true;
                 layer.effect: DropShadow
                 {
-                    verticalOffset: 1
-                    color: "#aaaaaa"
-                    samples:4
-                    spread: 0.5
+                    verticalOffset: 1;
+                    color: "#aaaaaa";
+                    samples: 4;
+                    spread: 0.5;
                 }
             }
         }
@@ -180,7 +180,7 @@ Item
 
         Button
         {
-            text:"Create User Request"
+            text: "Create User Request"
             onClicked:
             {
                 userData.clearBaseUserData();
@@ -193,7 +193,7 @@ Item
 
             Button
             {
-                text:"Search User Request"
+                text: "Search User Request";
                 onClicked:
                 {
                     userData.clearBaseUserData();
@@ -203,7 +203,7 @@ Item
 
             TextField
             {
-                id:email;
+                id: email;
                 implicitWidth: 160;
                 placeholderText: "email@mail.com";
                 text: "яндекс@почта.рф";
@@ -211,7 +211,7 @@ Item
 
             TextField
             {
-                id:phone;
+                id: phone;
                 implicitWidth: 160;
                 placeholderText: "phone";
                 text: "+79067706666";
@@ -224,7 +224,7 @@ Item
 
             Button
             {
-                text:"Search User By Id Request";
+                text: "Search User By Id Request";
                 onClicked:
                 {
                     userData.clearBaseUserData();
@@ -271,7 +271,7 @@ Item
 
             Button
             {
-                text:"Confirm User Request";
+                text: "Confirm User Request";
 
                 onClicked:
                 {
@@ -348,7 +348,7 @@ Item
 
     Connections
     {
-        target:server;
+        target: server;
 
         onUserNotFound:
         {

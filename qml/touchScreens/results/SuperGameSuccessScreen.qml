@@ -7,17 +7,17 @@ Item
 {
     id: result;
 
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
     property string mainTitleDefault: "ТЫ ПРОШЕЛ<br/>СУПЕР ИГРУ!";
     property string buttonText: "ЗАБРАТЬ ПОДАРОК";
 
     signal gotoIntro();
 
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
     Text
     {
-        id:mainTitle;
+        id: mainTitle;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -31,7 +31,7 @@ Item
 
     Text
     {
-        id:timeText;
+        id: timeText;
         anchors.top: mainTitle.bottom;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -45,7 +45,7 @@ Item
 
     Text
     {
-        id:addText;
+        id: addText;
         anchors.top: timeText.bottom;
         anchors.topMargin: 10;
         anchors.horizontalCenter: parent.horizontalCenter;

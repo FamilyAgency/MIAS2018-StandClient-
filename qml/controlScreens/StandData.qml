@@ -12,9 +12,9 @@ Item
         Text
         {
             text: "Stand data";
-            font.family: "Helvetica"
-            font.pixelSize: 17
-            color: "#000099"
+            font.family: "Helvetica";
+            font.pixelSize: 17;
+            color: "#000099";
         }
 
         Text

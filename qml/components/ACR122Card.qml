@@ -5,18 +5,14 @@ import com.app 1.0
 
 ApplicationWindow
 {
-    visible: true;
-    width: 500;
-    height: 700;
+    title: qsTr("RFID");
     x: 20;
     y: 0;
-    title: qsTr("RFID");
-    id: core;
+    width: 500;
+    height: 700;
+    visible: true;
 
-    Component.onCompleted:
-    {
-        // console.log("arduino component  ", rfid.config)
-    }
+    id: core;
 
     ColumnLayout
     {
@@ -125,7 +121,7 @@ ApplicationWindow
             Button
             {
                 id:write;
-                text: "Start Writing"
+                text: "Start Writing";
                 onClicked:
                 {
                     rfid.startWriting(rfidBox.value, name.text, surname.text, phone.text, mail.text);
@@ -136,7 +132,7 @@ ApplicationWindow
         Button
         {
             id:stopAll;
-            text: "Stop all"
+            text: "Stop all";
             onClicked:
             {
                 rfid.stopAll();
@@ -147,7 +143,7 @@ ApplicationWindow
             Button
             {
                 id:beepCommand;
-                text: "Beep"
+                text: "Beep";
                 onClicked:
                 {
                     rfid.beepCommand(beepEnabled.checked);
@@ -157,8 +153,8 @@ ApplicationWindow
             CheckBox
             {
                 id:beepEnabled;
-                text: qsTr("enabled")
-                checked: false
+                text: qsTr("enabled");
+                checked: false;
             }
         }
 

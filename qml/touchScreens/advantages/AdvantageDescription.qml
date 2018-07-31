@@ -4,7 +4,8 @@ import QtMultimedia 5.8
 
 Item
 {
-    id:advatage;
+    id: advatage;
+    anchors.fill: parent;
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property int circleSize : 150;
@@ -12,11 +13,9 @@ Item
 
     signal advantageReaded;
 
-    anchors.fill: parent;
-
     Video
     {
-        id: video
+        id: video;
         width : 1080;
         height : 600;
         loops: MediaPlayer.Infinite;
@@ -27,7 +26,7 @@ Item
 
     Text
     {
-        id:promtText;
+        id: promtText;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.verticalCenterOffset: -200;
@@ -39,11 +38,6 @@ Item
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
     }
-
-    //Video
-    //{
-
-    //}
 
     Canvas
     {
@@ -80,9 +74,9 @@ Item
             text: buttonText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
+            color: "#ffffff";
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
         }
         background: Rectangle
         {
@@ -118,8 +112,8 @@ Item
 
     function setVideo(videoPath)
     {
-       video.source = configController.getFileInAppDir(videoPath);
-       video.play();
+        video.source = configController.getFileInAppDir(videoPath);
+        video.play();
     }
 
     function show()

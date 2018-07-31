@@ -5,47 +5,47 @@ import QtQuick.Window 2.2
 
 Item
 {
-    property int marginLeft:50;
-    property int marginTop:10;
-    property int columnShift:400;
+    property int marginLeft: 50;
+    property int marginTop: 10;
+    property int columnShift: 400;
 
     StandData
     {
-        x:marginLeft;
-        y:marginTop;
+        x: marginLeft;
+        y: marginTop;
     }
 
     GameSession
     {
-        x:marginLeft;
-        y:marginTop + 480;
+        x: marginLeft;
+        y: marginTop + 480;
     }
 
     AppState
     {
-        x:marginLeft;
-        y:marginTop + 620;
+        x: marginLeft;
+        y: marginTop + 620;
     }
 
     MindwaveComponent
     {
-        x:marginLeft + 300;
-        y:marginTop;
-        id:mindWaveComp;
+        id: mindWaveComp;
+        x: marginLeft + 300;
+        y: marginTop;
     }
 
     ACR122Card
     {
-        x:marginLeft + 300;
-        y:marginTop + 280;
-        id:arduinoComp;
+        id: arduinoComp;
+        x: marginLeft + 300;
+        y: marginTop + 280;
     }
 
     ServerComponent
     {
-        x:marginLeft + 300;
-        y:marginTop + 680;
-        id:serverComp;
+        id: serverComp;
+        x: marginLeft;
+        y: marginTop + 720;
     }
 
 //    HealthCheckerComponent
@@ -57,9 +57,9 @@ Item
 
     TestScreen
     {
-        x:marginLeft + 800;
-        y:marginTop;
-        id:testScreen;
+        id: testScreen;
+        x: marginLeft + 800;
+        y: marginTop;
     }
 
     UserRegistrationData

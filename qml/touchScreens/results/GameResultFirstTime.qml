@@ -6,6 +6,8 @@ import QtQuick.Controls.Styles 1.4
 Item
 {
     id: result;
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     property string mainTitleDefault: "ПОЗДРАВЛЯЕМ";
     property string buttonTakeColaText: "ЗАБРАТЬ<br/>НАПИТОК";
@@ -14,13 +16,9 @@ Item
     signal startSuperGame();
     signal getColaCan();
 
-
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
     Text
     {
-        id:mainText;
+        id: mainText;
         anchors.top: parent.top;
         anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -44,7 +42,7 @@ Item
             text: buttonTakeColaText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
+            color: "#ffffff";
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
         }
@@ -74,7 +72,7 @@ Item
             text: buttonSuperGameText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
+            color: "#ffffff";
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
 

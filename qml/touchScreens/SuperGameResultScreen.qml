@@ -7,12 +7,11 @@ import "results"
 Item
 {
     id: result;
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     signal animComplete();
     signal animStart();
-
-    anchors.fill: parent;
-    anchors.centerIn: parent;
 
     SuperGameSuccessScreen
     {
@@ -27,7 +26,7 @@ Item
     SuperGameFailScreen
     {
        id:superGameFailScreen;
-       visible : false;
+       visible: false;
     }
 
     Connections

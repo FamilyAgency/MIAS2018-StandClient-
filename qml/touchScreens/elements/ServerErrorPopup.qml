@@ -15,7 +15,8 @@ Item
 
     Connections
     {
-        target:server
+        target: server;
+
         onServerRequestError:
         {
             console.log("server error");
@@ -46,10 +47,10 @@ Item
     {
         anchors.centerIn: parent;
         opacity: 1.0;
-        text: "OK...";
+        text: "OK. Close Error";
         onClicked:
         {
-            server.setServerStatus(ServerStatus.Free);
+            server.freeServer();
             error.visible = false;
         }
     }

@@ -5,13 +5,12 @@ import "advantages"
 Item
 {
     id:gameScreen;
+    anchors.fill: parent;
 
     property string mainTitleDefault: "КОНЦЕНТРИРУЙСЯ<br/>НА SANTA FE.<br/>ДВИГАЙСЯ К ТОЧКЕ";
 
     signal animComplete();
     signal animStart();
-
-    anchors.fill: parent;
 
     Text
     {
@@ -42,6 +41,7 @@ Item
     Connections
     {
         target:gameModule;
+
         onStageComleteEvent:
         {
             mainText.visible = false;

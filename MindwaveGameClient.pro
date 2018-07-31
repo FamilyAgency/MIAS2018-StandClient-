@@ -56,7 +56,7 @@ SOURCES += main.cpp \
     components/rfid/UHFCardHandler.cpp \
     components/RFIDComponent.cpp \
     components/server/ServerRemoteComponent.cpp \
-    tests/ServerRemoteComponentTest.cpp
+    tests/ServerRemoteComponentTest.cpp \
 
 
 RESOURCES += qml.qrc
@@ -151,7 +151,7 @@ HEADERS += \
     core/modules/InstructionModule.h \
     core/modules/IntroModule.h \
     components/server/ServerRemoteComponent.h \
-    tests/ServerRemoteComponentTest.h
+    tests/ServerRemoteComponentTest.h \
 
 DISTFILES += \
     modules/components/components.pri

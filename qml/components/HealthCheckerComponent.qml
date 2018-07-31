@@ -8,6 +8,7 @@ Item
     ColumnLayout
     {
         spacing: 10;
+
         Text
         {
             text: "HealthChecker component";

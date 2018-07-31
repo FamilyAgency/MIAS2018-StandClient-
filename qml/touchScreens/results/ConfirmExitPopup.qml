@@ -6,6 +6,11 @@ import QtQuick.Controls.Styles 1.4
 Item
 {
     id: popup;
+
+    visible:false;
+    anchors.fill: parent;
+    anchors.centerIn: parent;
+
     property string mainTitleDefault: "УВЕРЕН,<br/>ЧТО НЕ ХОЧЕШЬ<br/>СЫГРАТЬ В СУПЕР-ИГРУ<br/>И ПОЛУЧИТЬ<br/>АВТОМОБИЛЬ SANTA FE";
     property string buttonTakeColaText: "ЗАБРАТЬ<br/>НАПИТОК";
     property string buttonSuperGameText: "ИГРАТЬ<br/>В СУПЕРИГРУ";
@@ -13,20 +18,15 @@ Item
     signal reject();
     signal confirm();
 
-    visible:false;
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
     Rectangle
     {
         anchors.fill: parent;
         color: "#1c1c1c";
     }
 
-
     Text
     {
-        id:mainText;
+        id: mainText;
         anchors.verticalCenterOffset: -200;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -51,7 +51,7 @@ Item
             text: buttonTakeColaText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
+            color: "#ffffff";
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
         }
@@ -82,7 +82,7 @@ Item
             text: buttonSuperGameText;
             font.family: "Helvetica";
             font.pixelSize: 25;
-            color: "#ffffff"
+            color: "#ffffff";
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
 

@@ -10,10 +10,10 @@ Item
 
         Text
         {
-            text: "Output log"
-            font.family: "Helvetica"
-            font.pixelSize: 18
-            color: "#009900"
+            text: "Output log";
+            font.family: "Helvetica";
+            font.pixelSize: 18;
+            color: "#009900";
         }
 
         ScrollView
@@ -45,8 +45,8 @@ Item
 
         Button
         {
-            implicitWidth: 100
-            text: "Clear"
+            implicitWidth: 100;
+            text: "Clear";
             onClicked:
             {
                ouputConsole.clear();

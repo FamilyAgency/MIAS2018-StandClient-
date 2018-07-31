@@ -3,19 +3,19 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.1
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Window 2.2
+
 import "../components"
 import com.app 1.0
 
 Window
 {
-    objectName: "touchWindow";
     title: "User Window";
-    visible: true;
-    flags: Qt.SplashScreen;
     x: 0;
     y: 0;
     width: 400;
     height: 600;
+    visible: true;
+    flags: Qt.SplashScreen;
 
     Item
     {
@@ -175,16 +175,6 @@ Window
                     color: "#990000";
                 }
             }
-        }
-    }
-
-    Connections
-    {
-        target: userData;
-
-        onBaseUserDataChanged:
-        {
-           // pinToConfirmed.text = "Pin to confirmed: " + userData.baseUserData.getPinToConfirm();
         }
     }
 }

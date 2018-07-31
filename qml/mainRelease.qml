@@ -6,13 +6,14 @@ import "controlScreens"
 import com.app 1.0
 
 ApplicationWindow
-{
-    visible: true;
-    width: 100;
-    height: 100;
+{    
+    title: qsTr("App");
     x: 0;
     y: 0;
-    title: qsTr("App");
+    width: 100;
+    height: 100;
+    visible: true;
+
     id: core;
 
     TouchWindow

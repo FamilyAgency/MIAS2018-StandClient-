@@ -7,15 +7,15 @@ Item
 {
     id: result;
 
-    property string mainTitleDefault: "ПОЛУЧИТЕ<br/>НАПИТОК.<br/>ПОПРОБУЙТЕ СЫГРАТЬ<br/>В СУПЕР ИГРУ<br/>ЧЕРЕЗ 20 МИНУТ.";
-    property string buttonText: "ЗАБРАТЬ ПОДАРОК";
-
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+    property string mainTitleDefault: "ПОЛУЧИТЕ<br/>НАПИТОК.<br/>ПОПРОБУЙТЕ СЫГРАТЬ<br/>В СУПЕР ИГРУ<br/>ЧЕРЕЗ 20 МИНУТ.";
+    property string buttonText: "ЗАБРАТЬ ПОДАРОК";
+
     Text
     {
-        id:mainTitle;
+        id: mainTitle;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         text: mainTitleDefault;
