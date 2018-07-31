@@ -75,11 +75,6 @@ void UserData::checkCanUserPlay()
         _canPlay = false;
         cantPlayReason = CantPlayReason::YouArePlaying;
     }
-
-    if(!_canPlay)
-    {
-        emit userCantStartReason(cantPlayReason);
-    }
 }
 
 bool UserData::finished() const
@@ -102,7 +97,7 @@ bool UserData::playingOnAnotherStand() const
     return false;
 }
 
-UserData::CantPlayReason UserData::getReasonCantPlay() const
+CantPlayReason UserData::getReasonCantPlay() const
 {
     return cantPlayReason;
 }

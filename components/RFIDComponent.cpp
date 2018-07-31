@@ -9,6 +9,7 @@ RFIDComponent::RFIDComponent(QObject *parent) : ExternalSystemComponent(parent)
 
 RFIDComponent::~RFIDComponent()
 {
+
 }
 
 void RFIDComponent::setQmlContext(QQmlContext* value)

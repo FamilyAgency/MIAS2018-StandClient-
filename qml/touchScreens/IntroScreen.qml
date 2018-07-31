@@ -110,6 +110,23 @@ Item
         }
     }
 
+    OpacityAnimator on opacity
+    {
+        id:opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 1000
+        running:false;
+
+        onRunningChanged:
+        {
+            if (!opacityAnim.running)
+            {
+                intro.animComplete();
+            }
+        }
+    }
+
     Connections
     {
         target:introModule;
@@ -132,11 +149,6 @@ Item
             mainText.text = "Похоже, что тебя<br/>не существует!";
             cantPlayHandler();
         }
-    }
-
-    Connections
-    {
-        target:userData;
 
         onUserCantStartReason:
         {
@@ -162,23 +174,6 @@ Item
             }
 
             cantPlayHandler();
-        }
-    }
-
-    OpacityAnimator on opacity
-    {
-        id:opacityAnim;
-        from: 0;
-        to: 1;
-        duration: 1000
-        running:false;
-
-        onRunningChanged:
-        {
-            if (!opacityAnim.running)
-            {
-                intro.animComplete();
-            }
         }
     }
 

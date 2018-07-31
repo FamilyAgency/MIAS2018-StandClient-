@@ -101,9 +101,7 @@ class UserData : public QObject
     Q_OBJECT
     Q_PROPERTY(BaseUserData baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
     Q_PROPERTY(PrizesUserData prizesUserData READ prizesUserData WRITE setPrizesUserData NOTIFY prizesUserDataChanged)
-    Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)
-
-    Q_ENUMS(CantPlayReason)
+    Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)    
 
 public:
     explicit UserData(QObject *parent = nullptr);
@@ -117,6 +115,7 @@ public:
         FinishedPrizesGot,
         FinishedPrizesNotGot
     };
+    Q_ENUM(CantPlayReason)
 
     Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
     Q_INVOKABLE int getCurrentStageId() const;
@@ -176,7 +175,8 @@ signals:
     void baseUserDataChanged();
     void prizesUserDataChanged();
     void gameUserDataChanged();
-    void userCantStartReason(CantPlayReason reason);
 };
+
+typedef UserData::CantPlayReason CantPlayReason;
 
 #endif // USERDATA_H

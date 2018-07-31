@@ -366,14 +366,11 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
     if(gamesJson.size() > 0)
     {
         QJsonObject gameJson = gamesJson[0].toObject();
-
-
         gameUserData.startGame = gameJson["start_game"].toString();
         gameUserData.stage1 = gameJson["stage_1"].toString();
         gameUserData.stage2 = gameJson["stage_2"].toString();
         gameUserData.stage3 = gameJson["stage_3"].toString();
         gameUserData.finishGame = gameJson["finish_game"].toString();
-
         setGameUserData(gameUserData);
     }
 }

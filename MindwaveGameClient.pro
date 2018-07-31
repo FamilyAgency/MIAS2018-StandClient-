@@ -55,7 +55,6 @@ SOURCES += main.cpp \
     components/rfid/ACR122CardHandler.cpp \
     components/rfid/UHFCardHandler.cpp \
     components/RFIDComponent.cpp \
-    tests/RFIDComponentTest.cpp \
     components/server/ServerRemoteComponent.cpp \
     tests/ServerRemoteComponentTest.cpp
 
@@ -119,7 +118,6 @@ HEADERS += \
     core/modules/IntroModule.h \
     core/data/StandData.h \
     core/data/UserData.h \
-    tests/RFIDComponentTest.h \
     components/MonitoringComponent.h \
     components/monitoring/MemoryChecker.h \
     tools/AppSettings.h \

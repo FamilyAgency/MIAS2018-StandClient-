@@ -23,12 +23,8 @@
 #include "modules/GameResultModule.h"
 #include "modules/SuperGameModule.h"
 #include "modules/SuperGameResultModule.h"
-
 #include "Types.h"
-
 #include "tests/MindwaveComponentTest.h"
-#include "tests/RFIDComponentTest.h"
-
 #include "tools/AppSettings.h"
 
 class AppController : public QObject

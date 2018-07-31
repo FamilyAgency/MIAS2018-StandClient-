@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+//#include <QGuiApplication>
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("appController", appController.data());
 
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
-    qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
+    qRegisterMetaType<CantPlayReason>("CantPlayReason");
+    qmlRegisterUncreatableType<UserData>("com.app", 1, 0, "CantPlayReason", "CantPlayReason enum type");
 
     qRegisterMetaType<ServerStatus>("ServerStatus");
     qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerStatus", "ServerStatus enum type");

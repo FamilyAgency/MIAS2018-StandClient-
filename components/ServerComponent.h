@@ -94,7 +94,7 @@ public:
     virtual void startGameRequest(int userId) = 0;
     virtual void updateGameRequest(int userId) = 0;
     virtual void finishGameRequest(int userId) = 0;
-
+    virtual void searchUserByIdRequest(int userId) = 0;
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
 
