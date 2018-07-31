@@ -145,9 +145,6 @@ bool ACR122CardHandler::cardPreparedSuccess()
 void ACR122CardHandler::releaseCardReader()
 {
     SCardDisconnect(card_handle_, SCARD_UNPOWER_CARD);
-    //  LPCWSTR cardReaderName = reinterpret_cast<LPCWSTR>(rfidConfig().type.unicode());
-    //  SCardFreeMemory(card_context_, cardReaderName);
-    // SCardDisconnect(card_handle_, SCARD_LEAVE_CARD);
     SCardReleaseContext(card_context_);
 }
 
@@ -429,7 +426,12 @@ bool ACR122CardHandler::checkIsDeviceConnected()
     LPWSTR mszReaders;
     DWORD dwReaders = SCARD_AUTOALLOCATE;
     
-    if(SCardListReadersW(card_context_, NULL,(LPWSTR)&mszReaders,&dwReaders) != SCARD_S_SUCCESS)
+    if(SCardListReadersW(card_context_, NULL, (LPWSTR)&mszReaders, &dwReaders) != SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
+    if(SCardFreeMemory(card_context_, mszReaders)!= SCARD_S_SUCCESS)
     {
         return false;
     }
