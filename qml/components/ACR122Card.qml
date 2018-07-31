@@ -231,6 +231,8 @@ ApplicationWindow
                     break;
                 case CardReaderError.UnknownError:
                     break;
+                case CardReaderError.CardParsing:
+                    break;
                 }
             }
 

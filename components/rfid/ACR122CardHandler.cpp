@@ -1,40 +1,50 @@
 #include "ACR122CardHandler.h"
 #include <qDebug>
 #include <QSharedPointer>
-#define MAX_APDU_SIZE 255
 
 ACR122CardHandler::ACR122CardHandler(QObject *parent) : RFIDComponent(parent)
 {
     connectTimer = new QTimer(this);
-    fillBlockAdresses();
 
     connect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
     connect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
     connect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+
+    fillBlockAdresses();
 }
 
 ACR122CardHandler::~ACR122CardHandler()
-{
+{    
     disconnect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
     disconnect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
     disconnect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
-    disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
-    disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
+
+    if(connectTimer)
+    {
+        disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
+        disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onReadingUpdate()));
+        delete connectTimer;
+    }
 }
 
 void ACR122CardHandler::setConfig(ConfigPtr config)
 {
     RFIDComponent::setConfig(config);
-    writeValidation = WriteValidation::None;
+    writeValidation = validationFromString(_rfidConfig.writeValidation);
+}
 
-    if(_rfidConfig.writeValidation == "idOnly")
+ACR122CardHandler::WriteValidation ACR122CardHandler::validationFromString(const QString& value)
+{
+    if(value == "idOnly")
     {
-        writeValidation = WriteValidation::IdOnly;
+        return WriteValidation::IdOnly;
     }
-    else if(_rfidConfig.writeValidation == "allData")
+    else if(value == "allData")
     {
-        writeValidation = WriteValidation::AllData;
+        return WriteValidation::AllData;
     }
+
+    return WriteValidation::None;
 }
 
 void ACR122CardHandler::startReading()
@@ -68,13 +78,19 @@ void ACR122CardHandler::startWriting(int id, const QString& name, const QString&
 {
     setCardReaderState(CardReaderState::Writing);
 
-    lastUserId = QString::number(id);
+    formatUserData(id, name, surname, phone, email);
+    startWriting(lastUserData);
+}
+
+void ACR122CardHandler::formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
+{
+    // block 0x01: {678}0000000...
+    // block 0x02 -... {name,surname,phone,email}
     blockZeroDataInit();
+    lastUserId = QString::number(id);
     QString userId = BRACKET_1 + lastUserId + BRACKET_2;
     userId = blockZeroData.replace(0, userId.size(), userId);
     lastUserData = userId + BRACKET_1 + name + DELIM + surname + DELIM + phone + DELIM + email + BRACKET_2;
-
-    startWriting(lastUserData);
 }
 
 void ACR122CardHandler::timerRestart()
@@ -137,17 +153,17 @@ void ACR122CardHandler::releaseCardReader()
 
 void ACR122CardHandler::onWritingUpdate()
 {
-    connectTimer->stop();
-    
     if(!cardPreparedSuccess())
     {
         return;
     }
+
+    connectTimer->stop();
     
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
     {
-        emit cardReaderError(CardReaderError::CantStartTransaction);
         releaseCardReader();
+        emit cardReaderError(CardReaderError::CantStartTransaction);
         return;
     }
 
@@ -166,8 +182,8 @@ void ACR122CardHandler::onWritingUpdate()
         
         if(!blockAuthenticate(blockAdress))
         {
-            emit cardReaderError(CardReaderError::AuthError);
             releaseCardReader();
+            emit cardReaderError(CardReaderError::AuthError);
             return;
         }
         
@@ -182,30 +198,28 @@ void ACR122CardHandler::onWritingUpdate()
         
         if(!writeBlockData(blockAdress, blockData))
         {
-            emit cardReaderError(CardReaderError::WriteError);
             releaseCardReader();
+            emit cardReaderError(CardReaderError::WriteError);
             return;
         }
     }
     
     if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
     {
-        emit cardReaderError(CardReaderError::CantEndTransaction);
         releaseCardReader();
+        emit cardReaderError(CardReaderError::CantEndTransaction);
         return;
     }
-    
-    releaseCardReader();
+
     emit userWriteSuccess();
-    connectTimer->stop();
 }
 
 void ACR122CardHandler::onUserWriteSuccess()
 {
     if(writeValidation == WriteValidation::None)
     {
+        releaseCardReader();
         emit validationSuccess();
-        return;
     }
     else if(writeValidation == WriteValidation::IdOnly)
     {
@@ -216,6 +230,144 @@ void ACR122CardHandler::onUserWriteSuccess()
     {
         setCardReaderState(CardReaderState::Validating);
         readAllData();
+    }
+}
+
+void ACR122CardHandler::onReadingUpdate()
+{   
+    readIdOnly ? readId() : readAllData();
+}
+
+void ACR122CardHandler::readId()
+{
+    if(!cardPreparedSuccess())
+    {
+        return;
+    }
+
+    connectTimer->stop();
+
+    if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::CantStartTransaction);
+        return;
+    }
+
+    QByteArray data = "";
+    blockAdress = blockAdresses[0];
+
+    if(!blockAuthenticate(blockAdress))
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::AuthError);
+        return;
+    }
+
+    if(!readBlockData(blockAdress, data))
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::ReadError);
+        return;
+    }
+
+    QString id = QString(data);
+    int startIndex = id.indexOf(BRACKET_1);
+    int endIndex = id.indexOf(BRACKET_2);
+    if(startIndex != -1 && endIndex != -1)
+    {
+        id = id.mid(startIndex + 1, endIndex - 1);
+        emit userReadSuccess(id);
+    }
+    else
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::CardParsing);
+        return;
+    }
+
+    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+
+    if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::CantEndTransaction);
+        return;
+    }
+
+    releaseCardReader();
+}
+
+void ACR122CardHandler::readAllData()
+{
+    if(!cardPreparedSuccess())
+    {
+        return;
+    }
+
+    connectTimer->stop();
+
+    if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::CantStartTransaction);
+        return;
+    }
+
+    QByteArray data = "";
+    QByteArray fulldata;
+    int lastSymbolCount = 0;
+    const int lastSymbols = 2;
+
+    for(int i = 0; i < blockAdresses.size(); i++)
+    {
+        blockAdress = blockAdresses[i];
+
+        if(!blockAuthenticate(blockAdress))
+        {
+            releaseCardReader();
+            emit cardReaderError(CardReaderError::AuthError);
+            return;
+        }
+
+        if(!readBlockData(blockAdress, data))
+        {
+            releaseCardReader();
+            emit cardReaderError(CardReaderError::ReadError);
+            return;
+        }
+
+        fulldata.append(data);
+
+        int lastSymbol = data.indexOf(BRACKET_2);
+        if(lastSymbol != -1)
+        {
+            lastSymbolCount++;
+            if(lastSymbolCount == lastSymbols)
+            {
+                break;
+            }
+        }
+    }
+    qDebug()<<"fulldata "<<QString(fulldata);
+    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+
+    if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::CantEndTransaction);
+        return;
+    }
+
+    releaseCardReader();
+
+    if(lastSymbolCount == lastSymbols)
+    {
+        emit userReadSuccess(fulldata);
+    }
+    else
+    {
+        emit cardReaderError(CardReaderError::CardParsing);
     }
 }
 
@@ -252,136 +404,7 @@ void ACR122CardHandler::onUserReadSuccess(const QString& data)
 
 void ACR122CardHandler::onCardReaderError(CardReaderError error)
 {
-
     setCardReaderState(CardReaderState::Stopped);
-}
-
-void ACR122CardHandler::onReadingUpdate()
-{   
-    readIdOnly ? readId() : readAllData();
-}
-
-void ACR122CardHandler::readId()
-{
-    if(!cardPreparedSuccess())
-    {
-        return;
-    }
-    connectTimer->stop();
-
-    if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
-    {
-        emit cardReaderError(CardReaderError::CantStartTransaction);
-        releaseCardReader();
-        return;
-    }
-
-
-
-    QByteArray data = "";
-    blockAdress = blockAdresses[0];
-
-    if(!blockAuthenticate(blockAdress))
-    {
-        emit cardReaderError(CardReaderError::AuthError);
-        releaseCardReader();
-        return;
-    }
-
-    if(!readBlockData(blockAdress, data))
-    {
-        emit cardReaderError(CardReaderError::ReadError);
-        releaseCardReader();
-        return;
-    }
-
-    QString id = QString(data);
-    int startIndex = id.indexOf(BRACKET_1);
-    int endIndex = id.indexOf(BRACKET_2);
-    if(startIndex != -1 && endIndex != -1)
-    {
-        id = id.mid(startIndex + 1, endIndex-1);
-        emit userReadSuccess(id);
-    }
-    else
-    {
-        emit cardReaderError(CardReaderError::ReadError);
-        releaseCardReader();
-        return;
-    }
-
-    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-
-    if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
-    {
-        emit cardReaderError(CardReaderError::CantEndTransaction);
-        releaseCardReader();
-        return;
-    }
-
-    releaseCardReader();
-}
-
-void ACR122CardHandler::readAllData()
-{
-    if(!cardPreparedSuccess())
-    {
-        return;
-    }
-    connectTimer->stop();
-
-    if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
-    {
-        emit cardReaderError(CardReaderError::CantStartTransaction);
-        releaseCardReader();
-        return;
-    }
-
-    QByteArray data = "";
-    QByteArray fulldata;
-    int lastSymbolCount = 0;
-    for(int i = 0; i < blockAdresses.size(); i++)
-    {
-        blockAdress = blockAdresses[i];
-
-        if(!blockAuthenticate(blockAdress))
-        {
-            emit cardReaderError(CardReaderError::AuthError);
-            releaseCardReader();
-            return;
-        }
-
-        if(!readBlockData(blockAdress, data))
-        {
-            emit cardReaderError(CardReaderError::ReadError);
-            releaseCardReader();
-            return;
-        }
-        fulldata.append(data);
-
-        int lastSymbol = data.indexOf(BRACKET_2);
-        if(lastSymbol != -1)
-        {
-            lastSymbolCount++;
-            if(lastSymbolCount == 2)
-            {
-                break;
-            }
-        }
-
-    }
-    qDebug()<<"fulldata "<<QString(fulldata);
-    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-
-    if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
-    {
-        emit cardReaderError(CardReaderError::CantEndTransaction);
-        releaseCardReader();
-        return;
-    }
-
-    releaseCardReader();
-    emit userReadSuccess(fulldata);
 }
 
 void ACR122CardHandler::resetReadingState()
@@ -433,7 +456,7 @@ bool ACR122CardHandler::loadKey()
 
 bool ACR122CardHandler::blockAuthenticate(uint8_t blockNumber)
 {
-    uint8_t bytes[10] = {0xff, 0x86, 0x00, 0x00, 0x05, 0x01, 0x00, blockNumber/* Block number */,keyType, keyLocation};
+    uint8_t bytes[10] = {0xff, 0x86, 0x00, 0x00, 0x05, 0x01, 0x00, blockNumber, keyType, keyLocation};
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
     return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
@@ -447,19 +470,21 @@ bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QByteArray& data)
     qDebug()<<"read blockNumber :" <<blockNumber;
     qDebug()<<"read bytes :" << str.toInt();
 
-    uint8_t bytes[5] = {0xff, 0xB0, 0x00, blockNumber/* Block number */,bytesNum/* bytes */};
+    uint8_t bytes[5] = {0xff, 0xB0, 0x00, blockNumber, bytesNum};
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
+
     if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
     {
         return false;
     }
-    // qDebug()<<"size:  "<<cbRecv;
+
     QByteArray recieve;
     for (int i = 0; i < cbRecv - 2; i++)
     {
         recieve.append(pbRecv[i]);
     }
+
     qDebug()<<"bytes :" << data;
     data = recieve;
     return true;
@@ -469,8 +494,9 @@ bool ACR122CardHandler::writeBlockData(uint8_t blockNumber, const QByteArray& da
 {
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
-    const int size = 5 + 16;
-    uint8_t bytes[size];// = {0xff, 0xD6, 0x00, blockNumber/* Block number */, 0x10/* bytes */, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    const int reserveBytes = 5;
+    const int size = reserveBytes + 16;
+    uint8_t bytes[size];
 
     bytes[0] = 0xff;
     bytes[1] = 0xD6;
@@ -478,9 +504,9 @@ bool ACR122CardHandler::writeBlockData(uint8_t blockNumber, const QByteArray& da
     bytes[3] = blockNumber;
     bytes[4] = 0x10;
 
-    for(int i = 5; i < size; i++)
+    for(int i = reserveBytes; i < size; i++)
     {
-        bytes[i] = data[i-5];//userIdHex[i-5];
+        bytes[i] = data[i - reserveBytes];
     }
 
     return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
@@ -553,7 +579,6 @@ void ACR122CardHandler::alignData(QByteArray& cardData)
     }
 }
 
-
 //void ACR122CardHandler::resetCard()
 //{
 //    establishContext();
@@ -582,8 +607,6 @@ void ACR122CardHandler::alignData(QByteArray& cardData)
 //       rv = SCardStatus(hCard, pcReaders, &dwReaderLen, &dwState,
 //           &dwProt, pbAtr, &dwAtrLen);
 //}
-
-
 
 //bool ACR122CardHandler::getFirmVer(QString& ver)
 //{
@@ -624,8 +647,6 @@ void ACR122CardHandler::alignData(QByteArray& cardData)
 
 //    return true;
 //}
-
-
 
 //void ACR122CardHandler::getCardAttributes()
 //{

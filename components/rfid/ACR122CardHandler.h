@@ -43,11 +43,13 @@ public:
         AuthError,
         WriteError,
         ReadError,
+        CardParsing,
         UnknownError,
     };
     Q_ENUMS(CardReaderError)
 
 private:
+    static const DWORD MAX_APDU_SIZE = 255;
     const int ONE_BLOCK_SIZE = 16;
     const char DELIM = ',';
     const char BRACKET_1 = '{';
@@ -61,7 +63,7 @@ private:
 
     QVector<uint8_t> blockAdresses;
     uint8_t blockAdress = 0x01;
-    const uint8_t keyType = 0x60; //0x60 /*TypeA */
+    const uint8_t keyType = 0x60; //0x60 /*TypeA */ 0x61 /*TypeB */
     uint8_t keyLocation = 0x00;//0x01
     //QString userData = "";
     QString blockZeroData = "";
@@ -75,6 +77,9 @@ private:
     void readAllData();
 
     void fillBlockAdresses();
+    WriteValidation validationFromString(const QString& value);
+    void formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
+
     void timerRestart();
     bool cardPreparedSuccess();
     void releaseCardReader();
