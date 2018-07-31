@@ -118,6 +118,7 @@ signals:
     void serverGlobalError(ServerGlobalErrorType globalErrorType);
 
     void newUserEntered(const UserObject&);
+
     void userNotFound();
     void userAlreadyExists();
     void userAlreadyConfirmed();

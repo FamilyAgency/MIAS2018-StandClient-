@@ -180,7 +180,7 @@ Window
 
     Connections
     {
-        target: server;
+        target: userData;
 
         onBaseUserDataChanged:
         {

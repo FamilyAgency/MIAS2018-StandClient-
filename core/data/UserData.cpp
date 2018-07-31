@@ -107,6 +107,12 @@ UserData::CantPlayReason UserData::getReasonCantPlay() const
     return cantPlayReason;
 }
 
+void UserData::clearBaseUserData()
+{
+    _baseUserData.clear();
+    emit baseUserDataChanged();
+}
+
 int UserData::getCurrentStageId() const
 {
     return _gameUserData.getCurrentStageId();

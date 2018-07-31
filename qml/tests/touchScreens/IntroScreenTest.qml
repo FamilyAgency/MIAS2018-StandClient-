@@ -35,7 +35,7 @@ Item
             }
             onClicked:
             {
-                server.clearBaseUserData();
+                userData.clearBaseUserData();
                 server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone());
             }
         }
@@ -59,7 +59,7 @@ Item
             }
             onClicked:
             {
-                server.clearBaseUserData();
+                userData.clearBaseUserData();
                 server.searchUserByIdRequest(userId.value);
             }
         }
@@ -82,12 +82,9 @@ Item
     Connections
     {
         target: server;
-        onServerRequestSuccess:
+        onBaseUserDataRecived:
         {
-            if(responseType == ResponseType.CreateUserRequest)
-            {
-                userId.value = userData.baseUserData.id;
-            }
+            userId.value = baseUserData.id;
         }
     }
 }

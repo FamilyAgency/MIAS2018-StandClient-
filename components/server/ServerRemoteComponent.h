@@ -33,9 +33,7 @@ public:
 
     Q_INVOKABLE virtual void startGameRequest(int userId) override;
     Q_INVOKABLE virtual void updateGameRequest(int userId) override;
-    Q_INVOKABLE virtual void finishGameRequest(int userId) override;
-
-    Q_INVOKABLE void clearBaseUserData();
+    Q_INVOKABLE virtual void finishGameRequest(int userId) override;   
     Q_INVOKABLE virtual void logout();
 
     virtual void start() override;
@@ -68,9 +66,7 @@ private:
     void handleRequestError(const ServerResponse&  response);
 
 signals:
-    void baseUserDataChanged();
-    void prizesUserDataChanged();
-    void gameUserDataChanged();
+     void baseUserDataRecived(const BaseUserData& baseUserData);
 };
 
 #endif // SERVERREMOTECOMPONENT_H

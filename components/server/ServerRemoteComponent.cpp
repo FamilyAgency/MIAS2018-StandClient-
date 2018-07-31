@@ -231,7 +231,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     else if(response.type == ResponseType::VerifyUserRequest)
     {
         QJsonObject dataJson = responeJson["data"].toObject();
-        createBaseUserData(dataJson);
+        createBaseUserData(dataJson);;
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::SearchUserRequest)
@@ -385,7 +385,7 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
 void ServerRemoteComponent::setBaseUserData(const BaseUserData& value)
 {
     _baseUserData = value;
-    emit baseUserDataChanged();
+     emit baseUserDataRecived(_baseUserData);
 }
 
 BaseUserData ServerRemoteComponent::baseUserData() const
@@ -396,7 +396,6 @@ BaseUserData ServerRemoteComponent::baseUserData() const
 void ServerRemoteComponent::setPrizesUserData(const PrizesUserData& prizesUserData)
 {
     _prizesUserData = prizesUserData;
-    emit prizesUserDataChanged();
 }
 
 PrizesUserData ServerRemoteComponent::prizesUserData() const
@@ -407,16 +406,9 @@ PrizesUserData ServerRemoteComponent::prizesUserData() const
 void ServerRemoteComponent::setGameUserData(const GameUserData& gameUserData)
 {
     _gameUserData = gameUserData;
-    emit gameUserDataChanged();
 }
 
 GameUserData ServerRemoteComponent::gameUserData() const
 {
     return _gameUserData;
-}
-
-void ServerRemoteComponent::clearBaseUserData()
-{
-    _baseUserData.clear();
-    emit baseUserDataChanged();
 }

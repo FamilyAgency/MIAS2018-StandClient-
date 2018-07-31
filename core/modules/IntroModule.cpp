@@ -58,17 +58,19 @@ void IntroModule::onUserReadSuccess(const QString& data)
 {
     qDebug()<<"id readed "<<data;
 
-    serverComponent->clearBaseUserData();
+   // serverComponent->clearBaseUserData();
     serverComponent->searchUserByIdRequest(data.toInt());
 }
 
 void IntroModule::onNewUserEntered(const UserObject& userObject)
 {
+    qDebug()<<"onNewUserEntered";
     userData->clearData();
     userData->setNewUserData(userObject);
 
     if(userData->canPlay())
     {
+        qDebug()<<"canPlay";
         emit userStartPlay();
     }
 }

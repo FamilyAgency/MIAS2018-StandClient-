@@ -269,18 +269,13 @@ ApplicationWindow
     Connections
     {
         target:server;
-        onServerRequestSuccess:
+        onBaseUserDataRecived:
         {
-            switch(responseType)
-            {
-            case ResponseType.CreateUserRequest:
-                rfidBox.value = userData.baseUserData.id;
-                name.text = userData.baseUserData.name;
-                surname.text = userData.baseUserData.surname;
-                phone.text = userData.baseUserData.phone;
-                mail.text = userData.baseUserData.email;
-                break;
-            }
+            rfidBox.value = baseUserData.id;
+            name.text = baseUserData.name;
+            surname.text = baseUserData.surname;
+            phone.text = baseUserData.phone;
+            mail.text = baseUserData.email;
         }
     }
 }

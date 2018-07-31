@@ -183,7 +183,7 @@ Item
             text:"Create User Request"
             onClicked:
             {
-                server.clearBaseUserData();
+                userData.clearBaseUserData();
                 server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone());
             }
         }
@@ -196,7 +196,7 @@ Item
                 text:"Search User Request"
                 onClicked:
                 {
-                    server.clearBaseUserData();
+                    userData.clearBaseUserData();
                     server.searchUserRequest(email.text, phone.text);
                 }
             }
@@ -227,7 +227,7 @@ Item
                 text:"Search User By Id Request";
                 onClicked:
                 {
-                    server.clearBaseUserData();
+                    userData.clearBaseUserData();
                     server.searchUserByIdRequest(userId.value);
                 }
             }

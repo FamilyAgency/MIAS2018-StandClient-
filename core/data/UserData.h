@@ -120,6 +120,7 @@ public:
 
     Q_INVOKABLE CantPlayReason getReasonCantPlay() const;
     Q_INVOKABLE int getCurrentStageId() const;
+    Q_INVOKABLE void clearBaseUserData();
 
     void setBaseUserData(const BaseUserData& value);
     BaseUserData baseUserData() const;
