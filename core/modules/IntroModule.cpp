@@ -58,7 +58,7 @@ void IntroModule::onUserReadSuccess(const QString& data)
 {
     qDebug()<<"id readed "<<data;
 
-    serverComponent->clearBaseUserInfo();
+    serverComponent->clearBaseUserData();
     serverComponent->searchUserByIdRequest(data.toInt());
 }
 

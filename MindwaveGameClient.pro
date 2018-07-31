@@ -109,7 +109,6 @@ SOURCES += main.cpp \
     tools/MathTools.cpp \
     tools/StringTools.cpp \
     main.cpp \
-    components/server/ServerTypes.cpp \
     components/server/ServerRemoteComponent.cpp \
     tests/ServerRemoteComponentTest.cpp
 
@@ -248,7 +247,6 @@ HEADERS += \
     tools/AppSettings.h \
     tools/MathTools.h \
     tools/StringTools.h \
-    components/server/ServerTypes.h \
     components/server/ServerRemoteComponent.h \
     tests/ServerRemoteComponentTest.h
 

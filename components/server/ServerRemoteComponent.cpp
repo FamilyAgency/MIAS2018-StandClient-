@@ -219,19 +219,19 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     if(response.type == ResponseType::CreateUserRequest)
     {
         QJsonObject dataJson = responeJson["data"].toObject();
-        createBaseUserInfo(dataJson);
+        createBaseUserData(dataJson);
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::ConfirmUserRequest)
     {
         QJsonObject dataJson = responeJson["data"].toObject();
-        createBaseUserInfo(dataJson);
+        createBaseUserData(dataJson);
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::VerifyUserRequest)
     {
         QJsonObject dataJson = responeJson["data"].toObject();
-        createBaseUserInfo(dataJson);
+        createBaseUserData(dataJson);
         emit serverRequestSuccess(response.type);
     }
     else if(response.type == ResponseType::SearchUserRequest)
@@ -241,7 +241,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         if(dataArrayJson.size() > 0 )
         {
             QJsonObject dataJson = dataArrayJson[0].toObject();
-            createBaseUserInfo(dataJson);
+            createBaseUserData(dataJson);
             emit serverRequestSuccess(response.type);
         }
         else
@@ -256,7 +256,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         QJsonObject dataJson = responeJson["data"].toObject();
         if(!dataJson.empty())
         {
-            createBaseUserInfo(dataJson);
+            createBaseUserData(dataJson);
             createPrizesUserData(dataJson);
             createGameUserData(dataJson);
 
@@ -321,7 +321,7 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
 }
 
 
-void ServerRemoteComponent::createBaseUserInfo(const QJsonObject& object)
+void ServerRemoteComponent::createBaseUserData(const QJsonObject& object)
 {
     BaseUserData baseUserData;
     baseUserData.id = object["id"].toInt();
@@ -415,7 +415,7 @@ GameUserData ServerRemoteComponent::gameUserData() const
     return _gameUserData;
 }
 
-void ServerRemoteComponent::clearBaseUserInfo()
+void ServerRemoteComponent::clearBaseUserData()
 {
     _baseUserData.clear();
     emit baseUserDataChanged();

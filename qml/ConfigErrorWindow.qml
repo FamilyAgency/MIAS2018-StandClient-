@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import QtQuick.Controls 2.2
 import "tests/touchScreens"
 import "mainScreens"
@@ -21,7 +21,7 @@ ApplicationWindow
     }
 
     Text
-    {
+    {        
         id:promtText;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;

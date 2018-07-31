@@ -17,8 +17,6 @@ Item {
         id:consts;
     }
 
-
-
     Image
     {
         id:road      

@@ -18,7 +18,6 @@ Window
     x: standData.mainConfig.gameScreen.x;
     y: standData.mainConfig.gameScreen.y;
 
-
     Connections
     {
         target:appController;

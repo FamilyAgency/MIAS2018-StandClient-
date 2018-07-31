@@ -35,7 +35,7 @@ public:
     Q_INVOKABLE virtual void updateGameRequest(int userId) override;
     Q_INVOKABLE virtual void finishGameRequest(int userId) override;
 
-    Q_INVOKABLE void clearBaseUserInfo();
+    Q_INVOKABLE void clearBaseUserData();
     Q_INVOKABLE virtual void logout();
 
     virtual void start() override;
@@ -62,7 +62,7 @@ private:
 
     void commonRequest(ResponseType type, const QNetworkRequest& request, HTTPMethod httpMethod, const QByteArray& data = 0);
 
-    void createBaseUserInfo(const QJsonObject& object);
+    void createBaseUserData(const QJsonObject& object);
     void createPrizesUserData(const QJsonObject& object);
     void createGameUserData(const QJsonObject& object);
     void handleRequestError(const ServerResponse&  response);

@@ -6,16 +6,12 @@
 #include "config/Config.h"
 #include "network/http/HTTPClient.h"
 #include "core/data/UserData.h"
-#include "components/server/ServerTypes.h"
 
 class ServerComponent : public ExternalSystemComponent
 {
     Q_OBJECT
 
     Q_PROPERTY(ServerConfig serverConfig READ serverConfig WRITE setServerConfig NOTIFY serverConfigChanged)
-    Q_ENUMS(ResponseType)
-    Q_ENUMS(ServerGlobalErrorType)
-    Q_ENUMS(ServerStatus)
 
 public:
     explicit ServerComponent(QObject *parent = nullptr);
@@ -27,6 +23,7 @@ public:
         Busy,
         Error
     };
+    Q_ENUM(ServerStatus)
 
     enum class HTTPMethod
     {
@@ -63,6 +60,7 @@ public:
         UpdateGameRequest,
         FinishGameRequest
     };
+    Q_ENUM(ResponseType)
 
     enum class ServerGlobalErrorType
     {
@@ -71,6 +69,7 @@ public:
         NetworkError,
         ServerIsDown
     };
+    Q_ENUM(ServerGlobalErrorType)
 
     struct ServerResponse
     {
@@ -92,11 +91,9 @@ public:
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr config) override;
 
-    virtual void startGameRequest(int userId){};// = 0;
-    virtual void updateGameRequest(int userId){};//= 0;
-    virtual void finishGameRequest(int userId){};//= 0;
-    virtual void start() override{};//= 0;
-    virtual void stop() override{};//= 0;
+    virtual void startGameRequest(int userId) = 0;
+    virtual void updateGameRequest(int userId) = 0;
+    virtual void finishGameRequest(int userId) = 0;
 
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );
@@ -108,7 +105,7 @@ protected:
     ServerStatus _serverStatus = ServerStatus::Free;
 
     bool canRunRequest() const;
-    virtual void parse(const ServerResponse& response){};//= 0;
+    virtual void parse(const ServerResponse& response) = 0;
 
 signals:
     void serverConfigChanged();
@@ -136,7 +133,9 @@ protected slots:
     virtual void httpRequestFailedHandler(const QString& data);
 };
 
-
 typedef ServerComponent::ServerResponse ServerResponse;
+typedef ServerComponent::ServerStatus ServerStatus;
+typedef ServerComponent::ServerGlobalErrorType ServerGlobalErrorType;
+typedef ServerComponent::ResponseType ResponseType;
 
 #endif // SERVERCOMPONENT_H

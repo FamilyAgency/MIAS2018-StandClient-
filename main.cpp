@@ -9,7 +9,6 @@
 #include "core/AppController.h"
 #include "core/modules/IntroModule.h"
 #include "components/rfid/ACR122CardHandler.h"
-#include "components/server/ServerTypes.h"
 
 int main(int argc, char *argv[])
 { 
@@ -26,18 +25,19 @@ int main(int argc, char *argv[])
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
 
-    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerStatus");
-   // qmlRegisterType("com.app", 1, 0, "ServerStatus");
+    //qRegisterMetaType<ServerStatus>("ServerStatus");
+   //qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerStatus", "ServerStatus enum type");
 
+  //  qRegisterMetaType<ServerStatus>("ResponseType");
+   // qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ResponseType", "ResponseType enum type");
 
-    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ResponseType");
-    qmlRegisterType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType");
+   // qRegisterMetaType<ServerStatus>("ServerGlobalErrorType");
+   // qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType", "ServerGlobalErrorType enum type");
 
     qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
     qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
     qmlRegisterType<ACR122CardHandler>("com.app", 1, 0, "CardReaderError");
-
 
     QObject::connect(configController.data(), &ConfigController::configServiceReady,[&](ConfigPtr conf)
     {
@@ -52,7 +52,6 @@ int main(int argc, char *argv[])
         }
 
         return 1;
-
     });
 
     QObject::connect(configController.data(), &ConfigController::configServiceError, [&](const QString& message)
@@ -68,7 +67,7 @@ int main(int argc, char *argv[])
     });
 
     // config load. entry point
-    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
+    configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::RESOURCE_FILE);
     configController.data()->load();
 
     return app.exec();
