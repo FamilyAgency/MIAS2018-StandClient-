@@ -25,16 +25,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<AppController>("com.app", 1, 0, "AppState");
     qmlRegisterType<UserData>("com.app", 1, 0, "CantPlayReason");
 
-    //qRegisterMetaType<ServerStatus>("ServerStatus");
-   //qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerStatus", "ServerStatus enum type");
+    qRegisterMetaType<ServerStatus>("ServerStatus");
+    qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerStatus", "ServerStatus enum type");
+    qRegisterMetaType<ServerStatus>("ResponseType");
+    qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ResponseType", "ResponseType enum type");
+    qRegisterMetaType<ServerStatus>("ServerGlobalErrorType");
+    qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType", "ServerGlobalErrorType enum type");
 
-  //  qRegisterMetaType<ServerStatus>("ResponseType");
-   // qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ResponseType", "ResponseType enum type");
-
-   // qRegisterMetaType<ServerStatus>("ServerGlobalErrorType");
-   // qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType", "ServerGlobalErrorType enum type");
-
-    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");    
+    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
     qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
     qmlRegisterType<ACR122CardHandler>("com.app", 1, 0, "CardReaderError");
