@@ -51,7 +51,7 @@ Item
         {
             implicitHeight: 200;
             implicitWidth: 400;
-            color: takePrizeBtn.down ? "#3c2755" : "#4e1a8a";
+            color: failOkBtn.down ? "#3c2755" : "#4e1a8a";
         }
 
         onClicked:

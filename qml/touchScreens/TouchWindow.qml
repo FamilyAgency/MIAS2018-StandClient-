@@ -53,13 +53,9 @@ Window
         id: serverErrorPopup;
     }
 
-    BackBtn
+    SecretBackBtn
     {
-        id: backBtn;
-        anchors.top: parent.top;
-        anchors.topMargin: 100;
-        anchors.right: parent.right;
-        anchors.rightMargin: 100;
+        id: backBtn;      
     }
 
     Component.onCompleted:

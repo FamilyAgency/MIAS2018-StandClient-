@@ -10,7 +10,6 @@
         <file>qml/components/HealthCheckerComponent.qml</file>
         <file>qml/touchScreens/TouchWindow.qml</file>
         <file>qml/touchScreens/InstructionScreen.qml</file>
-        <file>qml/touchScreens/BackBtn.qml</file>
         <file>qml/touchScreens/GameScreen.qml</file>
         <file>qml/mainScreens/MainWindow.qml</file>
         <file>qml/controlScreens/ControlsWindow.qml</file>
@@ -51,5 +50,6 @@
         <file>qml/Tools.qml</file>
         <file>qml/components/MonitoringComponent.qml</file>
         <file>qml/touchScreens/TestDriveScreen.qml</file>
+        <file>qml/touchScreens/elements/SecretBackBtn.qml</file>
     </qresource>
 </RCC>
