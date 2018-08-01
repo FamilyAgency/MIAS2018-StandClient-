@@ -54,7 +54,7 @@ void IntroModule::stop()
     disconnectComponents();
 }
 
-void IntroModule::onUserReadSuccess(const QString& data)
+void IntroModule::onUserIdReadSuccess(const QString& data)
 {
     qDebug()<<"id readed "<<data;
     serverComponent->searchUserByIdRequest(data.toInt());
@@ -108,7 +108,7 @@ void IntroModule::connectComponents()
 
     if(rfidComponent)
     {
-        connect(rfidComponent.data(), SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+        connect(rfidComponent.data(), SIGNAL(userIdReadSuccess(const QString&)), this, SLOT(onUserIdReadSuccess(const QString&)));
     }
 }
 
@@ -122,6 +122,6 @@ void IntroModule::disconnectComponents()
 
     if(rfidComponent)
     {
-        disconnect(rfidComponent.data(), SIGNAL(userReadSuccess(const QString& )), this, SLOT(onUserReadSuccess(const QString&)));
+        disconnect(rfidComponent.data(), SIGNAL(userIdReadSuccess(const QString& )), this, SLOT(onUserIdReadSuccess(const QString&)));
     }
 }

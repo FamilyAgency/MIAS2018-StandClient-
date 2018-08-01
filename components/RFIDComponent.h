@@ -52,7 +52,8 @@ protected:
     void setCardReaderState(CardReaderState state);
 
 signals:
-    void userReadSuccess(const QString& data);
+    void userIdReadSuccess(const QString& data);
+    void userDataReadSuccess(const QString& data);
     void rfidConfigChanged();
     void connectedChanged();
     void onRFIDRecieve(int id);

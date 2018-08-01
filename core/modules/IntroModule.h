@@ -44,7 +44,7 @@ signals:
     void userAcceptedGame();
 
 private slots:
-    void onUserReadSuccess(const QString& data);
+    void onUserIdReadSuccess(const QString& data);
 
     void onNewUserEntered(const UserObject& userObject);
     void onUserNotFound();

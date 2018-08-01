@@ -246,7 +246,13 @@ ApplicationWindow
                 validation.text = "Validation: failed";
             }
 
-            onUserReadSuccess:
+            onUserIdReadSuccess:
+            {
+                clearError();
+                outputtext.text = "New data: " + data;
+            }
+
+            onUserDataReadSuccess:
             {
                 clearError();
                 outputtext.text = "New data: " + data;

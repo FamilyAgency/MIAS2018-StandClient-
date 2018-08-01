@@ -9,7 +9,8 @@ ACR122CardHandler::ACR122CardHandler(QObject *parent) : RFIDComponent(parent)
 
     connect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
     connect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
-    connect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+    connect(this, SIGNAL(userIdReadSuccess(const QString&)), this, SLOT(onUserIdReadSuccess(const QString&)));
+    connect(this, SIGNAL(userDataReadSuccess(const QString&)), this, SLOT(onUserDataReadSuccess(const QString&)));
 
     fillBlockAdresses();
 }
@@ -18,7 +19,8 @@ ACR122CardHandler::~ACR122CardHandler()
 {    
     disconnect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
     disconnect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
-    disconnect(this, SIGNAL(userReadSuccess(const QString&)), this, SLOT(onUserReadSuccess(const QString&)));
+    disconnect(this, SIGNAL(userIdReadSuccess(const QString&)), this, SLOT(onUserIdReadSuccess(const QString&)));
+    disconnect(this, SIGNAL(userDataReadSuccess(const QString&)), this, SLOT(onUserDataReadSuccess(const QString&)));
 
     if(connectTimer)
     {
@@ -299,7 +301,7 @@ void ACR122CardHandler::readId()
     if(startIndex != -1 && endIndex != -1)
     {
         id = id.mid(startIndex + 1, endIndex - 1);
-        emit userReadSuccess(id);
+        emit userIdReadSuccess(id);
     }
     else
     {
@@ -390,7 +392,7 @@ void ACR122CardHandler::readAllData()
 
     if(lastSymbolCount == lastSymbols)
     {
-        emit userReadSuccess(fulldata);
+        emit userDataReadSuccess(fulldata);
     }
     else
     {
@@ -398,7 +400,17 @@ void ACR122CardHandler::readAllData()
     }
 }
 
-void ACR122CardHandler::onUserReadSuccess(const QString& data)
+void ACR122CardHandler::onUserDataReadSuccess(const QString& data)
+{
+    startValidation(data);
+}
+
+void ACR122CardHandler::onUserIdReadSuccess(const QString& data)
+{
+    startValidation(data);
+}
+
+void ACR122CardHandler::startValidation(const QString& data)
 {
     if(cardReaderState == CardReaderState::Validating)
     {

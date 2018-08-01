@@ -103,6 +103,9 @@ private:
     bool readBlockData(uint8_t blockNumber, QByteArray& data);
     bool writeBlockData(uint8_t blockNumber, const QByteArray& data);
 
+
+    void startValidation(const QString& data);
+
     void blockZeroDataInit();
 
     int readerTimeout = 2000;
@@ -119,8 +122,9 @@ private slots:
     void onWritingUpdate();
     void resetReadingState();
     void onUserWriteSuccess();
-    void onUserReadSuccess(const QString& data);
     void onCardReaderError(CardReaderError);
+    void onUserIdReadSuccess(const QString&);
+    void onUserDataReadSuccess(const QString&);
 
 };
 
