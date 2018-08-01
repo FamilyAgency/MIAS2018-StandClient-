@@ -229,6 +229,8 @@ ApplicationWindow
                     break;
                 case CardReaderError.CardParsing:
                     break;
+                case CardReaderError.DataFormatError:
+                    break;
                 }
             }
 

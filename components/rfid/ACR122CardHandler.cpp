@@ -76,21 +76,80 @@ void ACR122CardHandler::startWriting(const QString& data)
 
 void ACR122CardHandler::startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
 {
-    setCardReaderState(CardReaderState::Writing);
-
-    formatUserData(id, name, surname, phone, email);
-    startWriting(lastUserData);
+    if(formatUserData(id, name, surname, phone, email))
+    {
+        startWriting(lastUserData);
+    }
 }
 
-void ACR122CardHandler::formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
+bool ACR122CardHandler::formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
 {
     // block 0x01: {678}0000000...
     // block 0x02 -... {name,surname,phone,email}
+
+    QString formattedPhone = phone;
+
+    if(!checkPhone(formattedPhone))
+    {
+        qDebug()<<"I can Format phone !!!!! ";
+        emit cardReaderError(CardReaderError::DataFormatError);
+        return false;
+    }
+
+    qDebug()<<"Formated phone "<<formattedPhone;
+
     blockZeroDataInit();
     lastUserId = QString::number(id);
     QString userId = BRACKET_1 + lastUserId + BRACKET_2;
     userId = blockZeroData.replace(0, userId.size(), userId);
-    lastUserData = userId + BRACKET_1 + name + DELIM + surname + DELIM + phone + DELIM + email + BRACKET_2;
+    lastUserData = userId + BRACKET_1 + name + DELIM + surname + DELIM + formattedPhone + DELIM + email + BRACKET_2;
+    return true;
+}
+
+bool ACR122CardHandler::checkPhone(QString& phone) const
+{
+    if (phone.length() > 12)
+    {
+        return false;
+    }
+    else if(phone.length() == 12)  //+7 ok
+    {
+        if( phone.at(0) == '+' && phone.at(1) == '7')
+        {
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if (phone.length() == 11) //8 or 7
+    {
+        const QChar firstChar = phone.at(0);
+        if(firstChar == '7')
+        {
+            phone = '+' + phone;
+        }
+        else if (firstChar == '8')
+        {
+            phone = '+' + phone;
+            phone[1] = '7';
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if (phone.length() == 10)//  906 660 67 90
+    {
+        phone = "+7" + phone;
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
 }
 
 void ACR122CardHandler::timerRestart()
