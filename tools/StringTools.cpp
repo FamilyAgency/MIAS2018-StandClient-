@@ -87,3 +87,49 @@ QString StringTools::convertUnicodeToCyrillic(const QByteArray& unicodeBytes)
     }
     return str;
 }
+
+bool StringTools::convertPhoneNumber(QString& phone)
+{
+    if (phone.length() > 12)
+    {
+        return false;
+    }
+    else if(phone.length() == 12)  //+7 ok
+    {
+        if( phone.at(0) == '+' && phone.at(1) == '7')
+        {
+
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if (phone.length() == 11) //8 or 7
+    {
+        const QChar firstChar = phone.at(0);
+        if(firstChar == '7')
+        {
+            phone = '+' + phone;
+        }
+        else if (firstChar == '8')
+        {
+            phone = '+' + phone;
+            phone[1] = '7';
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if (phone.length() == 10)//  906 660 67 90
+    {
+        phone = "+7" + phone;
+    }
+    else
+    {
+        return false;
+    }
+
+    return true;
+}

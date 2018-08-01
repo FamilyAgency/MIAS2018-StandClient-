@@ -11,9 +11,11 @@ public:
 
     QChar toCyrConverter(const QString& unicode);
     QString convertUnicodeToCyrillic(const QByteArray& unicodeBytes);
+    static bool convertPhoneNumber(QString& phone);
 
 private:
-   QMap<QString, QString> unicodeTable;
+    QMap<QString, QString> unicodeTable;
+
 };
 
 #endif // STRINGTOOLS_H

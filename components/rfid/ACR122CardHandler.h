@@ -84,7 +84,6 @@ private:
     void fillBlockAdresses();
     WriteValidation validationFromString(const QString& value);
     bool formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
-    bool checkPhone(QString& phone) const;
 
     void timerRestart();
     bool cardPreparedSuccess();

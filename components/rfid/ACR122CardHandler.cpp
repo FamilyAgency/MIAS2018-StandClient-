@@ -1,6 +1,7 @@
 #include "ACR122CardHandler.h"
 #include <qDebug>
 #include <QSharedPointer>
+#include "tools/StringTools.h"
 
 ACR122CardHandler::ACR122CardHandler(QObject *parent) : RFIDComponent(parent)
 {
@@ -89,7 +90,7 @@ bool ACR122CardHandler::formatUserData(int id, const QString& name, const QStrin
 
     QString formattedPhone = phone;
 
-    if(!checkPhone(formattedPhone))
+    if(!StringTools::convertPhoneNumber(formattedPhone))
     {
         qDebug()<<"I can Format phone !!!!! ";
         emit cardReaderError(CardReaderError::DataFormatError);
@@ -106,51 +107,6 @@ bool ACR122CardHandler::formatUserData(int id, const QString& name, const QStrin
     return true;
 }
 
-bool ACR122CardHandler::checkPhone(QString& phone) const
-{
-    if (phone.length() > 12)
-    {
-        return false;
-    }
-    else if(phone.length() == 12)  //+7 ok
-    {
-        if( phone.at(0) == '+' && phone.at(1) == '7')
-        {
-
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else if (phone.length() == 11) //8 or 7
-    {
-        const QChar firstChar = phone.at(0);
-        if(firstChar == '7')
-        {
-            phone = '+' + phone;
-        }
-        else if (firstChar == '8')
-        {
-            phone = '+' + phone;
-            phone[1] = '7';
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else if (phone.length() == 10)//  906 660 67 90
-    {
-        phone = "+7" + phone;
-    }
-    else
-    {
-        return false;
-    }
-
-    return true;
-}
 
 void ACR122CardHandler::timerRestart()
 {
