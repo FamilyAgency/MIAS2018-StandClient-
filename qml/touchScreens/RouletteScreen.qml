@@ -257,7 +257,7 @@ Item
 
     Connections
     {
-        target:rouletteModule;
+        target: rouletteModule;
 
         onStateChanged:
         {
@@ -309,7 +309,6 @@ Item
             rollAnim.to = degrees;
             rollAnim.start();
             roulette.animStart();
-
         }
     }
 

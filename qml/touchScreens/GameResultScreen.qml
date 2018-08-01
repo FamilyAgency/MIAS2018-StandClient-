@@ -11,16 +11,16 @@ Item
 
     GameResultFirstTime
     {
-        id:gameResultFirstTime;
+        id: gameResultFirstTime;
 
         onStartSuperGame:
         {
-            appController.startSuperGame();
+            gameResultModule.superGameAcceptedButtonClick();
         }
 
         onGetColaCan:
         {
-            appController.backToIntro();
+            gameResultModule.superGameRejectedButtonClick();
         }
     }
 

@@ -88,6 +88,11 @@ void IntroModule::onServerError()
     //userData->setLoginState(UserData::LoginState::Error);
 }
 
+void IntroModule::startButtonClick()
+{
+    emit userAcceptedGame();
+}
+
 QString IntroModule::getName() const
 {
     return "Intro location";

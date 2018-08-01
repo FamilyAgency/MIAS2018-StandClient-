@@ -13,6 +13,8 @@ Item
     property string mainTitleDefault: "ПОЛУЧИТЕ<br/>НАПИТОК.<br/>ПОПРОБУЙТЕ СЫГРАТЬ<br/>В СУПЕР ИГРУ<br/>ЧЕРЕЗ 20 МИНУТ.";
     property string buttonText: "ЗАБРАТЬ ПОДАРОК";
 
+    signal gotoIntro();
+
     Text
     {
         id: mainTitle;
@@ -24,5 +26,37 @@ Item
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
+    }
+
+    Button
+    {
+        id: failOkBtn;
+
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin: 100;
+        anchors.horizontalCenter: parent.horizontalCenter;
+
+        contentItem: Text
+        {
+            text: buttonText;
+            font.family: "Helvetica";
+            font.pixelSize: 25;
+            color: "#ffffff"
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+
+        }
+
+        background: Rectangle
+        {
+            implicitHeight: 200;
+            implicitWidth: 400;
+            color: takePrizeBtn.down ? "#3c2755" : "#4e1a8a";
+        }
+
+        onClicked:
+        {
+            result.gotoIntro();
+        }
     }
 }

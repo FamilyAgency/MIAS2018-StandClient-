@@ -26,6 +26,8 @@ public:
     virtual void setUserData(QSharedPointer<UserData> userData);
     virtual void setStandData(QSharedPointer<StandData> value);
 
+    Q_INVOKABLE void startButtonClick();
+
 private:
     QSharedPointer<RFIDComponent> rfidComponent = nullptr;
     QSharedPointer<ServerComponent> serverComponent = nullptr;
@@ -39,6 +41,7 @@ signals:
     void userStartPlay();
     void userNotFound();    
     void userCantStartReason(CantPlayReason reason);
+    void userAcceptedGame();
 
 private slots:
     void onUserReadSuccess(const QString& data);

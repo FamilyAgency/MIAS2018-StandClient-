@@ -60,11 +60,14 @@ void AppController::createEngine()
     introModule->setServerComponent(serverComponent);
     introModule->setStandData(standData);
     connect(introModule.data(), SIGNAL(userStartPlay()), this, SLOT(onUserStartPlay()));
+    connect(introModule.data(), SIGNAL(userAcceptedGame()), this, SLOT(onUserAcceptedGame()));
 
     modules.append(introModule);
 
     instructionModule.reset(new InstructionModule());
     modules.append(instructionModule);
+    connect(instructionModule.data(), SIGNAL(userStartRoulette()), this, SLOT(onUserStartRoulette()));
+    
 
     rouletteModule.reset(new RouletteModule());
     rouletteModule->setMindwave(mindWaveComponent);
@@ -85,6 +88,8 @@ void AppController::createEngine()
     modules.append(gameModule);
 
     gameResultModule.reset(new GameResultModule());
+    connect(gameResultModule.data(), SIGNAL(superGameAccepted()), this, SLOT(onSuperGameAccepted()));
+    connect(gameResultModule.data(), SIGNAL(superGameRejected()), this, SLOT(onSuperGameRejected()));
     modules.append(gameResultModule);
 
     superGameModule.reset(new SuperGameModule());
@@ -96,7 +101,12 @@ void AppController::createEngine()
     modules.append(superGameModule);
 
     superGameResultModule.reset(new SuperGameResultModule());
+    connect(superGameResultModule.data(), SIGNAL(superGameResultReaded()), this, SLOT(onSuperGameResultReaded()));
+
     modules.append(superGameResultModule);
+
+    testDriveModule.reset(new TestDriveModule());
+    modules.append(testDriveModule);
 }
 
 AppController::~AppController()
@@ -112,6 +122,15 @@ AppController::~AppController()
     disconnect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
 
     disconnect(introModule.data(), SIGNAL(userStartPlay()), this, SLOT(onUserStartPlay()));
+    disconnect(introModule.data(), SIGNAL(userAcceptedGame()), this, SLOT(onUserAcceptedGame()));
+
+    disconnect(instructionModule.data(), SIGNAL(userStartRoulette()), this, SLOT(onUserStartRoulette()));
+
+    disconnect(gameResultModule.data(), SIGNAL(superGameAccepted()), this, SLOT(onSuperGameAccepted()));
+    disconnect(gameResultModule.data(), SIGNAL(superGameRejected()), this, SLOT(onSuperGameRejected()));
+
+    disconnect(superGameResultModule.data(), SIGNAL(superGameResultReaded()), this, SLOT(onSuperGameResultReaded()));
+
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
@@ -201,10 +220,28 @@ void AppController::onServerResponse(const ServerResponse& response)
 
 }
 
+// ============== Intro Module ============== //
+
 void AppController::onUserStartPlay()
 {
     gameSession->start();
 }
+
+void AppController::onUserAcceptedGame()
+{
+    setAppState(AppState::Instruction);
+}
+
+
+// ============== Instruction Module ============== //
+
+
+void AppController::onUserStartRoulette()
+{
+    setAppState(AppState::Roulette);
+}
+
+// ============== Roulette Module ============== //
 
 void AppController::onGameCategoryUpdate(int id)
 {
@@ -216,10 +253,31 @@ void AppController::onCarStarting()
     startGame();
 }
 
+void AppController::startGame()
+{
+    setAppState(AppState::Game);
+}
+
+// ============== Game Module ============== //
+
 void AppController::onAllTaskComleteEvent()
 {
     setAppState(AppState::GameResult);
 }
+
+// ============== Game Result Module ============== //
+
+void AppController::onSuperGameAccepted()
+{
+    setAppState(AppState::SuperGame);
+}
+
+void AppController::onSuperGameRejected()
+{
+    backToIntro();
+}
+
+// ============== Super Game Module ============== //
 
 void AppController::onSuperGameFailed()
 {
@@ -231,29 +289,10 @@ void AppController::onSuperGameSuccess(int time)
     setAppState(AppState::SuperGameResult);
 }
 
-void AppController::startInstruction()
+// ============== Super Game Result Module ============== //
+void AppController::onSuperGameResultReaded()
 {
-    setAppState(AppState::Instruction);
-}
-
-void AppController::startRoulette()
-{
-    setAppState(AppState::Roulette);
-}
-
-void AppController::startGame()
-{
-    setAppState(AppState::Game);
-}
-
-void AppController::startGameResult()
-{
-    setAppState(AppState::GameResult);
-}
-
-void AppController::startSuperGame()
-{
-    setAppState(AppState::SuperGame);
+    setAppState(AppState::TestDrive);
 }
 
 void AppController::backToIntro()
@@ -297,6 +336,8 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
     case AppState::GameResult: return gameResultModule;
     case AppState::SuperGame: return superGameModule;
     case AppState::SuperGameResult: return superGameResultModule;
+    case AppState::TestDrive: return testDriveModule;
+
     }
 
     return nullptr;

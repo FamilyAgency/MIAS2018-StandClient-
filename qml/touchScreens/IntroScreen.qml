@@ -81,7 +81,7 @@ Item
 
             onClicked:
             {
-                appController.startInstruction();
+                introModule.startButtonClick();
             }
         }
     }

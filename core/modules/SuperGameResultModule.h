@@ -11,13 +11,17 @@ public:
     explicit SuperGameResultModule(QObject *parent = nullptr);
 
     virtual ~SuperGameResultModule();
+    virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void start() override;
     virtual void stop() override;
+
     virtual QString getName() const override;
 
-signals:
+    Q_INVOKABLE void superGameResultReadedButtonClicked();
 
-public slots:
+signals:
+    void superGameResultReaded();
+
 };
 
 #endif // SUPERGAMERESULTMODULE_H

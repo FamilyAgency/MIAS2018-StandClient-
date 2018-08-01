@@ -14,10 +14,14 @@ public:
     virtual void start() override;
     virtual void stop() override;
     virtual QString getName() const override;
+    virtual void setQmlContext(QQmlContext* value) override;
+
+    Q_INVOKABLE void superGameAcceptedButtonClick();
+    Q_INVOKABLE void superGameRejectedButtonClick();
 
 signals:
-
-public slots:
+    void superGameAccepted();
+    void superGameRejected();
 };
 
 #endif // GAMERESULTMODULE_H

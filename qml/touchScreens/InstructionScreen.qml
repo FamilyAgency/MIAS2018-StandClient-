@@ -120,7 +120,7 @@ Item
 
         onClicked:
         {
-            appController.startRoulette();
+            instructionModule.rouletteButtonClick();
         }
     }
 

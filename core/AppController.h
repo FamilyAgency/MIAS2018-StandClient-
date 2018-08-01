@@ -23,6 +23,7 @@
 #include "modules/GameResultModule.h"
 #include "modules/SuperGameModule.h"
 #include "modules/SuperGameResultModule.h"
+#include "modules/TestDriveModule.h"
 #include "Types.h"
 #include "tests/MindwaveComponentTest.h"
 #include "tools/AppSettings.h"
@@ -43,18 +44,14 @@ public:
         Game,
         GameResult,
         SuperGame,
-        SuperGameResult
+        SuperGameResult,
+        TestDrive
     };
     Q_ENUMS(AppState)
 
     void setQmlContext(QQmlContext* qmlContext);
 
     Q_INVOKABLE void start();
-    Q_INVOKABLE void startInstruction();
-    Q_INVOKABLE void startRoulette();
-    Q_INVOKABLE void startGame();
-    Q_INVOKABLE void startGameResult();
-    Q_INVOKABLE void startSuperGame();
     Q_INVOKABLE void backToIntro();
 
     Q_INVOKABLE void testCrash();
@@ -68,6 +65,7 @@ private:
     QSharedPointer<RouletteModule> rouletteModule;
     QSharedPointer<SuperGameModule> superGameModule;
     QSharedPointer<SuperGameResultModule> superGameResultModule;
+    QSharedPointer<TestDriveModule> testDriveModule;
     QList<QSharedPointer<BaseModule>> modules;
 
     QSharedPointer<LoggerComponent> loggerComponent;
@@ -98,6 +96,8 @@ private:
     template <class RFIDComponentT>
     void createRFID();
 
+    void startGame();
+
 signals:
     void appStateChanged(AppState appState);
     void configError(const QString& errorMessage);
@@ -114,6 +114,11 @@ private slots:
     void onSuperGameFailed();
     void onSuperGameSuccess(int time);
     void onUserStartPlay();
+    void onUserAcceptedGame();
+    void onUserStartRoulette();
+    void onSuperGameAccepted();
+    void onSuperGameRejected();
+    void onSuperGameResultReaded();
 };
 
 #endif // APPCOPCONTROLLER_H

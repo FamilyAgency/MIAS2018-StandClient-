@@ -19,7 +19,7 @@ Item
 
        onGotoIntro:
        {
-           appController.backToIntro();
+           superGameResultModule.superGameResultReadedButtonClicked();
        }
     }
 
@@ -27,6 +27,11 @@ Item
     {
        id:superGameFailScreen;
        visible: false;
+
+       onGotoIntro:
+       {
+           superGameResultModule.superGameResultReadedButtonClicked();
+       }
     }
 
     Connections

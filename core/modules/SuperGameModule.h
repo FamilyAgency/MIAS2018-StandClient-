@@ -48,7 +48,6 @@ signals:
 private slots:
     void onUpdate();
     void onUserFinishedGame();
-
 };
 
 #endif // SUPERGAMEMODULE_H

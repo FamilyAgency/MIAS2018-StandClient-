@@ -2,16 +2,21 @@
 #define TESTDRIVEMODULE_H
 
 #include <QObject>
+#include "BaseModule.h"
 
-class TestDriveModule : public QObject
+class TestDriveModule : public BaseModule
 {
     Q_OBJECT
 public:
     explicit TestDriveModule(QObject *parent = nullptr);
+    virtual ~TestDriveModule();
 
-signals:
+    virtual void setQmlContext(QQmlContext* qmlContext) override;
+    virtual void setConfig(ConfigPtr config) override;
 
-public slots:
+    virtual void start() override;
+    virtual void stop() override;
+    virtual QString getName() const override;
 };
 
 #endif // TESTDRIVEMODULE_H

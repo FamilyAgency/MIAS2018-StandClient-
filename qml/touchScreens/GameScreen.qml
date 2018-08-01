@@ -40,7 +40,7 @@ Item
 
     Connections
     {
-        target:gameModule;
+        target: gameModule;
 
         onStageComleteEvent:
         {

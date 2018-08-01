@@ -50,5 +50,6 @@
         <file>qml/components/ACR122Card.qml</file>
         <file>qml/Tools.qml</file>
         <file>qml/components/MonitoringComponent.qml</file>
+        <file>qml/touchScreens/TestDriveScreen.qml</file>
     </qresource>
 </RCC>

@@ -71,6 +71,7 @@ Window
         addLocation(AppState.GameResult, "GameResultScreen");
         addLocation(AppState.SuperGame, "SuperGameScreen");
         addLocation(AppState.SuperGameResult, "SuperGameResultScreen");
+        addLocation(AppState.TestDrive, "TestDriveScreen");
 
         setState(appController.getAppState());
     }

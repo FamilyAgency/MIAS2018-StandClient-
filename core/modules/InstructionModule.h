@@ -8,7 +8,7 @@ class InstructionModule : public BaseModule
 {
     Q_OBJECT
 public:
-    explicit InstructionModule(QObject *parent = nullptr);    
+    explicit InstructionModule(QObject *parent = nullptr);
     virtual ~InstructionModule();
 
     virtual void setQmlContext(QQmlContext* qmlContext) override;
@@ -17,6 +17,12 @@ public:
     virtual void stop() override;
 
     virtual QString getName() const override;
+
+    Q_INVOKABLE void rouletteButtonClick();
+
+signals:
+    void userStartRoulette();
+
 };
 
 #endif // INSTRUCTIONMODULE_H
