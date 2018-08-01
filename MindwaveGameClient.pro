@@ -57,7 +57,8 @@ SOURCES += main.cpp \
     components/RFIDComponent.cpp \
     components/server/ServerRemoteComponent.cpp \
     tests/ServerRemoteComponentTest.cpp \
-    core/modules/TestDriveModule.cpp
+    core/modules/TestDriveModule.cpp \
+    tools/FileReader.cpp
 
 
 RESOURCES += qml.qrc
@@ -153,7 +154,8 @@ HEADERS += \
     core/modules/IntroModule.h \
     components/server/ServerRemoteComponent.h \
     tests/ServerRemoteComponentTest.h \
-    core/modules/TestDriveModule.h
+    core/modules/TestDriveModule.h \
+    tools/FileReader.h
 
 DISTFILES += \
     modules/components/components.pri

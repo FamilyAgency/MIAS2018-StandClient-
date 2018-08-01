@@ -51,5 +51,6 @@
         <file>qml/components/MonitoringComponent.qml</file>
         <file>qml/touchScreens/TestDriveScreen.qml</file>
         <file>qml/touchScreens/elements/SecretBackBtn.qml</file>
+        <file>qml/components/FileReaderComponent.qml</file>
     </qresource>
 </RCC>
