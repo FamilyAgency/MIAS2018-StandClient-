@@ -89,10 +89,31 @@ Item
 
     Connections
     {
+        target:introModule;
+
+        onUserStartPlay:
+        {
+            visible = false;
+        }
+    }
+
+    Connections
+    {
         target: server;
         onBaseUserDataRecived:
         {
             userId.value = baseUserData.id;
         }
+    }
+
+    function start()
+    {
+        visible = true;
+
+    }
+
+    function stop()
+    {
+        visible = false;
     }
 }

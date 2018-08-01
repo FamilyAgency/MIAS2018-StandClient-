@@ -47,8 +47,8 @@ Item
         for(var i = 0; i < locations.length; i++)
         {
             if(locations[i].type === appState)
-            {
-                locations[i].loc.visible = true;
+            {               
+                locations[i].loc.start();
                 break;
             }
         }
@@ -58,7 +58,7 @@ Item
     {
         for(var i = 0; i < locations.length; i++)
         {
-            locations[i].loc.visible = false;
+            locations[i].loc.stop();
         }
     }
 }
