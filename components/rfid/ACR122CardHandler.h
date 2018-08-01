@@ -22,7 +22,7 @@ public:
     Q_INVOKABLE virtual void startWriting(const QString& data) override;
     Q_INVOKABLE void startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
     Q_INVOKABLE virtual void stopAll() override;
-    Q_INVOKABLE bool beepCommand(bool enabled);
+    Q_INVOKABLE bool beepCommandDirect(bool enabled);
     //Q_INVOKABLE void getCardAttributes();
     //Q_INVOKABLE void resetCard();
 
@@ -69,9 +69,13 @@ private:
     QString blockZeroData = "";
 
     bool readIdOnly = true;
+    bool startCommandsInit = false;
 
     QString lastUserId;
     QString lastUserData;
+
+    bool beepCommand(bool enabled);
+    void runStartCommands();
 
     void readId();
     void readAllData();

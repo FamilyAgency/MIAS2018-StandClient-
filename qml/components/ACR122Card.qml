@@ -146,7 +146,7 @@ ApplicationWindow
                 text: "Beep";
                 onClicked:
                 {
-                    rfid.beepCommand(beepEnabled.checked);
+                    rfid.beepCommandDirect(beepEnabled.checked);
                 }
             }
 

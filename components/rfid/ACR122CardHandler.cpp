@@ -155,6 +155,11 @@ void ACR122CardHandler::onWritingUpdate()
         return;
     }
 
+    if(!startCommandsInit)
+    {
+        runStartCommands();
+    }
+
     connectTimer->stop();
     
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
@@ -242,6 +247,11 @@ void ACR122CardHandler::readId()
         return;
     }
 
+    if(!startCommandsInit)
+    {
+        runStartCommands();
+    }
+
     connectTimer->stop();
 
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
@@ -300,6 +310,11 @@ void ACR122CardHandler::readAllData()
     if(!cardPreparedSuccess())
     {
         return;
+    }
+
+    if(!startCommandsInit)
+    {
+        runStartCommands();
     }
 
     connectTimer->stop();
@@ -514,13 +529,23 @@ bool ACR122CardHandler::writeBlockData(uint8_t blockNumber, const QByteArray& da
     return SCardTransmit(card_handle_, protocol, bytes,  sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
 }
 
-bool ACR122CardHandler::beepCommand(bool enabled)
+void ACR122CardHandler::runStartCommands()
+{
+    startCommandsInit = true;
+    beepCommand(rfidConfig().beepEnabled);
+}
+
+bool ACR122CardHandler::beepCommandDirect(bool enabled)
 {
     if(!cardPreparedSuccess())
     {
         return false;
     }
+    beepCommand(enabled);
+}
 
+bool ACR122CardHandler::beepCommand(bool enabled)
+{
     BYTE pbRecv[MAX_APDU_SIZE];
     DWORD cbRecv = MAX_APDU_SIZE;
     uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};

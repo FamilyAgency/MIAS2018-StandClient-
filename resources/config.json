@@ -49,7 +49,8 @@
         "type_example": ["arduino", "ACS ACR122 0"],
         "type": "ACS ACR122 0",
         "validation_example":["none", "idOnly", "allData"],
-        "validation":"idOnly"
+        "validation":"idOnly",
+        "beepEnabled":false
     },
     "mindwave":
     {

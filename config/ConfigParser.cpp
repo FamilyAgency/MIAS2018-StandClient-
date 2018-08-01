@@ -90,6 +90,7 @@ void ConfigParser::parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const 
     rfidConfig->useKeyword = jsonObj["useKeyword"].toBool();
     rfidConfig->type = jsonObj["type"].toString();
     rfidConfig->writeValidation = jsonObj["validation"].toString();
+    rfidConfig->beepEnabled = jsonObj["beepEnabled"].toBool();
 }
 
 void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj)
