@@ -17,7 +17,7 @@ Window
     height: standData.mainConfig.touchScreen.height;
     visible: true;
     flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
-    color: "#1c1c1c";
+    color: "#000000";
 
     id: touchCore;
 

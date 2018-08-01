@@ -10,7 +10,7 @@ Item
     {
         color: "white";
         anchors.fill: parent;
-        opacity: 0.3;
+        opacity: 0.0;
     }
 
     Button
