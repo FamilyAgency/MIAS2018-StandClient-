@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 
 import "../../.."
 import "../../../components"
+import ".."
 
 Item
 {
@@ -58,29 +59,13 @@ Item
         horizontalAlignment: Text.AlignHCenter;
     }
 
-    Button
+    BigRedButton
     {
-        id: startBtn;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.bottom: parent.bottom;
+        id: brb;
+
         anchors.bottomMargin: btnMarginBottom;
         visible:false;
-        contentItem: Text
-        {
-            text: buttonText;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 38 * consts.designScale;
-            color: "#ffffff";
-            horizontalAlignment: Text.AlignHCenter;
-            verticalAlignment: Text.AlignVCenter;
-        }
-        background: Rectangle
-        {
-            implicitHeight: 410 * consts.designScale;
-            implicitWidth: 410 * consts.designScale;
-            color: startBtn.down ? "#f00000" : "#fb0000";
-            radius: 205 * consts.designScale;
-        }
+        anchors.fill: parent;
 
         onClicked:
         {
@@ -100,7 +85,8 @@ Item
             mainText.visible = true;
             addText.visible = true;
             addText.text = addTitleHelloText;
-            startBtn.visible = true;
+            brb.visible = true;
+            brb.show();
         }
     }
 
@@ -111,6 +97,11 @@ Item
         to: 1;
         duration: 1000
         running:false;
+    }
+
+    Component.onCompleted:
+    {
+        brb.setTitle(buttonText);
     }
 
     function start()
@@ -130,6 +121,6 @@ Item
         addText.text =  "";
 
         mainText.visible = true;
-        startBtn.visible = false;
+        brb.visible = false;
     }
 }

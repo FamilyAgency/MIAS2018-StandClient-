@@ -8,7 +8,7 @@ Item
     anchors.fill:  parent;
     opacity: 0.1;
 
-    property int maxClicks: 5;
+    property int maxClicks: 1;
     property int mills: 2000;
     property int currentClick: 0;
 

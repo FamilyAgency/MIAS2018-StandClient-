@@ -57,7 +57,7 @@ private:
      const float prepareTimerDelay = 2000.0f;
 
      const float carInitialPosition = 0.0f;
-     int carMiddleThreshold = -600;
+     int carMiddleThreshold = -850;
      int carTopThreshold = -1200;
      const float carDecriment = -1.0f;
 
@@ -76,7 +76,7 @@ private:
      QSharedPointer<UserData> currentUser;
 
      float _carY = 0;
-     int _carHeight = 250;
+     int _carHeight = 350;//555;
      int choosenCategory = 0;
 
      void connectComponents();

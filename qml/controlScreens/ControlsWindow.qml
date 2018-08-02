@@ -62,8 +62,8 @@ Item
         y: marginTop;
     }
 
-    UserRegistrationData
-    {
+//    UserRegistrationData
+//    {
 
-    }
+//    }
 }

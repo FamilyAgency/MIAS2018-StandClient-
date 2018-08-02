@@ -108,11 +108,12 @@ void RouletteModule::setState(RouletteState state)
     {
         qDebug()<<"choose user games!!!!!!";
 
-        serverComponent->startGameRequest(currentUser->baseUserData().id);
+        //serverComponent->startGameRequest(currentUser->baseUserData().id);
+        onUserStartedGame();
     }
     else if(_state == RouletteState::CarStarting)
     {
-        mindwaveTimer->start(mindwaveTimerMills);
+        //mindwaveTimer->start(mindwaveTimerMills);
     }
 }
 

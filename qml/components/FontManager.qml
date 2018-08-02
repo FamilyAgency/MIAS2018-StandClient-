@@ -4,6 +4,7 @@ Item
 {
     property alias hyundaiSansHeadMedium: hyundaiSansHeadMedium.name;
     property alias hyundaiSansHeadRegular: hyundaiSansHeadRegular.name;
+    property alias hyundaiSansHeadBold: hyundaiSansHeadBold.name;
 
     FontLoader
     {

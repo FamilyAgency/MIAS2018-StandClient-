@@ -55,5 +55,11 @@
         <file>qml/touchScreens/elements/intro/VideoHolder.qml</file>
         <file>qml/Consts.qml</file>
         <file>qml/components/FontManager.qml</file>
+        <file>qml/touchScreens/elements/instruction/InstructionVideoHolder.qml</file>
+        <file>resources/rulette.png</file>
+        <file>resources/santafe_top.png</file>
+        <file>qml/touchScreens/elements/BigRedButton.qml</file>
+        <file>qml/touchScreens/elements/roulette/Titles.qml</file>
+        <file>qml/touchScreens/elements/roulette/Roulette.qml</file>
     </qresource>
 </RCC>
