@@ -27,7 +27,7 @@ Item
 
     Consts
     {
-        id:consts;
+        id: consts;
     }
 
     FontManager
@@ -74,14 +74,7 @@ Item
 
         onStopped:
         {
-            if(opacity == 1)
-            {
-                core.inAnimComplete()
-            }
-            else
-            {
-                core.outAnimComplete()
-            }
+           opacity == 1 ? core.inAnimComplete() : core.outAnimComplete();
         }
     }
 
@@ -95,10 +88,7 @@ Item
 
         onClicked:
         {
-            core.animStart();
-            opacityAnim.from = 1;
-            opacityAnim.to = 0;
-            opacityAnim.start();
+            startOpacityAnim(1, 0);
             brb.hide();
         }
     }
@@ -109,9 +99,7 @@ Item
         interval:1000;
         onTriggered:
         {
-            opacityAnim.from = 0;
-            opacityAnim.to = 1;
-            opacityAnim.start();
+            startOpacityAnim(0, 1);
             mainText.text = "Привет,<br/>" + userData.baseUserData.name;
             brb.visible = true;
             brb.show();
@@ -127,6 +115,15 @@ Item
     {
 
     }
+
+    function startOpacityAnim(from, to)
+    {
+        opacityAnim.from = from;
+        opacityAnim.to = to;
+        opacityAnim.start();
+        core.animStart();
+    }
+
 
     function startHelloState()
     {

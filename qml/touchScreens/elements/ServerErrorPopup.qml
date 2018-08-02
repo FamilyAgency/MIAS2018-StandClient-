@@ -59,6 +59,7 @@ Item
 
         onServerRequestError:
         {
+           // cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
             console.log("server error");
             visible = true;
         }

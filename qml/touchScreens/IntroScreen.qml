@@ -42,6 +42,7 @@ Item
 
             if(wasError)
             {
+                wasError = false;
                 appController.backToIntro();
             }
             else
@@ -92,21 +93,6 @@ Item
         }
     }
 
-    Connections
-    {
-        target:server;
-
-        onServerGlobalError:
-        {
-            cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
-        }
-
-        onServerRequestError:
-        {
-            cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
-        }
-    }
-
     function start()
     {
         visible = true;
@@ -120,11 +106,6 @@ Item
         visible = false;
         videoHolder.stop();
         helloBlock.stop();
-    }
-
-    function setTestState(state)
-    {
-        reset();
     }
 
     function cantPlayHandler(errorMsg)

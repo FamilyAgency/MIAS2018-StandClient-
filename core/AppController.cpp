@@ -211,7 +211,7 @@ void AppController::start()
     else
     {
         // userData->setGameCategory(1);
-        setAppState(AppState::Intro);
+        setAppState(AppState::Roulette);
     }
 }
 
