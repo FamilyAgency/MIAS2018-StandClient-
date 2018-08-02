@@ -1,25 +1,62 @@
 #include "RouletteModule.h"
 
 RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
-{
-    carStartTimer = new QTimer(this);
-    connect(carStartTimer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-
+{ 
     prepareTimer  = new QTimer(this);
     connect(prepareTimer, SIGNAL(timeout()), this, SLOT(onPrepareTimerComplete()));
 
     mindwaveTimer = new QTimer(this);
     connect(mindwaveTimer, SIGNAL(timeout()), this, SLOT(onMindwaveUpdate()));
+
+    carInAnimation = new QPropertyAnimation(this);
+    carInAnimation->setTargetObject(this);
+    carInAnimation->setPropertyName("carY");
+    connect(carInAnimation, SIGNAL(finished()), this, SLOT(onCarInAnimationCompleted()));
+    carInAnimation->setStartValue(carInitialPosition);
+    carInAnimation->setDuration(2000);
+    carInAnimation->setEasingCurve(QEasingCurve::OutCubic);
+
+
+    rollAnimation = new QPropertyAnimation(this);
+    rollAnimation->setTargetObject(this);
+    rollAnimation->setPropertyName("rotation");
+    rollAnimation->setStartValue(0);
+    rollAnimation->setDuration(2000);
+    rollAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+    connect(rollAnimation, SIGNAL(finished()), this, SLOT(onRollAnimationCompleted()));
+
+    scaleAnimation = new QPropertyAnimation(this);
+    scaleAnimation->setTargetObject(this);
+    scaleAnimation->setPropertyName("scale");
+    scaleAnimation->setStartValue(0);
+    scaleAnimation->setEndValue(1);
+    scaleAnimation->setDuration(700);
+    scaleAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+    connect(scaleAnimation, SIGNAL(finished()), this, SLOT(onScaleAnimationCompleted()));
 }
 
 RouletteModule::~RouletteModule()
 {
-    if(carStartTimer)
+    if(carInAnimation)
     {
-        carStartTimer->stop();
-        disconnect(carStartTimer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-        delete carStartTimer;
+        disconnect(carInAnimation, SIGNAL(finished()), this, SLOT(onCarInAnimationCompleted()));
+        delete carInAnimation;
     }
+
+    if(rollAnimation)
+    {
+        disconnect(rollAnimation, SIGNAL(finished()), this, SLOT(onRollAnimationCompleted()));
+        delete rollAnimation;
+    }
+
+    if(scaleAnimation)
+    {
+        disconnect(scaleAnimation, SIGNAL(finished()), this, SLOT(onScaleAnimationCompleted()));
+        delete scaleAnimation;
+    }
+
+
+
 
     if(prepareTimer)
     {
@@ -59,8 +96,10 @@ void RouletteModule::setUser(QSharedPointer<UserData> value)
 
 void RouletteModule::setConfig(ConfigPtr config)
 {
-    carMiddleThreshold = -config->mainConfig->touchScreen.height() / 2.;
+    carMiddleThreshold = -config->mainConfig->touchScreen.height() / 2. - _carHeight * 0.5f;
     carTopThreshold = -config->mainConfig->touchScreen.height();
+
+    carInAnimation->setEndValue(carMiddleThreshold);
 }
 
 void RouletteModule::start()
@@ -69,9 +108,14 @@ void RouletteModule::start()
 
     connectComponents();
     choosenCategory = 0;
+    setCarY(0.0);
+    setRotation(0.0);
+    setScale(0.0);
     setState(RouletteState::Intro);
-    setCarY(carInitialPosition);
-    carStartTimer->start(carStartTimerMills);
+
+    carInAnimation->setStartValue(0.0);
+    carInAnimation->setEndValue(carMiddleThreshold);
+    carInAnimation->start();
 }
 
 void RouletteModule::stop()
@@ -80,52 +124,17 @@ void RouletteModule::stop()
 
     disconnectComponents();
     setState(RouletteState::Intro);
-    carStartTimer->stop();
     prepareTimer->stop();
     mindwaveTimer->stop();
     emit locationStopped();
 }
 
-void RouletteModule::onUpdate()
+void RouletteModule::onCarInAnimationCompleted()
 {
-    if(_carY > carMiddleThreshold - _carHeight * 0.5f)
-    {
-        setCarY(_carY + carDecriment);
-    }
-    else
-    {
-        carStartTimer->stop();
-        setState(RouletteState::Roll);
-    }
+    setState(RouletteState::Roll);
 }
 
-void RouletteModule::setState(RouletteState state)
-{
-    _state = state;
-    emit stateChanged();
-
-    if(_state == RouletteState::RollFinished)
-    {
-        qDebug()<<"choose user games!!!!!!";
-
-        //serverComponent->startGameRequest(currentUser->baseUserData().id);
-        onUserStartedGame();
-    }
-    else if(_state == RouletteState::CarStarting)
-    {
-        //mindwaveTimer->start(mindwaveTimerMills);
-    }
-}
-
-void RouletteModule::onUserStartedGame()
-{
-    qDebug()<<"================ GAME STARTED!!!!!! ================";
-
-    prepareTimer->setSingleShot(true);
-    prepareTimer->start(prepareTimerDelay);
-}
-
-void RouletteModule::createRollParams(float rollSpeed)
+void RouletteModule::startRoll()
 {
     if(choosenCategory != 0)
     {
@@ -153,7 +162,49 @@ void RouletteModule::createRollParams(float rollSpeed)
     qDebug()<<"choosenCategory============= "<<choosenCategory;
 
     emit gameCategoryUpdate(choosenCategory);
-    emit rollParamsUpdate(degrees);
+    rollAnimation->setEndValue(degrees);
+    rollAnimation->start();
+}
+
+void RouletteModule::onRollAnimationCompleted()
+{
+    setState(RouletteState::RollFinished);
+}
+
+void RouletteModule::setState(RouletteState state)
+{
+    _state = state;
+    emit stateChanged();
+
+    if(_state == RouletteState::RollFinished)
+    {
+        qDebug()<<"choose user games!!!!!!";
+
+        //serverComponent->startGameRequest(currentUser->baseUserData().id);
+        onUserStartedGame();
+    }
+    else if(_state == RouletteState::CarStarting)
+    {
+        //mindwaveTimer->start(mindwaveTimerMills);
+    }
+}
+
+void RouletteModule::onUserStartedGame()
+{
+    qDebug()<<"================ GAME STARTED!!!!!! ================";
+
+    //prepareTimer->setSingleShot(true);
+    //prepareTimer->start(prepareTimerDelay);
+    scaleAnimation->start();
+
+    //carInAnimation->setStartValue(carY());
+   // carInAnimation->setEndValue(carY() + 100);
+  //  carInAnimation->start();
+}
+
+void RouletteModule::onScaleAnimationCompleted()
+{
+
 }
 
 void RouletteModule::onPrepareTimerComplete()
@@ -204,6 +255,28 @@ void RouletteModule::setCarHeight(int value)
     emit carHeightChanged();
 }
 
+float RouletteModule::rotation() const
+{
+    return _rotation;
+}
+
+void RouletteModule::setRotation(float value)
+{
+    _rotation = value;
+    emit rotationChanged();
+}
+
+float RouletteModule::scale() const
+{
+    return _scale;
+}
+
+void RouletteModule::setScale(float value)
+{
+    _scale = value;
+    emit scaleChanged();
+}
+
 QString RouletteModule::getName() const
 {
     return "Roulette location";
@@ -222,5 +295,5 @@ void RouletteModule::disconnectComponents()
     if(serverComponent)
     {
         disconnect(serverComponent.data(), SIGNAL(userStartedGame()), this, SLOT(onUserStartedGame()));
-     }
+    }
 }

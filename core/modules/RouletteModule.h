@@ -12,6 +12,9 @@ class RouletteModule : public BaseModule
     Q_OBJECT
 
     Q_PROPERTY(float carY READ carY WRITE setCarY NOTIFY carYChanged)
+    Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
+    Q_PROPERTY(float scale READ scale WRITE setScale NOTIFY scaleChanged)
+
     Q_PROPERTY(int carHeight READ carHeight WRITE setCarHeight NOTIFY carHeightChanged)
     Q_PROPERTY(RouletteState state READ state WRITE setState NOTIFY stateChanged)
 
@@ -28,7 +31,7 @@ public:
     explicit RouletteModule(QObject *parent = nullptr);
     virtual ~RouletteModule();
 
-    Q_INVOKABLE void createRollParams(float rollSpeed);
+    Q_INVOKABLE void startRoll();
 
     void setState(RouletteState state);
     RouletteState state() const;
@@ -48,11 +51,20 @@ public:
     float carY() const;
     void setCarY(float value);
 
+    float rotation() const;
+    void setRotation(float value);    
+
+    float scale() const;
+    void setScale(float value);
+
     int carHeight() const;
     void setCarHeight(int value);
 
 private:
-     const float carStartTimerMills = 100.0f/60.0f;
+    QPropertyAnimation* carInAnimation = nullptr;
+    QPropertyAnimation* rollAnimation = nullptr;
+    QPropertyAnimation* scaleAnimation = nullptr;
+
      const float mindwaveTimerMills = 100.0f/60.0f;
      const float prepareTimerDelay = 2000.0f;
 
@@ -64,7 +76,6 @@ private:
 
      const int mindwaveAttentionThreshold = 80;
 
-     QTimer* carStartTimer = nullptr;
      QTimer* prepareTimer = nullptr;
      QTimer* mindwaveTimer = nullptr;
 
@@ -75,7 +86,9 @@ private:
 
      QSharedPointer<UserData> currentUser;
 
+     float _scale = 0;
      float _carY = 0;
+     float _rotation = 0;
      int _carHeight = 350;//555;
      int choosenCategory = 0;
 
@@ -84,18 +97,22 @@ private:
 
 signals:
      void carYChanged();
+     void rotationChanged();
      void stateChanged();
      void locationStopped();
      void carStarting();
-     void rollParamsUpdate(float degrees);
      void gameCategoryUpdate(int id);
      void carHeightChanged();
+     void scaleChanged();
 
 private slots:
-     void onUpdate();
      void onPrepareTimerComplete();
      void onMindwaveUpdate();
      void onUserStartedGame();
+
+     void onCarInAnimationCompleted();
+     void onRollAnimationCompleted();
+     void onScaleAnimationCompleted();
 };
 
 

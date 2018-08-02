@@ -37,26 +37,9 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 222;
         smooth: true;
-        source: "qrc:/resources/rulette.png";
+        source: "qrc:/resources/rulette.png";        
+        rotation: rouletteModule.rotation;
 
-        RotationAnimation on rotation
-        {
-            id: rollAnim;
-            loops: 1;
-            from: 0;
-            to: 360 + 360;
-            duration: 2000;
-            running: false;
-            easing.type: "InOutCubic";
-
-            onStopped:
-            {
-                if(rouletteModule.state == RouletteState.Roll)
-                {
-                    rouletteModule.state = (RouletteState.RollFinished);
-                }
-            }
-        }
         Rectangle
         {
             id:bg;
@@ -66,18 +49,8 @@ Item
             radius: 475 * consts.designScale;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.verticalCenter: parent.verticalCenter;
-            scale: 0;
-        }
-        ScaleAnimator
-        {
-            id:scaleAnimator;
-            target: bg;
-            from: 0;
-            to: 1;
-            duration: 1000
-            running: false;
-            easing.type: "InOutQuad";
-        }
+            scale: rouletteModule.scale;
+        }       
     }
 
     Canvas
@@ -86,9 +59,7 @@ Item
         width: parent.width;
         height: parent.height;
         antialiasing: true;
-        visible:false
-
-
+        visible:false;
 
         onPaint:
         {
@@ -141,35 +112,17 @@ Item
             switch(rouletteModule.state)
             {
             case RouletteState.Intro:
-                bg.scale = 0;
-                roullete.rotation = 0;
                 break;
 
             case RouletteState.Roll:
-
                 break;
 
             case RouletteState.RollFinished:
-
-                scaleAnimator.start();
                 break;
 
             case RouletteState.CarStarting:
-                //                brb.visible = false;
-                //                mainText.visible = false;
-                //                taskText.visible = true;
-                //                helpText.opacity = 0;
-                //                helpText.visible = true;
-                //                hintOpactyAnimator.start();
-                //                mindwaveVisual.visible = true;
                 break;
             }
-        }
-
-        onRollParamsUpdate:
-        {
-            rollAnim.to = degrees;
-            rollAnim.start();
         }
     }
 

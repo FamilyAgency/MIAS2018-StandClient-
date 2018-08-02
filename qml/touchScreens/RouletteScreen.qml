@@ -55,7 +55,8 @@ Item
         {
             if(rouletteModule.state == RouletteState.Roll)
             {
-                rouletteModule.createRollParams(100);
+                core.animStart();
+                rouletteModule.startRoll();
                 brb.hide();
             }
         }
@@ -120,11 +121,6 @@ Item
 //                mindwaveVisual.visible = true;
                 break;
             }
-        }
-
-        onRollParamsUpdate:
-        {
-            core.animStart();
         }
     }
 

@@ -44,7 +44,7 @@ void IntroModule::setStandData(QSharedPointer<StandData> value)
 void IntroModule::start()
 {
     qDebug()<<"======================= IntroModule START =======================";
-    //rfidComponent->startReadingId();
+    rfidComponent->startReadingId();
     connectComponents();
 }
 
