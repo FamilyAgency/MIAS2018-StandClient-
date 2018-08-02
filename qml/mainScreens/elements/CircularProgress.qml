@@ -1,5 +1,6 @@
 import QtQuick 2.0
-import ".."
+import "../.."
+
 Item
 {
     property double nextAttentionValue: 0.0;

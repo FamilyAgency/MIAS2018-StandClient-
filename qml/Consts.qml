@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
-Item {
+Item
+{
+    property real designScale: 0.5;
 
     property string infoTextColor: "#009999";
 

@@ -75,7 +75,7 @@ Item
         SpinBox
         {
             id: userId;
-            value: 325;
+            value: 720;
             editable: true;
             from: 0;
             to: 3000;

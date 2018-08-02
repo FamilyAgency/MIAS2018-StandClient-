@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 import "elements"
 import "popups"
+import ".."
 
 Item {
 

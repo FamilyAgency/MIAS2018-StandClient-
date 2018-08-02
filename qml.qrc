@@ -13,7 +13,6 @@
         <file>qml/touchScreens/GameScreen.qml</file>
         <file>qml/mainScreens/MainWindow.qml</file>
         <file>qml/controlScreens/ControlsWindow.qml</file>
-        <file>qml/mainScreens/Consts.qml</file>
         <file>qml/mainScreens/GameScreen.qml</file>
         <file>qml/controlScreens/GameSession.qml</file>
         <file>qml/mainScreens/elements/CircularProgress.qml</file>
@@ -52,5 +51,9 @@
         <file>qml/touchScreens/TestDriveScreen.qml</file>
         <file>qml/touchScreens/elements/SecretBackBtn.qml</file>
         <file>qml/components/FileReaderComponent.qml</file>
+        <file>qml/touchScreens/elements/intro/HelloBlock.qml</file>
+        <file>qml/touchScreens/elements/intro/VideoHolder.qml</file>
+        <file>qml/Consts.qml</file>
+        <file>qml/components/FontManager.qml</file>
     </qresource>
 </RCC>
