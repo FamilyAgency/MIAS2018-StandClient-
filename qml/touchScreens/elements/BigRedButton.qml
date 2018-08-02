@@ -27,25 +27,26 @@ Item
             id: startBtn;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.bottom: parent.bottom;
+
             background: Rectangle
             {
-                id:bg;
+                id: bg;
                 implicitHeight: 410 * consts.designScale;
                 implicitWidth: 410 * consts.designScale;
                 color: startBtn.down ? "#f00000" : "#fb0000";
                 radius: 205 * consts.designScale;
             }
+
             contentItem: Text
             {
-                id:content;
-                z:1;
+                id: content;
+                z: 1;
                 font.family: font.hyundaiSansHeadMedium;
                 font.pixelSize: 38 * consts.designScale;
                 color: "#ffffff";
                 horizontalAlignment: Text.AlignHCenter;
                 verticalAlignment: Text.AlignVCenter;
             }
-
 
             onClicked:
             {
@@ -54,15 +55,14 @@ Item
 
             Glow
             {
-                id:glow;
+                id: glow;
                 anchors.fill: bg;
                 radius: 20;
                 samples: 50;
                 color: "#fb0000";
                 source: bg;
-                spread: 0.3
-                //visible:false;
-                opacity:0;
+                spread: 0.3;
+                opacity: 0;
 
                 OpacityAnimator on opacity
                 {
@@ -85,14 +85,6 @@ Item
             duration: 500
             running: false;
             easing.type: "InOutQuad";
-
-            onStopped:
-            {
-                if(startBtn.scale == 1)
-                {
-
-                }
-            }
         }
     }
 
@@ -125,7 +117,6 @@ Item
     function hide()
     {
         //visible = false;
-       // glow.visible = false;
         scaleAnimator.from = 1;
         scaleAnimator.to = 0;
         scaleAnimator.start();

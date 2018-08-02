@@ -12,6 +12,8 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+    property bool wasError: false;
+
     signal animComplete();
     signal animStart();
 
@@ -23,11 +25,30 @@ Item
     HelloBlock
     {
         id: helloBlock;
-    }
 
-    Component.onCompleted:
-    {
+        onAnimStart:
+        {
+            intro.animStart();
+        }
 
+        onInAnimComplete:
+        {
+            intro.animComplete();
+        }
+
+        onOutAnimComplete:
+        {
+            intro.animComplete();
+
+            if(wasError)
+            {
+                appController.backToIntro();
+            }
+            else
+            {
+                introModule.startButtonClick();
+            }
+        }
     }
 
     Connections
@@ -36,14 +57,14 @@ Item
 
         onUserStartPlay:
         {
+            wasError = false;
             videoHolder.startHelloState();
             helloBlock.startHelloState();
         }
 
         onUserNotFound:
         {
-            mainText.text = "Похоже, что тебя<br/>не существует!";
-            cantPlayHandler();
+            cantPlayHandler("Похоже, что тебя<br/>не существует!");
         }
 
         onUserCantStartReason:
@@ -53,23 +74,21 @@ Item
             switch(reason)
             {
             case CantPlayReason.WasRecently:
-                mainText.text = "Недавно же играл!";
+                cantPlayHandler("Недавно же играл!");
                 break;
 
             case CantPlayReason.YouArePlaying:
-                mainText.text = "Играешь на другом<br/>стенде, хитрец!";
+                cantPlayHandler("Играешь на другом<br/>стенде, хитрец!");
                 break;
 
             case CantPlayReason.FinishedPrizesNotGot:
-                mainText.text = "Забирай свои призы<br/>и не приходи сюда!";
+                cantPlayHandler("Забирай свои призы<br/>и не приходи сюда!");
                 break;
 
             case CantPlayReason.FinishedPrizesGot:
-                mainText.text = "Вы забрали призы. Удачи!";
+                cantPlayHandler("Вы забрали призы. Удачи!");
                 break;
             }
-
-            cantPlayHandler();
         }
     }
 
@@ -79,16 +98,14 @@ Item
 
         onServerGlobalError:
         {
-
+            cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
         }
 
         onServerRequestError:
         {
-
+            cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
         }
     }
-
-
 
     function start()
     {
@@ -110,9 +127,10 @@ Item
         reset();
     }
 
-    function cantPlayHandler()
+    function cantPlayHandler(errorMsg)
     {
-        startBtn.visible = false;
-        addText.visible = false;
+        wasError = true;
+        videoHolder.startHelloState();
+        helloBlock.startErrorState(errorMsg);
     }
 }

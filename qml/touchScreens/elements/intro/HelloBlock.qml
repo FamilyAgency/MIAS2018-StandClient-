@@ -9,7 +9,7 @@ import ".."
 
 Item
 {
-    id: data;
+    id: core;
     anchors.fill: parent;
     opacity: 0;
 
@@ -20,6 +20,10 @@ Item
     property real btnMarginBottom: 305 * consts.designScale;
     property real nameMarginTop: 294 * consts.designScale;
     property real titleMarginTop: 640 * consts.designScale;
+
+    signal inAnimComplete();
+    signal outAnimComplete();
+    signal animStart();
 
     Consts
     {
@@ -59,6 +63,28 @@ Item
         horizontalAlignment: Text.AlignHCenter;
     }
 
+    OpacityAnimator on opacity
+    {
+        id: opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 700;
+        running:false;
+        easing.type: "InOutCubic";
+
+        onStopped:
+        {
+            if(opacity == 1)
+            {
+                core.inAnimComplete()
+            }
+            else
+            {
+                core.outAnimComplete()
+            }
+        }
+    }
+
     BigRedButton
     {
         id: brb;
@@ -69,7 +95,11 @@ Item
 
         onClicked:
         {
-            introModule.startButtonClick();
+            core.animStart();
+            opacityAnim.from = 1;
+            opacityAnim.to = 0;
+            opacityAnim.start();
+            brb.hide();
         }
     }
 
@@ -79,24 +109,13 @@ Item
         interval:1000;
         onTriggered:
         {
+            opacityAnim.from = 0;
+            opacityAnim.to = 1;
             opacityAnim.start();
-
             mainText.text = "Привет,<br/>" + userData.baseUserData.name;
-            mainText.visible = true;
-            addText.visible = true;
-            addText.text = addTitleHelloText;
             brb.visible = true;
             brb.show();
         }
-    }
-
-    OpacityAnimator on opacity
-    {
-        id: opacityAnim;
-        from: 0;
-        to: 1;
-        duration: 1000
-        running:false;
     }
 
     Component.onCompleted:
@@ -111,8 +130,25 @@ Item
 
     function startHelloState()
     {
+        mainText.visible = true;
+        addText.visible = true;
+        addText.text = addTitleHelloText;
+        brb.setTitle(buttonText);
+
         opacity = 0;
         delayTimer.restart();
+        core.animStart();
+    }
+
+    function startErrorState(errorMsg)
+    {
+        mainText.visible = false;
+        addText.text = errorMsg;
+        brb.setTitle("ОК");
+
+        opacity = 0;
+        delayTimer.restart();
+        core.animStart();
     }
 
     function stop()
