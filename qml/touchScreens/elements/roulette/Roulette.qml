@@ -35,11 +35,11 @@ Item
         implicitHeight: 1200 * consts.designScale;
         implicitWidth: 1200 * consts.designScale;
 
-        color:  "#7b7cfe"//"#7b7cfe";
+        color: "#7b7cfe";
         radius: 600 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
-        anchors.topMargin: rouletteModule.circleY;
+        anchors.topMargin: rouletteModule.circleY - 125 * consts.designScale;
         scale: rouletteModule.pulsarScale;
         opacity: 1 - rouletteModule.pulsarScale;
     }
@@ -56,6 +56,7 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
         scale: rouletteModule.scale;
+        opacity: rouletteModule.circleOpacity;
     }
 
     Canvas
@@ -79,29 +80,29 @@ Item
             ctx.stroke();
             ctx.fill();
 
-            if(rouletteModule.state == RouletteState.Roll)
-            {
-                ctx.strokeStyle = "#000099";
-                ctx.fillStyle = "#000099";
-                ctx.beginPath();
-                ctx.arc(canvas.width * 0.5, canvas.height * 0.5 + 200, 20, 0, 2*Math.PI);
-                ctx.stroke();
-                ctx.fill();
+//            if(rouletteModule.state == RouletteState.Roll)
+//            {
+//                ctx.strokeStyle = "#000099";
+//                ctx.fillStyle = "#000099";
+//                ctx.beginPath();
+//                ctx.arc(canvas.width * 0.5, canvas.height * 0.5 + 200, 20, 0, 2*Math.PI);
+//                ctx.stroke();
+//                ctx.fill();
 
-                ctx.strokeStyle = "#990000";
-                ctx.fillStyle = "#990000";
-                ctx.beginPath();
-                ctx.arc(canvas.width * 0.5 - 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
-                ctx.stroke();
-                ctx.fill();
+//                ctx.strokeStyle = "#990000";
+//                ctx.fillStyle = "#990000";
+//                ctx.beginPath();
+//                ctx.arc(canvas.width * 0.5 - 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
+//                ctx.stroke();
+//                ctx.fill();
 
-                ctx.strokeStyle = "#009900";
-                ctx.fillStyle = "#009900";
-                ctx.beginPath();
-                ctx.arc(canvas.width * 0.5 + 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
-                ctx.stroke();
-                ctx.fill();
-            }
+//                ctx.strokeStyle = "#009900";
+//                ctx.fillStyle = "#009900";
+//                ctx.beginPath();
+//                ctx.arc(canvas.width * 0.5 + 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
+//                ctx.stroke();
+//                ctx.fill();
+//            }
         }
     }
 
@@ -111,24 +112,7 @@ Item
 
         onStateChanged:
         {
-            console.log(":::::::::::: state changed::::::::::::", rouletteModule.state)
             canvas.requestPaint();
-
-            switch(rouletteModule.state)
-            {
-            case RouletteState.Intro:
-                break;
-
-            case RouletteState.Roll:
-                break;
-
-            case RouletteState.RollFinished:
-                break;
-
-            case RouletteState.CarStarting:
-                break;
-            }
         }
     }
-
 }

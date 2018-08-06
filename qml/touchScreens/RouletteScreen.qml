@@ -48,17 +48,14 @@ Item
         id: brb;
 
         anchors.bottomMargin: btnMarginBottom;
-        visible:false;
+        visible: false;
         anchors.fill: parent;
 
         onClicked:
         {
-            if(rouletteModule.state == RouletteState.Roll)
-            {
-                core.animStart();
-                rouletteModule.startRoll();
-                brb.hide();
-            }
+            core.animStart();
+            rouletteModule.startRoll();
+            brb.hide();
         }
     }
 
@@ -89,34 +86,17 @@ Item
     {
         target: rouletteModule;
 
-        onStateChanged:
+        onShowBrb:
         {
-            console.log(":::::::::::: state changed::::::::::::", rouletteModule.state)
-
-            switch(rouletteModule.state)
-            {
-            case RouletteState.Intro:
-                brb.visible = false;
-                break;
-
-            case RouletteState.Roll:
-                brb.visible = true;
-                brb.show();
-                core.animComplete();
-                break;
-
-            case RouletteState.RollFinished:
-                core.animStart();
-                break;
-
-            case RouletteState.CarStarting:
-                break;
-            }
+            core.animComplete();
+            brb.visible = true;
+            brb.show();
         }
     }
 
     function start()
     {
+        brb.visible = false;
         visible = true;
         video.play();
     }

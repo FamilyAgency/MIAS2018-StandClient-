@@ -14,41 +14,20 @@ class RouletteModule : public BaseModule
     Q_PROPERTY(float carY READ carY WRITE setCarY NOTIFY carYChanged)
     Q_PROPERTY(float rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
     Q_PROPERTY(float scale READ scale WRITE setScale NOTIFY scaleChanged)
-
     Q_PROPERTY(int carHeight READ carHeight WRITE setCarHeight NOTIFY carHeightChanged)
-    Q_PROPERTY(RouletteState state READ state WRITE setState NOTIFY stateChanged)
-
     Q_PROPERTY(float mainTitleOpacity READ mainTitleOpacity WRITE setMainTitleOpacity NOTIFY mainTitleOpacityChanged)
-
-
     Q_PROPERTY(float taskOpacity READ taskOpacity WRITE setTaskOpacity NOTIFY taskOpacityChanged)
     Q_PROPERTY(float circleY READ circleY WRITE setCircleY NOTIFY circleYChanged)
-
     Q_PROPERTY(float helpTextOpacity READ helpTextOpacity WRITE setHelpTextOpacity NOTIFY helpTextOpacityChanged)
     Q_PROPERTY(bool particlesVisibility READ particlesVisibility WRITE setParticlesVisibility NOTIFY particlesVisibilityChanged)
-
     Q_PROPERTY(float pulsarScale READ pulsarScale WRITE setPulsarScale NOTIFY pulsarScaleChanged)
-
-
-
+    Q_PROPERTY(float circleOpacity READ circleOpacity WRITE setCircleOpacity NOTIFY circleOpacityChanged)
 
 public:
-    enum class RouletteState
-    {
-        Intro,
-        Roll,
-        RollFinished,
-        CarStarting
-    };
-    Q_ENUMS(RouletteState)
-
     explicit RouletteModule(QObject *parent = nullptr);
     virtual ~RouletteModule();
 
     Q_INVOKABLE void startRoll();
-
-    void setState(RouletteState state);
-    RouletteState state() const;
 
     virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void setConfig(ConfigPtr config) override;
@@ -92,6 +71,9 @@ public:
     float pulsarScale() const;
     void setPulsarScale(float value);
 
+    float circleOpacity() const;
+    void setCircleOpacity(float value);
+
 
 private:
     QPropertyAnimation* mainTitleOpacityAnimation = nullptr;
@@ -105,12 +87,9 @@ private:
     QPropertyAnimation* circleFinalYAnimation = nullptr;
     QPropertyAnimation* helpTextAnimation = nullptr;
     QPropertyAnimation* pulsarAnimation = nullptr;
+    QPropertyAnimation* circleOpacityAnimation = nullptr;
 
-
-
-
-
-
+    QList<QPropertyAnimation*> animations;
 
     const float mindwaveTimerMills = 100.0f/60.0f;
     const float prepareTimerDelay = 2000.0f;
@@ -119,23 +98,17 @@ private:
     int carMiddleThreshold = -850;
     int carTopThreshold = -1200;
     const float carDecriment = -1.0f;
-
-
+    const float circleYDefault = 222;
     const int mindwaveAttentionThreshold = 80;
 
-    QTimer* prepareTimer = nullptr;
     QTimer* mindwaveTimer = nullptr;
     QTimer* readTaskTimer = nullptr;
 
     QSharedPointer<MindwaveComponentBase> mindwaveComponent;
     QSharedPointer<ServerComponent> serverComponent;
-
-    RouletteState _state = RouletteState::Intro;
-
     QSharedPointer<UserData> currentUser;
 
     float _mainTitleOpacity  = 0.0f;
-
     float _scale = 0;
     float _carY = 0;
     float _rotation = 0;
@@ -143,12 +116,13 @@ private:
     int choosenCategory = 0;
 
     float _taskOpacity = 0;
-    float _circleY = 222;
+    float _circleY = circleYDefault;
     float _helpTextOpacity = 0.0;
-
     bool _particlesVisibility = true;
-
     float _pulsarScale = 0.0;
+    float _circleOpacity = 1;
+
+    void initParams();
 
     void connectComponents();
     void disconnectComponents();
@@ -158,7 +132,6 @@ signals:
     void carYChanged();
     void rotationChanged();
     void stateChanged();
-    void locationStopped();
     void carStarting();
     void gameCategoryUpdate(int id);
     void carHeightChanged();
@@ -168,11 +141,10 @@ signals:
     void helpTextOpacityChanged();
     void particlesVisibilityChanged();
     void pulsarScaleChanged();
-
-
+    void circleOpacityChanged();
+    void showBrb();
 
 private slots:
-    void onPrepareTimerComplete();
     void onMindwaveUpdate();
     void onUserStartedGame();
 
@@ -183,6 +155,8 @@ private slots:
 
     void onReadTaskTimerCompleted();
     void onCircleFinalYAnimationCompleted();
+    void onPulsarAnimationCompleted();
+    void onCircleOpacityCompleted();
 };
 
 

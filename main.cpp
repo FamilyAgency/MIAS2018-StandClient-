@@ -37,7 +37,6 @@ int main(int argc, char *argv[])
     qRegisterMetaType<ServerStatus>("ServerGlobalErrorType");
     qmlRegisterUncreatableType<ServerComponent>("com.app", 1, 0, "ServerGlobalErrorType", "ServerGlobalErrorType enum type");
 
-    qmlRegisterType<RouletteModule>("com.app", 1, 0, "RouletteState");
     qmlRegisterType<MindwaveComponentBase>("com.app", 1, 0, "DeviceState");
     qmlRegisterType<RFIDComponent>("com.app", 1, 0, "CardReaderState");
     qmlRegisterType<ACR122CardHandler>("com.app", 1, 0, "CardReaderError");
