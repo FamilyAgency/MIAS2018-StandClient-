@@ -34,12 +34,12 @@ Item
         y: marginTop;
     }
 
-    ACR122Card
-    {
-        id: arduinoComp;
-        x: marginLeft + 300;
-        y: marginTop + 280;
-    }
+//    ACR122Card
+//    {
+//        id: arduinoComp;
+//        x: marginLeft + 300;
+//        y: marginTop + 280;
+//    }
 
     ServerComponent
     {
@@ -48,12 +48,12 @@ Item
         y: marginTop + 720;
     }
 
-//    HealthCheckerComponent
-//    {
-//        x:marginLeft + 300;
-//        y:marginTop + 700;
-//        id:health
-//    }
+    //    HealthCheckerComponent
+    //    {
+    //        x:marginLeft + 300;
+    //        y:marginTop + 700;
+    //        id:health
+    //    }
 
     TestScreen
     {
@@ -62,8 +62,8 @@ Item
         y: marginTop;
     }
 
-//    UserRegistrationData
-//    {
+    //    UserRegistrationData
+    //    {
 
-//    }
+    //    }
 }

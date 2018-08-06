@@ -23,8 +23,7 @@ public:
     Q_INVOKABLE void startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
     Q_INVOKABLE virtual void stopAll() override;
     Q_INVOKABLE bool beepCommandDirect(bool enabled);
-    //Q_INVOKABLE void getCardAttributes();
-    //Q_INVOKABLE void resetCard();
+    Q_INVOKABLE bool getStatusCommand();
 
     enum class WriteValidation
     {
@@ -66,7 +65,6 @@ private:
     uint8_t blockAdress = 0x01;
     const uint8_t keyType = 0x60; //0x60 /*TypeA */ 0x61 /*TypeB */
     uint8_t keyLocation = 0x00;//0x01
-    //QString userData = "";
     QString blockZeroData = "";
 
     bool readIdOnly = true;
@@ -102,6 +100,8 @@ private:
     bool blockAuthenticate(uint8_t blockNumber);
     bool readBlockData(uint8_t blockNumber, QByteArray& data);
     bool writeBlockData(uint8_t blockNumber, const QByteArray& data);
+
+    bool compareAllData(const QString& data, const QString& lastUserData);
 
 
     void startValidation(const QString& data);

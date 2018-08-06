@@ -158,6 +158,17 @@ ApplicationWindow
             }
         }
 
+
+        Button
+        {
+            id:statusCommand;
+            text: "Status Command";
+            onClicked:
+            {
+                rfid.getStatusCommand();
+            }
+        }
+
         TextArea
         {
             implicitWidth: 400;
@@ -209,27 +220,37 @@ ApplicationWindow
                 switch(error)
                 {
                 case CardReaderError.CantStartTransaction:
+                    errorText.text = "CantStartTransaction";
                     break;
                 case CardReaderError.CantEndTransaction:
+                    errorText.text = "CantEndTransaction";
                     break;
                 case CardReaderError.LoadKeyError:
+                    errorText.text = "LoadKeyError";
                     break;
                 case CardReaderError.NoCardReader:
+                    errorText.text = "NoCardReader";
                     break;
                 case CardReaderError.NoCard:
                     errorText.text = "Last error: no card near";
                     break;
                 case CardReaderError.AuthError:
+                    errorText.text = "AuthError";
                     break;
                 case CardReaderError.WriteError:
+                    errorText.text = "WriteError";
                     break;
                 case CardReaderError.ReadError:
+                    errorText.text = "ReadError";
                     break;
                 case CardReaderError.UnknownError:
+                    errorText.text = "UnknownError";
                     break;
                 case CardReaderError.CardParsing:
+                    errorText.text = "CardParsing";
                     break;
                 case CardReaderError.DataFormatError:
+                    errorText.text = "DataFormatError";
                     break;
                 }
             }

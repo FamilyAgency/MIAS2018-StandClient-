@@ -109,7 +109,6 @@ bool ACR122CardHandler::formatUserData(int id, const QString& name, const QStrin
     return true;
 }
 
-
 void ACR122CardHandler::timerRestart()
 {
     disconnect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
@@ -190,6 +189,8 @@ void ACR122CardHandler::onWritingUpdate()
     QByteArray cardData = lastUserData.toUtf8();
     int blocksNeeded = getBlocksNeedForWriting(cardData);
     alignData(cardData);
+
+    lastUserData = cardData;
     qDebug()<<"fullCardData: "<<lastUserData;
     qDebug()<<"write bytes: "<<cardData.size();
     qDebug()<<"blocksNeeded: "<<blocksNeeded;
@@ -392,7 +393,7 @@ void ACR122CardHandler::readAllData()
 
     if(lastSymbolCount == lastSymbols)
     {
-        emit userDataReadSuccess(fulldata);
+        emit userDataReadSuccess(QString(fulldata));
     }
     else
     {
@@ -427,18 +428,27 @@ void ACR122CardHandler::startValidation(const QString& data)
         }
         else if(writeValidation == WriteValidation::AllData)
         {
-            if(data == lastUserData)
+            qDebug()<< "Validated "<<data<<lastUserData;
+
+            if(compareAllData(data, lastUserData))
             {
+                qDebug()<<"Validated success";
                 emit validationSuccess();
             }
             else
             {
+                qDebug()<<"VAlidated  failed";
                 emit validationFailed();
             }
         }
     }
 
     setCardReaderState(CardReaderState::Stopped);
+}
+
+bool ACR122CardHandler::compareAllData(const QString& data1, const QString& data2)
+{
+    return data1 == data2;
 }
 
 void ACR122CardHandler::onCardReaderError(CardReaderError error)
@@ -576,8 +586,36 @@ bool ACR122CardHandler::beepCommand(bool enabled)
     BYTE pbRecv[MAX_APDU_SIZE];
     DWORD cbRecv = MAX_APDU_SIZE;
     uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
-    return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
+    return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;   
 }
+
+bool ACR122CardHandler::getStatusCommand()
+{
+    if(!cardPreparedSuccess())
+    {
+        return false;
+    }
+
+    BYTE pbRecv[MAX_APDU_SIZE];
+    DWORD cbRecv = MAX_APDU_SIZE;
+    uint8_t bytes[7] = {0xff, 0x00, 0x00, 0x00, 0x02, 0xD4, 0x04};
+
+    if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
+    QByteArray recieve;
+    for (int i = 0; i < cbRecv - 2; i++)
+    {
+        recieve.append(pbRecv[i]);
+    }
+
+    qDebug()<<"bytes status :" << recieve;
+
+    return true;
+}
+
 
 void ACR122CardHandler::fillBlockAdresses()
 {

@@ -30,7 +30,7 @@ ApplicationWindow
     MainWindow
     {
         id:mainWindow;
-        visible:false;
+       // visible:false;
     }
 
     ControlsWindow
