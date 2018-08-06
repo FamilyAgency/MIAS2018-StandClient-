@@ -268,8 +268,8 @@ void RouletteModule::startRoll()
 
 void RouletteModule::onRollAnimationCompleted()
 {
-    //serverComponent->startGameRequest(currentUser->baseUserData().id);
-    onUserStartedGame();
+   serverComponent->startGameRequest(currentUser->baseUserData().id);
+   // onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()

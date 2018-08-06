@@ -202,7 +202,7 @@ void AppController::start()
 
 
     //todo cleaan
-    bool build = false;
+    bool build = true;
 
     if(build)
     {
@@ -210,8 +210,8 @@ void AppController::start()
     }
     else
     {
-        // userData->setGameCategory(1);
-        setAppState(AppState::Intro);
+        userData->setGameCategory(1);
+        setAppState(AppState::Game);
     }
 }
 
