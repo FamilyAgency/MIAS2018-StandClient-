@@ -16,7 +16,7 @@
 int main(int argc, char *argv[])
 { 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QQuickWindow::setSceneGraphBackend(QSGRendererInterface::OpenGL);
+   // QQuickWindow::setSceneGraphBackend(QSGRendererInterface::OpenGL);
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
 
