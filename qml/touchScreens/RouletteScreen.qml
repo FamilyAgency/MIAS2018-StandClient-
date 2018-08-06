@@ -97,7 +97,6 @@ Item
             {
             case RouletteState.Intro:
                 brb.visible = false;
-                titles.showMainTitle();
                 break;
 
             case RouletteState.Roll:
@@ -107,18 +106,10 @@ Item
                 break;
 
             case RouletteState.RollFinished:
-                titles.hideMainTitle();
                 core.animStart();
                 break;
 
             case RouletteState.CarStarting:
-//                brb.visible = false;
-//                mainText.visible = false;
-//                taskText.visible = true;
-//                helpText.opacity = 0;
-//                helpText.visible = true;
-//                hintOpactyAnimator.start();
-//                mindwaveVisual.visible = true;
                 break;
             }
         }

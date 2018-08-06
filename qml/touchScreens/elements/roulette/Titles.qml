@@ -29,53 +29,62 @@ Item
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
         textFormat: Text.StyledText;
-        OpacityAnimator on opacity
+        opacity:  rouletteModule.mainTitleOpacity
+    }
+
+    Text
+    {
+        id: taskText;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 60 * consts.designScale;
+        color: "#ffffff";
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.verticalCenterOffset: -10;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
+        textFormat: Text.StyledText;
+        opacity: rouletteModule.taskOpacity;
+
+        Text
         {
-            id:mainOpacityAnim;
-            from: 0;
-            to: 1;
-            running:false;
-            duration: 500
+            id: taskTextTitle;
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize: 40 * consts.designScale;
+            color: "#ffffff";
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.verticalCenter: parent.verticalCenter;
+            anchors.verticalCenterOffset: -60;
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+            // textFormat: Text.StyledText;
+            opacity : 0.7;
+            text: "В А Ш   М А Р Ш Р У Т";
         }
     }
 
     Text
     {
         id: helpText;
-        anchors.verticalCenter: parent.verticalCenter;
+        anchors.top: parent.top;
+        anchors.topMargin: 168 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
-       // anchors.verticalCenterOffset: circleSize + 60;
-        text: "А ТЕПЕРЬ ТЕБЕ НУЖНО<br/>КОНЦЕНТРИРОВАТЬСЯ<br/>НА АВТОМОБИЛЕ.<br/>ПОЕХАЛИ!";
-        font.family: "Helvetica";
-        font.pixelSize: 35;
+        text: "А теперь тебе нужно<br/>концентрироваться<br/>на автомобиле.<br/>Поехали!";
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 60 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;
-        visible:false;
-        OpacityAnimator on opacity
+        opacity:rouletteModule.helpTextOpacity;
+    }
+
+    Connections
+    {
+        target: userData;
+
+        onGameUserDataChanged:
         {
-            id:hintOpactyAnimator;
-            from: 0;
-            to: 1;
-            running:false;
-            duration: 500
+            taskText.text = userData.gameUserData.description;
         }
     }
-
-    function showMainTitle()
-    {
-        visible = true;
-        mainText.opacity = 0;
-        mainOpacityAnim.from = 0;
-        mainOpacityAnim.to = 1;
-        mainOpacityAnim.start();
-    }
-
-    function hideMainTitle()
-    {
-        mainOpacityAnim.from = 1;
-        mainOpacityAnim.to = 0;
-        mainOpacityAnim.start();
-    }
-
 }

@@ -9,25 +9,12 @@ Item
 {
     anchors.fill: parent;
     property int circleSize : 300;
+
     FontManager
     {
         id: font;
     }
 
-    //    Text
-    //    {
-    //        id: taskText;
-    //        anchors.top: parent.top;
-    //        anchors.topMargin: 100;
-    //        anchors.horizontalCenter: parent.horizontalCenter;
-    //        text: userData.gameUserData.description;
-    //        font.family: "Helvetica";
-    //        font.pixelSize: 35;
-    //        color: "#ffffff";
-    //        textFormat: Text.StyledText;
-    //        horizontalAlignment :Text.AlignHCenter;
-    //        visible:false;
-    //    }
     Image
     {
         id: roullete
@@ -39,18 +26,36 @@ Item
         smooth: true;
         source: "qrc:/resources/rulette.png";        
         rotation: rouletteModule.rotation;
+        visible: rouletteModule.particlesVisibility;
+    }
 
-        Rectangle
-        {
-            id:bg;
-            implicitHeight: 950 * consts.designScale;
-            implicitWidth: 950 * consts.designScale;
-            color:  "#7b7cfe";
-            radius: 475 * consts.designScale;
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.verticalCenter: parent.verticalCenter;
-            scale: rouletteModule.scale;
-        }       
+    Rectangle
+    {
+        id:bgPulsar;
+        implicitHeight: 1200 * consts.designScale;
+        implicitWidth: 1200 * consts.designScale;
+
+        color:  "#7b7cfe"//"#7b7cfe";
+        radius: 600 * consts.designScale;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: parent.top;
+        anchors.topMargin: rouletteModule.circleY;
+        scale: rouletteModule.pulsarScale;
+        opacity: 1 - rouletteModule.pulsarScale;
+    }
+
+    Rectangle
+    {
+        id:bg;
+        implicitHeight: 950 * consts.designScale;
+        implicitWidth: 950 * consts.designScale;
+
+        color:  "#7b7cfe";
+        radius: 475 * consts.designScale;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top: parent.top;
+        anchors.topMargin: rouletteModule.circleY;
+        scale: rouletteModule.scale;
     }
 
     Canvas

@@ -8,6 +8,15 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     mindwaveTimer = new QTimer(this);
     connect(mindwaveTimer, SIGNAL(timeout()), this, SLOT(onMindwaveUpdate()));
 
+
+    mainTitleOpacityAnimation = new QPropertyAnimation(this);
+    mainTitleOpacityAnimation->setTargetObject(this);
+    mainTitleOpacityAnimation->setPropertyName("mainTitleOpacity");
+    mainTitleOpacityAnimation->setStartValue(0);
+    mainTitleOpacityAnimation->setEndValue(1);
+    mainTitleOpacityAnimation->setDuration(700);
+    mainTitleOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
+
     carInAnimation = new QPropertyAnimation(this);
     carInAnimation->setTargetObject(this);
     carInAnimation->setPropertyName("carY");
@@ -33,6 +42,81 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     scaleAnimation->setDuration(700);
     scaleAnimation->setEasingCurve(QEasingCurve::InOutQuad);
     connect(scaleAnimation, SIGNAL(finished()), this, SLOT(onScaleAnimationCompleted()));
+
+
+    carYAnimation2 = new QPropertyAnimation(this);
+    carYAnimation2->setTargetObject(this);
+    carYAnimation2->setPropertyName("carY");
+    carYAnimation2->setDuration(2000);
+    carYAnimation2->setEasingCurve(QEasingCurve::OutCubic);
+
+
+
+
+    taskOpacityAnimation = new QPropertyAnimation(this);
+    taskOpacityAnimation->setTargetObject(this);
+    taskOpacityAnimation->setPropertyName("taskOpacity");
+    taskOpacityAnimation->setStartValue(0);
+    taskOpacityAnimation->setEndValue(1);
+    //  connect(carYAnimation2, SIGNAL(finished()), this, SLOT(onCarInAnimationCompleted()));
+    taskOpacityAnimation->setDuration(2000);
+    taskOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
+
+    readTaskTimer = new QTimer(this);
+    connect(readTaskTimer, SIGNAL(timeout()), this, SLOT(onReadTaskTimerCompleted()));
+    readTaskTimer->setSingleShot(true);
+    readTaskTimer->setInterval(3000);
+
+
+    carYAnimation3 = new QPropertyAnimation(this);
+    carYAnimation3->setTargetObject(this);
+    carYAnimation3->setPropertyName("carY");
+    carYAnimation3->setDuration(2000);
+    carYAnimation3->setEasingCurve(QEasingCurve::OutCubic);
+
+
+    scaleAnimation2 = new QPropertyAnimation(this);
+    scaleAnimation2->setTargetObject(this);
+    scaleAnimation2->setPropertyName("scale");
+    scaleAnimation2->setStartValue(1);
+    scaleAnimation2->setEndValue(0.9);
+    scaleAnimation2->setDuration(700);
+    scaleAnimation2->setEasingCurve(QEasingCurve::InOutQuad);
+
+
+    circleFinalYAnimation = new QPropertyAnimation(this);
+    circleFinalYAnimation->setTargetObject(this);
+    circleFinalYAnimation->setPropertyName("circleY");
+    circleFinalYAnimation->setStartValue(222);
+    circleFinalYAnimation->setEndValue(300);
+    circleFinalYAnimation->setDuration(700);
+    circleFinalYAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+    connect(circleFinalYAnimation, SIGNAL(finished()), this, SLOT(onCircleFinalYAnimationCompleted()));
+
+
+
+
+    helpTextAnimation = new QPropertyAnimation(this);
+    helpTextAnimation->setTargetObject(this);
+    helpTextAnimation->setPropertyName("helpTextOpacity");
+    helpTextAnimation->setStartValue(0);
+    helpTextAnimation->setEndValue(1);
+    helpTextAnimation->setDuration(700);
+    helpTextAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+
+
+    pulsarAnimation = new QPropertyAnimation(this);
+    pulsarAnimation->setTargetObject(this);
+    pulsarAnimation->setPropertyName("pulsarScale");
+    pulsarAnimation->setStartValue(0);
+    pulsarAnimation->setLoopCount(3);
+    pulsarAnimation->setEndValue(1);
+    pulsarAnimation->setDuration(2500);
+    pulsarAnimation->setEasingCurve(QEasingCurve::InOutExpo);
+    connect(pulsarAnimation, SIGNAL(finished()), this, SLOT(onPulsarAnimationCompleted()));
+
+
+
 }
 
 RouletteModule::~RouletteModule()
@@ -54,9 +138,6 @@ RouletteModule::~RouletteModule()
         disconnect(scaleAnimation, SIGNAL(finished()), this, SLOT(onScaleAnimationCompleted()));
         delete scaleAnimation;
     }
-
-
-
 
     if(prepareTimer)
     {
@@ -100,18 +181,29 @@ void RouletteModule::setConfig(ConfigPtr config)
     carTopThreshold = -config->mainConfig->touchScreen.height();
 
     carInAnimation->setEndValue(carMiddleThreshold);
+    carYAnimation2->setStartValue(carMiddleThreshold);
+    carYAnimation2->setEndValue(carMiddleThreshold + 220);
+    carYAnimation3->setStartValue(carMiddleThreshold + 220);
+    carYAnimation3->setEndValue(carMiddleThreshold + 120);
 }
 
 void RouletteModule::start()
 {
     qDebug()<<"======================= RouletteModule START =======================";
 
+
     connectComponents();
+
+    setParticlesVisibility(true);
     choosenCategory = 0;
     setCarY(0.0);
     setRotation(0.0);
     setScale(0.0);
     setState(RouletteState::Intro);
+
+    mainTitleOpacityAnimation->setStartValue(0);
+    mainTitleOpacityAnimation->setEndValue(1);
+    mainTitleOpacityAnimation->start();
 
     carInAnimation->setStartValue(0.0);
     carInAnimation->setEndValue(carMiddleThreshold);
@@ -195,17 +287,50 @@ void RouletteModule::onUserStartedGame()
 
     //prepareTimer->setSingleShot(true);
     //prepareTimer->start(prepareTimerDelay);
+    scaleAnimation->setStartValue(0);
+    scaleAnimation->setEndValue(1);
     scaleAnimation->start();
 
+    mainTitleOpacityAnimation->setStartValue(1);
+    mainTitleOpacityAnimation->setEndValue(0);
+    mainTitleOpacityAnimation->start();
+
+
     //carInAnimation->setStartValue(carY());
-   // carInAnimation->setEndValue(carY() + 100);
-  //  carInAnimation->start();
+    // carInAnimation->setEndValue(carY() + 100);
+    //  carInAnimation->start();
 }
 
 void RouletteModule::onScaleAnimationCompleted()
 {
+    carYAnimation2->start();
+    taskOpacityAnimation->setStartValue(0);
+    taskOpacityAnimation->setEndValue(1);
+    taskOpacityAnimation->start();
+    readTaskTimer->start();
+}
+
+void RouletteModule::onReadTaskTimerCompleted()
+{
+    taskOpacityAnimation->setStartValue(1);
+    taskOpacityAnimation->setEndValue(0);
+    taskOpacityAnimation->start();
+    carYAnimation3->start();
+
+    scaleAnimation2->start();
+    circleFinalYAnimation->start();
+    setParticlesVisibility(false);
+}
+
+void RouletteModule::onCircleFinalYAnimationCompleted()
+{
+    helpTextAnimation->start();
+    pulsarAnimation->start();
+    qDebug()<<"======================= onCircleFinalYAnimationCompleted =======================";
 
 }
+
+
 
 void RouletteModule::onPrepareTimerComplete()
 {
@@ -231,6 +356,17 @@ void RouletteModule::onMindwaveUpdate()
 RouletteModule::RouletteState RouletteModule::state() const
 {
     return _state;
+}
+
+float RouletteModule::mainTitleOpacity() const
+{
+    return _mainTitleOpacity;
+}
+
+void RouletteModule::setMainTitleOpacity(float value)
+{
+    _mainTitleOpacity = value;
+    emit mainTitleOpacityChanged();
 }
 
 float RouletteModule::carY() const
@@ -275,6 +411,62 @@ void RouletteModule::setScale(float value)
 {
     _scale = value;
     emit scaleChanged();
+}
+
+float RouletteModule::taskOpacity() const
+{
+    return _taskOpacity;
+}
+
+void RouletteModule::setTaskOpacity(float value)
+{
+    _taskOpacity = value;
+    emit taskOpacityChanged();
+}
+
+float RouletteModule::circleY() const
+{
+    return _circleY;
+}
+
+void RouletteModule::setCircleY(float value)
+{
+    _circleY = value;
+    emit circleYChanged();
+}
+
+float RouletteModule::helpTextOpacity() const
+{
+    return _helpTextOpacity;
+}
+
+void RouletteModule::setHelpTextOpacity(float value)
+{
+    _helpTextOpacity = value;
+    emit helpTextOpacityChanged();
+}
+
+
+bool RouletteModule::particlesVisibility() const
+{
+    return _particlesVisibility;
+}
+
+void RouletteModule::setParticlesVisibility(bool value)
+{
+    _particlesVisibility = value;
+    emit particlesVisibilityChanged();
+}
+
+float RouletteModule::pulsarScale() const
+{
+    return _pulsarScale;
+}
+
+void RouletteModule::setPulsarScale(float value)
+{
+    _pulsarScale = value;
+    emit pulsarScaleChanged();
 }
 
 QString RouletteModule::getName() const
