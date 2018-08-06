@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item
 {
-    property real designScale: 0.5;
+    property real designScale: 1.;
 
     property string infoTextColor: "#009999";
 
@@ -30,6 +30,12 @@ Item
     property var guideColor: Qt.rgba(0.9, 0.0, 0.0, animateHelper.opacity);
 
     property double toDegrees: 180 / Math.PI;
+
+    Component.onCompleted:
+    {
+        designScale =  standData.mainConfig.touchScreen.width / 1080.0;
+    }
+
     Item {
         id: animateHelper
         opacity: 0
