@@ -13,7 +13,7 @@ Window
     x: 0;
     y: 0;
     width: 1500;
-    height: 900;
+    height: 1000;
     visible: true;
     flags: Qt.Window;
 

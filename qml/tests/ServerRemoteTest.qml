@@ -197,6 +197,7 @@ Item
                 server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone(), "M");
             }
         }
+
         RowLayout
         {
             spacing: 10;
@@ -310,6 +311,58 @@ Item
 
         Text
         {
+            text: "Game Pass Tests";
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+            color: consts.infoTextColor;
+        }
+
+        RowLayout
+        {
+            spacing: 10;
+
+            SpinBox
+            {
+                id: userGameId;
+                value: 0;
+                editable: true;
+                from :0;
+                to: 3000;
+            }
+
+            Button
+            {
+                text:"Start";
+
+                onClicked:
+                {
+                    server.startGameRequest(userGameId.value);
+                }
+            }
+
+            Button
+            {
+                text:"Update";
+
+                onClicked:
+                {
+                    server.updateGameRequest(userGameId.value);
+                }
+            }
+
+            Button
+            {
+                text:"Finish";
+
+                onClicked:
+                {
+                    server.finishGameRequest(userGameId.value);
+                }
+            }
+        }
+
+        Text
+        {
             text: "Prize Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
@@ -348,6 +401,14 @@ Item
                 from :1;
                 to: 2;
             }
+        }
+
+        Text
+        {
+            text: "Dilers Tests";
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+            color: consts.infoTextColor;
         }
 
         RowLayout
