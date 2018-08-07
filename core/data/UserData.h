@@ -39,9 +39,9 @@ Q_DECLARE_METATYPE(BaseUserData)
 struct PrizesUserData
 {
 private:
+    Q_GADGET
     Q_PROPERTY(bool prize1 MEMBER prize1)
     Q_PROPERTY(bool prize2 MEMBER prize2)
-    Q_GADGET
 
 public:
     bool prize1 = false;
@@ -103,7 +103,7 @@ class UserData : public QObject
     Q_OBJECT
     Q_PROPERTY(BaseUserData baseUserData READ baseUserData WRITE setBaseUserData NOTIFY baseUserDataChanged)
     Q_PROPERTY(PrizesUserData prizesUserData READ prizesUserData WRITE setPrizesUserData NOTIFY prizesUserDataChanged)
-    Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)    
+    Q_PROPERTY(GameUserData gameUserData READ gameUserData WRITE setGameUserData NOTIFY gameUserDataChanged)
 
 public:
     explicit UserData(QObject *parent = nullptr);
@@ -134,7 +134,7 @@ public:
     GameUserData gameUserData() const;
 
     OneStageData getCurrentStage() const;
-    void currentStageCompleted(int time);    
+    void currentStageCompleted(int time);
 
     void superGameCompleted(int time);
 
@@ -155,7 +155,7 @@ public:
     bool allPrizesGot() const;
     bool wasRecently() const;
     bool playingOnAnotherStand() const;
-    bool finished() const;    
+    bool finished() const;
 
     SuperGameConfig getSuperGameData() const;
 

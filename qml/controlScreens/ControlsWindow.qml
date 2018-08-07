@@ -70,12 +70,12 @@ Window
         onClicked: appController.testCrash();
     }
 
-    //    ACR122Card
-    //    {
-    //        id: arduinoComp;
-    //        x: marginLeft + 300;
-    //        y: marginTop + 280;
-    //    }
+//    ACR122Card
+//    {
+//        id: arduinoComp;
+//        x: marginLeft + 300;
+//        y: marginTop + 280;
+//    }
 
     //    UserRegistrationData
     //    {

@@ -4,6 +4,10 @@
 #include <QObject>
 #include "BaseModule.h"
 
+#include "components/ServerComponent.h"
+#include "core/data/UserData.h"
+#include "core/data/DilerData.h"
+
 class TestDriveModule : public BaseModule
 {
     Q_OBJECT
@@ -17,6 +21,19 @@ public:
     virtual void start() override;
     virtual void stop() override;
     virtual QString getName() const override;
+
+    void setServerComponent(QSharedPointer<ServerComponent> value);
+    void setUser(QSharedPointer<UserData> value);
+    void setDilerData(QSharedPointer<DilerData> value);
+
+private:
+    QSharedPointer<ServerComponent> serverComponent;
+    QSharedPointer<UserData> currentUser;
+    QSharedPointer<DilerData> dilerData;
+
+private slots:
+    void onDilersDataUpdated(const QVariantList& data);
+
 };
 
 #endif // TESTDRIVEMODULE_H

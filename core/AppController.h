@@ -14,6 +14,8 @@
 
 #include "data/StandData.h"
 #include "data/UserData.h"
+#include "data/DilerData.h"
+
 #include "config/Config.h"
 
 #include "modules/IntroModule.h"
@@ -80,6 +82,8 @@ private:
 
     QSharedPointer<StandData> standData;
     QSharedPointer<UserData> userData;
+    QSharedPointer<DilerData> dilerData;
+
     ConfigPtr config;
     QSharedPointer<GameSession> gameSession;
     AppSettings appSettings;

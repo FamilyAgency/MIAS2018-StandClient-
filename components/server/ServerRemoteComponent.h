@@ -5,6 +5,7 @@
 #include <QJsonObject>
 #include "components/ServerComponent.h"
 #include "core/data/UserData.h"
+#include "core/data/DilerData.h"
 
 class ServerRemoteComponent : public ServerComponent
 {
@@ -72,8 +73,11 @@ private:
     void createGameUserData(const QJsonObject& object);
     void handleRequestError(const ServerResponse&  response);
 
+    void createDilersData(const QJsonArray& jsonArray);
+
 signals:
      void baseUserDataRecived(const BaseUserData& baseUserData);
+     void dilersDataUpdated(const QVariantList& dilersData);
 };
 
 #endif // SERVERREMOTECOMPONENT_H

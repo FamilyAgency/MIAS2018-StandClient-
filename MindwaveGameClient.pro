@@ -58,7 +58,8 @@ SOURCES += main.cpp \
     components/server/ServerRemoteComponent.cpp \
     tests/ServerRemoteComponentTest.cpp \
     core/modules/TestDriveModule.cpp \
-    tools/FileReader.cpp
+    tools/FileReader.cpp \
+    core/data/DilerData.cpp
 
 
 RESOURCES += qml.qrc
@@ -155,7 +156,8 @@ HEADERS += \
     components/server/ServerRemoteComponent.h \
     tests/ServerRemoteComponentTest.h \
     core/modules/TestDriveModule.h \
-    tools/FileReader.h
+    tools/FileReader.h \
+    core/data/DilerData.h
 
 DISTFILES += \
     modules/components/components.pri

@@ -31,6 +31,7 @@ void AppController::createEngine()
 
     userData.reset(new UserData());
     standData.reset(new StandData());
+    dilerData.reset(new DilerData());
     gameSession.reset(new GameSession());
 
     //////////////////// components //////////////////////
@@ -106,6 +107,9 @@ void AppController::createEngine()
     modules.append(superGameResultModule);
 
     testDriveModule.reset(new TestDriveModule());
+    testDriveModule->setServerComponent(serverComponent);
+    testDriveModule->setUser(userData);
+    testDriveModule->setDilerData(dilerData);
     modules.append(testDriveModule);
 }
 
@@ -340,7 +344,7 @@ void AppController::onConfigError(const QString& errorMessage)
 //===================TESTS===================
 
 void AppController::testCrash()
-{
+{  
     IntroModule* module;
     module->start();
 }

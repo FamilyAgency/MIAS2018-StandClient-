@@ -1,8 +1,9 @@
 #include "ServerRemoteComponent.h"
 #include <QUrlQuery>
-#include <QJsonDocument.h>
-#include <QJsonObject.h>
-#include <QJsonArray.h>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QVariant>
 
 ServerRemoteComponent::ServerRemoteComponent(QObject *parent) : ServerComponent(parent)
 {
@@ -328,7 +329,8 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     else if(response.type == ResponseType::GetDealersRequest)
     {
         qDebug()<<"===== GetDealersRequest =====";
-        //QJsonObject dataJson = responeJson["data"].toObject();
+        QJsonArray dataJson = responeJson["data"].toArray();
+        createDilersData(dataJson);
     }
 }
 
@@ -411,6 +413,35 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
         gameUserData.status = gameJson["status"].toInt();
         setGameUserData(gameUserData);
     }
+}
+
+void ServerRemoteComponent::createDilersData(const QJsonArray& jsonArray)
+{
+    QVariantList allDilersData;
+
+    for(auto diler : jsonArray)
+    {
+        DilerCityData dilerCityData;
+
+        auto dilerObj = diler.toObject();
+        dilerCityData.name = dilerObj["name"].toString();
+        dilerCityData.id = dilerObj["id"].toInt();
+
+        auto dilersInCity = dilerObj["dealers"].toArray();
+
+        for(auto dilerInCity : dilersInCity)
+        {
+            auto dilerInCityObj = dilerInCity.toObject();
+            OneDilerData oneDilerData;
+            oneDilerData.name = dilerInCityObj["name"].toString();
+            oneDilerData.dealer_id = dilerInCityObj["dealer_id"].toInt();
+            dilerCityData.dilersInCity.push_back(QVariant::fromValue(oneDilerData));
+        }
+
+        allDilersData.push_back(QVariant::fromValue(dilerCityData));
+    }
+
+    emit dilersDataUpdated(allDilersData);
 }
 
 //======================== SET/GET ========================//
