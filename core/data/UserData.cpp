@@ -77,9 +77,14 @@ void UserData::checkCanUserPlay()
     }
 }
 
+int UserData::getSecondsToStart() const
+{
+    return _baseUserData.remainSeconds;
+}
+
 bool UserData::finished() const
 {
-    return false;
+    return _gameUserData.status == 5;
 }
 
 bool UserData::allPrizesGot() const
@@ -89,12 +94,12 @@ bool UserData::allPrizesGot() const
 
 bool UserData::wasRecently() const
 {
-    return false;
+    return _gameUserData.status != 0;
 }
 
 bool UserData::playingOnAnotherStand() const
 {
-    return false;
+     return _gameUserData.status != 0;
 }
 
 CantPlayReason UserData::getReasonCantPlay() const

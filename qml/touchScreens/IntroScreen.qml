@@ -75,19 +75,19 @@ Item
             switch(reason)
             {
             case CantPlayReason.WasRecently:
-                cantPlayHandler("Недавно же играл!");
+                cantPlayHandler("Вы можете начать игру заново,<br/>через " + userData.getSecondsToStart() + " секунд");
                 break;
 
             case CantPlayReason.YouArePlaying:
-                cantPlayHandler("Играешь на другом<br/>стенде, хитрец!");
+                cantPlayHandler("Вы можете начать игру заново, через " + userData.getSecondsToStart());
                 break;
 
             case CantPlayReason.FinishedPrizesNotGot:
-                cantPlayHandler("Забирай свои призы<br/>и не приходи сюда!");
+                cantPlayHandler("Вы можете забрать свои призы<br/>на стойке выдачи призов!");
                 break;
 
             case CantPlayReason.FinishedPrizesGot:
-                cantPlayHandler("Вы забрали призы. Удачи!");
+                cantPlayHandler("Вы прошли игру и забрали призы.<br/>Спасибо за участие!");
                 break;
             }
         }
