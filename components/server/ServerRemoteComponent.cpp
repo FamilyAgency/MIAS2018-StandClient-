@@ -96,7 +96,11 @@ void ServerRemoteComponent::createUserRequest(const QString& name,
     query.addQueryItem("test", _serverConfig.serverAPI.testUser);
 
     qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
-    qDebug()<<"_serverConfig.serverAPI.testUser "<<_serverConfig.serverAPI.testUser;
+    qDebug()<<"testUser "<<_serverConfig.serverAPI.testUser;
+    qDebug()<<"name "<<name;
+    qDebug()<<"surname "<<surname;
+    qDebug()<<"email "<<email;
+    qDebug()<<"phone "<<phone;
 
     auto data = query.toString(QUrl::FullyEncoded).toUtf8();
 
@@ -170,10 +174,11 @@ void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 {
     QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-    QUrlQuery query;
+   // QUrlQuery query;
     // query.addQueryItem("status", QString::number(1));
     // query.addQueryItem("type", QString::number(1));
-    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+   // auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+    qDebug()<<"prizes  "<<serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid);
     commonRequest(ResponseType::ConfirmPrizeRequest, request, HTTPMethod::PUT);
 }
 
@@ -194,6 +199,30 @@ void ServerRemoteComponent::finishGameRequest(int userId)
     QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/games/finish");
     commonRequest(ResponseType::FinishGameRequest, request, HTTPMethod::GET);
 }
+
+void ServerRemoteComponent::getDealersRequest()
+{
+    QNetworkRequest request(serverConfig().url + "/dealers");
+    commonRequest(ResponseType::GetDealersRequest, request, HTTPMethod::GET);
+}
+
+void ServerRemoteComponent::testDriveRequest(int userId, int dealerId)
+{
+    QNetworkRequest request(serverConfig().url + "/testdrive");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery query;
+    query.addQueryItem("user_id", QString::number(userId));
+    query.addQueryItem("dealer_id", QString::number(dealerId));
+
+    qDebug()<<"fullRequest "<<serverConfig().url + "/testdrive";
+    qDebug()<<"user_id "<<userId;
+    qDebug()<<"dealer_id "<<dealerId;
+
+    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+    commonRequest(ResponseType::TestDriveRequest, request, HTTPMethod::POST, data);
+}
+
 
 //======================== PARSING ========================//
 //=========================================================//
@@ -330,6 +359,7 @@ void ServerRemoteComponent::createBaseUserData(const QJsonObject& object)
     baseUserData.email = object["email"].toString();
     baseUserData.phone = object["phone"].toString();
     baseUserData.confirmed = object["confirmed"].toInt();
+    baseUserData.remainSeconds = object["remainSeconds"].toInt();
     baseUserData.test = object["test"].toInt();
     baseUserData.print();
     setBaseUserData(baseUserData);
@@ -371,6 +401,7 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
         gameUserData.stage2 = gameJson["stage_2"].toString();
         gameUserData.stage3 = gameJson["stage_3"].toString();
         gameUserData.finishGame = gameJson["finish_game"].toString();
+        gameUserData.status = gameJson["status"].toInt();
         setGameUserData(gameUserData);
     }
 }

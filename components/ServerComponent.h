@@ -58,7 +58,9 @@ public:
 
         StartGameRequest,
         UpdateGameRequest,
-        FinishGameRequest
+        FinishGameRequest,
+        GetDealersRequest,
+        TestDriveRequest,
     };
     Q_ENUM(ResponseType)
 
