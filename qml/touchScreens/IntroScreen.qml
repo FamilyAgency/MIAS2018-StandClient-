@@ -15,7 +15,20 @@ Item
     property bool wasError: false;
 
     signal animComplete();
-    signal animStart();
+    signal animStart();   
+
+    Loader
+    {
+        active:false;
+       // source: "VideoHolder.qml"
+        asynchronous: true
+        visible: status == Loader.Ready
+
+        onStatusChanged:
+        {
+            console.log("Status component ", status);
+        }
+    }
 
     VideoHolder
     {

@@ -337,7 +337,6 @@ QSharedPointer<BaseModule> AppController::getModuleByAppState(AppState value)
     case AppState::SuperGame: return superGameModule;
     case AppState::SuperGameResult: return superGameResultModule;
     case AppState::TestDrive: return testDriveModule;
-
     }
 
     return nullptr;

@@ -8,12 +8,14 @@ import com.app 1.0
 
 ApplicationWindow
 {   
-    title: qsTr("App");
-    x: 420;
-    y: 20;
-    width: 1500;
-    height: 900;
+    title: "Touch Window";
+    x: standData.mainConfig.touchScreen.x;
+    y: standData.mainConfig.touchScreen.y;
+    width: standData.mainConfig.touchScreen.width;
+    height: standData.mainConfig.touchScreen.height;
     visible: true;
+    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
+    color: "#101010";
 
     id: core;
 
@@ -33,8 +35,8 @@ ApplicationWindow
        // visible:false;
     }
 
-    ControlsWindow
-    {
-        id:controlsWindow;
-    }
+//    ControlsWindow
+//    {
+//        id:controlsWindow;
+//    }
 }

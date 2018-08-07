@@ -8,18 +8,11 @@ import "../components"
 import "elements"
 import com.app 1.0
 
-Window
-{    
-    title: "Touch Window";
-    x: standData.mainConfig.touchScreen.x;
-    y: standData.mainConfig.touchScreen.y;
-    width: standData.mainConfig.touchScreen.width;
-    height: standData.mainConfig.touchScreen.height;
-    visible: true;
-    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
-    color: "#101010";
-
+Item
+{
     id: touchCore;
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     property var locations: [];
 

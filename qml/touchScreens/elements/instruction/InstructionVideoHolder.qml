@@ -20,6 +20,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
+        autoLoad:false;
     }
 
     Timer

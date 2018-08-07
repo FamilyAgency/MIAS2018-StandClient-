@@ -18,6 +18,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
+        autoLoad:false;
     }
 
     Video
@@ -29,6 +30,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
+        autoLoad:false;
 
         OpacityAnimator on opacity
         {
@@ -51,7 +53,7 @@ Item
     }
 
     Component.onCompleted:
-    {
+    {      
         video1.source = configController.getFileInAppDir("content/video/intro1.mp4");
         video2.source = configController.getFileInAppDir("content/video/intro2.mp4");
     }
@@ -85,7 +87,5 @@ Item
         video2.seek(0);
         video2.pause();
         video2.visible = false;
-
-
     }
 }
