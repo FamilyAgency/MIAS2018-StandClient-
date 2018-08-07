@@ -69,24 +69,7 @@ Item
             {
                 appController.setAppStateTest(AppState.Instruction);
             }
-        }
-
-        Button
-        {
-            implicitWidth: 200;
-            text: "Instruction";
-
-            background: Rectangle
-            {
-                implicitWidth: 200;
-                color: "#ffffff";
-            }
-
-            onClicked:
-            {
-                appController.setAppStateTest(AppState.Instruction);
-            }
-        }
+        } 
 
         Button
         {
