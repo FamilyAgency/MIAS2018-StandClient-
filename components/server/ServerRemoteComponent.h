@@ -22,7 +22,8 @@ public:
     Q_INVOKABLE void createUserRequest(const QString& name,
                                        const QString& surname,
                                        const QString& email,
-                                       const QString& phone);
+                                       const QString& phone,
+                                       const QString& gender = "M");
 
     Q_INVOKABLE void searchUserRequest(const QString& email, const QString& phone);
 

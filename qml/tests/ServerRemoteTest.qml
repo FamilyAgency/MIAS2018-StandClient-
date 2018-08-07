@@ -17,9 +17,19 @@ Item
         id:consts;
     }
 
+    Text
+    {
+        text: "===================TESTS===================";
+        font.family: "Helvetica";
+        font.pixelSize: 18;
+        color: "#990000";
+
+    }
+
     ColumnLayout
     {
         spacing: 10;
+        y: 50;
 
         ScrollView
         {
@@ -184,7 +194,7 @@ Item
             onClicked:
             {
                 userData.clearBaseUserData();
-                server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone());
+                server.createUserRequest(tools.randomName(), tools.randomName(), tools.randomEmail(), tools.randomPhone(), "M");
             }
         }
         RowLayout

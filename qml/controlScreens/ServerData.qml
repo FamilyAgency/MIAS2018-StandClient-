@@ -11,7 +11,7 @@ Item
 
         Text
         {
-            text: "Server component";
+            text: "Server data";
             font.family: "Helvetica";
             font.pixelSize: 17;
             color: "#008800";

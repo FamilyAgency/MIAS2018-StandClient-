@@ -1,61 +1,86 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.2
+import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.2
+
 import "../components"
 import "../tests"
-import QtQuick.Window 2.2
 
 Window
 {
-    title: "Touch Window";
+    title: "Control Window";
     x: 0;
     y: 0;
     width: 1500;
     height: 900;
     visible: true;
     flags: Qt.Window;
-  //  color: "#101010";
 
     property int marginLeft: 50;
     property int marginTop: 10;
     property int columnShift: 400;
 
+
+    ServerRemoteTest
+    {
+        id: testScreen;
+        x: marginLeft;
+        y: marginTop;
+    }
+
     StandData
     {
-        x: marginLeft;
+        x: marginLeft + 700;
         y: marginTop;
     }
 
     GameSession
     {
-        x: marginLeft;
-        y: marginTop + 480;
+        x: marginLeft + 700;
+        y: marginTop + 260;
+    }
+
+    ServerData
+    {
+        id: serverComp;
+        x: marginLeft + 700;
+        y: marginTop + 360;
     }
 
     AppState
     {
-        x: marginLeft;
-        y: marginTop + 620;
+        x: marginLeft + 700;
+        y: marginTop + 460;
     }
 
     MindwaveComponent
     {
         id: mindWaveComp;
-        x: marginLeft + 300;
-        y: marginTop;
+        x: marginLeft + 700;
+        y: marginTop + 560;
     }
 
-//    ACR122Card
-//    {
-//        id: arduinoComp;
-//        x: marginLeft + 300;
-//        y: marginTop + 280;
-//    }
-
-    ServerComponent
+    Button
     {
-        id: serverComp;
-        x: marginLeft;
-        y: marginTop + 720;
+        text: "Make Me Crash";
+        visible: true;
+        x: marginLeft + 1200;
+        y: marginTop;
+        onClicked: appController.testCrash();
     }
+
+    //    ACR122Card
+    //    {
+    //        id: arduinoComp;
+    //        x: marginLeft + 300;
+    //        y: marginTop + 280;
+    //    }
+
+    //    UserRegistrationData
+    //    {
+
+    //    }
 
     //    HealthCheckerComponent
     //    {
@@ -64,15 +89,4 @@ Window
     //        id:health
     //    }
 
-    TestScreen
-    {
-        id: testScreen;
-        x: marginLeft + 800;
-        y: marginTop;
-    }   
-
-    //    UserRegistrationData
-    //    {
-
-    //    }
 }

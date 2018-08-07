@@ -22,8 +22,6 @@
         <file>qml/controlScreens/StandData.qml</file>
         <file>qml/controlScreens/AppState.qml</file>
         <file>qml/controlScreens/Logger.qml</file>
-        <file>qml/tests/TestScreen.qml</file>
-        <file>qml/components/ServerComponent.qml</file>
         <file>qml/touchScreens/IntroScreen.qml</file>
         <file>qml/touchScreens/elements/ServerPreloader.qml</file>
         <file>qml/touchScreens/elements/ServerErrorPopup.qml</file>
@@ -62,5 +60,6 @@
         <file>qml/touchScreens/elements/roulette/Titles.qml</file>
         <file>qml/touchScreens/elements/roulette/Roulette.qml</file>
         <file>qml/tests/SkipLocationTest.qml</file>
+        <file>qml/controlScreens/ServerData.qml</file>
     </qresource>
 </RCC>

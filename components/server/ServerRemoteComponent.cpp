@@ -82,7 +82,8 @@ void ServerRemoteComponent::allUsersRequest()
 void ServerRemoteComponent::createUserRequest(const QString& name,
                                               const QString& surname,
                                               const QString& email,
-                                              const QString& phone)
+                                              const QString& phone,
+                                              const QString& gender)
 {
 
     QNetworkRequest request(serverConfig().url + "/users/register");
@@ -94,6 +95,7 @@ void ServerRemoteComponent::createUserRequest(const QString& name,
     query.addQueryItem("email", email);
     query.addQueryItem("phone", phone);
     query.addQueryItem("test", _serverConfig.serverAPI.testUser);
+    query.addQueryItem("gender", gender);
 
     qDebug()<<"fullRequest "<<serverConfig().url + "/users/register";
     qDebug()<<"testUser "<<_serverConfig.serverAPI.testUser;
@@ -174,12 +176,12 @@ void ServerRemoteComponent::confirmPrizeRequest(int userId, int prizeid)
 {
     QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
-   // QUrlQuery query;
-    // query.addQueryItem("status", QString::number(1));
-    // query.addQueryItem("type", QString::number(1));
-   // auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+
+    QUrlQuery query;
+    query.addQueryItem("status", QString::number(1));
+    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
     qDebug()<<"prizes  "<<serverConfig().url + "/users/" + QString::number(userId) + "/prizes/" + QString::number(prizeid);
-    commonRequest(ResponseType::ConfirmPrizeRequest, request, HTTPMethod::PUT);
+    commonRequest(ResponseType::ConfirmPrizeRequest, request, HTTPMethod::PUT, data);
 }
 
 void ServerRemoteComponent::startGameRequest(int userId)
@@ -323,6 +325,11 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         emit userFinishedGame();
         emit serverRequestSuccess(response.type);
     }
+    else if(response.type == ResponseType::GetDealersRequest)
+    {
+        qDebug()<<"===== GetDealersRequest =====";
+        //QJsonObject dataJson = responeJson["data"].toObject();
+    }
 }
 
 void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
@@ -413,7 +420,7 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
 void ServerRemoteComponent::setBaseUserData(const BaseUserData& value)
 {
     _baseUserData = value;
-     emit baseUserDataRecived(_baseUserData);
+    emit baseUserDataRecived(_baseUserData);
 }
 
 BaseUserData ServerRemoteComponent::baseUserData() const
