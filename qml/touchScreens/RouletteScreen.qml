@@ -51,6 +51,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
+        btnWidth: 350 * consts.designScale;
+        btnHeight: 350 * consts.designScale;
+        btnRadius: 175 * consts.designScale;
 
         onClicked:
         {
@@ -80,7 +83,6 @@ Item
     {
         video.source = configController.getFileInAppDir("content/video/bgloop.mp4");
         brb.setTitle(rollTextDefault);
-        brb.setWidth(350);
     }
 
     Connections

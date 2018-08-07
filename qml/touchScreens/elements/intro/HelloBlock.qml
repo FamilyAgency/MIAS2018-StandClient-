@@ -85,6 +85,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible:false;
         anchors.fill: parent;
+        btnWidth: 410 * consts.designScale;
+        btnHeight: 410 * consts.designScale;
+        btnRadius: 205 * consts.designScale;
 
         onClicked:
         {
@@ -109,6 +112,7 @@ Item
     Component.onCompleted:
     {
         brb.setTitle(buttonText);
+
     }
 
     function start()
