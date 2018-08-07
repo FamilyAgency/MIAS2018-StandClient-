@@ -199,20 +199,8 @@ void AppController::start()
         comp->start();
     }
 
+    setAppState(AppState::Intro);
 
-
-    //todo cleaan
-    bool build = true;
-
-    if(build)
-    {
-        setAppState(AppState::Intro);
-    }
-    else
-    {
-        userData->setGameCategory(1);
-        setAppState(AppState::Game);
-    }
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -355,5 +343,15 @@ void AppController::testCrash()
 {
     IntroModule* module;
     module->start();
+}
+
+void AppController::setAppStateTest(AppState appState)
+{
+    if(appState == AppState::Game)
+    {
+        userData->setGameCategory(1);
+    }
+
+    setAppState(appState);
 }
 

@@ -3,8 +3,17 @@ import "../components"
 import "../tests"
 import QtQuick.Window 2.2
 
-Item
+Window
 {
+    title: "Touch Window";
+    x: 0;
+    y: 0;
+    width: 1500;
+    height: 900;
+    visible: true;
+    flags: Qt.Window;
+  //  color: "#101010";
+
     property int marginLeft: 50;
     property int marginTop: 10;
     property int columnShift: 400;
@@ -60,7 +69,7 @@ Item
         id: testScreen;
         x: marginLeft + 800;
         y: marginTop;
-    }
+    }   
 
     //    UserRegistrationData
     //    {

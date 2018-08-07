@@ -7,6 +7,7 @@ import QtQuick.Window 2.2
 import "../../components"
 import "../../touchScreens/elements"
 import "../../touchScreens"
+import "../../tests"
 import com.app 1.0
 
 Item
@@ -16,6 +17,11 @@ Item
     property var locations: [];
 
     anchors.fill: parent;
+
+    SkipLocationTest
+    {
+       id:skipsLocs;
+    }
 
     Component.onCompleted:
     {

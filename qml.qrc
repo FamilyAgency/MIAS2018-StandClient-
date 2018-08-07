@@ -61,5 +61,6 @@
         <file>qml/touchScreens/elements/BigRedButton.qml</file>
         <file>qml/touchScreens/elements/roulette/Titles.qml</file>
         <file>qml/touchScreens/elements/roulette/Roulette.qml</file>
+        <file>qml/tests/SkipLocationTest.qml</file>
     </qresource>
 </RCC>

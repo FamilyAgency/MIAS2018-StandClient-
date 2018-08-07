@@ -57,6 +57,8 @@ public:
     Q_INVOKABLE void testCrash();
     Q_INVOKABLE AppState getAppState() const;
 
+    Q_INVOKABLE void setAppStateTest(AppState appState);
+
 private:
     QSharedPointer<IntroModule> introModule;
     QSharedPointer<InstructionModule> instructionModule;
