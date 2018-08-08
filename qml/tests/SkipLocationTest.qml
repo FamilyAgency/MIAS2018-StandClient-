@@ -51,6 +51,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.Intro);
+                locs.visible = false;
             }
         }
 
@@ -68,8 +69,9 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.Instruction);
+                locs.visible = false;
             }
-        } 
+        }
 
         Button
         {
@@ -85,6 +87,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.Roulette);
+                locs.visible = false;
             }
         }
 
@@ -102,6 +105,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.Game);
+                locs.visible = false;
             }
         }
 
@@ -119,6 +123,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.GameResult);
+                locs.visible = false;
             }
         }
 
@@ -136,6 +141,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.SuperGame);
+                locs.visible = false;
             }
         }
 
@@ -153,6 +159,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.SuperGameResult);
+                locs.visible = false;
             }
         }
 
@@ -170,6 +177,7 @@ Item
             onClicked:
             {
                 appController.setAppStateTest(AppState.TestDrive);
+                locs.visible = false;
             }
         }
     }
