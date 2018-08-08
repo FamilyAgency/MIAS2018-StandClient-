@@ -415,26 +415,6 @@ Item
         {
             spacing: 10;
 
-            Button
-            {
-                text:"Get Dealers";
-
-                onClicked:
-                {
-                    server.getDealersRequest();
-                }
-            }
-
-            Button
-            {
-                text:"Test Drive";
-
-                onClicked:
-                {
-                    server.testDriveRequest(1,1);
-                }
-            }
-
             ComboBox
             {
                 currentIndex: 0

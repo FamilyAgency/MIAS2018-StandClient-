@@ -2,6 +2,7 @@
 #define TESTDRIVEMODULE_H
 
 #include <QObject>
+#include <QVariantList>
 #include "BaseModule.h"
 
 #include "components/ServerComponent.h"
@@ -26,10 +27,15 @@ public:
     void setUser(QSharedPointer<UserData> value);
     void setDilerData(QSharedPointer<DilerData> value);
 
+    Q_INVOKABLE void makeTestDrive(int dealerId);
+
 private:
     QSharedPointer<ServerComponent> serverComponent;
     QSharedPointer<UserData> currentUser;
     QSharedPointer<DilerData> dilerData;
+
+signals:
+    void dilersDataUpdated(const QVariantList& dilersData);
 
 private slots:
     void onDilersDataUpdated(const QVariantList& data);

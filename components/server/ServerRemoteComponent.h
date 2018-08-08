@@ -39,10 +39,8 @@ public:
     Q_INVOKABLE virtual void finishGameRequest(int userId) override;   
     Q_INVOKABLE virtual void logout();
 
-
-    Q_INVOKABLE void getDealersRequest();
-    Q_INVOKABLE void testDriveRequest(int userId, int dealerId);
-
+    Q_INVOKABLE virtual void getDealersRequest() override;
+    Q_INVOKABLE virtual void testDriveRequest(int userId, int dealerId) override;
 
     virtual void start() override;
     virtual void stop() override;

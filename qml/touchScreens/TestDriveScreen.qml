@@ -11,6 +11,8 @@ Item
     anchors.centerIn: parent;
 
     property string mainTitleDefault: "ТЕСТ ДРАЙВ";
+    property var dilData;
+
 
     signal animComplete();
     signal animStart();
@@ -36,28 +38,9 @@ Item
         y:200;
         x:20;
 
-//        Button
-//        {
-//            text:"Get Dealers";
-
-//            onClicked:
-//            {
-//                server.getDealersRequest();
-//            }
-//        }
-
-//        Button
-//        {
-//            text:"Test Drive";
-
-//            onClicked:
-//            {
-//                server.testDriveRequest(1, 1);
-//            }
-//        }
-
         ComboBox
         {
+            id:cities;
             currentIndex: 0
             model:ListModel
             {
@@ -73,21 +56,41 @@ Item
 
         ComboBox
         {
+            id:dealers;
             currentIndex: 0
             model:ListModel
             {
                 id: dilersModel
             }
             implicitWidth: 500;
-            id: dilersCombo;
+        }
+
+        Button
+        {
+            text:"Test Drive";
+
+            onClicked:
+            {
+
+                var cityIndex = cities.currentIndex;
+                var dealerIndex = dealers.currentIndex;
+                var dealerId = dilData[cityIndex].dilersInCity[dealerIndex].dealer_id;
+                console.log("send test drive ", dealerId)
+                testDriveModule.makeTestDrive(dealerId);
+            }
+
+            background: Rectangle
+            {
+                implicitWidth: 200;
+                color: "#ffffff";
+            }
         }
     }
 
-     property var dilData;
 
     Connections
     {
-        target: server;
+        target: testDriveModule;
 
         onDilersDataUpdated:
         {
@@ -108,14 +111,13 @@ Item
         {
             dilersModel.append({"text": dilData[id].dilersInCity[j].name});
         }
-        dilersCombo.currentIndex = 0;
+        dealers.currentIndex = 0;
     }
 
     function start()
     {
         visible = true;
         testDrive.animComplete();
-         server.getDealersRequest();
     }
 
     function stop()
