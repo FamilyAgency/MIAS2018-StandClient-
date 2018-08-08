@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtMultimedia 5.8
 
+import "../../../components"
+
 Item
 {
     id: core;
@@ -20,7 +22,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
-        autoLoad:false;
+        autoLoad: false;
     }
 
     Timer
@@ -57,9 +59,14 @@ Item
         }
     }
 
+    VideoManager
+    {
+        id: videos;
+    }
+
     Component.onCompleted:
     {
-        video.source = configController.getFileInAppDir("content/video/instruction.mov");
+        video.source = videos.instructionPath;
     }
 
     function signalIsGood()
@@ -74,13 +81,13 @@ Item
     {
         videoState = 0;
         positionTimer.start();
+        video.seek(0);
         video.play();
     }
 
     function stop()
     {
-        video.seek(0);
-        video.pause();
+        video.stop();
     }
 
 }

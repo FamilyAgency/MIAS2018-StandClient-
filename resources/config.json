@@ -8,6 +8,7 @@
     "folderSeparator": "\\",
     "qmlOnStart": "qrc:/qml/mainDebug.qml",
     "release": false,
+    "videoEXT" : "mp4",
     "monitoring": {
         "enabled": true,
         "memoryCheckMills": 600000

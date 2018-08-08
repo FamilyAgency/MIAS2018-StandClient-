@@ -24,6 +24,7 @@ public:
 
     Q_INVOKABLE QString getErrorMessage() const;
     Q_INVOKABLE QString getFileInAppDir(const QString& fileName);
+    Q_INVOKABLE QString getVideoFileInAppDir(const QString& fileName);
 
 private:
     QSharedPointer<ConfigLoader> configLoader;

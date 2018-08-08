@@ -46,8 +46,6 @@ Item
             textOpacityAnim.to = 0;
             textOpacityAnim.start();
         }
-
-
     }
 
     Text

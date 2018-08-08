@@ -61,6 +61,7 @@ void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const 
     mainConfig->folderSeparator = jsonObj["folderSeparator"].toString();
     mainConfig->appName = jsonObj["appName"].toString();
     mainConfig->release = jsonObj["release"].toBool();
+    mainConfig->videoEXT = jsonObj["videoEXT"].toString();
 
     QJsonObject touchScreenData = jsonObj["screens"].toObject()["touch"].toObject();
     mainConfig->touchScreen.setX(touchScreenData["x"].toInt());

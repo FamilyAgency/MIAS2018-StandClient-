@@ -61,5 +61,6 @@
         <file>qml/touchScreens/elements/roulette/Roulette.qml</file>
         <file>qml/tests/SkipLocationTest.qml</file>
         <file>qml/controlScreens/ServerData.qml</file>
+        <file>qml/components/VideoManager.qml</file>
     </qresource>
 </RCC>

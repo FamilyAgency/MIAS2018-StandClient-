@@ -150,5 +150,13 @@ QString ConfigController::getFileInAppDir(const QString& fileName)
     return "file:///" + qApp->applicationDirPath() + "//" + fileName;
 }
 
+QString ConfigController::getVideoFileInAppDir(const QString& fileName)
+{
+    return "file:///" + qApp->applicationDirPath() + "//" + fileName + "." + config->mainConfig->videoEXT;
+}
+
+
+
+
 
 

@@ -89,9 +89,14 @@ Item
         }
     }
 
+    VideoManager
+    {
+        id: videos;
+    }
+
     Component.onCompleted:
     {
-        video.source = configController.getFileInAppDir("content/video/bgloop.mov");
+        video.source = videos.bgLoop;
     }
 
     Connections
@@ -111,6 +116,7 @@ Item
     {
         visible = true;
         gameScreen.animComplete();
+        video.seek(0);
         video.play();
         appearAnimation();
     }
@@ -129,6 +135,7 @@ Item
         mainText.visible = true;
         mainText.opacity = 0.0;
         mainText.scale = 0.5;
+        video.stop();
         advatage.hide();
     }
 }

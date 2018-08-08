@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.2
 import QtMultimedia 5.8
 
+import "../../../components"
 Item
 {
     anchors.fill: parent;
@@ -19,6 +20,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
         autoLoad:false;
+        source: videos.intro1Path;
     }
 
     Video
@@ -31,6 +33,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
         autoLoad:false;
+        source: videos.intro2Path;
 
         OpacityAnimator on opacity
         {
@@ -45,17 +48,25 @@ Item
                 if (!helloAnim.running)
                 {
                     video1.visible = false;
-                    video1.seek(0);
-                    video1.pause();
+                   // video1.seek(0);
+                  //  video1.pause();
                 }
             }
         }
     }
 
+    VideoManager
+    {
+        id:videos;
+    }
+
     Component.onCompleted:
-    {      
-        video1.source = configController.getFileInAppDir("content/video/intro1.mov");
-        video2.source = configController.getFileInAppDir("content/video/intro2.mov");
+    {
+        video2.source =  videos.intro2Path;
+        video1.source =  videos.intro1Path;
+
+         console.log("videos.intro2Path ", videos.intro2Path);
+        console.log("videos.intro2Path ", videos.intro1Path);
     }
 
     function start()
@@ -63,9 +74,9 @@ Item
         video1.visible = true;
         video2.visible = false;
 
-        video2.seek(0);
-        video2.play();
-        video2.pause();
+        video1.seek(0);
+      //  video2.play();
+      //  video2.pause();
         video2.opacity = 0;
 
         video1.play();
@@ -74,18 +85,20 @@ Item
     function startHelloState()
     {
         video2.visible = true;
+        video2.seek(0);
         video2.play();
         helloAnim.start();
     }
 
     function stop()
     {
-        video1.seek(0);
-        video1.pause();
+        video1.stop();
+        video2.stop();
+       // video1.pause();
         video1.visible = false;
 
-        video2.seek(0);
-        video2.pause();
+       // video2.seek(0);
+       // video2.pause();
         video2.visible = false;
     }
 }

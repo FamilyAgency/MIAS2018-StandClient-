@@ -106,6 +106,7 @@ private:
     bool gameScreenIsSplash;
     QString qmlOnStart = "qrc:/qml/mainRelease.qml";
     bool release = false;
+    QString videoEXT = "mp4";
 };
 Q_DECLARE_METATYPE(MainConfig)
 

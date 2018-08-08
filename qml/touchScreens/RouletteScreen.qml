@@ -36,7 +36,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         focus: true;
-        autoLoad:false;
+        autoLoad: false;
     }
 
     Roulette
@@ -79,9 +79,14 @@ Item
         id: titles;
     }
 
+    VideoManager
+    {
+        id: videos;
+    }
+
     Component.onCompleted:
     {
-        video.source = configController.getFileInAppDir("content/video/bgloop.mov");
+        video.source = videos.bgLoop;
         brb.setTitle(rollTextDefault);
     }
 
@@ -101,6 +106,8 @@ Item
     {
         brb.visible = false;
         visible = true;
+
+        video.seek(0);
         video.play();
     }
 
@@ -108,8 +115,7 @@ Item
     {
         visible = false;
 
-        video.seek(0);
-        video.pause();
+        video.stop();
         brb.visible = false;
     }
 }
