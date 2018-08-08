@@ -402,45 +402,6 @@ Item
                 to: 2;
             }
         }
-
-        Text
-        {
-            text: "Dilers Tests";
-            font.family: "Helvetica";
-            font.pixelSize: 14;
-            color: consts.infoTextColor;
-        }
-
-        RowLayout
-        {
-            spacing: 10;
-
-            ComboBox
-            {
-                currentIndex: 0
-                model:ListModel
-                {
-                    id: cityModel
-                }
-                implicitWidth: 500;
-
-                onCurrentIndexChanged:
-                {
-                    calculateDilers(currentIndex);
-                }
-            }
-
-            ComboBox
-            {
-                currentIndex: 0
-                model:ListModel
-                {
-                    id: dilersModel
-                }
-                implicitWidth: 500;
-                id: dilersCombo;
-            }
-        }
     }
 
     Tools
@@ -448,32 +409,9 @@ Item
         id:tools;
     }
 
-    function calculateDilers(id)
-    {
-        dilersModel.clear();
-        for(var j = 0; j < dilData[id].dilersInCity.length; j++)
-        {
-            dilersModel.append({"text": dilData[id].dilersInCity[j].name});
-        }
-        dilersCombo.currentIndex = 0;
-    }
-
-    property var dilData;
-
     Connections
     {
-        target: server;
-
-        onDilersDataUpdated:
-        {
-            console.log(" ========= onDilersDataUpdated =========");
-            for(var i = 0; i < dilersData[0].dilersInCity.length; i++)
-            {
-                cityModel.append({"text": dilersData[i].name});
-            }
-            dilData = dilersData;
-            calculateDilers(0);
-        }
+        target: server;    
 
         onUserNotFound:
         {

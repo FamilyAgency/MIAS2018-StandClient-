@@ -330,7 +330,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     {
         qDebug()<<"===== GetDealersRequest =====";
         QJsonArray dataJson = responeJson["data"].toArray();
-        createDilersData(dataJson);
+        createDealersData(dataJson);
     }
 }
 
@@ -415,33 +415,34 @@ void ServerRemoteComponent::createGameUserData(const QJsonObject& object)
     }
 }
 
-void ServerRemoteComponent::createDilersData(const QJsonArray& jsonArray)
+void ServerRemoteComponent::createDealersData(const QJsonArray& jsonArray)
 {
-    QVariantList allDilersData;
+    QVariantList allDealers;
 
-    for(auto diler : jsonArray)
+    for(auto city : jsonArray)
     {
-        DilerCityData dilerCityData;
+        DealerCityData dealerCityData;
 
-        auto dilerObj = diler.toObject();
-        dilerCityData.name = dilerObj["name"].toString();
-        dilerCityData.id = dilerObj["id"].toInt();
+        auto cityObj = city.toObject();
+        dealerCityData.name = cityObj["name"].toString();
+        dealerCityData.id = cityObj["id"].toInt();
 
-        auto dilersInCity = dilerObj["dealers"].toArray();
+        auto dealersArray = cityObj["dealers"].toArray();
 
-        for(auto dilerInCity : dilersInCity)
+        for(auto dealer : dealersArray)
         {
-            auto dilerInCityObj = dilerInCity.toObject();
-            OneDilerData oneDilerData;
-            oneDilerData.name = dilerInCityObj["name"].toString();
-            oneDilerData.dealer_id = dilerInCityObj["dealer_id"].toInt();
-            dilerCityData.dilersInCity.push_back(QVariant::fromValue(oneDilerData));
+            auto dealerObj = dealer.toObject();
+            OneDealerData oneDealerData;
+            oneDealerData.name = dealerObj["name"].toString();
+            oneDealerData.id = dealerObj["id"].toInt();
+
+            dealerCityData.dealers.push_back(QVariant::fromValue(oneDealerData));
         }
 
-        allDilersData.push_back(QVariant::fromValue(dilerCityData));
+        allDealers.push_back(QVariant::fromValue(dealerCityData));
     }
 
-    emit dilersDataUpdated(allDilersData);
+    emit dealersDataUpdated(allDealers);
 }
 
 //======================== SET/GET ========================//

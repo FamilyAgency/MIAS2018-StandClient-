@@ -35,10 +35,10 @@ private:
     QSharedPointer<DilerData> dilerData;
 
 signals:
-    void dilersDataUpdated(const QVariantList& dilersData);
+    void dealersDataUpdated(const QVariantList& allDealers);
 
 private slots:
-    void onDilersDataUpdated(const QVariantList& data);
+    void onDealersDataUpdated(const QVariantList& data);
 
 };
 

@@ -71,11 +71,11 @@ private:
     void createGameUserData(const QJsonObject& object);
     void handleRequestError(const ServerResponse&  response);
 
-    void createDilersData(const QJsonArray& jsonArray);
+    void createDealersData(const QJsonArray& jsonArray);
 
 signals:
      void baseUserDataRecived(const BaseUserData& baseUserData);
-     void dilersDataUpdated(const QVariantList& dilersData);
+     void dealersDataUpdated(const QVariantList& allDealers);
 };
 
 #endif // SERVERREMOTECOMPONENT_H

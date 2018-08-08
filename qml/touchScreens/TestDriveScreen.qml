@@ -11,8 +11,7 @@ Item
     anchors.centerIn: parent;
 
     property string mainTitleDefault: "ТЕСТ ДРАЙВ";
-    property var dilData;
-
+    property var allDealersData;
 
     signal animComplete();
     signal animStart();
@@ -40,29 +39,31 @@ Item
 
         ComboBox
         {
-            id:cities;
-            currentIndex: 0
+            id: citiesComboBox;
+            currentIndex: 0;
+            implicitWidth: 500;
+
             model:ListModel
             {
-                id: cityModel
-            }
-            implicitWidth: 500;
+                id: cityModel;
+            }            
 
             onCurrentIndexChanged:
             {
-                calculateDilers(currentIndex);
+                calculateDealersByCityId(currentIndex);
             }
         }
 
         ComboBox
         {
-            id:dealers;
-            currentIndex: 0
+            id: dealersComboBox;
+            currentIndex: 0;
+            implicitWidth: 500;
             model:ListModel
             {
-                id: dilersModel
+                id: dealersModel
             }
-            implicitWidth: 500;
+
         }
 
         Button
@@ -72,9 +73,9 @@ Item
             onClicked:
             {
 
-                var cityIndex = cities.currentIndex;
-                var dealerIndex = dealers.currentIndex;
-                var dealerId = dilData[cityIndex].dilersInCity[dealerIndex].dealer_id;
+                var cityIndex = citiesComboBox.currentIndex;
+                var dealerIndex = dealersComboBox.currentIndex;
+                var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
                 console.log("send test drive ", dealerId)
                 testDriveModule.makeTestDrive(dealerId);
             }
@@ -92,30 +93,39 @@ Item
     {
         target: testDriveModule;
 
-        onDilersDataUpdated:
+        onDealersDataUpdated:
         {
             console.log(" ========= onDilersDataUpdated =========");
-            for(var i = 0; i < dilersData[0].dilersInCity.length; i++)
+            citiesComboBox.currentIndex = 0;
+            dealersComboBox.currentIndex = 0;
+            allDealersData = allDealers;
+
+            for(var i = 0; i < allDealers.length; i++)
             {
-                cityModel.append({"text": dilersData[i].name});
+                cityModel.append({"text": allDealers[i].name});
             }
-            dilData = dilersData;
-            calculateDilers(0);
+
+            calculateDealersByCityId(0);
         }
     }
 
-    function calculateDilers(id)
+    function calculateDealersByCityId(id)
     {
-        dilersModel.clear();
-        for(var j = 0; j < dilData[id].dilersInCity.length; j++)
+        dealersModel.clear();
+        var city = allDealersData[id];
+
+        for(var j = 0; j < city.dealers.length; j++)
         {
-            dilersModel.append({"text": dilData[id].dilersInCity[j].name});
+            dealersModel.append({"text": city.dealers[j].name});
         }
-        dealers.currentIndex = 0;
+
+        dealersComboBox.currentIndex = 0;
     }
 
     function start()
     {
+        citiesComboBox.currentIndex = 0;
+        dealersComboBox.currentIndex = 0;
         visible = true;
         testDrive.animComplete();
     }

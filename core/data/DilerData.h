@@ -4,62 +4,50 @@
 #include <QObject>
 #include <QVariantList>
 
-struct OneDilerData
-{
-private:
-    Q_GADGET
-    Q_PROPERTY(int dealer_id MEMBER dealer_id)
-    Q_PROPERTY(QString name MEMBER name)
-public:
-    int dealer_id = 0;
-    QString name = "";
-
-};
-Q_DECLARE_METATYPE(OneDilerData)
-
-
-struct DilerCityData
+struct OneDealerData
 {
 private:
     Q_GADGET
     Q_PROPERTY(int id MEMBER id)
     Q_PROPERTY(QString name MEMBER name)
-    Q_PROPERTY(QVariantList dilersInCity MEMBER dilersInCity)
 public:
     int id = 0;
     QString name = "";
-    QVariantList dilersInCity;
-
 };
-Q_DECLARE_METATYPE(DilerCityData)
+Q_DECLARE_METATYPE(OneDealerData)
+
+struct DealerCityData
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(int id MEMBER id)
+    Q_PROPERTY(QString name MEMBER name)
+    Q_PROPERTY(QVariantList dealers MEMBER dealers)
+public:
+    int id = 0;
+    QString name = "";
+    QVariantList dealers;
+};
+Q_DECLARE_METATYPE(DealerCityData)
 
 
 class DilerData : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList cities READ cities WRITE setCities NOTIFY citiesChanged)
+    Q_PROPERTY(QVariantList dealers READ dealers WRITE setDealers NOTIFY dealersChanged)
 
 public:
     explicit DilerData(QObject *parent = nullptr);
 
-    void setCities(const QVariantList& value)
-    {
-        _cities = value;
-        emit citiesChanged();
-    }
-
-    QVariantList cities() const
-    {
-        return _cities;
-    }
+    void setDealers(const QVariantList& value);
+    QVariantList dealers() const;
 
 private:
-    QVariantList _cities;
+    QVariantList _dealers;
 
 signals:
-    void citiesChanged();
+    void dealersChanged();
 
-public slots:
 };
 
 #endif // DILERDATA_H

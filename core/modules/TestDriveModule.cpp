@@ -39,20 +39,20 @@ void TestDriveModule::setDilerData(QSharedPointer<DilerData> value)
 void TestDriveModule::start()
 {
     qDebug()<<"======================= TestDriveModule START =======================";
-    connect(serverComponent.data(), SIGNAL(dilersDataUpdated(const QVariantList&)), this, SLOT(onDilersDataUpdated(const QVariantList&)));
+    connect(serverComponent.data(), SIGNAL(dealersDataUpdated(const QVariantList&)), this, SLOT(onDealersDataUpdated(const QVariantList&)));
     serverComponent->getDealersRequest();
 }
 
 void TestDriveModule::stop()
 {
     qDebug()<<"======================= TestDriveModule STOP =======================";
-    disconnect(serverComponent.data(), SIGNAL(dilersDataUpdated(const QVariantList&)), this, SLOT(onDilersDataUpdated(const QVariantList&)));
+    disconnect(serverComponent.data(), SIGNAL(dealersDataUpdated(const QVariantList&)), this, SLOT(onDealersDataUpdated(const QVariantList&)));
 }
 
-void TestDriveModule::onDilersDataUpdated(const QVariantList& data)
+void TestDriveModule::onDealersDataUpdated(const QVariantList& data)
 {
     qDebug()<<"dilers data income";
-    emit dilersDataUpdated(data);
+    emit dealersDataUpdated(data);
 }
 
 void TestDriveModule::makeTestDrive(int dealerId)
