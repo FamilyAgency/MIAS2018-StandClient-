@@ -63,7 +63,6 @@ Item
             {
                 id: dealersModel
             }
-
         }
 
         Button
@@ -87,7 +86,6 @@ Item
             }
         }
     }
-
 
     Connections
     {

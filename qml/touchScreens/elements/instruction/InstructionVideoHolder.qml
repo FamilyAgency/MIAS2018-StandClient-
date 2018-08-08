@@ -59,7 +59,7 @@ Item
 
     Component.onCompleted:
     {
-        video.source = configController.getFileInAppDir("content/video/instruction.mp4");
+        video.source = configController.getFileInAppDir("content/video/instruction.mov");
     }
 
     function signalIsGood()

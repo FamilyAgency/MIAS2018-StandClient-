@@ -91,7 +91,7 @@ Item
 
     Component.onCompleted:
     {
-        video.source = configController.getFileInAppDir("content/video/bgloop.mp4");
+        video.source = configController.getFileInAppDir("content/video/bgloop.mov");
     }
 
     Connections

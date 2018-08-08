@@ -54,8 +54,8 @@ Item
 
     Component.onCompleted:
     {      
-        video1.source = configController.getFileInAppDir("content/video/intro1.mp4");
-        video2.source = configController.getFileInAppDir("content/video/intro2.mp4");
+        video1.source = configController.getFileInAppDir("content/video/intro1.mov");
+        video2.source = configController.getFileInAppDir("content/video/intro2.mov");
     }
 
     function start()
