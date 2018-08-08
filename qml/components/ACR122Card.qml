@@ -30,7 +30,7 @@ ApplicationWindow
 
         Text
         {
-            id:deviceState;
+            id: deviceState;
             text: "State: stopped";
             font.family: "Helvetica";
             font.pixelSize: 15;
@@ -39,10 +39,10 @@ ApplicationWindow
 
         Text
         {
-            id:errorText;
+            id: errorText;
             text: "Last error: ";
             font.family: "Helvetica";
-            font.pixelSize: 15;
+            font.pixelSize: 15
             color: "#008800";
         }
 

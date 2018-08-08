@@ -16,7 +16,7 @@ ACR122CardHandler::ACR122CardHandler(QObject *parent) : RFIDComponent(parent)
 }
 
 ACR122CardHandler::~ACR122CardHandler()
-{    
+{
     disconnect(this, SIGNAL(userWriteSuccess()), this, SLOT(onUserWriteSuccess()));
     disconnect(this, SIGNAL(cardReaderError(CardReaderError)), this, SLOT(onCardReaderError(CardReaderError)));
     disconnect(this, SIGNAL(userIdReadSuccess(const QString&)), this, SLOT(onUserIdReadSuccess(const QString&)));
@@ -73,8 +73,9 @@ void ACR122CardHandler::startWriting(const QString& data)
 {
     setCardReaderState(CardReaderState::Writing);
     lastUserData = data;
-    timerRestart();
-    connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
+   // timerRestart();
+   // connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
+    onWritingUpdate();
 }
 
 void ACR122CardHandler::startWriting(int id,
@@ -143,36 +144,38 @@ void ACR122CardHandler::stopAll()
 bool ACR122CardHandler::cardPreparedSuccess()
 {
     bool cardPrepared = true;
-    
+
     if(!establishContext())
     {
+        qDebug()<<"cant establish context";
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
-    
+
     else if(!checkIsDeviceConnected())
     {
+        qDebug()<<"cant device connected";
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
-    
+
     else if(!cardConnect())
     {
         emit cardReaderError(CardReaderError::NoCard);
         cardPrepared = false;
     }
-    
+
     else if(!loadKey())
     {
         emit cardReaderError(CardReaderError::LoadKeyError);
         cardPrepared = false;
     }
-    
+
     if(!cardPrepared)
     {
         releaseCardReader();
     }
-    
+
     return cardPrepared;
 }
 
@@ -195,7 +198,7 @@ void ACR122CardHandler::onWritingUpdate()
     }
 
     connectTimer->stop();
-    
+
     if(SCardBeginTransaction(card_handle_) != SCARD_S_SUCCESS)
     {
         releaseCardReader();
@@ -206,6 +209,7 @@ void ACR122CardHandler::onWritingUpdate()
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     QByteArray cardData = lastUserData.toUtf8();
     int blocksNeeded = getBlocksNeedForWriting(cardData);
+    qDebug()<<"before align: "<<cardData;
     alignData(cardData);
 
     lastUserData = cardData;
@@ -217,14 +221,14 @@ void ACR122CardHandler::onWritingUpdate()
     for(int i = 0; i < blocksNeeded; i++)
     {
         blockAdress = blockAdresses[i];
-        
+
         if(!blockAuthenticate(blockAdress))
         {
             releaseCardReader();
             emit cardReaderError(CardReaderError::AuthError);
             return;
         }
-        
+
         QByteArray blockData;
         for(int i = 0; i < ONE_BLOCK_SIZE; i++)
         {
@@ -233,7 +237,7 @@ void ACR122CardHandler::onWritingUpdate()
         blockOffset += ONE_BLOCK_SIZE;
 
         qDebug()<<"write to block: "<<blockAdress<<" : "<<blockData;
-        
+
         if(!writeBlockData(blockAdress, blockData))
         {
             releaseCardReader();
@@ -241,7 +245,7 @@ void ACR122CardHandler::onWritingUpdate()
             return;
         }
     }
-    
+
     if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
     {
         releaseCardReader();
@@ -272,7 +276,7 @@ void ACR122CardHandler::onUserWriteSuccess()
 }
 
 void ACR122CardHandler::onReadingUpdate()
-{   
+{
     readIdOnly ? readId() : readAllData();
 }
 
@@ -495,26 +499,27 @@ bool ACR122CardHandler::checkIsDeviceConnected()
 {
     LPWSTR mszReaders;
     DWORD dwReaders = SCARD_AUTOALLOCATE;
-    
+
     if(SCardListReadersW(card_context_, NULL, (LPWSTR)&mszReaders, &dwReaders) != SCARD_S_SUCCESS)
     {
-        return false;
+         return false;
     }
 
-    if(SCardFreeMemory(card_context_, mszReaders)!= SCARD_S_SUCCESS)
-    {
-        return false;
-    }
-    
     QByteArray buffer;
     wchar_t *it = mszReaders;
-    
+
     while(*it !='\0')
     {
         buffer.append(QChar(*it));
         *it++;
     }
     QString cardReaderName(buffer);
+
+    if(SCardFreeMemory(card_context_, mszReaders)!= SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
     return cardReaderName.contains(rfidConfig().type);
 }
 
@@ -604,7 +609,7 @@ bool ACR122CardHandler::beepCommand(bool enabled)
     BYTE pbRecv[MAX_APDU_SIZE];
     DWORD cbRecv = MAX_APDU_SIZE;
     uint8_t bytes[5] = {0xff, 0x00, 0x52, enabled ? 0xff: 0x00, 0x00};
-    return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;   
+    return SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) == SCARD_S_SUCCESS;
 }
 
 bool ACR122CardHandler::getStatusCommand()
