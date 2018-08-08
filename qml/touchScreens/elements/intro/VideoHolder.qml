@@ -64,9 +64,6 @@ Item
     {
         video2.source =  videos.intro2Path;
         video1.source =  videos.intro1Path;
-
-         console.log("videos.intro2Path ", videos.intro2Path);
-        console.log("videos.intro2Path ", videos.intro1Path);
     }
 
     function start()
@@ -94,6 +91,7 @@ Item
     {
         video1.stop();
         video2.stop();
+
        // video1.pause();
         video1.visible = false;
 

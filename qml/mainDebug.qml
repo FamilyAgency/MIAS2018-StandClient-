@@ -23,10 +23,10 @@ ApplicationWindow
     {
         id:touchWindow;
 
-        TouchWindowTest
-        {
+//        TouchWindowTest
+//        {
 
-        }
+//        }
     }
 
     MainWindow

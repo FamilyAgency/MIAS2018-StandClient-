@@ -71,5 +71,7 @@ int main(int argc, char *argv[])
     configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
     configController.data()->load();
 
+
+
     return app.exec();
 }
