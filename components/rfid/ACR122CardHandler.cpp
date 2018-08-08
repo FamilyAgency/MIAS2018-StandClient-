@@ -77,15 +77,25 @@ void ACR122CardHandler::startWriting(const QString& data)
     connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
 }
 
-void ACR122CardHandler::startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
+void ACR122CardHandler::startWriting(int id,
+                                     const QString& name,
+                                     const QString& surname,
+                                     const QString& phone,
+                                     const QString& email,
+                                     const QString& gender)
 {
-    if(formatUserData(id, name, surname, phone, email))
+    if(formatUserData(id, name, surname, phone, email, gender))
     {
         startWriting(lastUserData);
     }
 }
 
-bool ACR122CardHandler::formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email)
+bool ACR122CardHandler::formatUserData(int id,
+                                       const QString& name,
+                                       const QString& surname,
+                                       const QString& phone,
+                                       const QString& email,
+                                       const QString& gender)
 {
     // block 0x01: {678}0000000...
     // block 0x02 -... {name,surname,phone,email}
@@ -105,7 +115,15 @@ bool ACR122CardHandler::formatUserData(int id, const QString& name, const QStrin
     lastUserId = QString::number(id);
     QString userId = BRACKET_1 + lastUserId + BRACKET_2;
     userId = blockZeroData.replace(0, userId.size(), userId);
-    lastUserData = userId + BRACKET_1 + name + DELIM + surname + DELIM + formattedPhone + DELIM + email + BRACKET_2;
+
+    lastUserData = userId
+            + BRACKET_1 +
+            name + DELIM +
+            surname + DELIM +
+            formattedPhone + DELIM +
+            email + DELIM +
+            gender + BRACKET_2;
+
     return true;
 }
 

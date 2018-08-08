@@ -20,7 +20,12 @@ public:
     Q_INVOKABLE void startReadingAllData() override;
 
     Q_INVOKABLE virtual void startWriting(const QString& data) override;
-    Q_INVOKABLE void startWriting(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
+    Q_INVOKABLE void startWriting(int id,
+                                  const QString& name,
+                                  const QString& surname,
+                                  const QString& phone,
+                                  const QString& email,
+                                  const QString& gender);
     Q_INVOKABLE virtual void stopAll() override;
     Q_INVOKABLE bool beepCommandDirect(bool enabled);
     Q_INVOKABLE bool getStatusCommand();
@@ -81,7 +86,12 @@ private:
 
     void fillBlockAdresses();
     WriteValidation validationFromString(const QString& value);
-    bool formatUserData(int id, const QString& name, const QString& surname, const QString& phone, const QString& email);
+    bool formatUserData(int id,
+                        const QString& name,
+                        const QString& surname,
+                        const QString& phone,
+                        const QString& email,
+                        const QString& gender);
 
     void timerRestart();
     bool cardPreparedSuccess();
@@ -102,10 +112,7 @@ private:
     bool writeBlockData(uint8_t blockNumber, const QByteArray& data);
 
     bool compareAllData(const QString& data, const QString& lastUserData);
-
-
     void startValidation(const QString& data);
-
     void blockZeroDataInit();
 
     int readerTimeout = 2000;
@@ -125,7 +132,6 @@ private slots:
     void onCardReaderError(CardReaderError);
     void onUserIdReadSuccess(const QString&);
     void onUserDataReadSuccess(const QString&);
-
 };
 
 #endif // ACR122CARDHANDLER_H

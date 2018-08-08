@@ -9,7 +9,7 @@ ApplicationWindow
     x: 20;
     y: 0;
     width: 500;
-    height: 700;
+    height: 750;
     visible: true;
 
     id: core;
@@ -107,6 +107,13 @@ ApplicationWindow
             implicitWidth:200;
         }
 
+        ComboBox
+        {
+            id: genderComboBox;
+            implicitWidth: 200;
+            model: [ "M", "F"];
+        }
+
         SpinBox
         {
             id: rfidBox;
@@ -124,7 +131,7 @@ ApplicationWindow
                 text: "Start Writing";
                 onClicked:
                 {
-                    rfid.startWriting(rfidBox.value, name.text, surname.text, phone.text, mail.text);
+                    rfid.startWriting(rfidBox.value, name.text, surname.text, phone.text, mail.text, genderComboBox.currentText);
                 }
             }
         }
