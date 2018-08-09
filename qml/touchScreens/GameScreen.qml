@@ -8,7 +8,7 @@ import ".."
 
 Item
 {
-    id:gameScreen;
+    id: gameScreen;
     anchors.fill: parent;
 
     property string mainTitleDefault: "Концентрируйся<br/>на Santa fe.<br/>Двигайся к точке.";
@@ -25,19 +25,6 @@ Item
     {
         id: font;
     }
-
-
-//    Video
-//    {
-//        id: video;
-//        width: parent.width;
-//        height: parent.height;
-//        loops: MediaPlayer.Infinite;
-//        anchors.horizontalCenter: parent.horizontalCenter;
-//        anchors.verticalCenter: parent.verticalCenter;
-//        focus: true;
-//        autoLoad:false;
-//    }
 
     Text
     {
@@ -59,7 +46,7 @@ Item
             from: 0;
             to: 1;
             duration: 700;
-            running:false;
+            running: false;
             easing.type: "InOutCubic";
         }
 
@@ -85,18 +72,7 @@ Item
             advatage.hide();
             appearAnimation();
             gameModule.continueGame();
-
         }
-    }
-
-//    VideoManager
-//    {
-//        id: videos;
-//    }
-
-    Component.onCompleted:
-    {
-       // video.source = videos.bgLoop;
     }
 
     Connections
@@ -105,19 +81,22 @@ Item
 
         onStageComleteEvent:
         {
-            mainText.visible = false;
-            advatage.setTexts(title, description);
-            advatage.setVideo(videoPath);
-            advatage.show();
+            stageCompleted(title, description, videoPath);
         }
+    }
+
+    function stageCompleted(title, description, videoPath)
+    {
+        mainText.visible = false;
+        advatage.setTexts(title, description);
+        advatage.setVideo(videoPath);
+        advatage.show();
     }
 
     function start()
     {
         visible = true;
         gameScreen.animComplete();
-       // video.seek(0);
-      //  video.play();
         appearAnimation();
     }
 
@@ -135,7 +114,6 @@ Item
         mainText.visible = true;
         mainText.opacity = 0.0;
         mainText.scale = 0.5;
-       // video.stop();
         advatage.hide();
     }
 }

@@ -6,6 +6,7 @@ import QtQuick.Window 2.2
 
 import "../components"
 import "elements"
+import "advantages"
 import com.app 1.0
 
 Item
@@ -62,6 +63,28 @@ Item
         z: 4;
     }
 
+//    AdvantageDescription
+//    {
+//        id:advatage;
+
+//        onAdvantageReaded:
+//        {
+//            mainText.visible = true;
+//            advatage.hide();
+//            appearAnimation();
+//            gameModule.continueGame();
+
+//        }
+
+//        function stageCompleted(title, description, videoPath)
+//        {
+//            advatage.setTexts(title, description);
+//            advatage.setVideo(videoPath);
+//            advatage.show();
+//        }
+//    }
+
+
     Component.onCompleted:
     {
         addLocation(AppState.Intro, "IntroScreen");
@@ -74,6 +97,11 @@ Item
         addLocation(AppState.TestDrive, "TestDriveScreen");
 
         setState(appController.getAppState());
+
+       // appController.setAppStateTest(AppState.Game);
+
+       // advatage.stageCompleted("Система<br/>предупреждения<br/>столкновения сбоку", "при выезде с парковки<br/>задним ходом", "content/video/1.mp4");
+
     }
 
     Connections

@@ -2,6 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtMultimedia 5.8
 
+import "../../components"
+import "../elements"
+import "../.."
+
 Item
 {
     id: advatage;
@@ -9,9 +13,21 @@ Item
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property int circleSize : 150;
-    property string buttonText: "ДАЛЕЕ";
+    property real nameMarginTop: 200 * consts.designScale;
+    property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ!";
+    property real btnMarginBottom: 305 * consts.designScale;
 
     signal advantageReaded;
+
+    Consts
+    {
+        id: consts;
+    }
+
+    FontManager
+    {
+        id: font;
+    }
 
     Video
     {
@@ -27,69 +43,34 @@ Item
     Text
     {
         id: promtText;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        anchors.verticalCenterOffset: -200;
+        anchors.left: parent.left;
+        anchors.leftMargin: 100 * consts.designScale;
+        anchors.topMargin:  nameMarginTop;
+        anchors.top: parent.top;
         text: mainTitleDefault;
-        font.family: "Helvetica";
-        font.pixelSize: 55;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize:  70 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
-        horizontalAlignment: Text.AlignHCenter;
+        horizontalAlignment: Text.AlignLeft;
         verticalAlignment: Text.AlignVCenter;
     }
 
-    Canvas
+    BigRedButton
     {
-        id: canvas;
-        width: parent.width;
-        height: parent.height;
-        antialiasing: true;
+        id: brb;
 
-        onPaint:
-        {
-            var ctx = getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.lineWidth = 10;
-            ctx.strokeStyle = "#8009fb";
-            ctx.fillStyle = "#8009fb";
-            ctx.beginPath();
-            ctx.arc(canvas.width * 0.5, canvas.height  , circleSize, 0, 2*Math.PI);
-            ctx.stroke();
-            ctx.fill();
-        }
-    }
-
-    Button
-    {
-        //anchors.fill: parent;
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 20;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        enabled: gameModule.canContinue;
-
-        contentItem: Text
-        {
-            text: buttonText;
-            font.family: "Helvetica";
-            font.pixelSize: 25;
-            color: "#ffffff";
-            horizontalAlignment: Text.AlignHCenter;
-            verticalAlignment: Text.AlignVCenter;
-        }
-        background: Rectangle
-        {
-            implicitHeight: 110;
-            implicitWidth: 160;
-            color: "#801bfc";
-            // color: "#990000";
-            radius: 10;
-        }
+        anchors.bottomMargin: btnMarginBottom;
+        visible:false;
+        anchors.fill: parent;
+        btnWidth: 410 * consts.designScale;
+        btnHeight: 410 * consts.designScale;
+        btnRadius: 205 * consts.designScale;
 
         onClicked:
         {
-            fullAdvantageDescr.show();
+            advatage.advantageReaded();
+            brb.hide();
         }
     }
 
@@ -103,9 +84,13 @@ Item
         }
     }
 
+    Component.onCompleted:
+    {
+        brb.setTitle(buttonText);
+    }
+
     function setTexts(title, description)
     {
-        //promtText.text = title;
         advatage.mainTitleDefault = title;
         fullAdvantageDescr.setTexts(title, description);
     }
@@ -120,6 +105,7 @@ Item
     {
         visible = true;
         fullAdvantageDescr.hide();
+        brb.show();
     }
 
     function hide()

@@ -30,21 +30,6 @@ Item
         id: font;
     }
 
-    //    InstructionVideoHolder
-    //    {
-    //        id: instructionVideoHolder;
-
-    //        onVideoCompleted:
-    //        {
-    //
-    //        }
-
-    //        onAlmostCompleted:
-    //        {
-    //
-    //        }
-    //    }
-
     Text
     {
         opacity: 0;
