@@ -2,9 +2,8 @@ import QtQuick 2.2
 import QtQuick.Controls 2.2
 import QtMultimedia 5.8
 
-import "advantages"
-import "../components"
-import ".."
+import "game"
+import "../tools"
 
 Item
 {
@@ -49,7 +48,6 @@ Item
             running: false;
             easing.type: "InOutCubic";
         }
-
 
         ScaleAnimator on scale
         {

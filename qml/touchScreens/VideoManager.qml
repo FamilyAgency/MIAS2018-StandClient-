@@ -12,6 +12,8 @@ Item
     property string intro2Path: configController.getVideoFileInAppDir("content/video/intro2");
     property string instructionPath: configController.getVideoFileInAppDir("content/video/instruction");
     property string bgLoop: configController.getVideoFileInAppDir("content/video/bgloop");
+    property string gameresult: configController.getVideoFileInAppDir("content/video/gameresult");
+
 
     anchors.fill: parent;
 
@@ -87,11 +89,14 @@ Item
         playlist1.addItem(intro2Path);
         playlist1.addItem(instructionPath);
         playlist1.addItem(bgLoop);
+        playlist1.addItem(gameresult);
+
 
         playlist2.addItem(intro1Path);
         playlist2.addItem(intro2Path);
         playlist2.addItem(instructionPath);
         playlist2.addItem(bgLoop);
+        playlist2.addItem(gameresult);
 
         setState(appController.getAppState());
     }
@@ -163,8 +168,12 @@ Item
 
         case AppState.Roulette:
         case AppState.Game:
-           startIndex(3);
+            startIndex(3);
+             break;
+        case AppState.GameResult:
+           startIndex(4);
             break;
+
         }
         currentState = appState;
     }

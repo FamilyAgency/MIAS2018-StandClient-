@@ -5,10 +5,9 @@ import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
 import com.app 1.0
 
-import ".."
-import "../components"
+import "roulette"
 import "elements"
-import "elements/roulette"
+import "../tools"
 
 Item
 {    
@@ -26,18 +25,6 @@ Item
     {
         id:consts;
     }
-
-//    Video
-//    {
-//        id: video;
-//        width: parent.width;
-//        height: parent.height;
-//        loops: MediaPlayer.Infinite;
-//        anchors.horizontalCenter: parent.horizontalCenter;
-//        anchors.verticalCenter: parent.verticalCenter;
-//        focus: true;
-//        autoLoad: false;
-//    }
 
     Roulette
     {
@@ -79,14 +66,8 @@ Item
         id: titles;
     }
 
-//    VideoManager
-//    {
-//        id: videos;
-//    }
-
     Component.onCompleted:
     {
-       // video.source = videos.bgLoop;
         brb.setTitle(rollTextDefault);
     }
 
@@ -106,16 +87,11 @@ Item
     {
         brb.visible = false;
         visible = true;
-
-        //video.seek(0);
-        //video.play();
     }
 
     function stop()
     {
         visible = false;
-
-       // video.stop();
         brb.visible = false;
     }
 }

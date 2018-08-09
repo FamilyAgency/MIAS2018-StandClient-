@@ -32,35 +32,32 @@
         <file>qml/tests/touchScreens/TouchWindowTest.qml</file>
         <file>qml/touchScreens/RouletteScreen.qml</file>
         <file>qml/touchScreens/GameResultScreen.qml</file>
-        <file>qml/touchScreens/results/GameResultFirstTime.qml</file>
-        <file>qml/touchScreens/results/ConfirmExitPopup.qml</file>
         <file>qml/touchScreens/SuperGameScreen.qml</file>
         <file>qml/touchScreens/SuperGameResultScreen.qml</file>
-        <file>qml/touchScreens/results/SuperGameSuccessScreen.qml</file>
-        <file>qml/touchScreens/results/SuperGameFailScreen.qml</file>
-        <file>qml/touchScreens/advantages/AdvantageDescription.qml</file>
-        <file>qml/touchScreens/advantages/FullAdvantageDescription.qml</file>
         <file>qml/ConfigErrorWindow.qml</file>
         <file>qml/controlScreens/UserRegistrationData.qml</file>
         <file>qml/touchScreens/AnimationControllerLayer.qml</file>
         <file>qml/components/ACR122Card.qml</file>
-        <file>qml/Tools.qml</file>
         <file>qml/components/MonitoringComponent.qml</file>
         <file>qml/touchScreens/TestDriveScreen.qml</file>
         <file>qml/touchScreens/elements/SecretBackBtn.qml</file>
         <file>qml/components/FileReaderComponent.qml</file>
-        <file>qml/touchScreens/elements/intro/HelloBlock.qml</file>
-        <file>qml/touchScreens/elements/intro/VideoHolder.qml</file>
-        <file>qml/Consts.qml</file>
-        <file>qml/components/FontManager.qml</file>
-        <file>qml/touchScreens/elements/instruction/InstructionVideoHolder.qml</file>
         <file>resources/rulette.png</file>
         <file>resources/santafe_top.png</file>
         <file>qml/touchScreens/elements/BigRedButton.qml</file>
-        <file>qml/touchScreens/elements/roulette/Titles.qml</file>
-        <file>qml/touchScreens/elements/roulette/Roulette.qml</file>
         <file>qml/tests/SkipLocationTest.qml</file>
         <file>qml/controlScreens/ServerData.qml</file>
-        <file>qml/components/VideoManager.qml</file>
+        <file>qml/touchScreens/VideoManager.qml</file>
+        <file>qml/tools/Consts.qml</file>
+        <file>qml/tools/FontManager.qml</file>
+        <file>qml/tools/Tools.qml</file>
+        <file>qml/touchScreens/game/AdvantageDescription.qml</file>
+        <file>qml/touchScreens/game/FullAdvantageDescription.qml</file>
+        <file>qml/touchScreens/intro/HelloBlock.qml</file>
+        <file>qml/touchScreens/supergame/SuperGameFailScreen.qml</file>
+        <file>qml/touchScreens/supergame/SuperGameSuccessScreen.qml</file>
+        <file>qml/touchScreens/roulette/Roulette.qml</file>
+        <file>qml/touchScreens/roulette/Titles.qml</file>
+        <file>qml/touchScreens/gameresult/ConfirmExitPopup.qml</file>
     </qresource>
 </RCC>

@@ -4,7 +4,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import com.app 1.0
 
-import "../../../components"
+import "../../tools"
+import "../elements"
+
 Item
 {
     anchors.fill: parent;

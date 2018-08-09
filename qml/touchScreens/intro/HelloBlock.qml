@@ -3,9 +3,8 @@ import QtQuick 2.2
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.2
 
-import "../../.."
-import "../../../components"
-import ".."
+import "../../tools"
+import "../elements"
 
 Item
 {
@@ -127,7 +126,6 @@ Item
         opacityAnim.start();
         core.animStart();
     }
-
 
     function startHelloState()
     {

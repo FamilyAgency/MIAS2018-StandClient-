@@ -4,9 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
 
-import "elements/instruction"
-import "../components"
-import ".."
+import "../tools"
 
 Item
 {

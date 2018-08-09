@@ -59,7 +59,7 @@ Item
         background: Rectangle
         {
             implicitHeight: 200;
-            implicitWidth: result.width * 0.5;
+            implicitWidth: popup.width * 0.5;
             color: colaBtn.down ? "#3c2755" : "#801bfc";
         }
 
@@ -91,7 +91,7 @@ Item
         background: Rectangle
         {
             implicitHeight: 200;
-            implicitWidth: result.width * 0.5;
+            implicitWidth: popup.width * 0.5;
             color: superBtn.down ? "#3c2755" : "#4e1a8a";
         }
 

@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.2
 
 import com.app 1.0
-import "elements/intro"
+import "intro"
 
 Item
 {
