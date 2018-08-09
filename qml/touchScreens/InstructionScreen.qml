@@ -74,6 +74,7 @@ Item
         running: false;
         onTriggered:
         {
+            finishInstructTimer.stop();
             instructionModule.rouletteButtonClick();
         }
     }
@@ -94,7 +95,8 @@ Item
 
     function stop()
     {
-        //instructionVideoHolder.stop();
+        hideTextTimer.stop();
+        finishInstructTimer.stop();
         visible = false;
 
         mind.onPoorSignalLevelChanged.disconnect(poorSignalLevelChanged)

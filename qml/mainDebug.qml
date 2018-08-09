@@ -35,10 +35,10 @@ ApplicationWindow
         // visible:false;
     }
 
-    ControlsWindow
-    {
-        id:controlsWindow;
-    }
+//    ControlsWindow
+//    {
+//        id:controlsWindow;
+//    }
 
 
 }

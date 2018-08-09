@@ -34,12 +34,13 @@ Item
             id:videoAnim1;
             from: 0;
             to: 1;
-            duration: 1000
+            duration: 500;
             running:false;
 
-            onRunningChanged:
+            onStopped:
             {
-
+                console.log(("VIDEO PLAYER HIDE"))
+               player2.seek(0);
             }
         }
     }
@@ -62,26 +63,26 @@ Item
             id:videoAnim2;
             from: 0;
             to: 1;
-            duration: 1000
+            duration: 500;
             running:false;
 
-            onRunningChanged:
+            onStopped:
             {
-
+                player1.seek(0);
             }
         }
     }
 
 
-    Button
-    {
-        text:"Next video"
-        onClicked:
-        {
-            playlist2.next();
-            player2.play();
-        }
-    }
+//    Button
+//    {
+//        text:"Next video"
+//        onClicked:
+//        {
+//            playlist2.next();
+//            player2.play();
+//        }
+//    }
 
     Component.onCompleted:
     {
@@ -99,13 +100,15 @@ Item
         playlist2.addItem(gameresult);
 
         setState(appController.getAppState());
+
+        positionTimer.start();
     }
 
 
     property var currentState: -1;
-    property var currentPlayer: player1;
-    property var currentPlaylist: playlist1;
-    property var currentVideoAnim: videoAnim1;
+    property var currentPlayer: player2;
+    property var currentPlaylist: playlist2;
+    property var currentVideoAnim: videoAnim2;
 
     Connections
     {
@@ -130,7 +133,7 @@ Item
 
         onUserNotFound:
         {
-           startIndex(1);
+            startIndex(1);
         }
 
         onUserCantStartReason:
@@ -139,22 +142,17 @@ Item
         }
     }
 
-
-    function startIndex(index)
-    {
-        swapVideos();
-        currentPlaylist.currentIndex = index;
-        currentPlayer.seek(0);
-        currentPlayer.play();
-        playAnim();
-    }
-
     function setState(appState)
     {
-//        if(currentState == appState)
-//        {
-//            return;
-//        }
+        //        if(currentState == appState)
+        //        {
+        //            return;
+        //        }
+
+        console.log("swaaaaaaaaap")
+
+        positionTimer.stop();
+        needLoop = false;
 
         switch(appState)
         {
@@ -169,25 +167,68 @@ Item
         case AppState.Roulette:
         case AppState.Game:
             startIndex(3);
-             break;
+            break;
         case AppState.GameResult:
-           startIndex(4);
+            needLoop = true;
+            loopThreshold = 8300;
+            startIndex(4, 3000);
+            break;
+
+        case AppState.SuperGame:
+            startIndex(3);
             break;
 
         }
         currentState = appState;
+        positionTimer.start();
+    }
+
+    property bool needLoop: false;
+    property real loopThreshold: 0;
+
+    Timer
+    {
+        id: positionTimer;
+        running: false;
+        interval: 100;
+        repeat: true;
+        onTriggered:
+        {
+            if(needLoop)
+            {
+                console.log(currentPlayer.position, currentPlayer.duration)
+                if(currentPlayer.position >= currentPlayer.duration - 500)
+                {
+                    currentPlayer.seek(loopThreshold);
+                }
+            }
+        }
+    }
+
+
+    function startIndex(index, seekTo)
+    {
+        if (seekTo === undefined) seekTo = 0;
+        swapVideos();
+        currentPlaylist.currentIndex = index;
+        currentPlayer.seek(seekTo);
+        currentPlayer.play();
+        playAnim();
     }
 
     function swapVideos()
     {
         if(currentPlayer == player2)
         {
+            console.log("------------------------ currentPlayer")
             currentPlayer = player1;
             currentPlaylist = playlist1;
             currentVideoAnim = videoAnim1;
         }
         else if(currentPlayer == player1)
         {
+            console.log("------------------------ currentPlayer2")
+
             currentPlayer = player2;
             currentPlaylist = playlist2;
             currentVideoAnim = videoAnim2;

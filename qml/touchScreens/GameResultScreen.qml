@@ -1,8 +1,9 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.3
+import QtQuick 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 
+import "elements"
 import "../tools"
 import "gameresult"
 
@@ -15,8 +16,10 @@ Item
     signal animStart();
 
     property string mainTitleDefault: "Поздравляем!<br/>тебя ждет второй этап!<br/>Теперь ты знаешь <br/>все о Santa Fe <br/>и можешь управлять <br/>силой своих мыслей.";
-    property string buttonTakeColaText: "ЗАБРАТЬ<br/>НАПИТОК";
-    property string buttonSuperGameText: "ИГРАТЬ<br/>В СУПЕРИГРУ";
+    property string mainTitleDefault2: "Сыграй в супер-игру<br/>и получи в подарок<br/>освежающий напиток";
+    property string buttonTakeColaText: "НЕТ, СПАСИБО";
+    property string buttonSuperGameText: "ХОЧУ<br/>СЫГРАТЬ";
+    property real btnMarginBottom: 100 * consts.designScale;
 
     signal startSuperGame();
     signal getColaCan();
@@ -44,6 +47,51 @@ Item
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
+
+        OpacityAnimator on opacity
+        {
+            id: opacityAnim;
+            from: 1;
+            to: 0;
+            duration: 700;
+            running: false;
+            easing.type: "InOutCubic";
+        }
+
+        ScaleAnimator on scale
+        {
+            id: scaleAnim;
+            from: 1;
+            to: 0.5;
+            duration: 700;
+            running:false;
+            easing.type: "InOutCubic";
+        }
+    }
+
+    BigRedButton
+    {
+        id: brb;
+
+        anchors.bottomMargin: btnMarginBottom;
+        visible: false;
+        anchors.fill: parent;
+        btnWidth: 350 * consts.designScale;
+        btnHeight: 350 * consts.designScale;
+        btnRadius: 175 * consts.designScale;
+
+        onClicked:
+        {
+           // gameResultScreen.animStart();
+           // rouletteModule.startRoll();
+            gameResultModule.superGameAcceptedButtonClick();
+            brb.hide();
+        }
+    }
+
+    Component.onCompleted:
+    {
+        brb.setTitle(buttonSuperGameText);
     }
 
 //    Button
@@ -107,6 +155,39 @@ Item
 //        }
 //    }
 
+    Timer
+    {
+        id:hideIntroTimer;
+        running: false;
+        interval : 3000;
+        onTriggered:
+        {
+            opacityAnim.from = 1;
+            opacityAnim.to = 0;
+            opacityAnim.start();
+            scaleAnim.from = 1;
+            scaleAnim.to = 0;
+            scaleAnim.start();
+            hideIntroTimer.stop();
+            showIntro2Timer.start();
+        }
+    }
+
+    Timer
+    {
+        id:showIntro2Timer;
+        running: false;
+        interval : 500;
+        onTriggered:
+        {
+            //opacityAnim.start();
+           // scaleAnim.start();
+            brb.visible = true;
+            brb.show();
+            showIntro2Timer.stop();
+        }
+    }
+
     ConfirmExitPopup
     {
         id:confirmExitPopup;
@@ -120,20 +201,34 @@ Item
         onConfirm:
         {
             confirmExitPopup.hide();
-             gameResultModule.superGameAcceptedButtonClick();
+            gameResultModule.superGameAcceptedButtonClick();
         }
     }
 
-
     function start()
     {
+        opacityAnim.from = 0;
+        opacityAnim.to = 1;
+        opacityAnim.start();
+        scaleAnim.from = 0;
+        scaleAnim.to = 1;
+        scaleAnim.start();
+
+        mainText.opacity = 1;
+        mainText.scale = 1;
+        brb.visible = false;
         visible = true;
         gameResultScreen.animComplete();
+        hideIntroTimer.start();
+
     }
 
     function stop()
     {
+        brb.hide();
         visible = false;
         confirmExitPopup.hide();
+        hideIntroTimer.stop();
+        showIntro2Timer.stop();
     }
 }
