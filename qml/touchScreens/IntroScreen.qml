@@ -17,12 +17,6 @@ Item
     signal animComplete();
     signal animStart();
 
-//    VideoHolder
-//    {
-//        id: videoHolder;
-//        visible: false;
-//    }
-
     HelloBlock
     {
         id: helloBlock;
@@ -60,7 +54,6 @@ Item
         onUserStartPlay:
         {
             wasError = false;
-           // videoHolder.startHelloState();
             helloBlock.startHelloState();
         }
 
@@ -98,21 +91,18 @@ Item
     {
         visible = true;
         intro.animComplete();
-       // videoHolder.start();
         helloBlock.start();
     }
 
     function stop()
     {
         visible = false;
-       // videoHolder.stop();
         helloBlock.stop();
     }
 
     function cantPlayHandler(errorMsg)
     {
         wasError = true;
-       // videoHolder.startHelloState();
         helloBlock.startErrorState(errorMsg);
     }
 }

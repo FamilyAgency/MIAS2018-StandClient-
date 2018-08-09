@@ -30,23 +30,20 @@ Item
         id: font;
     }
 
-//    InstructionVideoHolder
-//    {
-//        id: instructionVideoHolder;
+    //    InstructionVideoHolder
+    //    {
+    //        id: instructionVideoHolder;
 
-//        onVideoCompleted:
-//        {
-//            instructionModule.rouletteButtonClick();
-//        }
+    //        onVideoCompleted:
+    //        {
+    //
+    //        }
 
-//        onAlmostCompleted:
-//        {
-//            textOpacityAnim.duration = 1000;
-//            textOpacityAnim.from = 1;
-//            textOpacityAnim.to = 0;
-//            textOpacityAnim.start();
-//        }
-//    }
+    //        onAlmostCompleted:
+    //        {
+    //
+    //        }
+    //    }
 
     Text
     {
@@ -72,17 +69,44 @@ Item
         }
     }
 
+    Timer
+    {
+        id:hideTextTimer;
+        interval: 2000;
+        running: false;
+        onTriggered:
+        {
+            textOpacityAnim.duration = 1000;
+            textOpacityAnim.from = 1;
+            textOpacityAnim.to = 0;
+            textOpacityAnim.start();
+            hideTextTimer.stop();
+        }
+    }
+
+    Timer
+    {
+        id:finishInstructTimer;
+        interval: 9000;
+        running: false;
+        onTriggered:
+        {
+            instructionModule.rouletteButtonClick();
+        }
+    }
+
     function start()
     {
         visible = true;
-       // instructionVideoHolder.start();
+        hideTextTimer.start();
+        finishInstructTimer.start();
 
         mind.onPoorSignalLevelChanged.connect(poorSignalLevelChanged)
 
-        if(goodSignal)
-        {
-            goodSignalHandler();
-        }
+        //        if(goodSignal)
+        //        {
+        //            goodSignalHandler();
+        //        }
     }
 
     function stop()
@@ -111,7 +135,7 @@ Item
 
     function goodSignalHandler()
     {
-       // instructionVideoHolder.signalIsGood();
+        // instructionVideoHolder.signalIsGood();
         mainText.opacity = 0;
         textOpacityAnim.duration = 1000;
         textOpacityAnim.from = 0;

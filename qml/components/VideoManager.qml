@@ -146,10 +146,10 @@ Item
 
     function setState(appState)
     {
-        if(currentState == appState)
-        {
-            return;
-        }
+//        if(currentState == appState)
+//        {
+//            return;
+//        }
 
         switch(appState)
         {
