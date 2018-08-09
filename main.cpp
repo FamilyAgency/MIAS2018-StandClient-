@@ -14,7 +14,8 @@
 
 int main(int argc, char *argv[])
 { 
-   // QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;
@@ -70,8 +71,6 @@ int main(int argc, char *argv[])
     // config load. entry point
     configController.data()->setLoadingMethod(ConfigLoader::CONFIG_LOAD_METHOD::LOCAL_FILE);
     configController.data()->load();
-
-
 
     return app.exec();
 }

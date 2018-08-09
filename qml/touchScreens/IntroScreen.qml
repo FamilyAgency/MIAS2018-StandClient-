@@ -15,25 +15,13 @@ Item
     property bool wasError: false;
 
     signal animComplete();
-    signal animStart();   
+    signal animStart();
 
-    Loader
-    {
-        active:false;
-       // source: "VideoHolder.qml"
-        asynchronous: true
-        visible: status == Loader.Ready
-
-        onStatusChanged:
-        {
-            console.log("Status component ", status);
-        }
-    }
-
-    VideoHolder
-    {
-        id: videoHolder;
-    }
+//    VideoHolder
+//    {
+//        id: videoHolder;
+//        visible: false;
+//    }
 
     HelloBlock
     {
@@ -72,7 +60,7 @@ Item
         onUserStartPlay:
         {
             wasError = false;
-            videoHolder.startHelloState();
+           // videoHolder.startHelloState();
             helloBlock.startHelloState();
         }
 
@@ -110,21 +98,21 @@ Item
     {
         visible = true;
         intro.animComplete();
-        videoHolder.start();
+       // videoHolder.start();
         helloBlock.start();
     }
 
     function stop()
     {
         visible = false;
-        videoHolder.stop();
+       // videoHolder.stop();
         helloBlock.stop();
     }
 
     function cantPlayHandler(errorMsg)
     {
         wasError = true;
-        videoHolder.startHelloState();
+       // videoHolder.startHelloState();
         helloBlock.startErrorState(errorMsg);
     }
 }

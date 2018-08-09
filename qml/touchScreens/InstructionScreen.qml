@@ -30,23 +30,23 @@ Item
         id: font;
     }
 
-    InstructionVideoHolder
-    {
-        id: instructionVideoHolder;
+//    InstructionVideoHolder
+//    {
+//        id: instructionVideoHolder;
 
-        onVideoCompleted:
-        {
-            instructionModule.rouletteButtonClick();
-        }
+//        onVideoCompleted:
+//        {
+//            instructionModule.rouletteButtonClick();
+//        }
 
-        onAlmostCompleted:
-        {
-            textOpacityAnim.duration = 1000;
-            textOpacityAnim.from = 1;
-            textOpacityAnim.to = 0;
-            textOpacityAnim.start();
-        }
-    }
+//        onAlmostCompleted:
+//        {
+//            textOpacityAnim.duration = 1000;
+//            textOpacityAnim.from = 1;
+//            textOpacityAnim.to = 0;
+//            textOpacityAnim.start();
+//        }
+//    }
 
     Text
     {
@@ -75,7 +75,7 @@ Item
     function start()
     {
         visible = true;
-        instructionVideoHolder.start();
+       // instructionVideoHolder.start();
 
         mind.onPoorSignalLevelChanged.connect(poorSignalLevelChanged)
 
@@ -87,7 +87,7 @@ Item
 
     function stop()
     {
-        instructionVideoHolder.stop();
+        //instructionVideoHolder.stop();
         visible = false;
 
         mind.onPoorSignalLevelChanged.disconnect(poorSignalLevelChanged)
@@ -111,7 +111,7 @@ Item
 
     function goodSignalHandler()
     {
-        instructionVideoHolder.signalIsGood();
+       // instructionVideoHolder.signalIsGood();
         mainText.opacity = 0;
         textOpacityAnim.duration = 1000;
         textOpacityAnim.from = 0;

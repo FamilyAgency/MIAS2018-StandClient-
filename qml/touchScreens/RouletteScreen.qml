@@ -27,17 +27,17 @@ Item
         id:consts;
     }
 
-    Video
-    {
-        id: video;
-        width: parent.width;
-        height: parent.height;
-        loops: MediaPlayer.Infinite;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        focus: true;
-        autoLoad: false;
-    }
+//    Video
+//    {
+//        id: video;
+//        width: parent.width;
+//        height: parent.height;
+//        loops: MediaPlayer.Infinite;
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        anchors.verticalCenter: parent.verticalCenter;
+//        focus: true;
+//        autoLoad: false;
+//    }
 
     Roulette
     {
@@ -79,14 +79,14 @@ Item
         id: titles;
     }
 
-    VideoManager
-    {
-        id: videos;
-    }
+//    VideoManager
+//    {
+//        id: videos;
+//    }
 
     Component.onCompleted:
     {
-        video.source = videos.bgLoop;
+       // video.source = videos.bgLoop;
         brb.setTitle(rollTextDefault);
     }
 
@@ -107,15 +107,15 @@ Item
         brb.visible = false;
         visible = true;
 
-        video.seek(0);
-        video.play();
+        //video.seek(0);
+        //video.play();
     }
 
     function stop()
     {
         visible = false;
 
-        video.stop();
+       // video.stop();
         brb.visible = false;
     }
 }

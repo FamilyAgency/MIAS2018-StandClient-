@@ -23,22 +23,22 @@ ApplicationWindow
     {
         id:touchWindow;
 
-//        TouchWindowTest
-//        {
-
-//        }
+        TouchWindowTest
+        {
+            z: 5;
+        }
     }
 
     MainWindow
     {
         id:mainWindow;
-       // visible:false;
+        // visible:false;
     }
 
-    ControlsWindow
-    {
-        id:controlsWindow;
-    }
+    //    ControlsWindow
+    //    {
+    //        id:controlsWindow;
+    //    }
 
 
 }

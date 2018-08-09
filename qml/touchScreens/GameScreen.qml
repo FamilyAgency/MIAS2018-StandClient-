@@ -27,17 +27,17 @@ Item
     }
 
 
-    Video
-    {
-        id: video;
-        width: parent.width;
-        height: parent.height;
-        loops: MediaPlayer.Infinite;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        focus: true;
-        autoLoad:false;
-    }
+//    Video
+//    {
+//        id: video;
+//        width: parent.width;
+//        height: parent.height;
+//        loops: MediaPlayer.Infinite;
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        anchors.verticalCenter: parent.verticalCenter;
+//        focus: true;
+//        autoLoad:false;
+//    }
 
     Text
     {
@@ -89,14 +89,14 @@ Item
         }
     }
 
-    VideoManager
-    {
-        id: videos;
-    }
+//    VideoManager
+//    {
+//        id: videos;
+//    }
 
     Component.onCompleted:
     {
-        video.source = videos.bgLoop;
+       // video.source = videos.bgLoop;
     }
 
     Connections
@@ -116,8 +116,8 @@ Item
     {
         visible = true;
         gameScreen.animComplete();
-        video.seek(0);
-        video.play();
+       // video.seek(0);
+      //  video.play();
         appearAnimation();
     }
 
@@ -135,7 +135,7 @@ Item
         mainText.visible = true;
         mainText.opacity = 0.0;
         mainText.scale = 0.5;
-        video.stop();
+       // video.stop();
         advatage.hide();
     }
 }

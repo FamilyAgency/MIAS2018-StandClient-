@@ -13,17 +13,17 @@ Item
     signal videoCompleted;
     signal almostCompleted;
 
-    Video
-    {
-        id: video;
-        width: parent.width;
-        height: parent.height;
-        loops: MediaPlayer.Infinite;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        focus: true;
-        autoLoad: false;
-    }
+//    Video
+//    {
+//        id: video;
+//        width: parent.width;
+//        height: parent.height;
+//        loops: MediaPlayer.Infinite;
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        anchors.verticalCenter: parent.verticalCenter;
+//        focus: true;
+//        autoLoad: false;
+//    }
 
     Timer
     {
@@ -59,14 +59,14 @@ Item
         }
     }
 
-    VideoManager
-    {
-        id: videos;
-    }
+//    VideoManager
+//    {
+//        id: videos;
+//    }
 
     Component.onCompleted:
     {
-        video.source = videos.instructionPath;
+      //  video.source = videos.instructionPath;
     }
 
     function signalIsGood()
@@ -81,13 +81,13 @@ Item
     {
         videoState = 0;
         positionTimer.start();
-        video.seek(0);
-        video.play();
+       // video.seek(0);
+       // video.play();
     }
 
     function stop()
     {
-        video.stop();
+        //video.stop();
     }
 
 }

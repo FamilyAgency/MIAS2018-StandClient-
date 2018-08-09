@@ -90,8 +90,3 @@ void ServerComponent::httpRequestFailedHandler(const QString& data)
 
     emit serverGlobalError(response.errorType);
 }
-
-//void ServerComponent::parse(const ServerResponse& response)
-//{
-//    //implementation needed, inherited classes
-//}
