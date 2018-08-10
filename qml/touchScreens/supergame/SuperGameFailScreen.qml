@@ -12,11 +12,10 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
-    property string superGameTitle: "УВЫ";
+    property string superGameTitle: "";
     property string descrTitleDefault: "ПОПРОБУЙТЕ<br/>ПОВТОРИТЬ ПОПЫТКУ<br/>ЧЕРЕЗ 20 МИНУТ";
-    property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
+    property string btntext: "В НАЧАЛО";
     property real btnMarginBottom: 100 * consts.designScale;
-
 
     signal gotoIntro();
 
@@ -28,6 +27,7 @@ Item
     TitleBlock
     {
         id: title;
+        offsetY: 400;
     }
 
     BigRedButton
@@ -64,6 +64,4 @@ Item
         title.hide();
         brb.hide();
     }
-
-
 }

@@ -7,7 +7,10 @@ import "../../tools"
 
 Item
 {
+    id: titleBlock;
     anchors.fill: parent;
+
+    property int offsetY: 80;
 
     FontManager
     {
@@ -32,12 +35,11 @@ Item
         horizontalAlignment :Text.AlignHCenter;
     }
 
-
     Text
     {
         id: text2;
         anchors.top: text1.bottom;
-        anchors.topMargin: 80 * consts.designScale;
+        anchors.topMargin: titleBlock.offsetY * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 80 * consts.designScale;

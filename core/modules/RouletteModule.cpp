@@ -193,7 +193,7 @@ void RouletteModule::start()
     connectComponents();
     initParams();
     mainTitleOpacityAnimation->start();
-    carInAnimation->start();
+    carInAnimation->start();     
 }
 
 void RouletteModule::initParams()
@@ -231,7 +231,6 @@ void RouletteModule::stop()
 void RouletteModule::onCarInAnimationCompleted()
 {
    // setState(RouletteState::Roll);
-    emit showBrb();
 }
 
 void RouletteModule::startRoll()

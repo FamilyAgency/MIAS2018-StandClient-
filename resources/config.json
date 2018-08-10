@@ -26,14 +26,14 @@
         "touch":
         {
             "x" : 1920,
-            "y" : -100,
-            "width" : 720,
-            "height" : 1080,
+            "y" : 0,
+            "width" : 1080,
+            "height" : 1920,
             "splashScreen": true
         },
         "game":
         {
-            "x" : 2900,
+            "x" : 3900,
             "y" : -100,
             "width" : 720,
             "height" : 1280,
@@ -66,7 +66,7 @@
         "type": "simulation"
     },
     "slack":
-    [       
+    [
         {
             "appId":1,
             "enabled": false,
@@ -177,7 +177,7 @@
                             {
                                 "title":"Название преимущества1",
                                 "description":"Описание преимущества1",
-                                "videoPath":"content/video/1.mp4"
+                                "videoPath":"1"
                             },
                             "path":[
                                 {"x":668,"y":1647},
@@ -190,7 +190,7 @@
                             {
                                 "title":"Название преимущества2",
                                 "description":"Описание преимущества2",
-                                "videoPath":"content/video/2.mp4"
+                                "videoPath":"2"
                             },
                             "path":[
                                 {"x":246,"y":1065},
@@ -203,7 +203,7 @@
                             {
                                 "title":"Название преимущества3",
                                 "description":"Описание преимущества3",
-                                "videoPath":"content/video/3.mp4"
+                                "videoPath":"3"
                             },
                             "path":[
                                 {"x":890,"y":485},
@@ -222,7 +222,7 @@
                             {
                                 "title":"Название преимущества1",
                                 "description":"Описание преимущества1",
-                                "videoPath":"content/video/1.mp4"
+                                "videoPath":"1"
                             },
                              "path":[
                                 {"x":668,"y":1647},
@@ -235,7 +235,7 @@
                             {
                                 "title":"Название преимущества2",
                                 "description":"Описание преимущества2",
-                                "videoPath":"content/video/2.mp4"
+                                "videoPath":"2"
                             },
                             "path":[
                                 {"x":246,"y":1065},
@@ -248,7 +248,7 @@
                             {
                                 "title":"Название преимущества3",
                                 "description":"Описание преимущества3",
-                                "videoPath":"content/video/3.mp4"
+                                "videoPath":"3"
                             },
                             "path":[
                                 {"x":890,"y":485},
@@ -267,7 +267,7 @@
                             {
                                 "title":"Название преимущества1",
                                 "description":"Описание преимущества1",
-                                "videoPath":"content/video/1.mp4"
+                                "videoPath":"1"
                             },
                              "path":[
                                 {"x":668,"y":1647},
@@ -280,7 +280,7 @@
                             {
                                 "title":"Название преимущества2",
                                 "description":"Описание преимущества2",
-                                "videoPath":"content/video/2.mp4"
+                                "videoPath":"2"
                             },
                             "path":[
                                 {"x":246,"y":1065},
@@ -293,7 +293,7 @@
                             {
                                 "title":"Название преимущества3",
                                 "description":"Описание преимущества3",
-                                "videoPath":"content/video/3.mp4"
+                                "videoPath":"3"
                             },
                             "path":[
                                 {"x":890,"y":485},

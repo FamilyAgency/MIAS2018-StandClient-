@@ -12,7 +12,6 @@ import "../tools"
 Item
 {    
     id:core;
-
     anchors.fill: parent;
 
     property string rollTextDefault: "КРУТИТЬ<br/>РУЛЕТКУ";
@@ -48,6 +47,11 @@ Item
             rouletteModule.startRoll();
             brb.hide();
         }
+    } 
+
+    Titles
+    {
+        id: titles;
     }
 
     Image
@@ -61,11 +65,6 @@ Item
         height: 555 * consts.designScale;
     }
 
-    Titles
-    {
-        id: titles;
-    }
-
     Component.onCompleted:
     {
         brb.setTitle(rollTextDefault);
@@ -77,15 +76,16 @@ Item
 
         onShowBrb:
         {
-            core.animComplete();
-            brb.visible = true;
-            brb.show();
+
         }
     }
 
     function start()
     {
-        brb.visible = false;
+        core.animComplete();
+        brb.visible = true;
+        brb.show();
+
         visible = true;
     }
 

@@ -22,8 +22,6 @@ Item
         id: font;
     }
 
-
-
     Item
     {
         anchors.fill: parent;
@@ -48,7 +46,7 @@ Item
                 id: content;
                 z: 1;
                 font.family: font.hyundaiSansHeadMedium;
-                font.pixelSize: 38 * consts.designScale;
+                font.pixelSize: 30 * consts.designScale;
                 color: "#ffffff";
                 horizontalAlignment: Text.AlignHCenter;
                 verticalAlignment: Text.AlignVCenter;
@@ -124,7 +122,7 @@ Item
     {
         //visible = false;
         scaleAnimator.from = 1;
-        scaleAnimator.to = 0;
+        scaleAnimator.to = 0.0;
         scaleAnimator.start();
 
         glowOpacty.from = 1;

@@ -13,12 +13,15 @@ Item
     signal animComplete();
     signal animStart();
 
+    property bool superGameSuccess: false;
+
     SuperGameSuccessScreen
     {
         id:superGameSuccessScreen;
 
         onGotoIntro:
         {
+            superGameSuccess = true;
             superGameSuccessScreen.hide();
             outTimer.start();
         }
@@ -31,6 +34,7 @@ Item
 
         onGotoIntro:
         {
+            superGameSuccess = false;
             superGameFailScreen.hide();
             outTimer.start();
         }
@@ -43,7 +47,14 @@ Item
         running: false;
         onTriggered:
         {
-            superGameResultModule.superGameResultReadedButtonClicked();
+            if(superGameSuccess)
+            {
+                superGameResultModule.superGameResultReadedButtonClicked();
+            }
+            else
+            {
+                appController.backToIntro();
+            }
         }
     }
 
@@ -72,7 +83,10 @@ Item
     {
         visible = true;
         result.animComplete();
-        superGameSuccessScreen.show();
+
+       // superGameSuccessScreen.visible = false;
+       /// superGameFailScreen.visible = true;
+       /// superGameFailScreen.show();
     }
 
     function stop()

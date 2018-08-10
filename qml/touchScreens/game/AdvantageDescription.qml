@@ -96,7 +96,8 @@ Item
 
     function setVideo(videoPath)
     {
-        video.source = configController.getFileInAppDir(videoPath);
+        video.source = configController.getVideoFileInAppDir(videoPath);
+        console.log("video path ", configController.getVideoFileInAppDir(videoPath));
         video.play();
     }
 

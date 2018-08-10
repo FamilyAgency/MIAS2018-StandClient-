@@ -13,6 +13,7 @@ Item
     anchors.fill: parent;
 
     property string mainTitleDefault: "У С Т Р О Й С Т В О<br/>А К Т И В И Р О В А Н О";
+    property string journeyTitleDefault: "отправляемся<br/>в путешествие";
     property bool goodSignal: false;
 
     signal animComplete();
@@ -49,13 +50,69 @@ Item
             duration: 2000
             running:false;
 
+            onStopped:
+            {
+                console.log("first text opacity", mainText.opacity)
+                if(mainText.opacity === 0)
+                {
+                    journeyOpacityAnim.duration = 1000;
+                    journeyOpacityAnim.from = 0;
+                    journeyOpacityAnim.to = 1;
+                    journeyOpacityAnim.start();
+                }
+            }
+        }
+    }
+
+    Text
+    {
+        opacity: 0;
+        id: journeyText;
+        text: journeyTitleDefault;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 60 * consts.designScale;
+        color: "#ffffff";
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter:  parent.verticalCenter;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
+
+        OpacityAnimator on opacity
+        {
+            id: journeyOpacityAnim;
+            from: 0;
+            to: 1;
+            duration: 2000
+            running:false;
+
+            onStopped:
+            {
+                if(journeyText.opacity === 1)
+                {
+                    hideJourneyTimer.start();
+                }
+            }
+        }
+
+        Timer
+        {
+            id:hideJourneyTimer;
+            interval: 1000;
+            running: false;
+            onTriggered:
+            {
+                journeyOpacityAnim.duration = 700;
+                journeyOpacityAnim.from = 1;
+                journeyOpacityAnim.to = 0;
+                journeyOpacityAnim.start();
+            }
         }
     }
 
     Timer
     {
         id:hideTextTimer;
-        interval: 2000;
+        interval: 3000;
         running: false;
         onTriggered:
         {
@@ -86,6 +143,7 @@ Item
         hideTextTimer.start();
         finishInstructTimer.start();
         mainTitleDefault.opacity = 0;
+        journeyText.opacity = 0;
 
         mind.onPoorSignalLevelChanged.connect(poorSignalLevelChanged)
 
@@ -99,7 +157,10 @@ Item
     {
         hideTextTimer.stop();
         finishInstructTimer.stop();
+        hideJourneyTimer.stop();
         visible = false;
+        mainTitleDefault.opacity = 0;
+        journeyText.opacity = 0;
 
         mind.onPoorSignalLevelChanged.disconnect(poorSignalLevelChanged)
     }
