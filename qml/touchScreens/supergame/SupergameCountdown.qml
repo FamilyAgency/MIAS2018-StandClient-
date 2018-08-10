@@ -25,13 +25,56 @@ Item
         id: consts;
     }
 
+//    Canvas
+//    {
+//        id: canvasCircStatic;
+//        width: 1080;
+//        height: 1920;
+//        smooth: true;
+//        antialiasing:true;
+//        rotation: -90;
+//        property int centerWidth: 1080 * 0.5
+//        property int centerHeight: 1920 * 0.5
+//        property int radius: 400;
+
+//        property real percentLimit: 0.0;
+//        property real percent: 0.5;
+
+//        onPaint:
+//        {
+//            var colorAttention= Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
+//            var colorBg = Qt.rgba(51./255., 106./255., 238.0 / 255., 1.0);
+
+//            var ctx = getContext("2d");
+//            ctx.clearRect(0, 0, 1080, 1920);
+
+//            ctx.strokeStyle = consts.redColor;
+//            ctx.lineCap = consts.lineCap;
+//            ctx.lineJoin = consts.lineJoin;
+
+//            ctx.lineWidth = 1;
+
+//            ctx.strokeStyle = colorAttention;
+//            ctx.beginPath();
+//            ctx.arc(canvasCirc.centerWidth,
+//                    canvasCirc.centerHeight,
+//                    canvasCirc.radius,
+//                    0,
+//                    2 * Math.PI);
+//            ctx.stroke();
+//            ctx.closePath();
+//        }
+//    }
+
     Canvas
     {
         id: canvasCirc;
         width: 1080;
         height: 1920;
         smooth: true;
-        antialiasing:true;
+        antialiasing: true;
+        rotation: -90;
+
         property int centerWidth: 1080 * 0.5
         property int centerHeight: 1920 * 0.5
         property int radius: 400;
@@ -63,16 +106,13 @@ Item
             ctx.stroke();
             ctx.closePath();
 
-           // ctx.shadowBlur = 10;
-           // ctx.shadowColor = "black";
-
             ctx.lineWidth = 5;
             ctx.strokeStyle = colorBg;
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
                     canvasCirc.radius,
-                    2 * Math.PI * percent, 0);
+                    2 * Math.PI * 0.1 * percent, 0);
             ctx.stroke();
             ctx.closePath();
         }
@@ -81,10 +121,18 @@ Item
         {
             id: attentionAnim;
             target: canvasCirc;
-            property: "percentAttention";
+            property: "percent";
             to: 100;
             duration: 50
         }
+    }
+
+    FastBlur
+    {
+        anchors.fill: canvasCirc
+        source: canvasCirc
+        radius: 50
+        //transparentBorder:true;
     }
 
     Image
@@ -131,7 +179,7 @@ Item
         id: opacityAnim;
         from: 0;
         to: 1;
-        duration: 700;
+        duration: 2000;
         running: false;
         easing.type: "InOutCubic";
     }
@@ -142,7 +190,10 @@ Item
         onUpdateSuperGameTime:
         {
             var seconds = (mills / 1000.).toFixed(0);
-            canvasCirc.percent  = (1 - superGameModule.getPercent()).toFixed(2);
+            attentionAnim.to = (1 - superGameModule.getPercent()).toFixed(2);
+            attentionAnim.duration = 100;
+            attentionAnim.start();
+            //canvasCirc.rotation = -90 - superGameModule.getPercent().toFixed(2);
             canvasCirc.requestPaint();
             minutesText.text = tools.formatSeconds(seconds);
         }
