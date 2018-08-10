@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
 
+import "../elements"
+import "../../tools"
 Item
 {
     id: result;
@@ -10,53 +12,58 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
-    property string mainTitleDefault: "ПОЛУЧИТЕ<br/>НАПИТОК.<br/>ПОПРОБУЙТЕ СЫГРАТЬ<br/>В СУПЕР ИГРУ<br/>ЧЕРЕЗ 20 МИНУТ.";
-    property string buttonText: "ЗАБРАТЬ ПОДАРОК";
+    property string superGameTitle: "УВЫ";
+    property string descrTitleDefault: "ПОПРОБУЙТЕ<br/>ПОВТОРИТЬ ПОПЫТКУ<br/>ЧЕРЕЗ 20 МИНУТ";
+    property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
+    property real btnMarginBottom: 100 * consts.designScale;
+
 
     signal gotoIntro();
 
-    Text
+    Consts
     {
-        id: mainTitle;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        text: mainTitleDefault;
-        font.family: "Helvetica";
-        font.pixelSize: 55;
-        color: "#ffffff";
-        textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
+        id: consts;
     }
 
-    Button
+    TitleBlock
     {
-        id: failOkBtn;
+        id: title;
+    }
 
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 100;
-        anchors.horizontalCenter: parent.horizontalCenter;
+    BigRedButton
+    {
+        id: brb;
 
-        contentItem: Text
-        {
-            text: buttonText;
-            font.family: "Helvetica";
-            font.pixelSize: 25;
-            color: "#ffffff"
-            horizontalAlignment: Text.AlignHCenter;
-            verticalAlignment: Text.AlignVCenter;
-
-        }
-
-        background: Rectangle
-        {
-            implicitHeight: 200;
-            implicitWidth: 400;
-            color: failOkBtn.down ? "#3c2755" : "#4e1a8a";
-        }
+        anchors.bottomMargin: btnMarginBottom;
+        visible: false;
+        anchors.fill: parent;
+        btnWidth: 350 * consts.designScale;
+        btnHeight: 350 * consts.designScale;
+        btnRadius: 175 * consts.designScale;
 
         onClicked:
         {
             result.gotoIntro();
         }
     }
+
+    Component.onCompleted:
+    {
+        title.setTexts(superGameTitle, descrTitleDefault);
+        brb.setTitle(btntext);
+    }
+
+    function show()
+    {
+        title.show();
+        brb.show();
+    }
+
+    function hide()
+    {
+        title.hide();
+        brb.hide();
+    }
+
+
 }

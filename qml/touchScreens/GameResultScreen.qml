@@ -16,9 +16,13 @@ Item
     signal animStart();
 
     property string mainTitleDefault: "Поздравляем!<br/>тебя ждет второй этап!<br/>Теперь ты знаешь <br/>все о Santa Fe <br/>и можешь управлять <br/>силой своих мыслей.";
-    property string mainTitleDefault2: "Сыграй в супер-игру<br/>и получи в подарок<br/>освежающий напиток";
     property string buttonTakeColaText: "НЕТ, СПАСИБО";
     property string buttonSuperGameText: "ХОЧУ<br/>СЫГРАТЬ";
+
+    property string superGameTitle: "СУПЕРИГРА";
+    property string descrTitleDefault: "Сыграй в супер-игру<br/>и получи в подарок<br/>освежающий напиток";
+
+
     property real btnMarginBottom: 100 * consts.designScale;
 
     signal startSuperGame();
@@ -37,8 +41,6 @@ Item
     Text
     {
         id: mainText;
-       // anchors.top: parent.top;
-       // anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         text: mainTitleDefault;
@@ -65,7 +67,7 @@ Item
             to: 0.5;
             duration: 700;
             running:false;
-            easing.type: "InOutCubic";
+            easing.type: "OutCubic";
         }
     }
 
@@ -82,110 +84,15 @@ Item
 
         onClicked:
         {
-           // gameResultScreen.animStart();
-           // rouletteModule.startRoll();
             gameResultModule.superGameAcceptedButtonClick();
             brb.hide();
+            title.hide();
         }
     }
 
-    Component.onCompleted:
+    TitleBlock
     {
-        brb.setTitle(buttonSuperGameText);
-    }
-
-//    Button
-//    {
-//        id: colaBtn;
-
-//        anchors.bottom: parent.bottom;
-//        anchors.left: parent.left;
-
-//        contentItem: Text
-//        {
-//            text: buttonTakeColaText;
-//            font.family: "Helvetica";
-//            font.pixelSize: 25;
-//            color: "#ffffff";
-//            horizontalAlignment: Text.AlignHCenter;
-//            verticalAlignment: Text.AlignVCenter;
-//        }
-
-//        background: Rectangle
-//        {
-//            implicitHeight: 200;
-//            implicitWidth: gameResultScreen.width * 0.5;
-//            color: colaBtn.down ? "#3c2755" : "#801bfc";
-//        }
-
-//        onClicked:
-//        {
-//            confirmExitPopup.show();
-//        }
-//    }
-
-//    Button
-//    {
-//        id: superBtn;
-
-//        anchors.bottom: parent.bottom;
-//        anchors.right: parent.right;
-
-//        contentItem: Text
-//        {
-//            text: buttonSuperGameText;
-//            font.family: "Helvetica";
-//            font.pixelSize: 25;
-//            color: "#ffffff";
-//            horizontalAlignment: Text.AlignHCenter;
-//            verticalAlignment: Text.AlignVCenter;
-
-//        }
-
-//        background: Rectangle
-//        {
-//            implicitHeight: 200;
-//            implicitWidth: gameResultScreen.width * 0.5;
-//            color: superBtn.down ? "#3c2755" : "#4e1a8a";
-//        }
-
-//        onClicked:
-//        {
-//            gameResultModule.superGameAcceptedButtonClick();
-//        }
-//    }
-
-    Timer
-    {
-        id:hideIntroTimer;
-        running: false;
-        interval : 3000;
-        onTriggered:
-        {
-            opacityAnim.from = 1;
-            opacityAnim.to = 0;
-            opacityAnim.start();
-            scaleAnim.from = 1;
-            scaleAnim.to = 0;
-            scaleAnim.start();
-            hideIntroTimer.stop();
-            showIntro2Timer.start();
-        }
-    }
-
-    Timer
-    {
-        id:showIntro2Timer;
-        running: false;
-        interval : 500;
-        onTriggered:
-        {
-            //opacityAnim.start();
-           // scaleAnim.start();
-            brb.visible = true;
-            brb.show();
-            showIntro2Timer.stop();
-        }
+        id: title;
     }
 
     ConfirmExitPopup
@@ -205,6 +112,47 @@ Item
         }
     }
 
+    Timer
+    {
+        id:hideIntroTimer;
+        running: false;
+        interval : 6000;
+        onTriggered:
+        {
+            opacityAnim.from = 1;
+            opacityAnim.to = 0;
+            opacityAnim.start();
+            scaleAnim.from = 1;
+            scaleAnim.to = 0.2;
+            scaleAnim.start();
+            hideIntroTimer.stop();
+            showIntro2Timer.start();
+        }
+    }
+
+    Timer
+    {
+        id:showIntro2Timer;
+        running: false;
+        interval : 2000;
+        onTriggered:
+        {
+            brb.visible = true;
+            brb.show();
+
+            title.visible = true;
+            title.show();
+
+            showIntro2Timer.stop();
+        }
+    }
+
+    Component.onCompleted:
+    {
+        brb.setTitle(buttonSuperGameText);
+        title.setTexts(superGameTitle, descrTitleDefault);
+    }
+
     function start()
     {
         opacityAnim.from = 0;
@@ -216,16 +164,21 @@ Item
 
         mainText.opacity = 1;
         mainText.scale = 1;
-        brb.visible = false;
+
+
         visible = true;
         gameResultScreen.animComplete();
         hideIntroTimer.start();
-
     }
 
     function stop()
     {
-        brb.hide();
+        brb.visible = false;
+      //  brb.hide();
+
+        title.visible = false;
+       // title.hide();
+
         visible = false;
         confirmExitPopup.hide();
         hideIntroTimer.stop();

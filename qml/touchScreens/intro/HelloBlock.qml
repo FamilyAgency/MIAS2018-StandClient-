@@ -98,7 +98,7 @@ Item
     Timer
     {
         id: delayTimer;
-        interval:1000;
+        interval:2000;
         onTriggered:
         {
             startOpacityAnim(0, 1);
@@ -111,7 +111,6 @@ Item
     Component.onCompleted:
     {
         brb.setTitle(buttonText);
-
     }
 
     function start()

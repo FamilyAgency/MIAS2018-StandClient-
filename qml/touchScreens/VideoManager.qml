@@ -8,11 +8,11 @@ import com.app 1.0
 
 Item
 {
-    property string intro1Path: configController.getVideoFileInAppDir("content/video/intro1");
-    property string intro2Path: configController.getVideoFileInAppDir("content/video/intro2");
-    property string instructionPath: configController.getVideoFileInAppDir("content/video/instruction");
-    property string bgLoop: configController.getVideoFileInAppDir("content/video/bgloop");
-    property string gameresult: configController.getVideoFileInAppDir("content/video/gameresult");
+    property string intro1Path: configController.getVideoFileInAppDir("intro1");
+    property string intro2Path: configController.getVideoFileInAppDir("intro2");
+    property string instructionPath: configController.getVideoFileInAppDir("instruction");
+    property string bgLoop: configController.getVideoFileInAppDir("bgloop");
+    property string gameresult: configController.getVideoFileInAppDir("gameresult");
 
 
     anchors.fill: parent;
@@ -171,10 +171,15 @@ Item
         case AppState.GameResult:
             needLoop = true;
             loopThreshold = 8300;
-            startIndex(4, 3000);
+            startIndex(4);
             break;
 
         case AppState.SuperGame:
+            startIndex(3);
+            break;
+
+        case AppState.SuperGameResult:
+        case AppState.TestDrive:
             startIndex(3);
             break;
 
@@ -196,10 +201,10 @@ Item
         {
             if(needLoop)
             {
-                console.log(currentPlayer.position, currentPlayer.duration)
+               // console.log(currentPlayer.position, currentPlayer.duration)
                 if(currentPlayer.position >= currentPlayer.duration - 500)
                 {
-                    currentPlayer.seek(loopThreshold);
+                  //  currentPlayer.seek(loopThreshold);
                 }
             }
         }
@@ -208,7 +213,7 @@ Item
 
     function startIndex(index, seekTo)
     {
-        if (seekTo === undefined) seekTo = 0;
+        /*if (seekTo === undefined)*/ seekTo = 0;
         swapVideos();
         currentPlaylist.currentIndex = index;
         currentPlayer.seek(seekTo);

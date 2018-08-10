@@ -27,11 +27,6 @@ Window
         }
     }
 
-    GameScreen
-    {
-        id:mainGameScreen;
-    }
-
     MouseArea
     {
         anchors.fill: parent;
@@ -54,6 +49,11 @@ Window
                 Qt.quit();
             }
         }
+    }
+
+    GameScreen
+    {
+        id:mainGameScreen;
     }
 
     function setState(appState)

@@ -62,6 +62,29 @@ Item
         z: 4;
     }
 
+    MouseArea
+    {
+        anchors.fill: parent;
+        onClicked:
+        {
+            focusedId.forceActiveFocus();
+        }
+    }
+
+    Item
+    {
+        id:focusedId;
+        focus: true;
+        anchors.fill: parent;
+
+        Keys.onPressed:
+        {
+            if (event.key === Qt.Key_Escape)
+            {
+                Qt.quit();
+            }
+        }
+    }
 
     Component.onCompleted:
     {

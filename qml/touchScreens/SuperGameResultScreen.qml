@@ -15,23 +15,36 @@ Item
 
     SuperGameSuccessScreen
     {
-       id:superGameSuccessScreen;
+        id:superGameSuccessScreen;
 
-       onGotoIntro:
-       {
-           superGameResultModule.superGameResultReadedButtonClicked();
-       }
+        onGotoIntro:
+        {
+            superGameSuccessScreen.hide();
+            outTimer.start();
+        }
     }
 
     SuperGameFailScreen
     {
-       id:superGameFailScreen;
-       visible: false;
+        id:superGameFailScreen;
+        visible: false;
 
-       onGotoIntro:
-       {
-           superGameResultModule.superGameResultReadedButtonClicked();
-       }
+        onGotoIntro:
+        {
+            superGameFailScreen.hide();
+            outTimer.start();
+        }
+    }
+
+    Timer
+    {
+        id: outTimer;
+        interval: 1000;
+        running: false;
+        onTriggered:
+        {
+            superGameResultModule.superGameResultReadedButtonClicked();
+        }
     }
 
     Connections
@@ -42,6 +55,7 @@ Item
         {
             superGameSuccessScreen.visible = false;
             superGameFailScreen.visible = true;
+            superGameFailScreen.show();
             console.log("SuperGameFailed");
         }
 
@@ -49,6 +63,7 @@ Item
         {
             superGameSuccessScreen.visible = true;
             superGameFailScreen.visible = false;
+            superGameSuccessScreen.show();
             console.log("onSuperGameSuccess");
         }
     }
@@ -57,6 +72,7 @@ Item
     {
         visible = true;
         result.animComplete();
+        superGameSuccessScreen.show();
     }
 
     function stop()

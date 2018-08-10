@@ -26,6 +26,7 @@ Item
     Component.onCompleted:
     {
         addLocation(AppState.Intro, "IntroScreenTest");
+        addLocation(AppState.SuperGame, "SuperGameScreenTest");
         setState(appController.getAppState());
     }
 

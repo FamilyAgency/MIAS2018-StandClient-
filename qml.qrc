@@ -59,5 +59,9 @@
         <file>qml/touchScreens/roulette/Roulette.qml</file>
         <file>qml/touchScreens/roulette/Titles.qml</file>
         <file>qml/touchScreens/gameresult/ConfirmExitPopup.qml</file>
+        <file>qml/touchScreens/elements/TitleBlock.qml</file>
+        <file>qml/touchScreens/supergame/SupergameTimeRules.qml</file>
+        <file>qml/touchScreens/supergame/SupergameCountdown.qml</file>
+        <file>qml/tests/touchScreens/SuperGameScreenTest.qml</file>
     </qresource>
 </RCC>

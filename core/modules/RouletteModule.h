@@ -98,7 +98,7 @@ private:
     int carMiddleThreshold = -850;
     int carTopThreshold = -1200;
     const float carDecriment = -1.0f;
-    const float circleYDefault = 222;
+    const float circleYDefault = 444;
     const int mindwaveAttentionThreshold = 80;
 
     QTimer* mindwaveTimer = nullptr;
@@ -112,7 +112,7 @@ private:
     float _scale = 0;
     float _carY = 0;
     float _rotation = 0;
-    int _carHeight = 350;//555;
+    int _carHeight = 555;
     int choosenCategory = 0;
 
     float _taskOpacity = 0;

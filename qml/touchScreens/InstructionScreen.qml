@@ -81,9 +81,11 @@ Item
 
     function start()
     {
+        goodSignal = false;
         visible = true;
         hideTextTimer.start();
         finishInstructTimer.start();
+        mainTitleDefault.opacity = 0;
 
         mind.onPoorSignalLevelChanged.connect(poorSignalLevelChanged)
 

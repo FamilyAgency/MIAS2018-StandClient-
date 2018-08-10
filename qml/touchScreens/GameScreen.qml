@@ -56,7 +56,7 @@ Item
             to: 1;
             duration: 700;
             running:false;
-            easing.type: "InOutCubic";
+            easing.type: "OutCubic";
         }
     }
 

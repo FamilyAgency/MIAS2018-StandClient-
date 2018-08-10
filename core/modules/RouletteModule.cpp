@@ -82,8 +82,8 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     circleFinalYAnimation = new QPropertyAnimation(this);
     circleFinalYAnimation->setTargetObject(this);
     circleFinalYAnimation->setPropertyName("circleY");
-    circleFinalYAnimation->setStartValue(222);
-    circleFinalYAnimation->setEndValue(300);
+    circleFinalYAnimation->setStartValue(circleYDefault);
+    circleFinalYAnimation->setEndValue(circleYDefault + 80);
     circleFinalYAnimation->setDuration(700);
     circleFinalYAnimation->setEasingCurve(QEasingCurve::InOutQuad);
     connect(circleFinalYAnimation, SIGNAL(finished()), this, SLOT(onCircleFinalYAnimationCompleted()));
@@ -176,13 +176,13 @@ void RouletteModule::setUser(QSharedPointer<UserData> value)
 
 void RouletteModule::setConfig(ConfigPtr config)
 {
-    carMiddleThreshold = -config->mainConfig->touchScreen.height() / 2. - _carHeight * 0.5f;
+    carMiddleThreshold = - config->mainConfig->touchScreen.height() / 2. - _carHeight * 0.5f - 60.0f;
     carTopThreshold = -config->mainConfig->touchScreen.height();
 
     carInAnimation->setEndValue(carMiddleThreshold);
     carYAnimation2->setStartValue(carMiddleThreshold);
-    carYAnimation2->setEndValue(carMiddleThreshold + 220);
-    carYAnimation3->setStartValue(carMiddleThreshold + 220);
+    carYAnimation2->setEndValue(carMiddleThreshold + 500);
+    carYAnimation3->setStartValue(carMiddleThreshold + 500);
     carYAnimation3->setEndValue(carMiddleThreshold + 120);
 }
 

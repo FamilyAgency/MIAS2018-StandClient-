@@ -55,7 +55,7 @@ Item
             color: "#ffffff";
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: -60;
+            anchors.verticalCenterOffset: -120;
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
             // textFormat: Text.StyledText;

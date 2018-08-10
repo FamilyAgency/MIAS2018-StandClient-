@@ -1,7 +1,10 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.3
+import QtQuick 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
+import "elements"
+import "supergame"
+import "../tools"
 
 Item
 {
@@ -11,10 +14,25 @@ Item
     anchors.centerIn: parent;
 
     property string mainTitleDefault: "ТЕСТ ДРАЙВ";
+    property string buttonText: "ЗАПИСАТЬСЯ";
+    property string okText: "Спасибо!<br/>Ваш запрос отправлен.";
+
     property var allDealersData;
+    property real btnMarginBottom: 100 * consts.designScale;
 
     signal animComplete();
     signal animStart();
+
+    Consts
+    {
+        id: consts;
+    }
+
+
+    FontManager
+    {
+        id: font;
+    }
 
     Text
     {
@@ -32,10 +50,10 @@ Item
 
     ColumnLayout
     {
+        id:columns;
         spacing: 100;
-
-        y:200;
-        x:20;
+        y:400;
+        anchors.horizontalCenter: parent.horizontalCenter;
 
         ComboBox
         {
@@ -46,7 +64,7 @@ Item
             model:ListModel
             {
                 id: cityModel;
-            }            
+            }
 
             onCurrentIndexChanged:
             {
@@ -64,27 +82,89 @@ Item
                 id: dealersModel
             }
         }
+    }
 
-        Button
+    Text
+    {
+        id: okFiled;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
+        text: okText;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 80 * consts.designScale;
+        color: "#ffffff";
+        textFormat: Text.StyledText;
+        horizontalAlignment :Text.AlignHCenter;
+
+        OpacityAnimator on opacity
         {
-            text:"Test Drive";
-
-            onClicked:
-            {
-
-                var cityIndex = citiesComboBox.currentIndex;
-                var dealerIndex = dealersComboBox.currentIndex;
-                var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
-                console.log("send test drive ", dealerId)
-                testDriveModule.makeTestDrive(dealerId);
-            }
-
-            background: Rectangle
-            {
-                implicitWidth: 200;
-                color: "#ffffff";
-            }
+            id: opacityAnim;
+            from: 0;
+            to: 1;
+            duration: 700;
+            running: false;
+            easing.type: "InOutCubic";
         }
+
+        ScaleAnimator on scale
+        {
+            id: scaleAnim;
+            from: 0.5;
+            to: 1;
+            duration: 700;
+            running:false;
+            easing.type: "OutCubic";
+        }
+    }
+
+
+
+
+
+    BigRedButton
+    {
+        id: startBtn;
+
+        anchors.bottomMargin: btnMarginBottom;
+        visible: false;
+        anchors.fill: parent;
+        btnWidth: 350 * consts.designScale;
+        btnHeight: 350 * consts.designScale;
+        btnRadius: 175 * consts.designScale;
+
+        onClicked:
+        {
+            columns.visible = false;
+            startBtn.hide();
+            opacityAnim.start();
+            scaleAnim.start();
+
+            outTimer.start();
+
+            var cityIndex = citiesComboBox.currentIndex;
+            var dealerIndex = dealersComboBox.currentIndex;
+            var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
+            console.log("send test drive ", dealerId)
+            testDriveModule.makeTestDrive(dealerId);
+        }
+    }
+
+    Timer
+    {
+        id:outTimer;
+        running: false;
+        interval : 2000;
+        onTriggered:
+        {
+           appController.backToIntro();
+        }
+    }
+
+
+
+    Component.onCompleted:
+    {
+        startBtn.setTitle(buttonText);
     }
 
     Connections
@@ -122,10 +202,16 @@ Item
 
     function start()
     {
+        columns.visible = true;
         citiesComboBox.currentIndex = 0;
         dealersComboBox.currentIndex = 0;
         visible = true;
         testDrive.animComplete();
+
+        startBtn.show();
+
+        okFiled.scale = 0;
+        okFiled.opacity = 0;
     }
 
     function stop()

@@ -22,6 +22,8 @@ Item
         id: font;
     }
 
+
+
     Item
     {
         anchors.fill: parent;

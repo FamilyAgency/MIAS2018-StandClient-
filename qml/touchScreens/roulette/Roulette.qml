@@ -24,7 +24,7 @@ Item
         height: 875  * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
-        anchors.topMargin: 222;
+        anchors.topMargin: rouletteModule.circleY;
         smooth: true;
         source: "qrc:/resources/rulette.png";        
         rotation: rouletteModule.rotation;
@@ -41,7 +41,7 @@ Item
         radius: 600 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
-        anchors.topMargin: rouletteModule.circleY - 125 * consts.designScale;
+        anchors.topMargin: rouletteModule.circleY - 125;
         scale: rouletteModule.pulsarScale;
         opacity: 1 - rouletteModule.pulsarScale;
     }
@@ -51,9 +51,10 @@ Item
         id:bg;
         implicitHeight: 950 * consts.designScale;
         implicitWidth: 950 * consts.designScale;
+        radius: 475 * consts.designScale;
 
         color:  "#7b7cfe";
-        radius: 475 * consts.designScale;
+
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
@@ -61,60 +62,4 @@ Item
         opacity: rouletteModule.circleOpacity;
     }
 
-    Canvas
-    {
-        id: canvas;
-        width: parent.width;
-        height: parent.height;
-        antialiasing: true;
-        visible:false;
-
-        onPaint:
-        {
-            var ctx = getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            ctx.lineWidth = 10;
-            ctx.strokeStyle = "#8009fb";
-            ctx.fillStyle = "#8009fb";
-            ctx.beginPath();
-            ctx.arc(canvas.width * 0.5, canvas.height * 0.5, circleSize, 0, 2*Math.PI);
-            ctx.stroke();
-            ctx.fill();
-
-//            if(rouletteModule.state == RouletteState.Roll)
-//            {
-//                ctx.strokeStyle = "#000099";
-//                ctx.fillStyle = "#000099";
-//                ctx.beginPath();
-//                ctx.arc(canvas.width * 0.5, canvas.height * 0.5 + 200, 20, 0, 2*Math.PI);
-//                ctx.stroke();
-//                ctx.fill();
-
-//                ctx.strokeStyle = "#990000";
-//                ctx.fillStyle = "#990000";
-//                ctx.beginPath();
-//                ctx.arc(canvas.width * 0.5 - 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
-//                ctx.stroke();
-//                ctx.fill();
-
-//                ctx.strokeStyle = "#009900";
-//                ctx.fillStyle = "#009900";
-//                ctx.beginPath();
-//                ctx.arc(canvas.width * 0.5 + 200, canvas.height * 0.5 , 20, 0, 2*Math.PI);
-//                ctx.stroke();
-//                ctx.fill();
-//            }
-        }
-    }
-
-    Connections
-    {
-        target: rouletteModule;
-
-        onStateChanged:
-        {
-            canvas.requestPaint();
-        }
-    }
 }

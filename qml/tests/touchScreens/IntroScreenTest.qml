@@ -109,7 +109,6 @@ Item
     function start()
     {
         visible = true;
-
     }
 
     function stop()
