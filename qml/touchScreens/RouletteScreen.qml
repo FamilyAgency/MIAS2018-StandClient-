@@ -70,16 +70,6 @@ Item
         brb.setTitle(rollTextDefault);
     }
 
-    Connections
-    {
-        target: rouletteModule;
-
-        onShowBrb:
-        {
-
-        }
-    }
-
     function start()
     {
         core.animComplete();

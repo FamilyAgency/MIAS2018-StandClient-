@@ -75,8 +75,8 @@ Item
             switch(reason)
             {
             case CantPlayReason.WasRecently:
-                var seconds = 10;//userData.getSecondsToStart();
-                cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStartseconds);
+                var seconds = userData.getSecondsToStart();
+                cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStart(seconds));
                 break;
 
             case CantPlayReason.YouArePlaying:

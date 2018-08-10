@@ -28,7 +28,6 @@ Item
         id: consts;
     }
 
-
     FontManager
     {
         id: font;
