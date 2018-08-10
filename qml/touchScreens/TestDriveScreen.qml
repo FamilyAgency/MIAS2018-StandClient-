@@ -117,10 +117,6 @@ Item
         }
     }
 
-
-
-
-
     BigRedButton
     {
         id: startBtn;
@@ -155,12 +151,10 @@ Item
         running: false;
         interval : 2000;
         onTriggered:
-        {
+        {       
            appController.backToIntro();
         }
     }
-
-
 
     Component.onCompleted:
     {

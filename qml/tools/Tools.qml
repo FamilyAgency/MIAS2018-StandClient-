@@ -58,4 +58,32 @@ Item
 
         return minutes + ":" + secs;
     }
+
+    property var decCache: [];
+    function decOfNum(number, titles)
+    {
+        if(!decCache[number]) decCache[number] = number % 100 > 4 && number % 100 < 20 ? 2 : decCases[Math.min(number % 10, 5)];
+        return titles[decCache[number]];
+    }
+
+    function getTimeToStart(seconds)
+    {
+        var minutes = Math.floor(seconds / 60);
+        if(minutes > 0)
+        {
+            if (minutes === 4 || minutes === 3 || minutes === 2)
+                return  minutes + " минуты";
+
+            if (minutes === 1)
+                return  minutes + " минуту";
+
+            return  minutes + " минут";
+        }
+        else
+        {
+            return  "1 минуту";
+            //return  seconds + " секунд";
+           // return  decOfNum(seconds, ['секунда', 'секунды', 'секунд']);
+        }
+    }
 }

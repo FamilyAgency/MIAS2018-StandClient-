@@ -13,8 +13,6 @@ Item
     property string instructionPath: configController.getVideoFileInAppDir("instruction");
     property string bgLoop: configController.getVideoFileInAppDir("bgloop");
     property string gameresult: configController.getVideoFileInAppDir("gameresult");
-
-
     anchors.fill: parent;
 
     Video
@@ -23,8 +21,7 @@ Item
         anchors.fill: parent;
         anchors.centerIn: parent;
         loops: MediaPlayer.Infinite;
-        playlist:
-            Playlist
+        playlist: Playlist
         {
             id: playlist1;
         }
@@ -39,8 +36,8 @@ Item
 
             onStopped:
             {
-                console.log(("VIDEO PLAYER HIDE"))
-               player2.seek(0);
+                player2.seek(0);
+                player2.pause();
             }
         }
     }
@@ -52,8 +49,7 @@ Item
         anchors.centerIn: parent;
         opacity: 0;
         loops: MediaPlayer.Infinite;
-        playlist:
-            Playlist
+        playlist: Playlist
         {
             id: playlist2;
         }
@@ -69,20 +65,10 @@ Item
             onStopped:
             {
                 player1.seek(0);
+                player1.pause();
             }
         }
     }
-
-
-//    Button
-//    {
-//        text:"Next video"
-//        onClicked:
-//        {
-//            playlist2.next();
-//            player2.play();
-//        }
-//    }
 
     Component.onCompleted:
     {
@@ -92,7 +78,6 @@ Item
         playlist1.addItem(bgLoop);
         playlist1.addItem(gameresult);
 
-
         playlist2.addItem(intro1Path);
         playlist2.addItem(intro2Path);
         playlist2.addItem(instructionPath);
@@ -100,10 +85,8 @@ Item
         playlist2.addItem(gameresult);
 
         setState(appController.getAppState());
-
         positionTimer.start();
     }
-
 
     property var currentState: -1;
     property var currentPlayer: player2;
@@ -201,15 +184,14 @@ Item
         {
             if(needLoop)
             {
-               // console.log(currentPlayer.position, currentPlayer.duration)
+                // console.log(currentPlayer.position, currentPlayer.duration)
                 if(currentPlayer.position >= currentPlayer.duration - 500)
                 {
-                  //  currentPlayer.seek(loopThreshold);
+                    //  currentPlayer.seek(loopThreshold);
                 }
             }
         }
     }
-
 
     function startIndex(index, seekTo)
     {
@@ -225,15 +207,12 @@ Item
     {
         if(currentPlayer == player2)
         {
-            console.log("------------------------ currentPlayer")
             currentPlayer = player1;
             currentPlaylist = playlist1;
             currentVideoAnim = videoAnim1;
         }
         else if(currentPlayer == player1)
         {
-            console.log("------------------------ currentPlayer2")
-
             currentPlayer = player2;
             currentPlaylist = playlist2;
             currentVideoAnim = videoAnim2;

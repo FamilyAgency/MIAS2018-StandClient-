@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 
 import com.app 1.0
 import "intro"
+import "../tools"
 
 Item
 {
@@ -16,6 +17,11 @@ Item
 
     signal animComplete();
     signal animStart();
+
+    Tools
+    {
+        id: tools;
+    }
 
     HelloBlock
     {
@@ -69,7 +75,8 @@ Item
             switch(reason)
             {
             case CantPlayReason.WasRecently:
-                cantPlayHandler("Вы можете начать игру заново,<br/>через " + userData.getSecondsToStart() + " секунд");
+                var seconds = 10;//userData.getSecondsToStart();
+                cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStartseconds);
                 break;
 
             case CantPlayReason.YouArePlaying:
