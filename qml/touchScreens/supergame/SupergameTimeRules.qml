@@ -117,7 +117,4 @@ Item
         opacityAnim.to = 0;
         opacityAnim.start();
     }
-
-
-
 }

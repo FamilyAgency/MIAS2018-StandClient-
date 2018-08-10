@@ -1,7 +1,8 @@
 import QtQuick 2.2
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.3
+import QtGraphicalEffects 1.0
 
 import "../../tools"
 
@@ -62,6 +63,9 @@ Item
             ctx.stroke();
             ctx.closePath();
 
+           // ctx.shadowBlur = 10;
+           // ctx.shadowColor = "black";
+
             ctx.lineWidth = 5;
             ctx.strokeStyle = colorBg;
             ctx.beginPath();
@@ -105,7 +109,7 @@ Item
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
-        text: "00:99";
+        text: "00:00";
 
         Text
         {
@@ -170,5 +174,4 @@ Item
         opacityAnim.to = 0;
         opacityAnim.start();
     }
-
 }

@@ -1,5 +1,7 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
+import QtQuick 2.2
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Styles 1.4
 import QtMultimedia 5.8
 
 import "../../tools"
@@ -53,6 +55,15 @@ Item
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignLeft;
         verticalAlignment: Text.AlignVCenter;
+
+        OpacityAnimator on opacity
+        {
+            id: promtTextAnim;
+            from: 0;
+            to: 1;
+            duration: 700
+            running:false;
+        }
     }
 
     BigRedButton
@@ -69,17 +80,6 @@ Item
         onClicked:
         {
             advatage.advantageReaded();
-            brb.hide();
-        }
-    }
-
-    FullAdvantageDescription
-    {
-        id: fullAdvantageDescr;
-
-        onAdvantageReaded:
-        {
-            advatage.advantageReaded();
         }
     }
 
@@ -91,7 +91,7 @@ Item
     function setTexts(title, description)
     {
         advatage.mainTitleDefault = title;
-        fullAdvantageDescr.setTexts(title, description);
+        //fullAdvantageDescr.setTexts(title, description);
     }
 
     function setVideo(videoPath)
@@ -104,14 +104,20 @@ Item
     function show()
     {
         visible = true;
-        fullAdvantageDescr.hide();
         brb.show();
+        promtText.opacity = 0;
+        promtTextAnim.from = 0;
+        promtTextAnim.to = 1;
+        promtTextAnim.start();
     }
 
     function hide()
     {
-        visible = false;
+        brb.hide();
         video.stop();
-        fullAdvantageDescr.hide();
+
+        promtTextAnim.from = 1;
+        promtTextAnim.to = 0;
+        promtTextAnim.start();
     }
 }

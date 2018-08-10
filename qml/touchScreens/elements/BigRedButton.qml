@@ -8,14 +8,13 @@ import "../../tools"
 Item
 {
     id: core;
+    anchors.fill: parent;
 
     signal clicked;
 
-    anchors.fill: parent;
-
-    property alias btnWidth:  bg.implicitWidth;
-    property alias btnHeight:  bg.implicitHeight;
-    property alias btnRadius:  bg.radius;
+    property alias btnWidth: bg.implicitWidth;
+    property alias btnHeight: bg.implicitHeight;
+    property alias btnRadius: bg.radius;
 
     FontManager
     {
@@ -35,10 +34,7 @@ Item
             background: Rectangle
             {
                 id: bg;
-               // implicitHeight: core.btnWidth
-              //  implicitWidth: core.btnWidth;
                 color: startBtn.down ? "#f00000" : "#fb0000";
-               // radius: core.btnWidthHalf;
             }
 
             contentItem: Text
@@ -92,12 +88,12 @@ Item
         }
     }
 
-//    function setWidth(width)
-//    {
-//        bg.implicitHeight = width * consts.designScale;
-//        bg.implicitWidth = width * consts.designScale;
-//        bg.radius = (width / 2) * consts.designScale;
-//    }
+    //    function setWidth(width)
+    //    {
+    //        bg.implicitHeight = width * consts.designScale;
+    //        bg.implicitWidth = width * consts.designScale;
+    //        bg.radius = (width / 2) * consts.designScale;
+    //    }
 
     function setTitle(title)
     {

@@ -52,7 +52,6 @@
         <file>qml/tools/FontManager.qml</file>
         <file>qml/tools/Tools.qml</file>
         <file>qml/touchScreens/game/AdvantageDescription.qml</file>
-        <file>qml/touchScreens/game/FullAdvantageDescription.qml</file>
         <file>qml/touchScreens/intro/HelloBlock.qml</file>
         <file>qml/touchScreens/supergame/SuperGameFailScreen.qml</file>
         <file>qml/touchScreens/supergame/SuperGameSuccessScreen.qml</file>

@@ -66,8 +66,19 @@ Item
 
         onAdvantageReaded:
         {
-            mainText.visible = true;
             advatage.hide();
+            hideAdvantageTimer.start();
+        }
+    }
+
+    Timer
+    {
+        id:hideAdvantageTimer;
+        interval: 1500;
+        running: false;
+        onTriggered:
+        {
+            hideAdvantageTimer.stop();
             appearAnimation();
             gameModule.continueGame();
         }
@@ -88,6 +99,7 @@ Item
         mainText.visible = false;
         advatage.setTexts(title, description);
         advatage.setVideo(videoPath);
+        advatage.visible = true;
         advatage.show();
     }
 
@@ -100,6 +112,7 @@ Item
 
     function appearAnimation()
     {
+        mainText.visible = true;
         mainText.opacity = 0.0;
         mainText.scale = 0.5;
         opacityAnim.start();
@@ -108,10 +121,11 @@ Item
 
     function stop()
     {
+        hideAdvantageTimer.stop();
         visible = false;
         mainText.visible = true;
         mainText.opacity = 0.0;
         mainText.scale = 0.5;
-        advatage.hide();
+        advatage.visible = false;
     }
 }
