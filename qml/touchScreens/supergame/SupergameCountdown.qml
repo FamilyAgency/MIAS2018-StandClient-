@@ -112,7 +112,7 @@ Item
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
                     canvasCirc.radius,
-                    2 * Math.PI * 0.1 * percent, 0);
+                    2 * Math.PI * percent, 0);
             ctx.stroke();
             ctx.closePath();
         }
