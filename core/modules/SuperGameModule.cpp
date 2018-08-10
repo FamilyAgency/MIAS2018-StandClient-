@@ -64,6 +64,9 @@ void SuperGameModule::onUpdate()
 {
     int time = QDateTime::currentMSecsSinceEpoch() - startTime;
     int leftTime = superGameTime - time;
+
+    percent = float(leftTime)/superGameTime;
+
     if(leftTime >= 0.0)
     {
         emit updateSuperGameTime(leftTime);
@@ -87,6 +90,11 @@ void SuperGameModule::onUserFinishedGame()
 {
     currentUser->superGameCompleted(superGameWinTime);
     emit superGameSuccess(superGameWinTime);
+}
+
+float SuperGameModule::getPercent()
+{
+    return percent;
 }
 
 QString SuperGameModule::getName() const

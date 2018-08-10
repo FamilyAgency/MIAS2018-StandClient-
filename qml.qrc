@@ -63,5 +63,7 @@
         <file>qml/touchScreens/supergame/SupergameTimeRules.qml</file>
         <file>qml/touchScreens/supergame/SupergameCountdown.qml</file>
         <file>qml/tests/touchScreens/SuperGameScreenTest.qml</file>
+        <file>resources/Time.png</file>
+        <file>resources/time_round.png</file>
     </qresource>
 </RCC>

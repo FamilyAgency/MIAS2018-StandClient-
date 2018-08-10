@@ -40,4 +40,22 @@ Item
         }
         return text;
     }
+
+    function formatSeconds(seconds)
+    {
+        var minutes = Math.floor(seconds / 60);
+        var secs = (seconds % 60).toFixed(0);
+
+        if(minutes < 10)
+        {
+            minutes = "0" + minutes
+        }
+
+        if(secs < 10)
+        {
+            secs = "0" + secs;
+        }
+
+        return minutes + ":" + secs;
+    }
 }

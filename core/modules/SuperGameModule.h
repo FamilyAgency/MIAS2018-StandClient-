@@ -24,15 +24,17 @@ public:
 
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void superGamePassedTest();
+    Q_INVOKABLE float getPercent();
 
     void setServerComponent(QSharedPointer<ServerComponent> value);
-
 
 private:
     const float superGameTimerMills = 100.0f/60.0f;
     int superGameTime = 1000 * 10;
     int startTime = 0;
     int superGameWinTime = 0;
+    float percent = 0.0f;
+
     QTimer* superGameTimer = nullptr;
     QSharedPointer<UserData> currentUser;
     QSharedPointer<ServerComponent> serverComponent;

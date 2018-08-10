@@ -14,6 +14,11 @@ Item
         id: font;
     }
 
+    Tools
+    {
+        id:tools;
+    }
+
     Consts
     {
         id: consts;
@@ -31,25 +36,23 @@ Item
         property int radius: 400;
 
         property real percentLimit: 0.0;
-        property real percentAttention: 0.5;
+        property real percent: 0.5;
 
         onPaint:
         {
-            var colorBg = Qt.rgba(0., 164./255., 227.0 / 255., 0.3);
-            var colorLimit =  Qt.rgba(255./255.,52./255., 12./255., 1.);
-            var colorAttention = Qt.rgba(159./255., 217./255., 239.0 / 255., 0.9);
-            var lineWidth = 4;
+            var colorAttention= Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
+            var colorBg = Qt.rgba(51./255., 106./255., 238.0 / 255., 1.0);
 
             var ctx = getContext("2d");
-            ctx.clearRect(0, 0, 250, 250);
+            ctx.clearRect(0, 0, 1080, 1920);
 
             ctx.strokeStyle = consts.redColor;
             ctx.lineCap = consts.lineCap;
             ctx.lineJoin = consts.lineJoin;
 
-            ctx.lineWidth = lineWidth;
+            ctx.lineWidth = 1;
 
-            ctx.strokeStyle = colorBg;
+            ctx.strokeStyle = colorAttention;
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
@@ -59,33 +62,13 @@ Item
             ctx.stroke();
             ctx.closePath();
 
-//            ctx.strokeStyle = colorLimit;
-//            ctx.beginPath();
-//            ctx.arc(canvasCirc.centerWidth,
-//                    canvasCirc.centerHeight,
-//                    canvasCirc.radius,
-//                    0,
-//                    2*Math.PI * canvasCirc.percentLimit);
-//            ctx.stroke();
-//            ctx.closePath();
-
-            var col = colorAttention;
-            if(canvasCirc.percentAttention > canvasCirc.percentLimit )
-            {
-                col = colorLimit;
-            }
-            else
-            {
-                col = colorAttention;
-            }
-
-            ctx.strokeStyle = col;
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = colorBg;
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
                     canvasCirc.radius,
-                    0,
-                    2 * Math.PI * canvasCirc.percentAttention);
+                    2 * Math.PI * percent, 0);
             ctx.stroke();
             ctx.closePath();
         }
@@ -100,23 +83,44 @@ Item
         }
     }
 
+    Image
+    {
+        id: time
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.verticalCenterOffset: -160;
+        smooth: true;
+        source: "qrc:/resources/time_round.png"
+        width: 81 * consts.designScale;
+        height: 81 * consts.designScale;
+    }
+
     Text
     {
         id: minutesText;
-       // anchors.top: parent.top;
-       // anchors.topMargin: 100 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 120 * consts.designScale;
+        font.pixelSize: 160 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
         text: "00:99";
+
+        Text
+        {
+            id: minutesText2;
+            anchors.horizontalCenter: minutesText.horizontalCenter;
+            anchors.top: minutesText.bottom;
+            anchors.topMargin: -10;
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize: 30 * consts.designScale;
+            text: "ОСТАЛОСЬ";
+            color: "#336aee";
+            textFormat: Text.StyledText;
+            horizontalAlignment: Text.AlignHCenter;
+        }
     }
-
-
-
 
     OpacityAnimator on opacity
     {
@@ -133,10 +137,10 @@ Item
         target: superGameModule;
         onUpdateSuperGameTime:
         {
-            var minutes = (mills/1000.).toFixed(1);
-            canvasCirc.percentAttention = minutes / 20.0;
+            var seconds = (mills / 1000.).toFixed(0);
+            canvasCirc.percent  = (1 - superGameModule.getPercent()).toFixed(2);
             canvasCirc.requestPaint();
-            minutesText.text =  minutes + "<br/>МИНУТЫ";
+            minutesText.text = tools.formatSeconds(seconds);
         }
 
         onSuperGameFailed:
@@ -152,6 +156,8 @@ Item
 
     function show()
     {
+        canvasCirc.percent  = 1;
+        canvasCirc.requestPaint();
         opacity = 0;
         opacityAnim.from = 0;
         opacityAnim.to = 1;
