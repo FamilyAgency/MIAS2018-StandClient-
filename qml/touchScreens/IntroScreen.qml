@@ -74,13 +74,10 @@ Item
 
             switch(reason)
             {
-            case CantPlayReason.WasRecently:
+            case CantPlayReason.WasRecently:   
+            case CantPlayReason.YouArePlaying:
                 var seconds = userData.getSecondsToStart();
                 cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStart(seconds));
-                break;
-
-            case CantPlayReason.YouArePlaying:
-                cantPlayHandler("Вы можете начать игру заново, через " + userData.getSecondsToStart());
                 break;
 
             case CantPlayReason.FinishedPrizesNotGot:
