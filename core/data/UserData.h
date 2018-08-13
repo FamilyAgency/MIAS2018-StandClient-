@@ -75,6 +75,9 @@ public:
 
     float superGameTime = 0.0;
 
+    QVariantList fullGamePath;
+    QVariantList targetPoints;
+
     GameUserData();
 
     void setupConfigGameData(const StandOneGameConfig& game);
@@ -88,6 +91,11 @@ public:
     void superGameCompleted(int time);
 
     bool hasStages() const;
+
+    QVariantList getFullGamePath() const;
+    QVariantList getTargetPoints() const;
+
+
 };
 Q_DECLARE_METATYPE(GameUserData)
 
@@ -123,6 +131,10 @@ public:
     Q_INVOKABLE int getCurrentStageId() const;
     Q_INVOKABLE void clearBaseUserData();
     Q_INVOKABLE int getSecondsToStart() const;
+
+    QVariantList getFullGamePath() const;
+    QVariantList getTargetPoints() const;
+
 
     void setBaseUserData(const BaseUserData& value);
     BaseUserData baseUserData() const;

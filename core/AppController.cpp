@@ -353,9 +353,19 @@ void AppController::setAppStateTest(AppState appState)
 {
     if(appState == AppState::Game)
     {
-        userData->setGameCategory(1);
+        userData->setGameCategory(0);
     }
 
     setAppState(appState);
 }
+
+void AppController::setTestUserId(int id)
+{
+    BaseUserData baseUserData;
+    baseUserData.id = id;
+   userData->setBaseUserData(baseUserData);
+}
+
+
+
 

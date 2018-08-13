@@ -61,6 +61,8 @@ public:
 
     Q_INVOKABLE void setAppStateTest(AppState appState);
 
+    Q_INVOKABLE void setTestUserId(int id);
+
 private:
     QSharedPointer<IntroModule> introModule;
     QSharedPointer<InstructionModule> instructionModule;

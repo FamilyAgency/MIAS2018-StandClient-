@@ -99,7 +99,7 @@ bool UserData::wasRecently() const
 
 bool UserData::playingOnAnotherStand() const
 {
-     return _gameUserData.status != 0;
+    return _gameUserData.status != 0;
 }
 
 CantPlayReason UserData::getReasonCantPlay() const
@@ -145,6 +145,16 @@ void UserData::setGameCategory(int id)
     _gameUserData.setupConfigGameData(choosenGame);
     _gameUserData.setCurrentStageId(1);
     emit gameUserDataChanged();
+}
+
+QVariantList UserData::getFullGamePath() const
+{
+    return _gameUserData.getFullGamePath();
+}
+
+QVariantList UserData::getTargetPoints() const
+{
+    return _gameUserData.getTargetPoints();
 }
 
 OneStageData UserData::getCurrentStage() const
@@ -244,13 +254,24 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
     description = game.description;
     qDebug()<<"description   "<<description;
 
+    fullGamePath.clear();
+    targetPoints.clear();
     for(int i = 0; i < game.stages.size(); i++)
     {
         OneStageData oneGameData;
         oneGameData.setId(i + 1);
         oneGameData.setComplete(false);
         oneGameData.setTime(0.0f);
-        oneGameData.setPath(game.stages[i].path);
+        auto path = game.stages[i].path;
+        oneGameData.setPath(path);
+
+        for(int j = 0; j < path.size(); j++)
+        {
+            fullGamePath.append(path[j]);
+        }
+
+        targetPoints.append(path[path.size() - 1]);
+
         oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
         oneGameData.setAdvantage(game.stages[i].advantage);
         stages.push_back(oneGameData);
@@ -259,6 +280,18 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
 
     _hasGames = true;
 }
+
+QVariantList GameUserData::getFullGamePath() const
+{
+    return fullGamePath;
+}
+
+QVariantList GameUserData::getTargetPoints() const
+{
+    return targetPoints;
+}
+
+
 
 void GameUserData::setCurrentStageId(int id)
 {

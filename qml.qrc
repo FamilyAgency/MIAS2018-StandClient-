@@ -68,5 +68,8 @@
         <file>qml/touchScreens/elements/BgParticles.qml</file>
         <file>resources/particleA.png</file>
         <file>resources/Round.png</file>
+        <file>resources/bluecircle.png</file>
+        <file>resources/fin.png</file>
+        <file>resources/stop.png</file>
     </qresource>
 </RCC>

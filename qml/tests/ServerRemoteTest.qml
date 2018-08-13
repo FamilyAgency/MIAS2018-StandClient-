@@ -401,6 +401,15 @@ Item
                 from :1;
                 to: 2;
             }
+
+            Button
+            {
+                text:"Go to game";
+                onClicked:
+                {
+                     appController.setAppStateTest(AppState.Game);
+                }
+            }
         }
     }
 
@@ -421,6 +430,13 @@ Item
         onServerLogged:
         {
             ouputConsole.text = log;
+        }        
+
+        onBaseUserDataRecived:
+        {
+            userGameId.value = baseUserData.id;
+            server.startGameRequest(userGameId.value);
+            appController.setTestUserId(userGameId.value);
         }
 
         onServerRequestSuccess:
@@ -429,7 +445,7 @@ Item
 
             switch(responseType)
             {
-            case ResponseType.CreateUserRequest:
+            case ResponseType.CreateUserRequest:                
                 console.log("ResponseType.CreateUserRequest");
                 break;
 

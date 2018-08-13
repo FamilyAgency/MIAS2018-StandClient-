@@ -9,6 +9,11 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+    Component.onCompleted:
+    {
+       // appController.setAppStateTest(AppState.Game);
+    }
+
     Button
     {
         y: 150;
@@ -31,11 +36,11 @@ Item
 
     ColumnLayout
     {
-        id:locs;
+        id: locs;
         spacing: 10;
         visible: false;
 
-        anchors.top:toggleVis.bottom;
+        anchors.top: toggleVis.bottom;
         anchors.topMargin: 20;
 
         Button

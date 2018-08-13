@@ -31,7 +31,8 @@ void GameTaskManager::start(QSharedPointer<UserData> user)
     qDebug()<<"Game Started";
     auto game = user->getCurrentStage();
     currentUser = user;
-    setupCurrentGame(game);
+    setupCurrentGame(game);    
+
     setTaskState(TaskState::PreGame);
 }
 
@@ -133,9 +134,14 @@ QVariantList GameTaskManager::getCompletedPath() const
     return gameTask->getCompletedPath();
 }
 
-QVariantList GameTaskManager::getFullPath() const
+QVariantList GameTaskManager::getFullGamePath() const
+{    
+    return currentUser->getFullGamePath();
+}
+
+QVariantList GameTaskManager::getTargetPoints() const
 {
-    return gameTask->getFullPath();
+    return currentUser->getTargetPoints();
 }
 
 float GameTaskManager::getMindwaveLimit() const

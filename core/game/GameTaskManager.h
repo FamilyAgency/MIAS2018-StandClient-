@@ -25,7 +25,8 @@ public:
     Q_INVOKABLE QPointF getCurPoint() const;
     Q_INVOKABLE QPointF getEndPoint() const;
     Q_INVOKABLE QVariantList getCompletedPath() const;
-    Q_INVOKABLE QVariantList getFullPath() const;
+    Q_INVOKABLE QVariantList getFullGamePath() const;
+    Q_INVOKABLE QVariantList getTargetPoints() const;
     Q_INVOKABLE float getForwardVectorRotation() const;
     Q_INVOKABLE float getMindwaveLimit() const;
 

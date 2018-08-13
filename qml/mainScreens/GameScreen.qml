@@ -4,13 +4,10 @@ import "elements"
 import "popups"
 import "../tools"
 
-Item {
+Item
+{
 
-    id:gameView
-
-    property int canvasWidth: 1600;
-    property int canvasHeight: 900;
-
+    id: gameView;
     anchors.fill: parent;
 
     Consts
@@ -20,7 +17,7 @@ Item {
 
     Image
     {
-        id:road      
+        id:road
         anchors.fill: parent;
         smooth:true;
     }
@@ -49,7 +46,8 @@ Item {
                 var list = gameTaskManager.getCompletedPath();
 
                 ctx.lineWidth = consts.lineWidth;
-                ctx.strokeStyle = consts.redColor;
+                ctx.strokeStyle =  "#ff0000";
+
                 ctx.lineCap = consts.lineCap;
                 ctx.lineJoin = consts.lineJoin;
 
@@ -79,12 +77,12 @@ Item {
         }
     }
 
-    FinishBullet
-    {
-        id: finishBullet;
-        visible: false;
-        y: consts.canvasY;
-    }
+    //    FinishBullet
+    //    {
+    //        id: finishBullet;
+    //        visible: false;
+    //        y: consts.canvasY;
+    //    }
 
     StartBullet
     {
@@ -154,11 +152,11 @@ Item {
     function drawGuidePaths(ctx)
     {
         var scaleFactor = consts.scaleFactor;
-        var list = gameTaskManager.getFullPath();
+        var list = gameTaskManager.getFullGamePath();
 
         ctx.beginPath();
         ctx.moveTo(list[0].x * scaleFactor, list[0].y * scaleFactor);
-        ctx.strokeStyle =  consts.guideColor;
+        ctx.strokeStyle =  "#ff0000";
         ctx.lineWidth = consts.lineWidth;
 
         for(var i = 1; i < list.length; i++)
@@ -167,6 +165,23 @@ Item {
         }
         ctx.stroke();
         ctx.closePath();
+
+        var circles = gameTaskManager.getTargetPoints();
+
+
+        for(var k = 0; k < circles.length; k++)
+        {
+           ctx.beginPath();
+            console.log(circles[k].x, circles[k].y)
+            ctx.fillStyle =  "#ffffff";
+            ctx.strokeStyle =  "#ff0000";
+            ctx.lineWidth = 18;
+            var ellipseSize = 20;
+            ctx.ellipse(circles[k].x - ellipseSize * 0.5, circles[k].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        }
     }
 
     function moveCar()
@@ -197,7 +212,7 @@ Item {
         console.log("=================== game stop ===================")
         car.visible = false;
         shadow.visible = false;
-        finishBullet.visible = false;
+        // finishBullet.visible = false;
         circProgress.visible = false;
         startBullet.visible = false;
         pretaskPopup.visible = false;
@@ -206,9 +221,10 @@ Item {
     function gameStart()
     {
         console.log("=================== game start ===================")
-        finishBullet.visible = true;
+        // finishBullet.visible = false;
+        // startBullet.visible = false;
+
         circProgress.visible = true;
-        startBullet.visible = true;
         pretaskPopup.visible = true;
     }
 }

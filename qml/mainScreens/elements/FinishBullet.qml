@@ -26,7 +26,7 @@ Item
         onPreTaskStartEvent:
         {
             var finishBulletSize = consts.finishBulletSize;
-            visible = true;
+           // visible = true;
             var endPoint = gameTaskManager.getEndPoint();
             x = endPoint.x * consts.scaleFactor - bullet.width * 0.5;
             y = consts.canvasY + endPoint.y * consts.scaleFactor - bullet.height - 20;
