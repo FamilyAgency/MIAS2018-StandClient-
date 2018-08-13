@@ -63,7 +63,7 @@ Item
             {
                 id: glow;
                 anchors.fill: bg;
-                radius: 50;
+                radius: 40;
                 samples: 150;
                 color: "#fb0000";
                 source: bg;

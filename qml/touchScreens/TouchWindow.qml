@@ -98,7 +98,7 @@ Item
         addLocation(AppState.TestDrive, "TestDriveScreen");
 
         setState(appController.getAppState());
-       // appController.setAppStateTest(AppState.GameResult);
+        // appController.setAppStateTest(AppState.GameResult);
         // advatage.stageCompleted("Система<br/>предупреждения<br/>столкновения сбоку", "при выезде с парковки<br/>задним ходом", "content/video/1.mp4");
     }
 

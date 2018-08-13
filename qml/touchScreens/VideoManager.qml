@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.2
 import QtMultimedia 5.8
 
+import "elements"
 import com.app 1.0
 
 Item
@@ -13,6 +14,7 @@ Item
     property string instructionPath: configController.getVideoFileInAppDir("instruction.mp4");
     property string bgLoop: configController.getVideoFileInAppDir("bgloop.mp4");
     property string gameresult: configController.getVideoFileInAppDir("gameresult.mp4");
+    property string superGameResult: configController.getVideoFileInAppDir("cola.mp4");
     anchors.fill: parent;
 
     Video
@@ -29,6 +31,7 @@ Item
         OpacityAnimator on opacity
         {
             id:videoAnim1;
+            target: player1;
             from: 0;
             to: 1;
             duration: 500;
@@ -38,6 +41,7 @@ Item
             {
                 player2.seek(0);
                 player2.pause();
+                player2.visible = false;
             }
         }
     }
@@ -61,11 +65,40 @@ Item
             to: 1;
             duration: 500;
             running:false;
+            target: player2;
 
             onStopped:
             {
                 player1.seek(0);
                 player1.pause();
+                player1.visible = false;
+            }
+        }
+    }
+
+    BgParticles
+    {
+        id: bgParticles;
+        z: 1;
+        visible: false;
+
+        OpacityAnimator on opacity
+        {
+            id:particlesAnim;
+            from: 0;
+            to: 1;
+            duration: 500;
+            running:false;
+            target: bgParticles;
+
+            onStopped:
+            {
+                if(bgParticles.opacity == 1)
+                {
+                    currentPlayer.seek(0);
+                    currentPlayer.pause();
+                    currentPlayer.visible = false;
+                }
             }
         }
     }
@@ -77,12 +110,16 @@ Item
         playlist1.addItem(instructionPath);
         playlist1.addItem(bgLoop);
         playlist1.addItem(gameresult);
+        playlist1.addItem(superGameResult);
+
 
         playlist2.addItem(intro1Path);
         playlist2.addItem(intro2Path);
         playlist2.addItem(instructionPath);
         playlist2.addItem(bgLoop);
         playlist2.addItem(gameresult);
+        playlist2.addItem(superGameResult);
+
 
         setState(appController.getAppState());
         positionTimer.start();
@@ -125,6 +162,23 @@ Item
         }
     }
 
+    property bool superGameSuccess: false;
+
+    Connections
+    {
+        target: superGameModule;
+
+        onSuperGameFailed:
+        {
+            superGameSuccess = false;
+        }
+
+        onSuperGameSuccess:
+        {
+            superGameSuccess = true;
+        }
+    }
+
     function setState(appState)
     {
         //        if(currentState == appState)
@@ -132,38 +186,58 @@ Item
         //            return;
         //        }
 
-        console.log("swaaaaaaaaap")
+        //console.log("swaaaaaaaaap")
 
         positionTimer.stop();
-        needLoop = false;
+
+        player1.loops = MediaPlayer.Infinite;
+        player2.loops = MediaPlayer.Infinite;
 
         switch(appState)
         {
         case AppState.Intro:
+            stopParticles();
             startIndex(0);
             break;
 
         case AppState.Instruction:
+            stopParticles();
             startIndex(2);
             break;
 
         case AppState.Roulette:
         case AppState.Game:
-            startIndex(3);
+            startParticles();
+            //startIndex(3);
             break;
+
         case AppState.GameResult:
-            needLoop = true;
-            loopThreshold = 8300;
+            stopParticles();
             startIndex(4);
+            currentPlayer.loops = 1;
             break;
 
         case AppState.SuperGame:
-            startIndex(3);
+            startParticles();
             break;
 
         case AppState.SuperGameResult:
+
+            if(superGameSuccess)
+            {
+                stopParticles();
+                startIndex(5);
+                currentPlayer.loops = 1;
+            }
+            else
+            {
+                startParticles();
+            }
+
+            break;
+
         case AppState.TestDrive:
-            startIndex(3);
+            startParticles();
             break;
 
         }
@@ -182,15 +256,14 @@ Item
         repeat: true;
         onTriggered:
         {
-            if(needLoop)
+            // console.log("PAUSEEEEEEEEEEEEEEE")
+            if (currentPlayer.loops == 1 && (currentPlayer.position > 1000 && currentPlayer.duration - currentPlayer.position < 1000))
             {
-                // console.log(currentPlayer.position, currentPlayer.duration)
-                if(currentPlayer.position >= currentPlayer.duration - 500)
-                {
-                    //  currentPlayer.seek(loopThreshold);
-                }
+
+                currentPlayer.pause();
             }
         }
+
     }
 
     function startIndex(index, seekTo)
@@ -221,14 +294,66 @@ Item
 
     function playAnim()
     {
+        videoAnim2.stop();
+        videoAnim1.stop();
+
+        currentPlayer.visible = true;
         currentPlayer.opacity = 0;
         currentPlayer.z = 1;
-        getOppositePlayer().z = 0;
+        currentVideoAnim.from = 0;
+        currentVideoAnim.to = 1;
         currentVideoAnim.start();
+
+
+        var opposePlayer = getOppositePlayer();
+        opposePlayer.z = 0;
+
+        //        var opposePlayerAnim = getOppositePlayerAnim();
+        //        opposePlayerAnim.from = 1;
+        //        opposePlayerAnim.to = 0;
+        //        opposePlayerAnim.start();
+
+    }
+
+    function stopParticles()
+    {
+        if(bgParticles.opacity === 1)
+        {
+            particlesAnim.from = 1;
+            particlesAnim.to = 0;
+            particlesAnim.start();
+        }
+    }
+
+    function startParticles()
+    {
+        videoAnim2.stop();
+        videoAnim1.stop();
+
+        bgParticles.visible = true;
+        bgParticles.opacity = 0;
+        bgParticles.z = 1;
+
+        particlesAnim.from = 0;
+        particlesAnim.to = 1;
+        particlesAnim.start();
+
+        currentPlayer.z = 0;
+        currentVideoAnim.from = 1;
+        currentVideoAnim.to = 0;
+        currentVideoAnim.start();
+
     }
 
     function getOppositePlayer()
     {
         return  currentPlayer == player1 ? player2 : player1;
     }
+
+    function getOppositePlayerAnim()
+    {
+        return  currentPlayer == player1 ? videoAnim2 : videoAnim1;
+    }
+
+
 }

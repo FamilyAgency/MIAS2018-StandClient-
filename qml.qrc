@@ -65,5 +65,8 @@
         <file>resources/Time.png</file>
         <file>resources/time_round.png</file>
         <file>qml/touchScreens/elements/SimpleButton.qml</file>
+        <file>qml/touchScreens/elements/BgParticles.qml</file>
+        <file>resources/particleA.png</file>
+        <file>resources/Round.png</file>
     </qresource>
 </RCC>
