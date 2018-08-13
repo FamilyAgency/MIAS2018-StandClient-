@@ -60,7 +60,7 @@ Item
         {
             id: promtText2;
             anchors.left: parent.left;
-           // anchors.leftMargin: 60 * consts.designScale;
+            // anchors.leftMargin: 60 * consts.designScale;
             anchors.topMargin: nameMarginTop;
             anchors.top: promtText.bottom;
             text: mainTitleDefault;
@@ -99,6 +99,18 @@ Item
         }
     }
 
+    Timer
+    {
+        id: brbdelay;
+        running: false;
+        interval: 2000;
+        onTriggered:
+        {
+            brbdelay.stop();
+            brb.show();
+        }
+    }
+
     Component.onCompleted:
     {
         brb.setTitle(buttonText);
@@ -114,14 +126,14 @@ Item
     function setVideo(videoPath)
     {
         video.source = configController.getVideoFileInAppDir(videoPath + ".mov");
-       // console.log("video path ", configController.getVideoFileInAppDir(videoPath));
+        // console.log("video path ", configController.getVideoFileInAppDir(videoPath));
         video.play();
     }
 
     function show()
     {
         visible = true;
-        brb.show();
+        brbdelay.start();
         promtText.opacity = 0;
         promtTextAnim.from = 0;
         promtTextAnim.to = 1;
@@ -130,6 +142,7 @@ Item
 
     function hide()
     {
+        brbdelay.stop();
         brb.hide();
         video.stop();
 
