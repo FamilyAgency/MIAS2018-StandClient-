@@ -1,10 +1,11 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.3
+import QtQuick 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 
 import "../elements"
 import "../../tools"
+
 Item
 {
     id: result;
@@ -19,6 +20,11 @@ Item
 
 
     signal gotoIntro();
+
+    FontManager
+    {
+        id:font;
+    }
 
     Consts
     {
@@ -47,21 +53,32 @@ Item
         }
     }
 
+    SimpleButton
+    {
+        id: backBtn;
+        anchors.top: brb.bottom;
+        anchors.fill: parent;
+        onClicked:
+        {
+            appController.backToIntro();
+        }
+    }
     Component.onCompleted:
     {
         title.setTexts(superGameTitle, descrTitleDefault);
         brb.setTitle(btntext);
     }
 
-
     function show()
     {
         title.show();
+        backBtn.show();
         brb.show();
     }
 
     function hide()
     {
+        backBtn.hide();
         title.hide();
         brb.hide();
     }

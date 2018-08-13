@@ -18,6 +18,11 @@ Item
         id: consts;
     }
 
+    Tools
+    {
+        id: tools;
+    }
+
     FontManager
     {
         id: font;
@@ -105,6 +110,7 @@ Item
 
     function show()
     {
+        timeText.text = tools.formatSeconds(superGameModule.getSuperGameTime() / 1000.0);
         opacity = 0;
         opacityAnim.from = 0;
         opacityAnim.to = 1;

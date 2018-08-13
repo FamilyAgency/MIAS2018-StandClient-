@@ -154,7 +154,7 @@ QString ConfigController::getVideoFileInAppDir(const QString& fileName)
 {
     QDir dir = QDir(QCoreApplication::applicationDirPath());
     dir.cdUp();
-    return "file:///" + dir.path() + "//video//" + fileName + "." + config->mainConfig->videoEXT;
+    return "file:///" + dir.path() + "//video//" + fileName;// + "." + config->mainConfig->videoEXT;
 }
 
 

@@ -13,10 +13,10 @@ Item
     anchors.fill: parent;
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
-    property int circleSize : 150;
-    property real nameMarginTop: 200 * consts.designScale;
+    property int circleSize: 150;
+    property real nameMarginTop: 60 * consts.designScale;
     property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ!";
-    property real btnMarginBottom: 305 * consts.designScale;
+    property real btnMarginBottom: 500 * consts.designScale;
 
     signal advantageReaded;
 
@@ -34,10 +34,10 @@ Item
     {
         id: video;
         width : 1080;
-        height : 600;
+        height : 1150;
         loops: MediaPlayer.Infinite;
         anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
+        anchors.bottom: parent.bottom;
         focus: true;
     }
 
@@ -45,16 +45,32 @@ Item
     {
         id: promtText;
         anchors.left: parent.left;
-        anchors.leftMargin: 100 * consts.designScale;
-        anchors.topMargin:  nameMarginTop;
+        anchors.leftMargin: 60 * consts.designScale;
+        anchors.topMargin: nameMarginTop;
         anchors.top: parent.top;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize:  70 * consts.designScale;
+        font.pixelSize:  60 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignLeft;
         verticalAlignment: Text.AlignVCenter;
+
+        Text
+        {
+            id: promtText2;
+            anchors.left: parent.left;
+           // anchors.leftMargin: 60 * consts.designScale;
+            anchors.topMargin: nameMarginTop;
+            anchors.top: promtText.bottom;
+            text: mainTitleDefault;
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize:  40 * consts.designScale;
+            color: "#ffffff";
+            textFormat: Text.StyledText;
+            horizontalAlignment: Text.AlignLeft;
+            verticalAlignment: Text.AlignVCenter;
+        }
 
         OpacityAnimator on opacity
         {
@@ -91,13 +107,14 @@ Item
     function setTexts(title, description)
     {
         advatage.mainTitleDefault = title;
+        promtText2.text = description;
         //fullAdvantageDescr.setTexts(title, description);
     }
 
     function setVideo(videoPath)
     {
-        video.source = configController.getVideoFileInAppDir(videoPath);
-        console.log("video path ", configController.getVideoFileInAppDir(videoPath));
+        video.source = configController.getVideoFileInAppDir(videoPath + ".mov");
+       // console.log("video path ", configController.getVideoFileInAppDir(videoPath));
         video.play();
     }
 

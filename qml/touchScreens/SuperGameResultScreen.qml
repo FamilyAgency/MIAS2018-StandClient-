@@ -13,15 +13,12 @@ Item
     signal animComplete();
     signal animStart();
 
-    property bool superGameSuccess: false;
-
     SuperGameSuccessScreen
     {
         id:superGameSuccessScreen;
 
         onGotoIntro:
         {
-            superGameSuccess = true;
             superGameSuccessScreen.hide();
             outTimer.start();
         }
@@ -34,7 +31,6 @@ Item
 
         onGotoIntro:
         {
-            superGameSuccess = false;
             superGameFailScreen.hide();
             outTimer.start();
         }
@@ -47,14 +43,7 @@ Item
         running: false;
         onTriggered:
         {
-            if(superGameSuccess)
-            {
-                superGameResultModule.superGameResultReadedButtonClicked();
-            }
-            else
-            {
-                appController.backToIntro();
-            }
+            superGameResultModule.superGameResultReadedButtonClicked();
         }
     }
 
@@ -64,18 +53,12 @@ Item
 
         onSuperGameFailed:
         {
-            superGameSuccessScreen.visible = false;
-            superGameFailScreen.visible = true;
-            superGameFailScreen.show();
-            console.log("SuperGameFailed");
+            superGameFailedHandler();
         }
 
         onSuperGameSuccess:
         {
-            superGameSuccessScreen.visible = true;
-            superGameFailScreen.visible = false;
-            superGameSuccessScreen.show();
-            console.log("onSuperGameSuccess");
+           superGameSuccessHandler();
         }
     }
 
@@ -84,13 +67,27 @@ Item
         visible = true;
         result.animComplete();
 
-       // superGameSuccessScreen.visible = false;
-       /// superGameFailScreen.visible = true;
-       /// superGameFailScreen.show();
+       // superGameSuccessHandler();
     }
 
     function stop()
     {
         visible = false;
+    }
+
+    function superGameSuccessHandler()
+    {
+        superGameSuccessScreen.visible = true;
+        superGameFailScreen.visible = false;
+        superGameSuccessScreen.show();
+        console.log("onSuperGameSuccess");
+    }
+
+    function superGameFailedHandler()
+    {
+        superGameSuccessScreen.visible = false;
+        superGameFailScreen.visible = true;
+        superGameFailScreen.show();
+        console.log("SuperGameFailed");
     }
 }

@@ -90,6 +90,48 @@ Item
         }
     }
 
+    Button
+    {
+        id: backBtn;
+        opacity: 0;
+
+        anchors.top: brb.bottom;
+        anchors.topMargin: 10;
+        anchors.horizontalCenter: parent.horizontalCenter;
+
+        contentItem: Text
+        {
+            text: "НЕТ, СПАСИБО";
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize: 20 * consts.designScale;
+            color: "#ffffff"
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+        }
+
+        background: Rectangle
+        {
+            opacity: 0;
+            implicitHeight: 100;
+            implicitWidth: 200;
+        }
+
+        onClicked:
+        {
+            appController.backToIntro();
+        }
+
+        OpacityAnimator on opacity
+        {
+            id: opacityAnim1;
+            from: 0;
+            to: 1;
+            duration: 700;
+            running: false;
+            easing.type: "InOutCubic";
+        }
+    }
+
     TitleBlock
     {
         id: title;
@@ -140,6 +182,9 @@ Item
             brb.visible = true;
             brb.show();
 
+            backBtn.visible = true;
+            opacityAnim1.start();
+
             title.visible = true;
             title.show();
 
@@ -155,6 +200,9 @@ Item
 
     function start()
     {
+        backBtn.opacity = 0;
+        backBtn.visible = false;
+
         opacityAnim.from = 0;
         opacityAnim.to = 1;
         opacityAnim.start();
@@ -164,7 +212,6 @@ Item
 
         mainText.opacity = 1;
         mainText.scale = 1;
-
 
         visible = true;
         gameResultScreen.animComplete();

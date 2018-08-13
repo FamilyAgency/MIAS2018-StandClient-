@@ -25,47 +25,6 @@ Item
         id: consts;
     }
 
-//    Canvas
-//    {
-//        id: canvasCircStatic;
-//        width: 1080;
-//        height: 1920;
-//        smooth: true;
-//        antialiasing:true;
-//        rotation: -90;
-//        property int centerWidth: 1080 * 0.5
-//        property int centerHeight: 1920 * 0.5
-//        property int radius: 400;
-
-//        property real percentLimit: 0.0;
-//        property real percent: 0.5;
-
-//        onPaint:
-//        {
-//            var colorAttention= Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
-//            var colorBg = Qt.rgba(51./255., 106./255., 238.0 / 255., 1.0);
-
-//            var ctx = getContext("2d");
-//            ctx.clearRect(0, 0, 1080, 1920);
-
-//            ctx.strokeStyle = consts.redColor;
-//            ctx.lineCap = consts.lineCap;
-//            ctx.lineJoin = consts.lineJoin;
-
-//            ctx.lineWidth = 1;
-
-//            ctx.strokeStyle = colorAttention;
-//            ctx.beginPath();
-//            ctx.arc(canvasCirc.centerWidth,
-//                    canvasCirc.centerHeight,
-//                    canvasCirc.radius,
-//                    0,
-//                    2 * Math.PI);
-//            ctx.stroke();
-//            ctx.closePath();
-//        }
-//    }
-
     Canvas
     {
         id: canvasCirc;
@@ -81,6 +40,8 @@ Item
 
         property real percentLimit: 0.0;
         property real percent: 0.5;
+
+         onPercentChanged: requestPaint();
 
         onPaint:
         {
@@ -111,29 +72,31 @@ Item
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
-                    canvasCirc.radius,
-                    2 * Math.PI * percent, 0);
+                    canvasCirc.radius, 0, 2 *  Math.PI* percent );//
+                  //  2 * Math.PI * percent, 0);
             ctx.stroke();
             ctx.closePath();
         }
 
         PropertyAnimation
         {
-            id: attentionAnim;
+            id: roundAnim;
             target: canvasCirc;
             property: "percent";
-            to: 100;
-            duration: 50
+            from: 1;
+            to: 0;
+            duration: 2000
+        }
+
+        FastBlur
+        {
+            anchors.fill: canvasCirc
+            source: canvasCirc
+            radius: 50
+            //transparentBorder:true;
         }
     }
 
-    FastBlur
-    {
-        anchors.fill: canvasCirc
-        source: canvasCirc
-        radius: 50
-        //transparentBorder:true;
-    }
 
     Image
     {
@@ -184,17 +147,22 @@ Item
         easing.type: "InOutCubic";
     }
 
+    ScaleAnimator on scale
+    {
+        id: scaleAnim;
+        from: 0.3;
+        to: 1;
+        duration: 1000;
+        running: false;
+        easing.type: "InOutCubic";
+    }
+
     Connections
     {
         target: superGameModule;
         onUpdateSuperGameTime:
         {
             var seconds = (mills / 1000.).toFixed(0);
-            attentionAnim.to = (1 - superGameModule.getPercent()).toFixed(2);
-            attentionAnim.duration = 100;
-            attentionAnim.start();
-            //canvasCirc.rotation = -90 - superGameModule.getPercent().toFixed(2);
-            canvasCirc.requestPaint();
             minutesText.text = tools.formatSeconds(seconds);
         }
 
@@ -211,12 +179,17 @@ Item
 
     function show()
     {
+        roundAnim.duration = superGameModule.getSuperGameTime();
+        roundAnim.start();
+
         canvasCirc.percent  = 1;
         canvasCirc.requestPaint();
         opacity = 0;
+        scale = 0.3;
         opacityAnim.from = 0;
         opacityAnim.to = 1;
         opacityAnim.start();
+        scaleAnim.start();
     }
 
     function hide()
@@ -224,5 +197,6 @@ Item
         opacityAnim.from = 1;
         opacityAnim.to = 0;
         opacityAnim.start();
+        scaleAnim.stop();
     }
 }

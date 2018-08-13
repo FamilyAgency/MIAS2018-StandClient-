@@ -103,6 +103,14 @@ Item
             duration: 700;
             running: false;
             easing.type: "InOutCubic";
+
+            onStopped:
+            {
+                if( okFiled.opacity == 0)
+                {
+                    appController.backToIntro();
+                }
+            }
         }
 
         ScaleAnimator on scale
@@ -131,7 +139,13 @@ Item
         {
             columns.visible = false;
             startBtn.hide();
+
+            opacityAnim.from = 0;
+            opacityAnim.to = 1;
             opacityAnim.start();
+
+            scaleAnim.from = 0.5;
+            scaleAnim.to = 1;
             scaleAnim.start();
 
             outTimer.start();
@@ -148,10 +162,17 @@ Item
     {
         id:outTimer;
         running: false;
-        interval : 2000;
+        interval: 2000;
         onTriggered:
-        {       
-           appController.backToIntro();
+        {
+
+            opacityAnim.from = 1;
+            opacityAnim.to = 0;
+            opacityAnim.start();
+
+            scaleAnim.from = 1;
+            scaleAnim.to = 0;
+            scaleAnim.start();
         }
     }
 

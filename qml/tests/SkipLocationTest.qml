@@ -11,6 +11,7 @@ Item
 
     Button
     {
+        y: 150;
         id:toggleVis;
         implicitWidth: 200;
         text:  locs.visible ? "Hide" : "Show";
@@ -31,7 +32,6 @@ Item
     ColumnLayout
     {
         id:locs;
-
         spacing: 10;
         visible: false;
 

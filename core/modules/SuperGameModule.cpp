@@ -92,7 +92,13 @@ void SuperGameModule::onUserFinishedGame()
     emit superGameSuccess(superGameWinTime);
 }
 
-float SuperGameModule::getPercent()
+
+float SuperGameModule::getSuperGameTime() const
+{
+    return superGameTime;
+}
+
+float SuperGameModule::getPercent() const
 {
     return percent;
 }

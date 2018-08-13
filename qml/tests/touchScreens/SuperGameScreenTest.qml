@@ -12,24 +12,21 @@ Item
         id: passBtn;
 
         anchors.top: parent.top;
-        anchors.topMargin: 100;
-        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.topMargin: 500;
+        anchors.left: parent.left;
 
         contentItem: Text
         {
             text: "ПРОЙТИ СУПЕРИГРУ";
             font.family: "Helvetica";
-            font.pixelSize: 25;
-            color: "#ffffff"
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
         }
 
         background: Rectangle
         {
-            implicitHeight: 100;
             implicitWidth: 200;
-            color: passBtn.down ? "#3c2755" : "#4e1a8a";
+            color: "#ffffff";
         }
 
         onClicked:

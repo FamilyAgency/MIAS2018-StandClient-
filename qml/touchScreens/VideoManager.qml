@@ -8,11 +8,11 @@ import com.app 1.0
 
 Item
 {
-    property string intro1Path: configController.getVideoFileInAppDir("intro1");
-    property string intro2Path: configController.getVideoFileInAppDir("intro2");
-    property string instructionPath: configController.getVideoFileInAppDir("instruction");
-    property string bgLoop: configController.getVideoFileInAppDir("bgloop");
-    property string gameresult: configController.getVideoFileInAppDir("gameresult");
+    property string intro1Path: configController.getVideoFileInAppDir("intro1.mp4");
+    property string intro2Path: configController.getVideoFileInAppDir("intro2.mp4");
+    property string instructionPath: configController.getVideoFileInAppDir("instruction.mp4");
+    property string bgLoop: configController.getVideoFileInAppDir("bgloop.mp4");
+    property string gameresult: configController.getVideoFileInAppDir("gameresult.mp4");
     anchors.fill: parent;
 
     Video

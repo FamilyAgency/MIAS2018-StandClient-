@@ -20,7 +20,7 @@ Item
 
     SkipLocationTest
     {
-       id:skipsLocs;
+       id:skipsLocs;       
     }
 
     Component.onCompleted:

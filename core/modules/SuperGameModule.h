@@ -24,7 +24,8 @@ public:
 
     Q_INVOKABLE void startGame();
     Q_INVOKABLE void superGamePassedTest();
-    Q_INVOKABLE float getPercent();
+    Q_INVOKABLE float getPercent() const;
+    Q_INVOKABLE float getSuperGameTime() const;
 
     void setServerComponent(QSharedPointer<ServerComponent> value);
 

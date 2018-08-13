@@ -1,6 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Layouts 1.3
+import QtQuick 2.2
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 
 import "../elements"
@@ -14,7 +14,7 @@ Item
 
     property string superGameTitle: "";
     property string descrTitleDefault: "ПОПРОБУЙТЕ<br/>ПОВТОРИТЬ ПОПЫТКУ<br/>ЧЕРЕЗ 20 МИНУТ";
-    property string btntext: "В НАЧАЛО";
+    property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
     property real btnMarginBottom: 100 * consts.designScale;
 
     signal gotoIntro();
@@ -47,6 +47,17 @@ Item
         }
     }
 
+    SimpleButton
+    {
+        id: backBtn;
+        anchors.top: brb.bottom;
+        anchors.fill: parent;
+        onClicked:
+        {
+            appController.backToIntro();
+        }
+    }
+
     Component.onCompleted:
     {
         title.setTexts(superGameTitle, descrTitleDefault);
@@ -56,6 +67,7 @@ Item
     function show()
     {
         title.show();
+        backBtn.show();
         brb.show();
     }
 
@@ -63,5 +75,6 @@ Item
     {
         title.hide();
         brb.hide();
+        backBtn.hide();
     }
 }
