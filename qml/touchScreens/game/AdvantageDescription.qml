@@ -107,6 +107,7 @@ Item
         onTriggered:
         {
             brbdelay.stop();
+            brb.visible = true;
             brb.show();
         }
     }
@@ -133,6 +134,7 @@ Item
     function show()
     {
         visible = true;
+        brb.visible = false;
         brbdelay.start();
         promtText.opacity = 0;
         promtTextAnim.from = 0;

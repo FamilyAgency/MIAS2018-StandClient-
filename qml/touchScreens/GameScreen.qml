@@ -97,6 +97,7 @@ Item
     function stageCompleted(title, description, videoPath)
     {
         mainText.visible = false;
+        advatage.visible = true;
         advatage.setTexts(title, description);
         advatage.setVideo(videoPath);
         advatage.visible = true;
@@ -121,6 +122,7 @@ Item
 
     function stop()
     {
+        advatage.visible = false;
         hideAdvantageTimer.stop();
         visible = false;
         mainText.visible = true;

@@ -110,6 +110,8 @@ Item
     {
         visible = true;
 
+        startBtn.scale = 0;
+
         scaleAnimator.from = 0;
         scaleAnimator.to = 1;
         scaleAnimator.start();

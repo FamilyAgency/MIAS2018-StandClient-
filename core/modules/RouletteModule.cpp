@@ -205,6 +205,7 @@ void RouletteModule::initParams()
     setScale(0.0);
     setCircleOpacity(1.0);
     setCircleY(circleYDefault);
+    setTaskOpacity(0.0);
 
     mainTitleOpacityAnimation->setStartValue(0);
     mainTitleOpacityAnimation->setEndValue(1);

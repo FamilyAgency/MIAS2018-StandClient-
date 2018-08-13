@@ -162,6 +162,9 @@ Item
         mainTitleDefault.opacity = 0;
         journeyText.opacity = 0;
 
+        journeyOpacityAnim.stop();
+        textOpacityAnim.stop();
+
         mind.onPoorSignalLevelChanged.disconnect(poorSignalLevelChanged)
     }
 
@@ -173,8 +176,8 @@ Item
         {
             goodSignal = true;
             goodSignalHandler();
-
         }
+
         if (goodSignal && level < 100)
         {
             goodSignal = false;
