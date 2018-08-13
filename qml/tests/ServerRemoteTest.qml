@@ -434,9 +434,9 @@ Item
 
         onBaseUserDataRecived:
         {
-            userGameId.value = baseUserData.id;
-            server.startGameRequest(userGameId.value);
-            appController.setTestUserId(userGameId.value);
+           // userGameId.value = baseUserData.id;
+           // server.startGameRequest(userGameId.value);
+           // appController.setTestUserId(userGameId.value);
         }
 
         onServerRequestSuccess:
