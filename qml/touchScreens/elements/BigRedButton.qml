@@ -34,7 +34,13 @@ Item
             background: Rectangle
             {
                 id: bg;
-                color: startBtn.down ? "#f00000" : "#fb0000";
+              //  color: startBtn.down ? "#f00000" : "#fb0000";
+                border.width: 0;
+
+                gradient: Gradient {
+                        GradientStop { position: 0.0; color: "#fb0000" }
+                        GradientStop { position: 1.0; color: "#5b0000" }
+                    }
             }
 
             contentItem: Text
@@ -57,18 +63,18 @@ Item
             {
                 id: glow;
                 anchors.fill: bg;
-                radius: 20;
-                samples: 50;
+                radius: 50;
+                samples: 150;
                 color: "#fb0000";
                 source: bg;
-                spread: 0.3;
+                spread: 0.1;
                 opacity: 0;
 
                 OpacityAnimator on opacity
                 {
                     id:glowOpacty;
                     from: 0;
-                    to: 1;
+                    to: 0.3;
                     running:false;
                     duration: 500;
                     easing.type: "InOutQuad";
@@ -110,7 +116,7 @@ Item
 
         glow.opacity = 0;
         glowOpacty.from = 0;
-        glowOpacty.to = 1;
+        glowOpacty.to = 0.6;
         glowOpacty.start();
     }
 
