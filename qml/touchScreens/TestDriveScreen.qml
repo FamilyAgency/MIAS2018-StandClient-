@@ -137,19 +137,6 @@ Item
 
         onClicked:
         {
-            columns.visible = false;
-            startBtn.hide();
-
-            opacityAnim.from = 0;
-            opacityAnim.to = 1;
-            opacityAnim.start();
-
-            scaleAnim.from = 0.5;
-            scaleAnim.to = 1;
-            scaleAnim.start();
-
-            outTimer.start();
-
             var cityIndex = citiesComboBox.currentIndex;
             var dealerIndex = dealersComboBox.currentIndex;
             var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
@@ -198,6 +185,22 @@ Item
             }
 
             calculateDealersByCityId(0);
+        }
+
+        onTestDriveRequestSuccess:
+        {
+            columns.visible = false;
+            startBtn.hide();
+
+            opacityAnim.from = 0;
+            opacityAnim.to = 1;
+            opacityAnim.start();
+
+            scaleAnim.from = 0.5;
+            scaleAnim.to = 1;
+            scaleAnim.start();
+
+            outTimer.start();
         }
     }
 

@@ -36,9 +36,11 @@ private:
 
 signals:
     void dealersDataUpdated(const QVariantList& allDealers);
+    void testDriveRequestSuccess();
 
 private slots:
     void onDealersDataUpdated(const QVariantList& data);
+    void onTestDriveRequestSuccess();
 
 };
 

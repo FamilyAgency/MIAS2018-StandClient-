@@ -76,6 +76,7 @@ private:
 signals:
      void baseUserDataRecived(const BaseUserData& baseUserData);
      void dealersDataUpdated(const QVariantList& allDealers);
+     void testDriveRequestSuccess();
 };
 
 #endif // SERVERREMOTECOMPONENT_H

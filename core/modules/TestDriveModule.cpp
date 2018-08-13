@@ -40,6 +40,8 @@ void TestDriveModule::start()
 {
     qDebug()<<"======================= TestDriveModule START =======================";
     connect(serverComponent.data(), SIGNAL(dealersDataUpdated(const QVariantList&)), this, SLOT(onDealersDataUpdated(const QVariantList&)));
+    connect(serverComponent.data(), SIGNAL(testDriveRequestSuccess()), this, SLOT(onTestDriveRequestSuccess()));
+
     serverComponent->getDealersRequest();
 }
 
@@ -47,12 +49,18 @@ void TestDriveModule::stop()
 {
     qDebug()<<"======================= TestDriveModule STOP =======================";
     disconnect(serverComponent.data(), SIGNAL(dealersDataUpdated(const QVariantList&)), this, SLOT(onDealersDataUpdated(const QVariantList&)));
+    disconnect(serverComponent.data(), SIGNAL(testDriveRequestSuccess()), this, SLOT(onTestDriveRequestSuccess()));
 }
 
 void TestDriveModule::onDealersDataUpdated(const QVariantList& data)
 {
     qDebug()<<"dilers data income";
     emit dealersDataUpdated(data);
+}
+
+void TestDriveModule::onTestDriveRequestSuccess()
+{
+    emit testDriveRequestSuccess();
 }
 
 void TestDriveModule::makeTestDrive(int dealerId)

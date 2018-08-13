@@ -64,5 +64,6 @@
         <file>qml/tests/touchScreens/SuperGameScreenTest.qml</file>
         <file>resources/Time.png</file>
         <file>resources/time_round.png</file>
+        <file>qml/touchScreens/elements/SimpleButton.qml</file>
     </qresource>
 </RCC>

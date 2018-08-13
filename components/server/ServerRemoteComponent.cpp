@@ -332,6 +332,10 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
         QJsonArray dataJson = responeJson["data"].toArray();
         createDealersData(dataJson);
     }
+    else if(response.type == ResponseType::TestDriveRequest)
+    {
+         emit testDriveRequestSuccess();
+    }
 }
 
 void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
