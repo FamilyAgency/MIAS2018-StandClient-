@@ -41,7 +41,7 @@ Item
         property real percentLimit: 0.0;
         property real percent: 0.5;
 
-         onPercentChanged: requestPaint();
+        onPercentChanged: requestPaint();
 
         onPaint:
         {
@@ -73,7 +73,7 @@ Item
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
                     canvasCirc.radius, 0, 2 *  Math.PI* percent );//
-                  //  2 * Math.PI * percent, 0);
+            //  2 * Math.PI * percent, 0);
             ctx.stroke();
             ctx.closePath();
         }
@@ -83,8 +83,8 @@ Item
             id: roundAnim;
             target: canvasCirc;
             property: "percent";
-            from: 1;
-            to: 0;
+            from:1;
+           // to: 0;
             duration: 2000
         }
 
@@ -164,6 +164,12 @@ Item
         {
             var seconds = (mills / 1000.).toFixed(0);
             minutesText.text = tools.formatSeconds(seconds);
+
+           // roundAnim.duration = 100;
+           // roundAnim.to =
+            console.log(1000 *seconds/superGameModule.getSuperGameTime())
+            //roundAnim.start();
+            canvasCirc.percent = 1000 * seconds/superGameModule.getSuperGameTime();
         }
 
         onSuperGameFailed:
@@ -179,8 +185,8 @@ Item
 
     function show()
     {
-        roundAnim.duration = superGameModule.getSuperGameTime();
-        roundAnim.start();
+        // roundAnim.duration = superGameModule.getSuperGameTime();
+        // roundAnim.start();
 
         canvasCirc.percent  = 1;
         canvasCirc.requestPaint();

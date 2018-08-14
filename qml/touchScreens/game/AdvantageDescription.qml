@@ -126,7 +126,7 @@ Item
 
     function setVideo(videoPath)
     {
-        video.source = configController.getVideoFileInAppDir(videoPath + ".mov");
+        video.source = configController.getVideoFileInAppDir(videoPath + ".mp4");
         // console.log("video path ", configController.getVideoFileInAppDir(videoPath));
         video.play();
     }

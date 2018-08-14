@@ -76,32 +76,32 @@ Item
         }
     }
 
-    BgParticles
-    {
-        id: bgParticles;
-        z: 1;
-        visible: false;
+//    BgParticles
+//    {
+//        id: bgParticles;
+//        z: 1;
+//        visible: false;
 
-        OpacityAnimator on opacity
-        {
-            id:particlesAnim;
-            from: 0;
-            to: 1;
-            duration: 500;
-            running:false;
-            target: bgParticles;
+//        OpacityAnimator on opacity
+//        {
+//            id:particlesAnim;
+//            from: 0;
+//            to: 1;
+//            duration: 500;
+//            running:false;
+//            target: bgParticles;
 
-            onStopped:
-            {
-                if(bgParticles.opacity == 1)
-                {
-                    currentPlayer.seek(0);
-                    currentPlayer.pause();
-                    currentPlayer.visible = false;
-                }
-            }
-        }
-    }
+//            onStopped:
+//            {
+//                if(bgParticles.opacity == 1)
+//                {
+//                    currentPlayer.seek(0);
+//                    currentPlayer.pause();
+//                    currentPlayer.visible = false;
+//                }
+//            }
+//        }
+//    }
 
     Component.onCompleted:
     {
@@ -196,48 +196,51 @@ Item
         switch(appState)
         {
         case AppState.Intro:
-            stopParticles();
+           // stopParticles();
             startIndex(0);
             break;
 
         case AppState.Instruction:
-            stopParticles();
+           // stopParticles();
             startIndex(2);
             break;
 
         case AppState.Roulette:
         case AppState.Game:
-            startParticles();
-            //startIndex(3);
+           // startParticles();
+            startIndex(3);
             break;
 
         case AppState.GameResult:
-            stopParticles();
+           // stopParticles();
             startIndex(4);
             currentPlayer.loops = 1;
             break;
 
         case AppState.SuperGame:
-            startParticles();
+           // startParticles();
+            startIndex(3);
             break;
 
         case AppState.SuperGameResult:
 
             if(superGameSuccess)
             {
-                stopParticles();
+                //stopParticles();
                 startIndex(5);
                 currentPlayer.loops = 1;
             }
             else
             {
-                startParticles();
+               // startParticles();
+                startIndex(3);
             }
 
             break;
 
         case AppState.TestDrive:
-            startParticles();
+           // startParticles();
+            startIndex(3);
             break;
 
         }
@@ -259,7 +262,6 @@ Item
             // console.log("PAUSEEEEEEEEEEEEEEE")
             if (currentPlayer.loops == 1 && (currentPlayer.position > 1000 && currentPlayer.duration - currentPlayer.position < 1000))
             {
-
                 currentPlayer.pause();
             }
         }
@@ -317,31 +319,31 @@ Item
 
     function stopParticles()
     {
-        if(bgParticles.opacity === 1)
-        {
-            particlesAnim.from = 1;
-            particlesAnim.to = 0;
-            particlesAnim.start();
-        }
+//        if(bgParticles.opacity === 1)
+//        {
+//            particlesAnim.from = 1;
+//            particlesAnim.to = 0;
+//            particlesAnim.start();
+//        }
     }
 
     function startParticles()
     {
-        videoAnim2.stop();
-        videoAnim1.stop();
+//        videoAnim2.stop();
+//        videoAnim1.stop();
 
-        bgParticles.visible = true;
-        bgParticles.opacity = 0;
-        bgParticles.z = 1;
+//        bgParticles.visible = true;
+//        bgParticles.opacity = 0;
+//        bgParticles.z = 1;
 
-        particlesAnim.from = 0;
-        particlesAnim.to = 1;
-        particlesAnim.start();
+//        particlesAnim.from = 0;
+//        particlesAnim.to = 1;
+//        particlesAnim.start();
 
-        currentPlayer.z = 0;
-        currentVideoAnim.from = 1;
-        currentVideoAnim.to = 0;
-        currentVideoAnim.start();
+//        currentPlayer.z = 0;
+//        currentVideoAnim.from = 1;
+//        currentVideoAnim.to = 0;
+//        currentVideoAnim.start();
 
     }
 

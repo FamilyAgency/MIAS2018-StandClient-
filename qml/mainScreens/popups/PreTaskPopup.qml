@@ -23,10 +23,10 @@ Item
     {
         id: preTask;
         smooth:true;
-        antialiasing: true
+        antialiasing: true;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
-        source: "qrc:/resources/bluecircle.png"
+        source: configController.getFileInAppDir("content/misc/bluecircle.png");
 
         Text
         {
@@ -50,7 +50,7 @@ Item
         antialiasing: true
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
-        source: "qrc:/resources/stop.png"
+        source: configController.getFileInAppDir("content/misc/stop.png");
     }
 
     Image
@@ -61,7 +61,7 @@ Item
         antialiasing: true
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
-        source: "qrc:/resources/fin.png"
+        source: configController.getFileInAppDir("content/misc/fin.png");
     }
 
 
@@ -128,7 +128,7 @@ Item
 
             if( countdownText.text == "0")
             {
-                countdownText.font.pixelSize = 200 * consts.designScale;
+                countdownText.font.pixelSize = 120 * consts.designScale;
                 countdownText.text = "ПОЕХАЛИ";
             }
         }
