@@ -253,6 +253,9 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
 
     description = game.description;
     qDebug()<<"description   "<<description;
+    descriptionWin = game.descriptionWin;
+    iconName = game.iconName;
+    imageWinName = game.imageWinName;
 
     fullGamePath.clear();
     targetPoints.clear();

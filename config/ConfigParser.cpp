@@ -153,13 +153,16 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
         {
             // cola game parsing
 
-            auto data = oneGameJsonObj["colaGame"].toArray();
+            auto data = oneGameJsonObj["mainGame"].toArray();
             for(auto game : data)
             {
                 auto gameObj = game.toObject();
                 StandOneGameConfig oneGameconfig;
                 oneGameconfig.category = gameObj["category"].toString();
                 oneGameconfig.description = gameObj["description"].toString();
+                oneGameconfig.descriptionWin = gameObj["descriptionwin"].toString();
+                oneGameconfig.imageWinName = gameObj["imagewinpath"].toString();
+                oneGameconfig.iconName = gameObj["iconpath"].toString();
 
                 auto stagesJson = gameObj["stages"].toArray();
 
@@ -169,6 +172,7 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                     auto advantageObject = oneStageJson.toObject()["advantage"].toObject();
                     oneStage.advantage.title = advantageObject["title"].toString();
                     oneStage.advantage.description = advantageObject["description"].toString();
+                    oneStage.advantage.descriptionMap = advantageObject["descriptionmap"].toString();
                     oneStage.advantage.videoPath = advantageObject["videoPath"].toString();
                     for(auto path: oneStageJson.toObject()["path"].toArray())
                     {

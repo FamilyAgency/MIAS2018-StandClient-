@@ -15,7 +15,15 @@
 int main(int argc, char *argv[])
 { 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
+
+
    // QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+
+   // QQuickWindow::setSceneGraphBackend(QSGRendererInterface::OpenGL);
+   // QQuickWindow::setSceneGraphBackend(QSGRendererInterface::OpenVG);
+    //   QGuiApplication app(argc, argv);
+   //    QQuickView view;
 
     QApplication app(argc, argv);
     QQmlApplicationEngine engine;

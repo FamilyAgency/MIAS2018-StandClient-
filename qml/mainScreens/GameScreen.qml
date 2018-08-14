@@ -6,7 +6,6 @@ import "../tools"
 
 Item
 {
-
     id: gameView;
     anchors.fill: parent;
 
@@ -117,21 +116,19 @@ Item
 
     CircularProgress
     {
-        id: circProgress
+        id: circProgress;
         visible: false;
         y: consts.canvasY;
     }
 
     PreTaskPopup
     {
-        id: pretaskPopup
-        x: canvas.width - 300 - 10;
-        y: 100 + 10;
+        id: pretaskPopup;
     }
 
     Component.onCompleted:
     {
-        road.source = configController.getFileInAppDir("content/maps/map" + standData.mainConfig.appId + ".png");
+        road.source = standData.getStandMap();
     }
 
     Connections
@@ -212,18 +209,15 @@ Item
         console.log("=================== game stop ===================")
         car.visible = false;
         shadow.visible = false;
-        // finishBullet.visible = false;
         circProgress.visible = false;
         startBullet.visible = false;
         pretaskPopup.visible = false;
+        pretaskPopup.visible = true;
     }
 
     function gameStart()
     {
-        console.log("=================== game start ===================")
-        // finishBullet.visible = false;
-        // startBullet.visible = false;
-
+        console.log("=================== game start ===================")      
         circProgress.visible = true;
         pretaskPopup.visible = true;
     }

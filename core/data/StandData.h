@@ -12,6 +12,8 @@ class StandData : public QObject
 
 public:
     Q_INVOKABLE QVariantList getScreensInfo() const;
+    Q_INVOKABLE QString getStandImage(const QString& path) const;
+    Q_INVOKABLE QString getStandMap() const;
 
     explicit StandData(QObject *parent = nullptr);
     void setQmlContext(QQmlContext* value);

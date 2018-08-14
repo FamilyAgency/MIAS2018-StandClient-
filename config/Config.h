@@ -194,6 +194,7 @@ struct OneAdvantageConfig
 {
     QString title = "title";
     QString description = "description";
+    QString descriptionMap = "descriptionMap";
     QString videoPath = "";
 };
 
@@ -209,10 +210,17 @@ private:
     Q_GADGET
     Q_PROPERTY(QString category MEMBER category)
     Q_PROPERTY(QString description MEMBER description)
+    Q_PROPERTY(QString descriptionWin MEMBER descriptionWin)
+    Q_PROPERTY(QString imageWinName MEMBER imageWinName)
+    Q_PROPERTY(QString iconName MEMBER iconName)
 
 public:
     QString category = "category";
     QString description = "description";
+    QString descriptionWin = "descriptionWin";
+    QString imageWinName = "imageWinName";
+    QString iconName = "iconName";
+
     QVector<OneStageConfig> stages;
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)

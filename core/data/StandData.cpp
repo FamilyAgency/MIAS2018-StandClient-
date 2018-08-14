@@ -29,6 +29,18 @@ MainConfig StandData::mainConfig() const
     return _mainConfig;
 }
 
+QString StandData::getStandImage(const QString& path) const
+{
+    QString id = QString::number(_mainConfig.appId);
+    return "file:///" + qApp->applicationDirPath() + "//content//data//stand" + id + "//" + path;
+}
+
+QString StandData::getStandMap() const
+{
+    QString id = QString::number(_mainConfig.appId);
+    return "file:///" + qApp->applicationDirPath() + "//content//data//stand" + id + "//" + "map.png";
+}
+
 QVariantList StandData::getScreensInfo() const
 {
     QVariantList infoList;

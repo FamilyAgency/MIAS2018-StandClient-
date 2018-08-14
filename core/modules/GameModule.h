@@ -58,7 +58,9 @@ private slots:
 
 signals:
     void allStagesComleteEvent();
+    void allStagesComleteEventMap(const QString& description, const QString& imageWinName);
     void stageComleteEvent(const QString& title, const QString& description, const QString& videoPath);
+    void stageComleteEventMap(const QString& description);
     void canContinueChanged();
 };
 

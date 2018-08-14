@@ -63,7 +63,12 @@ public:
     int cleanGameTime;
     OneStageData currentStage;
     bool _hasGames = false;
+
     QString description;
+    QString descriptionWin;
+    QString iconName;
+    QString imageWinName;
+
     QVariantList stageTimes;
 
     QString startGame;

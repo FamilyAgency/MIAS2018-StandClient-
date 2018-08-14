@@ -167,7 +167,7 @@ Item
 
            // roundAnim.duration = 100;
            // roundAnim.to =
-            console.log(1000 *seconds/superGameModule.getSuperGameTime())
+           // console.log(1000 *seconds/superGameModule.getSuperGameTime())
             //roundAnim.start();
             canvasCirc.percent = 1000 * seconds/superGameModule.getSuperGameTime();
         }

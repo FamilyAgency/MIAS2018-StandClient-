@@ -80,7 +80,9 @@ void GameModule::dispatchAdvantageData()
     QString advantageDescription = userGameData.getAdvantage().description;
     QString advantageTitle = userGameData.getAdvantage().title;
     QString videoPath = userGameData.getAdvantage().videoPath;
+    QString advantageDescriptionMap = userGameData.getAdvantage().descriptionMap;
     emit stageComleteEvent(advantageTitle, advantageDescription, videoPath);
+    emit stageComleteEventMap(advantageDescriptionMap);
 }
 
 void GameModule::onUserUpdatedGame()
@@ -98,6 +100,9 @@ void GameModule::continueGame()
         }
         else
         {
+            auto descr = currentUser->gameUserData().descriptionWin;
+            auto imageWinName = currentUser->gameUserData().imageWinName;
+            emit allStagesComleteEventMap(descr, imageWinName);
             emit allStagesComleteEvent();
         }
     }
