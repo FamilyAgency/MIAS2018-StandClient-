@@ -45,6 +45,7 @@ Item
         running: false;
         onTriggered:
         {
+            outTimer.stop();
             superGameResultModule.superGameResultReadedButtonClicked();
         }
     }
@@ -75,9 +76,10 @@ Item
 
     function stop()
     {
-        //visible = false;
+        visible = false;
         //superGameFailScreen.visible = false;
         //superGameSuccessScreen.visible = false;
+        outTimer.stop();
     }
 
     function superGameSuccessHandler()

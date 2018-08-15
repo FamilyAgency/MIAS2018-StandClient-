@@ -7,7 +7,7 @@ import "../../tools"
 
 Item
 {
-    id: core;
+    id: bigRedButton;
     anchors.fill: parent;
 
     signal clicked;
@@ -76,7 +76,8 @@ Item
 
             onClicked:
             {
-                core.clicked();
+                console.log("clicccked", content.text)
+                bigRedButton.clicked();
             }
 
             Glow
@@ -144,7 +145,7 @@ Item
 
     function hide()
     {
-        //visible = false;
+       // visible = false;
         scaleAnimator.from = 1;
         scaleAnimator.to = 0.0;
         scaleAnimator.start();
