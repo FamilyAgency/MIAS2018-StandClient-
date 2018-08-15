@@ -70,7 +70,7 @@ Window
             mainGameScreen.gameStart()
             break;
 
-        case AppState.GameResult:
+       // case AppState.GameResult:
         case AppState.SuperGame:
         case AppState.TestDrive:
         case AppState.SuperGameResult:

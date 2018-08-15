@@ -13,8 +13,8 @@ Item
     visible: false;
 
     property int currentStageId: 0;
-    property var greenColor:"#25f631";
-    property var blueColor:"#297bf5";
+    property var greenColor:"#ffffff";
+    property var blueColor:"#00aedc";
 
     FontManager
     {
@@ -195,7 +195,7 @@ Item
 
     Connections
     {
-        target:gameModule;
+        target: gameModule;
 
         onAllStagesComleteEventMap:
         {
@@ -207,6 +207,8 @@ Item
             visible = true;
 
             winDescrText.text = description;
+            console.log("allStagesComleteEventMap ", description, imageWinName);
+
             placeIcon.source = standData.getStandImage(imageWinName);
         }
 

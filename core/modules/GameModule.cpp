@@ -103,7 +103,6 @@ void GameModule::continueGame()
         {
             auto descr = currentUser->gameUserData().descriptionWin;
             auto imageWinName = currentUser->gameUserData().imageWinName;
-            qDebug()<<"allStagesComleteEventMap "<<descr<<imageWinName;
             emit allStagesComleteEventMap(descr, imageWinName);
             emit allStagesComleteEvent();
 

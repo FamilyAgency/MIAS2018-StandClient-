@@ -3,7 +3,7 @@ import QtQuick.Controls 2.1
 
 Item
 {
-    id:anim;
+    id: anim;
     anchors.fill: parent;
 
     Rectangle
