@@ -47,7 +47,7 @@ Item
             rouletteModule.startRoll();
             brb.hide();
         }
-    } 
+    }
 
     Titles
     {
@@ -65,9 +65,13 @@ Item
         height: 555 * consts.designScale;
     }
 
+
     Component.onCompleted:
     {
+        //sprite.source =  "qrc:/resources/arrow_pack.png";
+        // sprite.start();
         brb.setTitle(rollTextDefault);
+
     }
 
     function start()

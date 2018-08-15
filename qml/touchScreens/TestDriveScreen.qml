@@ -165,7 +165,7 @@ Item
 
     Component.onCompleted:
     {
-        startBtn.setTitle(buttonText);
+        startBtn.setTitle(buttonText);       
     }
 
     Connections
@@ -225,7 +225,7 @@ Item
         visible = true;
         testDrive.animComplete();
 
-        startBtn.show();
+        //startBtn.show();
 
         okFiled.scale = 0;
         okFiled.opacity = 0;

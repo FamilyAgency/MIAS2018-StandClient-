@@ -46,7 +46,7 @@ private:
 
     bool _canContinue = false;
 
-    void startGame();
+    void startStage();
     void dispatchAdvantageData();
 
     void connectComponents();

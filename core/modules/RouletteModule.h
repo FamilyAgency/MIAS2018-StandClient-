@@ -23,6 +23,13 @@ class RouletteModule : public BaseModule
     Q_PROPERTY(float pulsarScale READ pulsarScale WRITE setPulsarScale NOTIFY pulsarScaleChanged)
     Q_PROPERTY(float circleOpacity READ circleOpacity WRITE setCircleOpacity NOTIFY circleOpacityChanged)
 
+    Q_PROPERTY(bool mainIconVisibility READ mainIconVisibility WRITE setMainIconVisibility NOTIFY mainIconVisibilityChanged)
+    Q_PROPERTY(float mainIconScale READ mainIconScale WRITE setMainIconScale NOTIFY mainIconScaleChanged)
+    Q_PROPERTY(float mainIconOpacity READ mainIconOpacity WRITE setMainIconOpacity NOTIFY mainIconOpacityChanged)
+    Q_PROPERTY(float mainIconY READ mainIconY WRITE setMainIconY NOTIFY mainIconYChanged)
+
+    Q_PROPERTY(float allIconsScale READ allIconsScale WRITE setAllIconsScale NOTIFY allIconsScaleChanged)
+
 public:
     explicit RouletteModule(QObject *parent = nullptr);
     virtual ~RouletteModule();
@@ -75,6 +82,22 @@ public:
     void setCircleOpacity(float value);
 
 
+    bool mainIconVisibility() const;
+    void setMainIconVisibility(bool value);
+
+    float mainIconScale() const;
+    void setMainIconScale(float value);
+
+    float mainIconOpacity() const;
+    void setMainIconOpacity(float value);
+
+    float mainIconY() const;
+    void setMainIconY(float value);
+
+    float allIconsScale() const;
+    void setAllIconsScale(float value);
+
+
 private:
     QPropertyAnimation* mainTitleOpacityAnimation = nullptr;
     QPropertyAnimation* carInAnimation = nullptr;
@@ -89,6 +112,13 @@ private:
     QPropertyAnimation* pulsarAnimation = nullptr;
     QPropertyAnimation* circleOpacityAnimation = nullptr;
 
+    QPropertyAnimation* mainIconOpacityAnimation = nullptr;
+    QPropertyAnimation* mainIconScaleAnimation = nullptr;
+    QPropertyAnimation* mainIconYAnimation = nullptr;
+    QPropertyAnimation* allIconsScaleAnimation = nullptr;
+
+
+
     QList<QPropertyAnimation*> animations;
 
     const float mindwaveTimerMills = 100.0f/60.0f;
@@ -98,7 +128,7 @@ private:
     int carMiddleThreshold = -850;
     int carTopThreshold = -1200;
     const float carDecriment = -1.0f;
-    const float circleYDefault = 444;
+    const float circleYDefault = 418;
     const int mindwaveAttentionThreshold = 80;
 
     QTimer* mindwaveTimer = nullptr;
@@ -122,8 +152,13 @@ private:
     float _pulsarScale = 0.0;
     float _circleOpacity = 1;
 
-    void initParams();
+    bool _mainIconVisibility = false;
+    float _mainIconScale = 1;
+    float _mainIconOpacity = 1;
+    float _mainIconY = 1;
+    float _allIconsScale = 1;
 
+    void initParams();
     void connectComponents();
     void disconnectComponents();
 
@@ -143,6 +178,16 @@ signals:
     void pulsarScaleChanged();
     void circleOpacityChanged();
     void showBrb();
+
+
+    void mainIconVisibilityChanged();
+    void mainIconScaleChanged();
+    void mainIconOpacityChanged();
+    void mainIconYChanged();
+
+
+    void allIconsScaleChanged();
+
 
 private slots:
     void onMindwaveUpdate();

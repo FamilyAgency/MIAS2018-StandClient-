@@ -9,12 +9,14 @@ import com.app 1.0
 
 Item
 {
-    property string intro1Path: configController.getVideoFileInAppDir("intro1.mp4");
-    property string intro2Path: configController.getVideoFileInAppDir("intro2.mp4");
-    property string instructionPath: configController.getVideoFileInAppDir("instruction.mp4");
-    property string bgLoop: configController.getVideoFileInAppDir("bgloop.mp4");
-    property string gameresult: configController.getVideoFileInAppDir("gameresult.mp4");
-    property string superGameResult: configController.getVideoFileInAppDir("cola.mp4");
+    property string intro1Path: configController.getVideoFileInAppDir("intro1");
+    property string intro2Path: configController.getVideoFileInAppDir("intro2");
+    property string instructionPath: configController.getVideoFileInAppDir("instruction");
+    property string bgLoop: configController.getVideoFileInAppDir("bgloop");
+    property string gameresult: configController.getVideoFileInAppDir("gameresult");
+    property string superGameResult: configController.getVideoFileInAppDir("cola");
+    property string instruction0Path: configController.getVideoFileInAppDir("girl");
+
     anchors.fill: parent;
 
     Video
@@ -22,26 +24,42 @@ Item
         id: player1;
         anchors.fill: parent;
         anchors.centerIn: parent;
+        fillMode: VideoOutput.PreserveAspectFit
+        width: 1080;
         loops: MediaPlayer.Infinite;
         playlist: Playlist
         {
             id: playlist1;
         }
 
-        OpacityAnimator on opacity
+        OpacityAnimator
         {
             id:videoAnim1;
             target: player1;
             from: 0;
             to: 1;
-            duration: 500;
+            duration: 800;
             running:false;
 
-            onStopped:
+            //            onStopped:
+            //            {
+            //                    player2.seek(0);
+            //                    player2.pause();
+            //                    player2.visible = false;
+            //            }
+        }
+
+        onStatusChanged:
+        {
+            console.log("status ", status);
+            if(status == MediaPlayer.Loaded)
             {
-                player2.seek(0);
-                player2.pause();
-                player2.visible = false;
+                console.log("MediaPlayer.Loaded");
+            }
+
+            if(status == MediaPlayer.Loading)
+            {
+                console.log("MediaPlayer.Loading");
             }
         }
     }
@@ -51,57 +69,77 @@ Item
         id: player2;
         anchors.fill: parent;
         anchors.centerIn: parent;
+        fillMode: VideoOutput.PreserveAspectFit
+        width: 1080;
         opacity: 0;
         loops: MediaPlayer.Infinite;
+
+
         playlist: Playlist
         {
             id: playlist2;
+
         }
 
-        OpacityAnimator on opacity
+        onStatusChanged:
+        {
+            console.log("status ", status);
+
+            if(status == MediaPlayer.Loaded)
+            {
+                console.log("MediaPlayer.Loaded");
+            }
+
+            if(status == MediaPlayer.Loading)
+            {
+                console.log("MediaPlayer.Loading");
+            }
+        }
+
+        OpacityAnimator
         {
             id:videoAnim2;
             from: 0;
             to: 1;
-            duration: 500;
+            duration: 800;
             running:false;
             target: player2;
 
-            onStopped:
-            {
-                player1.seek(0);
-                player1.pause();
-                player1.visible = false;
-            }
+            //            onStopped:
+            //            {
+            //                player1.seek(0);
+            //                player1.pause();
+            //                player1.visible = false;
+            //            }
         }
     }
 
-//    BgParticles
-//    {
-//        id: bgParticles;
-//        z: 1;
-//        visible: false;
+    //    BgParticles
+    //    {
+    //        id: bgParticles;
+    //        z: 1;
+    //        visible: false;
 
-//        OpacityAnimator on opacity
-//        {
-//            id:particlesAnim;
-//            from: 0;
-//            to: 1;
-//            duration: 500;
-//            running:false;
-//            target: bgParticles;
+    //        OpacityAnimator on opacity
+    //        {
+    //            id:particlesAnim;
+    //            from: 0;
+    //            to: 1;
+    //            duration: 500;
+    //            running:false;
+    //            target: bgParticles;
 
-//            onStopped:
-//            {
-//                if(bgParticles.opacity == 1)
-//                {
-//                    currentPlayer.seek(0);
-//                    currentPlayer.pause();
-//                    currentPlayer.visible = false;
-//                }
-//            }
-//        }
-//    }
+    //            onStopped:
+    //            {
+    //                if(bgParticles.opacity == 1)
+    //                {
+    //                    currentPlayer.seek(0);
+    //                    currentPlayer.pause();
+    //                    currentPlayer.visible = false;
+    //                }
+    //            }
+    //        }
+    //    }
 
     Component.onCompleted:
     {
@@ -111,6 +149,9 @@ Item
         playlist1.addItem(bgLoop);
         playlist1.addItem(gameresult);
         playlist1.addItem(superGameResult);
+        playlist1.addItem(instruction0Path);
+
+
 
 
         playlist2.addItem(intro1Path);
@@ -119,6 +160,7 @@ Item
         playlist2.addItem(bgLoop);
         playlist2.addItem(gameresult);
         playlist2.addItem(superGameResult);
+        playlist2.addItem(instruction0Path);
 
 
         setState(appController.getAppState());
@@ -136,7 +178,7 @@ Item
 
         onAppStateChanged:
         {
-            console.log("touch app state changes in video controller :::::::::::::", appState);
+           // console.log("touch app state changes in video controller :::::::::::::", appState);
 
             setState(appState);
         }
@@ -179,14 +221,42 @@ Item
         }
     }
 
+    Connections
+    {
+        target: instructionModule;
+        onMindwaveReady:
+        {
+            console.log("--------------- onMindwaveReady ---------------");
+            positionTimer.stop();
+            player1.loops = MediaPlayer.Infinite;
+            player2.loops = MediaPlayer.Infinite;
+            startIndex(2);
+            currentPlayer.loops = 1;
+            positionTimer.start();
+        }
+    }
+
+
+    function handleEndOfMedia(index)
+    {
+       // console.log("video index finished ", index);
+
+        if(index === 2)
+        {
+            instructionModule.mediaEnded();
+        }
+
+        //        if(currentState == AppState.Instruction)
+        //        {
+        //            instructionModule.mediaEnded();
+        //        }
+    }
+
+
     function setState(appState)
     {
-        //        if(currentState == appState)
-        //        {
-        //            return;
-        //        }
+        // return;
 
-        //console.log("swaaaaaaaaap")
 
         positionTimer.stop();
 
@@ -196,29 +266,30 @@ Item
         switch(appState)
         {
         case AppState.Intro:
-           // stopParticles();
+            // stopParticles();
             startIndex(0);
             break;
 
         case AppState.Instruction:
-           // stopParticles();
-            startIndex(2);
+            // stopParticles();
+            startIndex(6);
+            // currentPlayer.loops = 1;
             break;
 
         case AppState.Roulette:
         case AppState.Game:
-           // startParticles();
+            // startParticles();
             startIndex(3);
             break;
 
         case AppState.GameResult:
-           // stopParticles();
+            // stopParticles();
             startIndex(4);
             currentPlayer.loops = 1;
             break;
 
         case AppState.SuperGame:
-           // startParticles();
+            // startParticles();
             startIndex(3);
             break;
 
@@ -232,14 +303,14 @@ Item
             }
             else
             {
-               // startParticles();
+                // startParticles();
                 startIndex(3);
             }
 
             break;
 
         case AppState.TestDrive:
-           // startParticles();
+            // startParticles();
             startIndex(3);
             break;
 
@@ -250,6 +321,7 @@ Item
 
     property bool needLoop: false;
     property real loopThreshold: 0;
+    property int currentIndex: -1;
 
     Timer
     {
@@ -259,56 +331,86 @@ Item
         repeat: true;
         onTriggered:
         {
-            // console.log("PAUSEEEEEEEEEEEEEEE")
+
+            // console.log(currentPlayer.status)
+            // console.log(currentPlayer.position, currentPlayer.visible, currentPlayer.opacity)
             if (currentPlayer.loops == 1 && (currentPlayer.position > 1000 && currentPlayer.duration - currentPlayer.position < 1000))
             {
                 currentPlayer.pause();
+                handleEndOfMedia(currentPlaylist.currentIndex);
             }
         }
-
     }
 
     function startIndex(index, seekTo)
     {
-        /*if (seekTo === undefined)*/ seekTo = 0;
-        swapVideos();
-        currentPlaylist.currentIndex = index;
-        currentPlayer.seek(seekTo);
-        currentPlayer.play();
-        playAnim();
+        // if(currentIndex !== index)
+        {
+            /*if (seekTo === undefined)*/ seekTo = 0;
+            currentIndex = index;
+            swapVideos();
+            currentPlaylist.currentIndex = index;
+            currentPlayer.seek(seekTo);
+            currentPlayer.play();
+            playAnim();
+        }
+        // else
+        {
+            //currentPlayer.seek(seekTo);
+            // currentPlayer.play();
+        }
     }
 
     function swapVideos()
     {
+        videoAnim2.stop();
+        videoAnim1.stop();
+
         if(currentPlayer == player2)
         {
             currentPlayer = player1;
             currentPlaylist = playlist1;
             currentVideoAnim = videoAnim1;
+
+            videoAnim1.from = 0;
+            videoAnim1.to = 1;
+            videoAnim1.start();
+
+
+            videoAnim2.from = 1;
+            videoAnim2.to = 0;
+            videoAnim2.start();
         }
         else if(currentPlayer == player1)
         {
             currentPlayer = player2;
             currentPlaylist = playlist2;
             currentVideoAnim = videoAnim2;
+
+            videoAnim1.from = 1;
+            videoAnim1.to = 0;
+            videoAnim1.start();
+
+
+            videoAnim2.from = 0;
+            videoAnim2.to = 1;
+            videoAnim2.start();
+
         }
     }
 
     function playAnim()
     {
-        videoAnim2.stop();
-        videoAnim1.stop();
-
         currentPlayer.visible = true;
         currentPlayer.opacity = 0;
         currentPlayer.z = 1;
-        currentVideoAnim.from = 0;
-        currentVideoAnim.to = 1;
-        currentVideoAnim.start();
+        //        currentVideoAnim.from = 0;
+        //        currentVideoAnim.to = 1;
+        //        currentVideoAnim.start();
 
 
-        var opposePlayer = getOppositePlayer();
-        opposePlayer.z = 0;
+        // var opposePlayer = getOppositePlayer();
+        //  opposePlayer.z = 0;
 
         //        var opposePlayerAnim = getOppositePlayerAnim();
         //        opposePlayerAnim.from = 1;
@@ -319,31 +421,31 @@ Item
 
     function stopParticles()
     {
-//        if(bgParticles.opacity === 1)
-//        {
-//            particlesAnim.from = 1;
-//            particlesAnim.to = 0;
-//            particlesAnim.start();
-//        }
+        //        if(bgParticles.opacity === 1)
+        //        {
+        //            particlesAnim.from = 1;
+        //            particlesAnim.to = 0;
+        //            particlesAnim.start();
+        //        }
     }
 
     function startParticles()
     {
-//        videoAnim2.stop();
-//        videoAnim1.stop();
+        //        videoAnim2.stop();
+        //        videoAnim1.stop();
 
-//        bgParticles.visible = true;
-//        bgParticles.opacity = 0;
-//        bgParticles.z = 1;
+        //        bgParticles.visible = true;
+        //        bgParticles.opacity = 0;
+        //        bgParticles.z = 1;
 
-//        particlesAnim.from = 0;
-//        particlesAnim.to = 1;
-//        particlesAnim.start();
+        //        particlesAnim.from = 0;
+        //        particlesAnim.to = 1;
+        //        particlesAnim.start();
 
-//        currentPlayer.z = 0;
-//        currentVideoAnim.from = 1;
-//        currentVideoAnim.to = 0;
-//        currentVideoAnim.start();
+        //        currentPlayer.z = 0;
+        //        currentVideoAnim.from = 1;
+        //        currentVideoAnim.to = 0;
+        //        currentVideoAnim.start();
 
     }
 

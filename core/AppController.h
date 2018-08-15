@@ -123,7 +123,7 @@ private slots:
     void onSuperGameSuccess(int time);
     void onUserStartPlay();
     void onUserAcceptedGame();
-    void onUserStartRoulette();
+    void onInstructionComplete();
     void onSuperGameAccepted();
     void onSuperGameRejected();
     void onSuperGameResultReaded();

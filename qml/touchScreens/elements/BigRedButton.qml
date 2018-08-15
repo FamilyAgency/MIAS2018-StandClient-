@@ -34,13 +34,33 @@ Item
             background: Rectangle
             {
                 id: bg;
-              //  color: startBtn.down ? "#f00000" : "#fb0000";
+                color: "#66d5fc";
+                opacity: startBtn.down ? 0.8 : 1;
                 border.width: 0;
 
-                gradient: Gradient {
-                        GradientStop { position: 0.0; color: "#fb0000" }
-                        GradientStop { position: 1.0; color: "#5b0000" }
+                gradient: Gradient
+                {
+                    GradientStop
+                    {
+                        position: 0.0
+                        SequentialAnimation on color
+                        {
+                            loops: Animation.Infinite
+                            ColorAnimation { from: "#0b9abf"; to: "#66d5fc"; duration: 3500 }
+                            ColorAnimation { from: "#66d5fc"; to: "#0b9abf"; duration: 2500 }
+                        }
                     }
+                    GradientStop
+                    {
+                        position: 1.0
+                        SequentialAnimation on color
+                        {
+                            loops: Animation.Infinite
+                            ColorAnimation { from: "#0aabd4"; to: "#006c92"; duration: 2500 }
+                            ColorAnimation { from: "#006c92"; to: "#0aabd4"; duration: 3500 }
+                        }
+                    }
+                }
             }
 
             contentItem: Text
@@ -65,7 +85,7 @@ Item
                 anchors.fill: bg;
                 radius: 40;
                 samples: 150;
-                color: "#fb0000";
+                color: "#66d5fc";
                 source: bg;
                 spread: 0.1;
                 opacity: 0;

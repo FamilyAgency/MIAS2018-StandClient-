@@ -46,7 +46,7 @@ Item
         onPaint:
         {
             var colorAttention= Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
-            var colorBg = Qt.rgba(51./255., 106./255., 238.0 / 255., 1.0);
+            var colorBg = Qt.rgba(10./255., 171./255., 212.0 / 255., 1.0);
 
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, 1080, 1920);
@@ -131,7 +131,7 @@ Item
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 30 * consts.designScale;
             text: "ОСТАЛОСЬ";
-            color: "#336aee";
+            color: "#0aabd4";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignHCenter;
         }
@@ -174,12 +174,12 @@ Item
 
         onSuperGameFailed:
         {
-            console.log("SuperGameFailed");
+            //console.log("SuperGameFailed");
         }
 
         onSuperGameSuccess:
         {
-            console.log("onSuperGameSuccess");
+          //  console.log("onSuperGameSuccess");
         }
     }
 

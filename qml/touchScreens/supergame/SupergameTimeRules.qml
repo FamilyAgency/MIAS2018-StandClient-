@@ -63,7 +63,7 @@ Item
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 40 * consts.designScale;
             text: "МИНУТЫ";
-            color: "#336aee";
+            color: "#0aabd4";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignHCenter;
         }
@@ -92,7 +92,7 @@ Item
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 40 * consts.designScale;
             text: "ПОПЫТКА";
-            color: "#336aee";
+            color: "#0aabd4";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignHCenter;
         }

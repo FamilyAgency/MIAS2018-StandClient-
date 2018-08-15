@@ -49,7 +49,8 @@ void GameModule::start()
     qDebug()<<"======================= GameModule START =======================";
 
     connectComponents();
-    startGame();
+    gameTaskManager->startGame();
+    startStage();
 }
 
 void GameModule::stop()
@@ -60,9 +61,9 @@ void GameModule::stop()
     gameTaskManager->stop();
 }
 
-void GameModule::startGame()
+void GameModule::startStage()
 {
-     gameTaskManager->start(currentUser);
+     gameTaskManager->startStage(currentUser);
 }
 
 void GameModule::onStageComleteEvent(int completionTime)
@@ -96,14 +97,17 @@ void GameModule::continueGame()
     {
         if(currentUser->hasStages())
         {
-           startGame();
+           startStage();
         }
         else
         {
             auto descr = currentUser->gameUserData().descriptionWin;
             auto imageWinName = currentUser->gameUserData().imageWinName;
+            qDebug()<<"allStagesComleteEventMap "<<descr<<imageWinName;
             emit allStagesComleteEventMap(descr, imageWinName);
             emit allStagesComleteEvent();
+
+            gameTaskManager->stop();
         }
     }
 }

@@ -225,7 +225,7 @@ Item
 
     Connections
     {
-        target:gameTaskManager;
+        target: gameTaskManager;
 
         onPreTaskStartEvent:
         {

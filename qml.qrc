@@ -69,5 +69,7 @@
         <file>resources/particleA.png</file>
         <file>resources/Round.png</file>
         <file>resources/arrow.png</file>
+        <file>resources/arrow_pack.png</file>
+        <file>qml/touchScreens/intro/IntroTitles.qml</file>
     </qresource>
 </RCC>

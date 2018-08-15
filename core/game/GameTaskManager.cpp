@@ -13,6 +13,9 @@ GameTaskManager::GameTaskManager()
     gameTask.reset(new GameTask());
     connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
     connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+    connect(gameTask.data(), SIGNAL(newCompletedPoint(const QPointF&)), this, SLOT(onNewCompletedPoint(const QPointF&)));
+
+
 }
 
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
@@ -26,11 +29,16 @@ void GameTaskManager::setMindWaveClient(QSharedPointer<MindwaveComponentBase> va
     gameTask->setMindWaveClient(mindWave);
 }
 
-void GameTaskManager::start(QSharedPointer<UserData> user)
+void GameTaskManager::startGame()
+{
+      gameCompletedPath.clear();
+}
+
+void GameTaskManager::startStage(QSharedPointer<UserData> user)
 {
     qDebug()<<"Game Started";
     auto game = user->getCurrentStage();
-    currentUser = user;
+    currentUser = user;  
     setupCurrentGame(game);    
 
     setTaskState(TaskState::PreGame);
@@ -92,6 +100,11 @@ void GameTaskManager::onTaskUpdateEvent()
     emit updateCanvas();
 }
 
+void GameTaskManager::onNewCompletedPoint(const QPointF& point)
+{
+    gameCompletedPath.append(point);
+}
+
 void GameTaskManager::onTaskCompleteEvent()
 {
     gameTask->stop();
@@ -131,7 +144,7 @@ float GameTaskManager::getForwardVectorRotation() const
 
 QVariantList GameTaskManager::getCompletedPath() const
 {
-    return gameTask->getCompletedPath();
+    return gameCompletedPath;
 }
 
 QVariantList GameTaskManager::getFullGamePath() const

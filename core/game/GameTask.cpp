@@ -69,6 +69,7 @@ void GameTask::start()
 void GameTask::addCompletedPoint(const QPointF& point)
 {
     completedPathList.append(point);
+    emit newCompletedPoint(point);
 }
 
 void GameTask::setPoints()

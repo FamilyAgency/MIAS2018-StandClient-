@@ -42,7 +42,11 @@ void TestDriveModule::start()
     connect(serverComponent.data(), SIGNAL(dealersDataUpdated(const QVariantList&)), this, SLOT(onDealersDataUpdated(const QVariantList&)));
     connect(serverComponent.data(), SIGNAL(testDriveRequestSuccess()), this, SLOT(onTestDriveRequestSuccess()));
 
-    serverComponent->getDealersRequest();
+    if(!(dealersLoaded && loadOnlyOnce))
+    {
+        serverComponent->getDealersRequest();
+    }
+
 }
 
 void TestDriveModule::stop()
@@ -55,6 +59,8 @@ void TestDriveModule::stop()
 void TestDriveModule::onDealersDataUpdated(const QVariantList& data)
 {
     qDebug()<<"dilers data income";
+
+    dealersLoaded = data.length() > 0;
     emit dealersDataUpdated(data);
 }
 
@@ -65,7 +71,7 @@ void TestDriveModule::onTestDriveRequestSuccess()
 
 void TestDriveModule::makeTestDrive(int dealerId)
 {
-    serverComponent->testDriveRequest(currentUser->baseUserData().id, dealerId);
+    serverComponent->testDriveRequest(1500/*currentUser->baseUserData().id*/, dealerId);
 }
 
 QString TestDriveModule::getName() const

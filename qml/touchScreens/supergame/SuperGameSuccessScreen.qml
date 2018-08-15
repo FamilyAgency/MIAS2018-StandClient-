@@ -60,9 +60,10 @@ Item
         anchors.fill: parent;
         onClicked:
         {
-            appController.backToIntro();
+           appController.backToIntro();
         }
     }
+
     Component.onCompleted:
     {
         title.setTexts(superGameTitle, descrTitleDefault);

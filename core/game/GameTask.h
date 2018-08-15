@@ -43,7 +43,8 @@ private:
     QSharedPointer<MindwaveComponentBase> mindWave;
 
     QVector<QPointF> path;
-    QPointF curPoint, startPoint, endPoint, position;
+    QPointF curPoint = QPointF(0.0f, 0.0f);
+    QPointF startPoint, endPoint, position;
     int currentPointIndex = 0;   
     bool taskComplete = false;
     QVariantList completedPathList, fullPathList;
@@ -65,6 +66,7 @@ private slots:
 signals:
     void updateEvent();
     void completeEvent();
+    void newCompletedPoint(const QPointF& point);
 
 };
 

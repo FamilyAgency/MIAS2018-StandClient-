@@ -35,7 +35,7 @@ void ServerRemoteComponent::commonRequest(ResponseType type, const QNetworkReque
 
     response.clear();
     response.type = type;
-    setServerStatus(ServerStatus::Busy);
+    setServerStatus(ServerStatus::Busy);  
 
     switch(httpMethod)
     {

@@ -30,9 +30,10 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 40 * consts.designScale;
-        color: "#990000";
+        color: "#0aabd4";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
+        font.letterSpacing: 14;
     }
 
     Text
@@ -48,7 +49,7 @@ Item
         horizontalAlignment :Text.AlignHCenter;
     }
 
-    OpacityAnimator on opacity
+    OpacityAnimator
     {
         id: opacityAnim;
         from: 0;
@@ -56,6 +57,7 @@ Item
         duration: 700;
         running: false;
         easing.type: "InOutCubic";
+        target: titleBlock;
     }
 
 

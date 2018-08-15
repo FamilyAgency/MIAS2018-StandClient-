@@ -34,6 +34,9 @@ private:
     QSharedPointer<UserData> currentUser;
     QSharedPointer<DilerData> dilerData;
 
+    bool loadOnlyOnce = true;
+    bool dealersLoaded = false;
+
 signals:
     void dealersDataUpdated(const QVariantList& allDealers);
     void testDriveRequestSuccess();

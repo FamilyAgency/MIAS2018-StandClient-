@@ -67,7 +67,8 @@ Window
         x: marginLeft + 1200;
         y: marginTop;
         onClicked: appController.testCrash();
-    }
+    }   
+
 
 //    ACR122Card
 //    {

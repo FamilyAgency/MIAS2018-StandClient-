@@ -67,7 +67,7 @@ void AppController::createEngine()
 
     instructionModule.reset(new InstructionModule());
     modules.append(instructionModule);
-    connect(instructionModule.data(), SIGNAL(userStartRoulette()), this, SLOT(onUserStartRoulette()));
+    connect(instructionModule.data(), SIGNAL(instructionComplete()), this, SLOT(onInstructionComplete()));
     
 
     rouletteModule.reset(new RouletteModule());
@@ -128,7 +128,7 @@ AppController::~AppController()
     disconnect(introModule.data(), SIGNAL(userStartPlay()), this, SLOT(onUserStartPlay()));
     disconnect(introModule.data(), SIGNAL(userAcceptedGame()), this, SLOT(onUserAcceptedGame()));
 
-    disconnect(instructionModule.data(), SIGNAL(userStartRoulette()), this, SLOT(onUserStartRoulette()));
+    disconnect(instructionModule.data(), SIGNAL(instructionComplete()), this, SLOT(onInstructionComplete()));
 
     disconnect(gameResultModule.data(), SIGNAL(superGameAccepted()), this, SLOT(onSuperGameAccepted()));
     disconnect(gameResultModule.data(), SIGNAL(superGameRejected()), this, SLOT(onSuperGameRejected()));
@@ -228,7 +228,7 @@ void AppController::onUserAcceptedGame()
 // ============== Instruction Module ============== //
 
 
-void AppController::onUserStartRoulette()
+void AppController::onInstructionComplete()
 {
     setAppState(AppState::Roulette);
 }

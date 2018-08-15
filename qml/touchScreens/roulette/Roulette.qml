@@ -10,7 +10,8 @@ import "../elements"
 Item
 {
     anchors.fill: parent;
-    property int circleSize : 300;
+    property int circleSize: 300;
+    property int offset: 80;
 
     FontManager
     {
@@ -20,15 +21,51 @@ Item
     Image
     {
         id: roullete
-        width: 878 * consts.designScale;
-        height: 875  * consts.designScale;
+        width: 926 * consts.designScale;
+        height: 926  * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
         smooth: true;
-        source: "qrc:/resources/rulette.png";        
+        source: "qrc:/resources/rulette.png";
         rotation: rouletteModule.rotation;
         visible: rouletteModule.particlesVisibility;
+
+        Image
+        {
+            id: image1;
+            scale: rouletteModule.allIconsScale;
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.bottom: parent.bottom;
+            anchors.bottomMargin: -offset;
+            smooth: true;
+            rotation: -rouletteModule.rotation;
+            source: standData.getStandImage("task1/icon.png");
+        }
+
+        Image
+        {
+            id: image2;
+             rotation: -rouletteModule.rotation;
+            scale: rouletteModule.allIconsScale;
+            anchors.verticalCenter: parent.verticalCenter;
+            anchors.left: parent.left;
+            anchors.leftMargin: -offset;
+            smooth: true;
+            source: standData.getStandImage("task2/icon.png");
+        }
+
+        Image
+        {
+            id: image3;
+             rotation: -rouletteModule.rotation;
+            scale: rouletteModule.allIconsScale;
+            anchors.verticalCenter: parent.verticalCenter;
+            anchors.right: parent.right;
+            anchors.rightMargin: -offset;
+            smooth: true;
+            source: standData.getStandImage("task3/icon.png");
+        }
     }
 
     Rectangle
@@ -60,6 +97,41 @@ Item
         anchors.topMargin: rouletteModule.circleY;
         scale: rouletteModule.scale;
         opacity: rouletteModule.circleOpacity;
+    }
+
+    Image
+    {
+        id: choosen
+        visible:rouletteModule.mainIconVisibility;
+        scale: rouletteModule.mainIconScale;
+        opacity: rouletteModule.mainIconOpacity;
+
+        anchors.horizontalCenter: roullete.horizontalCenter;
+        anchors.top: roullete.top;
+        anchors.topMargin: -offset + rouletteModule.mainIconY;
+        smooth: true;
+        source: standData.getStandImage("task1/icon.png");
+    }
+
+    Connections
+    {
+        target: rouletteModule;
+        onGameCategoryUpdate:
+        {
+            switch(id)
+            {
+            case 0:
+                choosen.source = standData.getStandImage("task2/icon.png");
+                break;
+            case 1:
+                choosen.source = standData.getStandImage("task3/icon.png");
+                break;
+            case 2:
+                choosen.source = standData.getStandImage("task1/icon.png");
+                break;
+            }
+        }
+
     }
 
 }

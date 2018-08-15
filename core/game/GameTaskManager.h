@@ -37,8 +37,8 @@ public:
         Game,
         PostGame
     };
-
-    void start(QSharedPointer<UserData> value);
+    void startGame();
+    void startStage(QSharedPointer<UserData> value);
     void stop();
     void setMindWaveClient(QSharedPointer<MindwaveComponentBase> mindWave);
     void setTaskState(TaskState taskState);
@@ -60,6 +60,8 @@ private:
     int currentGameId = 0;
     QSharedPointer<UserData> currentUser;
 
+    QVariantList gameCompletedPath;
+
 signals:
     void updateCanvas();   
     void taskComleteEvent(int completionTime);
@@ -75,6 +77,8 @@ private slots:
     void onPreGameTaskUpdate(float countDown);
     void onPreGameTaskComplete();
     void onTaskUpdateEvent();
+    void onNewCompletedPoint(const QPointF& point);
+
 };
 
 #endif // GAMETASKMANAGER_H

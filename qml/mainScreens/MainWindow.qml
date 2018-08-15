@@ -61,23 +61,22 @@ Window
         switch(appState)
         {
         case AppState.Intro:
-            mainGameScreen.gameStop();
-            break;
-
         case AppState.Instruction:
-            mainGameScreen.gameStop();
-            break;
-
         case AppState.Roulette:
+            mainGameScreen.gameStop();
             break;
 
         case AppState.Game:
             mainGameScreen.gameStart()
             break;
 
-        case AppState.Result:
+        case AppState.GameResult:
+        case AppState.SuperGame:
+        case AppState.TestDrive:
+        case AppState.SuperGameResult:
             mainGameScreen.gameStop();
             break;
         }
     }
+
 }

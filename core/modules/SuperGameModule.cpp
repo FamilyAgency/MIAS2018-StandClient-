@@ -79,13 +79,6 @@ void SuperGameModule::onUpdate()
     }
 }
 
-void SuperGameModule::superGamePassedTest()
-{
-    superGameTimer->stop();
-    superGameWinTime = QDateTime::currentMSecsSinceEpoch() - startTime;
-    serverComponent->finishGameRequest(currentUser->baseUserData().id);
-}
-
 void SuperGameModule::onUserFinishedGame()
 {
     currentUser->superGameCompleted(superGameWinTime);
@@ -122,6 +115,22 @@ void SuperGameModule::disconnectComponents()
     {
         disconnect(serverComponent.data(), SIGNAL(userFinishedGame()), this, SLOT(onUserFinishedGame()));
     }
+}
+
+//===================TESTS===================
+
+void SuperGameModule::superGamePassedTest()
+{
+    superGameTimer->stop();
+    superGameWinTime = QDateTime::currentMSecsSinceEpoch() - startTime;
+    serverComponent->finishGameRequest(currentUser->baseUserData().id);
+}
+
+void SuperGameModule::superGameFailedTest()
+{
+    superGameTimer->stop();
+    emit updateSuperGameTime(0.0f);
+    emit superGameFailed();
 }
 
 

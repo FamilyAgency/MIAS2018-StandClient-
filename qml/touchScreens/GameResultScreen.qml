@@ -90,48 +90,6 @@ Item
         }
     }
 
-    Button
-    {
-        id: backBtn;
-        opacity: 0;
-
-        anchors.top: brb.bottom;
-        anchors.topMargin: 10;
-        anchors.horizontalCenter: parent.horizontalCenter;
-
-        contentItem: Text
-        {
-            text: "НЕТ, СПАСИБО";
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 20 * consts.designScale;
-            color: "#ffffff"
-            horizontalAlignment: Text.AlignHCenter;
-            verticalAlignment: Text.AlignVCenter;
-        }
-
-        background: Rectangle
-        {
-            opacity: 0;
-            implicitHeight: 100;
-            implicitWidth: 200;
-        }
-
-        onClicked:
-        {
-            appController.backToIntro();
-        }
-
-        OpacityAnimator on opacity
-        {
-            id: opacityAnim1;
-            from: 0;
-            to: 1;
-            duration: 700;
-            running: false;
-            easing.type: "InOutCubic";
-        }
-    }
-
     TitleBlock
     {
         id: title;
@@ -158,7 +116,7 @@ Item
     {
         id:hideIntroTimer;
         running: false;
-        interval : 6000;
+        interval: 6000;
         onTriggered:
         {
             opacityAnim.from = 1;
@@ -176,14 +134,11 @@ Item
     {
         id:showIntro2Timer;
         running: false;
-        interval : 2000;
+        interval: 2000;
         onTriggered:
         {
             brb.visible = true;
             brb.show();
-
-            backBtn.visible = true;
-            opacityAnim1.start();
 
             title.visible = true;
             title.show();
@@ -200,8 +155,8 @@ Item
 
     function start()
     {
-        backBtn.opacity = 0;
-        backBtn.visible = false;
+       // backBtn.opacity = 0;
+       // backBtn.visible = false;
 
         opacityAnim.from = 0;
         opacityAnim.to = 1;
@@ -221,10 +176,7 @@ Item
     function stop()
     {
         brb.visible = false;
-      //  brb.hide();
-
         title.visible = false;
-       // title.hide();
 
         visible = false;
         confirmExitPopup.hide();

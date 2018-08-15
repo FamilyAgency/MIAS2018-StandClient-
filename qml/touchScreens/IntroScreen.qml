@@ -22,6 +22,11 @@ Item
     {
         id: tools;
     }
+    
+    IntroTitles
+    {
+        id: introTitiles;
+    }
 
     HelloBlock
     {
@@ -52,6 +57,8 @@ Item
             }
         }
     }
+    
+    
 
     Connections
     {
@@ -61,6 +68,7 @@ Item
         {
             wasError = false;
             helloBlock.startHelloState();
+            introTitiles.hide();
         }
 
         onUserNotFound:
@@ -91,11 +99,13 @@ Item
         }
     }
 
+
     function start()
     {
         visible = true;
         intro.animComplete();
         helloBlock.start();
+        introTitiles.show();
     }
 
     function stop()
@@ -106,6 +116,7 @@ Item
 
     function cantPlayHandler(errorMsg)
     {
+        introTitiles.hide();
         wasError = true;
         helloBlock.startErrorState(errorMsg);
     }

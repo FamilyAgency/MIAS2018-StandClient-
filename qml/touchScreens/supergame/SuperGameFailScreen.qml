@@ -67,7 +67,7 @@ Item
     function show()
     {
         title.show();
-        backBtn.show();
+        backBtn.show();       
         brb.show();
     }
 

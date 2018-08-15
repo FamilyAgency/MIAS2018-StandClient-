@@ -73,8 +73,8 @@ void ACR122CardHandler::startWriting(const QString& data)
 {
     setCardReaderState(CardReaderState::Writing);
     lastUserData = data;
-   // timerRestart();
-   // connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
+    // timerRestart();
+    // connect(connectTimer, SIGNAL(timeout()), this, SLOT(onWritingUpdate()));
     onWritingUpdate();
 }
 
@@ -164,7 +164,6 @@ bool ACR122CardHandler::cardPreparedSuccess()
         emit cardReaderError(CardReaderError::NoCard);
         cardPrepared = false;
     }
-
     else if(!loadKey())
     {
         emit cardReaderError(CardReaderError::LoadKeyError);
@@ -502,7 +501,7 @@ bool ACR122CardHandler::checkIsDeviceConnected()
 
     if(SCardListReadersW(card_context_, NULL, (LPWSTR)&mszReaders, &dwReaders) != SCARD_S_SUCCESS)
     {
-         return false;
+        return false;
     }
 
     QByteArray buffer;
@@ -551,7 +550,17 @@ bool ACR122CardHandler::readBlockData(uint8_t blockNumber, QByteArray& data)
     DWORD cbRecv = MAX_APDU_SIZE;
     BYTE pbRecv[MAX_APDU_SIZE];
 
+
+    qDebug()<<"try to read";
     if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
+    {
+        qDebug()<<"cant read";
+        return false;
+    }
+
+    qDebug()<<"readed"<<cbRecv;
+
+    if(cbRecv < 2)
     {
         return false;
     }
@@ -624,6 +633,11 @@ bool ACR122CardHandler::getStatusCommand()
     uint8_t bytes[7] = {0xff, 0x00, 0x00, 0x00, 0x02, 0xD4, 0x04};
 
     if (SCardTransmit(card_handle_, protocol, bytes, sizeof(bytes), NULL, pbRecv, &cbRecv) != SCARD_S_SUCCESS)
+    {
+        return false;
+    }
+
+    if(cbRecv < 2)
     {
         return false;
     }

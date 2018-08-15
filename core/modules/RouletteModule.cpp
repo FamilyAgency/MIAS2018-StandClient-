@@ -58,6 +58,42 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     taskOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     animations.push_back(taskOpacityAnimation);
 
+    mainIconOpacityAnimation = new QPropertyAnimation(this);
+    mainIconOpacityAnimation->setTargetObject(this);
+    mainIconOpacityAnimation->setPropertyName("mainIconOpacity");
+    mainIconOpacityAnimation->setStartValue(0);
+    mainIconOpacityAnimation->setEndValue(1);
+    mainIconOpacityAnimation->setDuration(2000);
+    mainIconOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    animations.push_back(mainIconOpacityAnimation);
+
+    mainIconScaleAnimation = new QPropertyAnimation(this);
+    mainIconScaleAnimation->setTargetObject(this);
+    mainIconScaleAnimation->setPropertyName("mainIconScale");
+    mainIconScaleAnimation->setStartValue(0);
+    mainIconScaleAnimation->setEndValue(1);
+    mainIconScaleAnimation->setDuration(2000);
+    mainIconScaleAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    animations.push_back(mainIconScaleAnimation);
+
+    mainIconYAnimation = new QPropertyAnimation(this);
+    mainIconYAnimation->setTargetObject(this);
+    mainIconYAnimation->setPropertyName("mainIconY");
+    mainIconYAnimation->setStartValue(0);
+    mainIconYAnimation->setEndValue(1);
+    mainIconYAnimation->setDuration(2000);
+    mainIconYAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    animations.push_back(mainIconYAnimation);
+
+    allIconsScaleAnimation = new QPropertyAnimation(this);
+    allIconsScaleAnimation->setTargetObject(this);
+    allIconsScaleAnimation->setPropertyName("allIconsScale");
+    allIconsScaleAnimation->setStartValue(0);
+    allIconsScaleAnimation->setEndValue(1);
+    allIconsScaleAnimation->setDuration(700);
+    allIconsScaleAnimation->setEasingCurve(QEasingCurve::OutCubic);
+    animations.push_back(allIconsScaleAnimation);
+
     readTaskTimer = new QTimer(this);
     connect(readTaskTimer, SIGNAL(timeout()), this, SLOT(onReadTaskTimerCompleted()));
     readTaskTimer->setSingleShot(true);
@@ -193,7 +229,7 @@ void RouletteModule::start()
     connectComponents();
     initParams();
     mainTitleOpacityAnimation->start();
-    carInAnimation->start();     
+    carInAnimation->start();
 }
 
 void RouletteModule::initParams()
@@ -206,6 +242,18 @@ void RouletteModule::initParams()
     setCircleOpacity(1.0);
     setCircleY(circleYDefault);
     setTaskOpacity(0.0);
+
+    setHelpTextOpacity(0.0f);
+
+    setPulsarScale(0.0f);
+
+    setMainIconVisibility(false);
+    setMainIconOpacity(1.0f);
+    setMainIconY(0.0f);
+    setMainIconScale(1.0f);
+
+    setAllIconsScale(0.0f);
+
 
     mainTitleOpacityAnimation->setStartValue(0);
     mainTitleOpacityAnimation->setEndValue(1);
@@ -231,7 +279,9 @@ void RouletteModule::stop()
 
 void RouletteModule::onCarInAnimationCompleted()
 {
-   // setState(RouletteState::Roll);
+    allIconsScaleAnimation->setStartValue(0.0);
+    allIconsScaleAnimation->setEndValue(1.0);
+    allIconsScaleAnimation->start();
 }
 
 void RouletteModule::startRoll()
@@ -249,13 +299,13 @@ void RouletteModule::startRoll()
     switch(choosenCategory)
     {
     case 0:
-        degrees = 360 + 180;
+        degrees = 360 + 90;//task2
         break;
     case 1:
-        degrees = 360 + 270;
+        degrees = 360 + 270;//task3
         break;
     case 2:
-        degrees = 360 + 90;
+        degrees = 360 + 180;//task1
         break;
     }
 
@@ -268,13 +318,19 @@ void RouletteModule::startRoll()
 
 void RouletteModule::onRollAnimationCompleted()
 {
-   serverComponent->startGameRequest(currentUser->baseUserData().id);
+    serverComponent->startGameRequest(currentUser->baseUserData().id);
    // onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()
 {
     qDebug()<<"================ GAME STARTED!!!!!! ================";
+
+    setMainIconVisibility(true);
+
+    allIconsScaleAnimation->setStartValue(1.0);
+    allIconsScaleAnimation->setEndValue(0.0);
+    allIconsScaleAnimation->start();
 
     scaleAnimation->setStartValue(0);
     scaleAnimation->setEndValue(1);
@@ -291,6 +347,15 @@ void RouletteModule::onScaleAnimationCompleted()
     taskOpacityAnimation->setStartValue(0);
     taskOpacityAnimation->setEndValue(1);
     taskOpacityAnimation->start();
+
+    mainIconScaleAnimation->setStartValue(1);
+    mainIconScaleAnimation->setEndValue(0.7);
+    mainIconScaleAnimation->start();
+
+    mainIconYAnimation->setStartValue(0);
+    mainIconYAnimation->setEndValue(120);
+    mainIconYAnimation->start();
+
     readTaskTimer->start();
 }
 
@@ -300,6 +365,10 @@ void RouletteModule::onReadTaskTimerCompleted()
     taskOpacityAnimation->setEndValue(0);
     taskOpacityAnimation->start();
     carYAnimation3->start();
+
+    mainIconOpacityAnimation->setStartValue(1);
+    mainIconOpacityAnimation->setEndValue(0);
+    mainIconOpacityAnimation->start();
 
     scaleAnimation2->start();
     circleFinalYAnimation->start();
@@ -465,6 +534,66 @@ void RouletteModule::setCircleOpacity(float value)
     _circleOpacity = value;
     emit circleOpacityChanged();
 }
+
+
+
+bool RouletteModule::mainIconVisibility() const
+{
+    return _mainIconVisibility;
+}
+
+void RouletteModule::setMainIconVisibility(bool value)
+{
+    _mainIconVisibility = value;
+    emit mainIconVisibilityChanged();
+}
+
+
+float RouletteModule::mainIconScale() const
+{
+    return _mainIconScale;
+}
+
+void RouletteModule::setMainIconScale(float value)
+{
+    _mainIconScale = value;
+    emit mainIconScaleChanged();
+}
+
+float RouletteModule::mainIconOpacity() const
+{
+    return _mainIconOpacity;
+}
+
+void RouletteModule::setMainIconOpacity(float value)
+{
+    _mainIconOpacity = value;
+    emit mainIconOpacityChanged();
+}
+
+float RouletteModule::mainIconY() const
+{
+    return _mainIconY;
+}
+
+void RouletteModule::setMainIconY(float value)
+{
+    _mainIconY = value;
+    emit mainIconYChanged();
+}
+
+
+float RouletteModule::allIconsScale() const
+{
+    return _allIconsScale;
+}
+
+void RouletteModule::setAllIconsScale(float value)
+{
+    _allIconsScale = value;
+    emit allIconsScaleChanged();
+}
+
 
 QString RouletteModule::getName() const
 {

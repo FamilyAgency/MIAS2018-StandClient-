@@ -12,7 +12,7 @@ Item
         id: passBtn;
 
         anchors.top: parent.top;
-        anchors.topMargin: 500;
+        anchors.topMargin: 1200;
         anchors.left: parent.left;
 
         contentItem: Text
@@ -26,12 +26,43 @@ Item
         background: Rectangle
         {
             implicitWidth: 200;
+            implicitHeight: 100;
             color: "#ffffff";
         }
 
         onClicked:
         {
             superGameModule.superGamePassedTest();
+        }
+    }
+
+
+    Button
+    {
+        id: failBtn;
+
+        anchors.top: parent.top;
+        anchors.topMargin: 1400;
+        anchors.left: parent.left;
+
+        contentItem: Text
+        {
+            text: "ПРОИГРАТЬ СУПЕРИГРУ";
+            font.family: "Helvetica";
+            horizontalAlignment: Text.AlignHCenter;
+            verticalAlignment: Text.AlignVCenter;
+        }
+
+        background: Rectangle
+        {
+            implicitWidth: 200;
+            implicitHeight: 100;
+            color: "#ffffff";
+        }
+
+        onClicked:
+        {
+            superGameModule.superGameFailedTest();
         }
     }
 

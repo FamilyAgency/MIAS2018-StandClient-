@@ -20,14 +20,16 @@ public:
     virtual void stop() override;
     virtual QString getName() const override;
 
-    void setUser(QSharedPointer<UserData> value);
-
     Q_INVOKABLE void startGame();
-    Q_INVOKABLE void superGamePassedTest();
     Q_INVOKABLE float getPercent() const;
     Q_INVOKABLE float getSuperGameTime() const;
 
+    void setUser(QSharedPointer<UserData> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);
+
+
+    Q_INVOKABLE void superGamePassedTest();
+    Q_INVOKABLE void superGameFailedTest();
 
 private:
     const float superGameTimerMills = 100.0f/60.0f;

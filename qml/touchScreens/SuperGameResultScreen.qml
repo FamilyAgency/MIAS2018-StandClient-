@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Styles 1.4
+
 import "supergame"
 
 Item
@@ -16,6 +17,7 @@ Item
     SuperGameSuccessScreen
     {
         id:superGameSuccessScreen;
+        visible: false;
 
         onGotoIntro:
         {
@@ -67,12 +69,15 @@ Item
         visible = true;
         result.animComplete();
 
-       // superGameSuccessHandler();
+       // superGameFailedHandler();
+        //superGameSuccessHandler();
     }
 
     function stop()
     {
-        visible = false;
+        //visible = false;
+        //superGameFailScreen.visible = false;
+        //superGameSuccessScreen.visible = false;
     }
 
     function superGameSuccessHandler()
@@ -80,7 +85,6 @@ Item
         superGameSuccessScreen.visible = true;
         superGameFailScreen.visible = false;
         superGameSuccessScreen.show();
-        console.log("onSuperGameSuccess");
     }
 
     function superGameFailedHandler()
@@ -88,6 +92,5 @@ Item
         superGameSuccessScreen.visible = false;
         superGameFailScreen.visible = true;
         superGameFailScreen.show();
-        console.log("SuperGameFailed");
     }
 }

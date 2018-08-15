@@ -1,10 +1,9 @@
 import QtQuick 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 
 import "../../tools"
 import "../elements"
+
+import Qt3D.Extras 2.0
 
 Item
 {
@@ -76,7 +75,31 @@ Item
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;
-        opacity:rouletteModule.helpTextOpacity;
+        opacity: rouletteModule.helpTextOpacity;
+    }
+
+    Item
+    {
+        id: animationItem
+        anchors.fill: parent;
+        opacity: rouletteModule.helpTextOpacity;
+        Image
+        {
+            property int currentImage: 1
+            anchors.horizontalCenter: parent.horizontalCenter
+            id: image
+            x: 0
+            y: 0
+            source: configController.getFileInAppDir("content/misc/arrow/" + currentImage + ".png");
+            NumberAnimation on currentImage
+            {
+                from: 4
+                to: 35
+                duration: 1000
+                running: true;
+                loops: Animation.Infinite;
+            }
+        }
     }
 
     Connections
