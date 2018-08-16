@@ -26,7 +26,7 @@ void MindwaveReaderSerial::start()
 
 void MindwaveReaderSerial::startReading(int modelIndex)
 {
-    QString portName = "COM6";
+    QString portName = mindwaveConfig.com;
     serialPort->setPortName(portName);
     auto serialPortBaudRate = QSerialPort::Baud9600;
     serialPort->setBaudRate(serialPortBaudRate);

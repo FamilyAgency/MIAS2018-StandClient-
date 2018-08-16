@@ -104,6 +104,7 @@ void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveCo
     mindwaveConfig->authCommand = jsonObj["authCommand"].toString();
     mindwaveConfig->type = jsonObj["type"].toString();
     mindwaveConfig->timeoutMills = jsonObj["timeout"].toInt();
+    mindwaveConfig->com = jsonObj["com"].toString();
 }
 
 void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj)

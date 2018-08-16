@@ -76,6 +76,8 @@ void MindwaveComponentBase::onSignalLevelParsed(int value)
     qDebug()<<"onSignalLevelParsed "<<value;
     setDeviceState(DeviceState::Reading);
     timeoutTimer->start(_mindwaveConfig.timeoutMills);
+
+    setPoorSignalLevel(value);
 }
 
 void MindwaveComponentBase::onMeditationParsed(int value)
@@ -83,6 +85,8 @@ void MindwaveComponentBase::onMeditationParsed(int value)
     qDebug()<<"onMeditationParsed "<<value;
     setDeviceState(DeviceState::Reading);
     timeoutTimer->start(_mindwaveConfig.timeoutMills);
+
+     setMeditation(value);
 }
 
 void MindwaveComponentBase::onAttentionParsed(int value)
@@ -90,6 +94,8 @@ void MindwaveComponentBase::onAttentionParsed(int value)
     qDebug()<<"onAttentionParsed "<<value;
     setDeviceState(DeviceState::Reading);
     timeoutTimer->start(_mindwaveConfig.timeoutMills);
+
+      setAttention(value);
 }
 
 void MindwaveComponentBase::onDataParsed(const MindwaveData& mindwaveData)
