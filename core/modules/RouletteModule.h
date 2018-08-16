@@ -133,7 +133,7 @@ private:
     int carTopThreshold = -1200;
     const float carDecriment = -1.0f;
     const float circleYDefault = 418;
-    const int mindwaveAttentionThreshold = 80;
+    const int mindwaveAttentionThreshold = 40;
 
     const int smallCarTimerMills = 10;
 

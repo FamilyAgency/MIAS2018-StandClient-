@@ -23,6 +23,13 @@ Item
        id:skipsLocs;       
     }
 
+    MindwaveComponent
+    {
+        id: mindWaveComp;
+        x: 50;
+        y: 160;
+    }
+
     Component.onCompleted:
     {
         addLocation(AppState.Intro, "IntroScreenTest");
