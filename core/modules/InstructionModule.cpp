@@ -160,6 +160,10 @@ void InstructionModule::onOpacity1AnimatorCompleted()
         opacity2Animator->setEndValue(1);
         opacity2Animator->setDuration(1000);
         opacity2Animator->start();
+
+
+        //test
+        mediaEnded();
     }
 }
 

@@ -39,7 +39,7 @@ private:
     QTimer* animDelayTimer = nullptr;
     QTimer* showTextTimer = nullptr;
 
-    const float delayTimerMills = 10000.0f;
+    const float delayTimerMills = 500.0f;
     const float animDelayTimerMills = 1500.0f;
 
     QSharedPointer<MindwaveComponentBase> mindWaveComponent;
