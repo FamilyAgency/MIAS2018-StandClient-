@@ -6,6 +6,10 @@ SuperGameModule::SuperGameModule(QObject *parent) : BaseModule(parent)
 {
     superGameTimer = new QTimer(this);
     connect(superGameTimer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+
+    gameCountDown.reset(new GameCountDown());
+    connect(gameCountDown.data(), SIGNAL(update(float)), this, SLOT(onCountDownUpdate(float)));
+    connect(gameCountDown.data(), SIGNAL(complete()), this, SLOT(onCountDownComplete()));
 }
 
 SuperGameModule::~SuperGameModule()
@@ -15,6 +19,9 @@ SuperGameModule::~SuperGameModule()
         disconnect(superGameTimer, SIGNAL(timeout()), this, SLOT(onUpdate()));
         delete superGameTimer;
     }
+
+    disconnect(gameCountDown.data(), SIGNAL(update(float)), this, SLOT(onCountDownUpdate(float)));
+    disconnect(gameCountDown.data(), SIGNAL(complete()), this, SLOT(onCountDownComplete()));
 }
 
 void SuperGameModule::setQmlContext(QQmlContext* qmlContext)
@@ -51,13 +58,27 @@ void SuperGameModule::stop()
     qDebug()<<"======================= SuperGameModule STOP =======================";
     disconnectComponents();
     superGameTimer->stop();
+    gameCountDown->stop();
+}
+
+void SuperGameModule::onCountDownUpdate(float countDown)
+{
+    emit countDownUpdate(countDown);
+}
+
+void SuperGameModule::onCountDownComplete()
+{
+    emit countDownComplete();
+    superGameTimer->start(superGameTimerMills);
 }
 
 void SuperGameModule::startGame()
 {
     superGameWinTime = 0;
     startTime = QDateTime::currentMSecsSinceEpoch();
-    superGameTimer->start(superGameTimerMills);
+    gameCountDown->init();
+    gameCountDown->run();
+    emit superGameStarted();
 }
 
 void SuperGameModule::onUpdate()

@@ -190,13 +190,21 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                     oneGameconfig.startPath.push_back(QPointF(x, y));
                 }
 
+
+                //final path
+
+                OneStageConfig oneStage;
                 auto finalPathJson = gameObj["finalPath"].toArray();
                 for(auto path: finalPathJson)
                 {
                     auto x = (path.toObject()["x"].toDouble());
                     auto y = (path.toObject()["y"].toDouble());
-                    oneGameconfig.finalPath.push_back(QPointF(x, y));
+                    oneStage.path.push_back(QPointF(x, y));
                 }
+                oneGameconfig.stages.push_back(oneStage);
+                //
+
+
 
                 standGamesConfig->games.push_back(oneGameconfig);
             }

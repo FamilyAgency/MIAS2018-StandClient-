@@ -5,6 +5,7 @@ import QtQuick.Controls.Styles 1.2
 import QtMultimedia 5.8
 
 import "elements"
+import "../tests"
 import com.app 1.0
 
 Item
@@ -18,6 +19,31 @@ Item
     property string instruction0Path: configController.getVideoFileInAppDir("girl");
 
     anchors.fill: parent;
+
+//    VideoWindow
+//    {
+//        id: video1;
+//    }
+
+//    VideoWindow
+//    {
+//        id: video2;
+//        x: 540;
+//    }
+
+//    VideoWindow
+//    {
+//        id: video3;
+//        x: 1080;
+//    }
+
+//    Component.onCompleted:
+//    {
+//        video1.setSource(intro1Path);
+//        video2.setSource(intro2Path);
+//        video3.setSource(instructionPath);
+//    }
+
 
     //    Video
     //    {

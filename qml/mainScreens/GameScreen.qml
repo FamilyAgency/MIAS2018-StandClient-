@@ -39,6 +39,23 @@ Item
     Component.onCompleted:
     {
         map.source = standData.getStandMap();
+    }    
+
+
+    Connections
+    {
+        target: rouletteModule;
+
+        onShowSmallCar:
+        {
+            console.log("show small car !!!!!!!!!!!!");
+            car.visible = true;
+        }
+
+        onUpdateCanvas:
+        {
+            car.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
+        }
     }
 
     Connections
@@ -46,15 +63,15 @@ Item
         target: gameTaskManager;
 
         onUpdateCanvas:
-        {           
+        {
             road.draw();
-            car.moveCar();
+            car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
         }
 
-//        onPreTaskStartEvent:
-//        {
-//            consts.animateGuideColor();
-//        }
+        //        onPreTaskStartEvent:
+        //        {
+        //            consts.animateGuideColor();
+        //        }
     }
 
     function gameStop()

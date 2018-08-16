@@ -195,33 +195,35 @@ Item
 
     Connections
     {
+        target: superGameModule;
+        onSuperGameStarted:
+        {
+            openCountDown();
+        }
+
+        onCountDownUpdate:
+        {
+            countDownUpdate(time);
+        }
+
+        onCountDownComplete:
+        {
+            visible = false;
+        }
+    }
+
+    Connections
+    {
         target: gameModule;
 
         onAllStagesComleteEventMap:
         {
-            preTask.visible = false;
-            postTask.visible = false;
-            allTask.visible = true;
-            scale = 0;
-            scaleAnimator.start();
-            visible = true;
-
-            winDescrText.text = description;
-            console.log("allStagesComleteEventMap ", description, imageWinName);
-
-            placeIcon.source = standData.getStandImage(imageWinName);
+            openGameComplete();
         }
 
         onStageComleteEventMap:
         {
-            descrText.text = description;
-
-            preTask.visible = false;
-            postTask.visible = true;
-            allTask.visible = false;
-            scale = 0;
-            scaleAnimator.start();
-            visible = true;
+            openStageComplete();
         }
     }
 
@@ -231,13 +233,7 @@ Item
 
         onPreTaskStartEvent:
         {
-            // currentStageId = userData.getCurrentStageId();
-            preTask.visible = true;
-            postTask.visible = false;
-            allTask.visible = false;
-            scale = 0;
-            scaleAnimator.start();
-            visible = true;
+            openCountDown();
         }
 
         onTaskStartEvent:
@@ -247,15 +243,56 @@ Item
 
         onPreTaskCoundownUpdate:
         {
-            countdownText.font.pixelSize = 350 * consts.designScale;
-            countdownText.text = time.toFixed(0);
-
-            if( countdownText.text == "0")
-            {
-                countdownText.font.pixelSize = 120 * consts.designScale;
-                countdownText.text = "ПОЕХАЛИ";
-            }
+            countDownUpdate(time);
         }
     }
 
+    function openGameComplete()
+    {
+        preTask.visible = false;
+        postTask.visible = false;
+        allTask.visible = true;
+        scale = 0;
+        scaleAnimator.start();
+        visible = true;
+
+        winDescrText.text = description;
+        console.log("allStagesComleteEventMap ", description, imageWinName);
+
+        placeIcon.source = standData.getStandImage(imageWinName);
+    }
+
+    function openStageComplete()
+    {
+        descrText.text = description;
+
+        preTask.visible = false;
+        postTask.visible = true;
+        allTask.visible = false;
+        scale = 0;
+        scaleAnimator.start();
+        visible = true;
+    }
+
+    function openCountDown()
+    {
+        preTask.visible = true;
+        postTask.visible = false;
+        allTask.visible = false;
+        scale = 0;
+        scaleAnimator.start();
+        visible = true;
+    }
+
+    function countDownUpdate(time)
+    {
+        countdownText.font.pixelSize = 350 * consts.designScale;
+        countdownText.text = time.toFixed(0);
+
+        if( countdownText.text == "0")
+        {
+            countdownText.font.pixelSize = 120 * consts.designScale;
+            countdownText.text = "ПОЕХАЛИ";
+        }
+    }
 }

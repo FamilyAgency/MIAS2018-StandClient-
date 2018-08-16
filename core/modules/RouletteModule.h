@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QVector2D>
+
 #include "BaseModule.h"
 #include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
@@ -97,6 +99,8 @@ public:
     float allIconsScale() const;
     void setAllIconsScale(float value);
 
+    Q_INVOKABLE QPointF getCurPoint() const;
+    Q_INVOKABLE float getForwardVectorRotation() const;
 
 private:
     QPropertyAnimation* mainTitleOpacityAnimation = nullptr;
@@ -131,8 +135,12 @@ private:
     const float circleYDefault = 418;
     const int mindwaveAttentionThreshold = 80;
 
+    const int smallCarTimerMills = 10;
+
+
     QTimer* mindwaveTimer = nullptr;
     QTimer* readTaskTimer = nullptr;
+    QTimer* smallCarTimer = nullptr;
 
     QSharedPointer<MindwaveComponentBase> mindwaveComponent;
     QSharedPointer<ServerComponent> serverComponent;
@@ -162,6 +170,13 @@ private:
     void connectComponents();
     void disconnectComponents();
 
+    void startSmallCarAnimation();
+
+    QPointF curPoint = QPointF(0.0f, 0.0f);
+    QPointF startPoint, endPoint, position;
+    QVector2D velocityDirection;
+
+
 signals:
     void mainTitleOpacityChanged();
     void carYChanged();
@@ -187,6 +202,9 @@ signals:
 
 
     void allIconsScaleChanged();
+    void showSmallCar();
+
+    void updateCanvas();
 
 
 private slots:
@@ -202,6 +220,7 @@ private slots:
     void onCircleFinalYAnimationCompleted();
     void onPulsarAnimationCompleted();
     void onCircleOpacityCompleted();
+    void onSmallCarUpdate();
 };
 
 

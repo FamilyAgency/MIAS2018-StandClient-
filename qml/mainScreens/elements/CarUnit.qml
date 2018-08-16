@@ -30,15 +30,14 @@ Item
     }
 
 
-    function moveCar()
+    function moveCar(currentPoint, forwardVector)
     {
-        var scaleFactor = consts.scaleFactor;
-        var canvasY = 0;
+       var canvasY = 0;
 
-        var curPoint = gameTaskManager.getCurPoint();
+        var curPoint = currentPoint;
 
-        car.x = curPoint.x * scaleFactor;
-        car.y = canvasY + curPoint.y * scaleFactor;
+        car.x = curPoint.x;
+        car.y = canvasY + curPoint.y;
         shadow.x = car.x;
         shadow.y = car.y;
 
@@ -46,7 +45,7 @@ Item
         car.scale = consts.artScaleFactor;
         shadow.scale = car.scale;
 
-        var rotation = gameTaskManager.getForwardVectorRotation();
+        var rotation = forwardVector;
         var degrees = rotation * consts.toDegrees;
         car.rotation = degrees + consts.carAddAngle;
         shadow.rotation = car.rotation;

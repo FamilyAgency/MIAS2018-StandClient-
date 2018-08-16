@@ -118,6 +118,11 @@ int UserData::getCurrentStageId() const
     return _gameUserData.getCurrentStageId();
 }
 
+bool UserData::isFinalStage() const
+{
+    return _gameUserData.isFinalStage();
+}
+
 bool UserData::canPlay() const
 {
     return _canPlay;
@@ -324,6 +329,13 @@ int GameUserData::getCurrentStageId() const
 {
     return currentStageId;
 }
+
+bool GameUserData::isFinalStage() const
+{
+  return currentStageId == 4;
+}
+
+
 
 void GameUserData::currentStageCompleted(int time)
 {

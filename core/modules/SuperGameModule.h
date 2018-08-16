@@ -6,6 +6,7 @@
 #include "BaseModule.h"
 #include "core/data/UserData.h"
 #include "components/ServerComponent.h"
+#include "core/game/GameCountDown.h"
 
 class SuperGameModule : public BaseModule
 {
@@ -40,7 +41,9 @@ private:
 
     QTimer* superGameTimer = nullptr;
     QSharedPointer<UserData> currentUser;
-    QSharedPointer<ServerComponent> serverComponent;
+    QSharedPointer<ServerComponent> serverComponent;    
+    QSharedPointer<GameCountDown> gameCountDown = nullptr;
+
 
     void connectComponents();
     void disconnectComponents();
@@ -49,10 +52,16 @@ signals:
     void updateSuperGameTime(int mills);
     void superGameFailed();
     void superGameSuccess(int time);
+    void superGameStarted();
+    void countDownUpdate(float time);
+    void countDownComplete();
 
 private slots:
     void onUpdate();
     void onUserFinishedGame();
+
+    void onCountDownUpdate(float countDown);
+    void onCountDownComplete();
 };
 
 #endif // SUPERGAMEMODULE_H

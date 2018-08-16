@@ -14,8 +14,6 @@ SOURCES += main.cpp \
     network/http/HTTPClient.cpp \
     tools/MathTools.cpp \
     components/HealthCheckerComponent.cpp \
-    core/game/GamePostTask.cpp \
-    core/game/GamePreTask.cpp \
     core/game/GameTask.cpp \
     core/game/GameTaskManager.cpp \
     core/game/VelocityCalculator.cpp \
@@ -59,7 +57,10 @@ SOURCES += main.cpp \
     tests/ServerRemoteComponentTest.cpp \
     core/modules/TestDriveModule.cpp \
     tools/FileReader.cpp \
-    core/data/DilerData.cpp
+    core/data/DilerData.cpp \
+    core/game/GameCountDown.cpp \
+    core/game/GameCountDown.cpp \
+    core/game/GameCountDown.cpp
 
 
 RESOURCES += qml.qrc
@@ -100,8 +101,6 @@ HEADERS += \
     network/socketClient/TCPSocketClient.h \
     network/http/HTTPClient.h \
     tools/MathTools.h \
-    core/game/GamePostTask.h \
-    core/game/GamePreTask.h \
     core/game/GameTask.h \
     core/game/GameTaskManager.h \
     core/game/VelocityCalculator.h \
@@ -157,7 +156,8 @@ HEADERS += \
     tests/ServerRemoteComponentTest.h \
     core/modules/TestDriveModule.h \
     tools/FileReader.h \
-    core/data/DilerData.h
+    core/data/DilerData.h \
+    core/game/GameCountDown.h
 
 DISTFILES += \
     modules/components/components.pri

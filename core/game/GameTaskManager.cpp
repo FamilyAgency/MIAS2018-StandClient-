@@ -3,19 +3,25 @@
 #include <QDateTime>
 
 GameTaskManager::GameTaskManager()
-{    
-    gamePreTask = new GamePreTask();
-    gamePostTask = new GamePostTask();
-
-    connect(gamePreTask, SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
-    connect(gamePreTask, SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
+{
+    gameCountDown.reset(new GameCountDown());
+    connect(gameCountDown.data(), SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
+    connect(gameCountDown.data(), SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
 
     gameTask.reset(new GameTask());
     connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
     connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
     connect(gameTask.data(), SIGNAL(newCompletedPoint(const QPointF&)), this, SLOT(onNewCompletedPoint(const QPointF&)));
+}
 
+GameTaskManager::~GameTaskManager()
+{
+    disconnect(gameCountDown.data(), SIGNAL(update(float)), this, SLOT(onPreGameTaskUpdate(float)));
+    disconnect(gameCountDown.data(), SIGNAL(complete()), this, SLOT(onPreGameTaskComplete()));
 
+    disconnect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+    disconnect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+    disconnect(gameTask.data(), SIGNAL(newCompletedPoint(const QPointF&)), this, SLOT(onNewCompletedPoint(const QPointF&)));
 }
 
 void GameTaskManager::setQmlContext(QQmlContext* qmlContext)
@@ -62,15 +68,15 @@ void GameTaskManager::setTaskState(TaskState taskState)
     switch(taskState)
     {
     case TaskState::None:
-        gamePreTask->stop();
+        gameCountDown->stop();
         gameTask->stop();
         emit updateCanvas();
         break;
 
     case TaskState::PreGame:
         gameTask->init();
-        gamePreTask->init();
-        gamePreTask->run();
+        gameCountDown->init();
+        gameCountDown->run();
         emit preTaskStartEvent();
         break;
 

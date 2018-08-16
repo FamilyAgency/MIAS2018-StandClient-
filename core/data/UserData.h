@@ -94,6 +94,8 @@ public:
     OneStageData getCurrentStage() const;
     int getCurrentStageId() const;
 
+    bool isFinalStage() const;
+
     void currentStageCompleted(int time);
 
     void superGameCompleted(int time);
@@ -139,6 +141,7 @@ public:
     Q_INVOKABLE int getCurrentStageId() const;
     Q_INVOKABLE void clearBaseUserData();
     Q_INVOKABLE int getSecondsToStart() const;
+    bool isFinalStage() const;
 
     QVariantList getFullGamePath() const;
     QVariantList getTargetPoints() const;

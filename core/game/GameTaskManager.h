@@ -8,8 +8,7 @@
 #include "components/mindwave/MindwaveComponentBase.h"
 
 #include "core/game/GameTask.h"
-#include "core/game/GamePreTask.h"
-#include "core/game/GamePostTask.h"
+#include "core/game/GameCountDown.h"
 
 #include "core/data/UserData.h"
 
@@ -18,6 +17,7 @@ class GameTaskManager: public QObject
     Q_OBJECT
 public:
     GameTaskManager();
+    ~GameTaskManager();
 
     Q_INVOKABLE bool isRunning() const;
     Q_INVOKABLE bool isPreTaskState() const;
@@ -53,9 +53,8 @@ private:
     void setupCurrentGame(const OneStageData& gameData);
     void initCurrentTask();
 
-    GamePreTask* gamePreTask = nullptr;
+    QSharedPointer<GameCountDown> gameCountDown = nullptr;
     QSharedPointer<GameTask> gameTask = nullptr;
-    GamePostTask* gamePostTask = nullptr;
 
     int currentGameId = 0;
     QSharedPointer<UserData> currentUser;
@@ -65,8 +64,6 @@ private:
 signals:
     void updateCanvas();   
     void taskComleteEvent(int completionTime);
-   // void allTaskComleteEvent();
-
     void taskStartEvent();
     void preTaskStartEvent();  
     void preTaskCoundownUpdate(float time);

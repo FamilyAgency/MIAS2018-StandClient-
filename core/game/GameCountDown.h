@@ -4,11 +4,13 @@
 #include <QObject>
 #include <QTimer>
 
-class GamePreTask : public QObject
+class GameCountDown : public QObject
 {
     Q_OBJECT
 public:
-    explicit GamePreTask(QObject *parent = nullptr);
+    explicit GameCountDown();
+    ~GameCountDown();
+
     void init();
     void run();
     void stop();
@@ -19,8 +21,9 @@ signals:
 
 private slots:
      void onUpdate();
+
 private:
-    QTimer* timer;
+    QTimer* timer = nullptr;
     int startTime = 0;
     const int preTaskMills = 3 * 1000;
     const int preTaskTimerMills = 10;

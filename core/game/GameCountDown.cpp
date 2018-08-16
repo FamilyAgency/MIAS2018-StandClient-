@@ -1,30 +1,39 @@
-#include "GamePreTask.h"
+#include "GameCountDown.h"
 #include <QDateTime>
 #include <QDebug>
 
-GamePreTask::GamePreTask(QObject *parent) : QObject(parent)
+GameCountDown::GameCountDown()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
 }
 
-void GamePreTask::init()
+GameCountDown::~GameCountDown()
+{
+    if(timer)
+    {
+        disconnect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
+        delete timer;
+    }
+}
+
+void GameCountDown::init()
 {
 
 }
 
-void GamePreTask::run()
+void GameCountDown::run()
 {
     startTime = QDateTime::currentMSecsSinceEpoch();
     timer->start(preTaskTimerMills);
 }
 
-void GamePreTask::stop()
+void GameCountDown::stop()
 {
      timer->stop();
 }
 
-void GamePreTask::onUpdate()
+void GameCountDown::onUpdate()
 {
     int newTime = QDateTime::currentMSecsSinceEpoch() - startTime;
 

@@ -29,7 +29,7 @@ public:
     QPointF getEndPoint() const;
     int getCompletionTime() const;
 
-    void getCurrentPoint();
+   // void getCurrentPoint();
     QVariantList getCompletedPath() const;
     QVariantList getFullPath() const;
     float getForwardVectorRotation() const;

@@ -63,15 +63,23 @@ void GameModule::stop()
 
 void GameModule::startStage()
 {
-     gameTaskManager->startStage(currentUser);
+    gameTaskManager->startStage(currentUser);
 }
 
 void GameModule::onStageComleteEvent(int completionTime)
-{
-    setCanContinue(false);
-    dispatchAdvantageData();
+{    
     currentUser->currentStageCompleted(completionTime);
-    serverComponent->updateGameRequest(currentUser->baseUserData().id);
+
+    if(!currentUser->isFinalStage())
+    {
+        setCanContinue(false);
+        dispatchAdvantageData();
+        serverComponent->updateGameRequest(currentUser->baseUserData().id);
+    }
+    else
+    {
+        continueGame();
+    }
     // gameSession->addTaskTime(completionTime);
 }
 
@@ -97,7 +105,7 @@ void GameModule::continueGame()
     {
         if(currentUser->hasStages())
         {
-           startStage();
+            startStage();
         }
         else
         {
