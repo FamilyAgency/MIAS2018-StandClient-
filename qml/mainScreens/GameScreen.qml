@@ -109,6 +109,12 @@ Item
         {
             car.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
         }
+
+        onSuperGameFailed:
+        {
+
+        }
+
     }
 
     function gameStop()

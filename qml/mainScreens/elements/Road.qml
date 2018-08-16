@@ -93,7 +93,6 @@ Item
 
     function drawCircles(ctx)
     {
-        console.log("draw circles", circles.length)
         for(var k = 0; k < circles.length - 1; k++)
         {
             ctx.beginPath();

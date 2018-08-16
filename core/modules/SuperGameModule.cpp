@@ -138,6 +138,7 @@ void SuperGameModule::onUpdate()
     }
     else
     {
+        gameTask->stop();
         superGameTimer->stop();
         emit updateSuperGameTime(0.0f);
         emit superGameFailed();
@@ -238,6 +239,7 @@ void SuperGameModule::superGamePassedTest()
 
 void SuperGameModule::superGameFailedTest()
 {
+    gameTask->stop();
     superGameTimer->stop();
     emit updateSuperGameTime(0.0f);
     emit superGameFailed();

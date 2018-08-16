@@ -30,7 +30,7 @@ Item
             id: startBtn;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.bottom: parent.bottom;
-           // anchors.top: parent.top;
+            //anchors.top: parent.top;
 
             background: Rectangle
             {
