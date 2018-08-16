@@ -73,7 +73,7 @@ Item
         var minutes = Math.floor(seconds / 60);
         if(minutes > 0)
         {           
-            return minutes + decOfNum(minutes, ['минуту', 'минуты', 'минут']);
+            return minutes + " " + decOfNum(minutes, ['минуту', 'минуты', 'минут']);
         }
         else
         {
