@@ -203,8 +203,7 @@ void AppController::start()
         comp->start();
     }
 
-    setAppState(AppState::Intro);
-
+    setAppState(AppState::TestDrive);
 }
 
 void AppController::onServerResponse(const ServerResponse& response)

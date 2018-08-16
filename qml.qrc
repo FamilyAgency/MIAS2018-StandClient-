@@ -71,5 +71,8 @@
         <file>resources/arrow.png</file>
         <file>resources/arrow_pack.png</file>
         <file>qml/touchScreens/intro/IntroTitles.qml</file>
+        <file>qml/touchScreens/testdrive/TestDriveListView.qml</file>
+        <file>qml/touchScreens/testdrive/FinalTitle.qml</file>
+        <file>qml/touchScreens/testdrive/ChooseTestDrive.qml</file>
     </qresource>
 </RCC>
