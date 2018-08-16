@@ -1,4 +1,4 @@
-import QtQuick 2.2
+import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
@@ -11,57 +11,215 @@ Item
     property var allDealersData;
     property real btnMarginBottom: 100 * consts.designScale;
 
+
+	property string signInText: "Запись\nна тест-драйв";
+	property string signInDescText: "Познакомься с увлекательным\nмиром Sata Fe!";
+	property string citiesBtnText: "Выберите ваш город";
+	property string dealerBtnText: "Выберите вашего дилера";
     property string buttonText: "ЗАПИСАТЬСЯ";
 
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+	ListModel
+	{
+		id: citiesModel;
 
-    ListModel
-    {
-        id: cityModel1;
+		ListElement { name: "Абаза" }
+		ListElement { name: "Балашиха" }
+		ListElement { name: "Верея" }
+		ListElement { name: "Верхоянск" }
+		ListElement { name: "Москва" }
+		ListElement { name: "Москва и подмосковье" }
+		ListElement { name: "Новосибирск" }
+		ListElement { name: "Самара" }
+	}
 
-        ListElement
-        {
-            name: "A"
-            type: "serviceItem"
-        }
+	ListModel
+	{
+		id: dealerModel;
+		ListElement { name: "Абаза" }
+		ListElement { name: "Абаза" }
+		ListElement { name: "Абаза" }
+		ListElement { name: "Абаза" }
+		ListElement { name: "Абаза" }
+	}
 
-        ListElement
-        {
-            name: "Алма-Аты"
-            type: "playableItem"
-        }
+//	ListModel
+//	{
+//		id: testModel;
+////		model: ["Adan Gula","Alexandria Armand","Alverta Gorney","Annalisa Dixion","Arlene Drapeau","Ashely Euler","Ashleigh Terry","Audra Vannorman","Bibi Fraire", "Branda Melgoza","Breanna Rotenberry","Brigette Delk","Bruno Raso","Calandra Dudney","Carrol Dedeaux","Celina Bichrest","Celinda Frutos","Celsa Moen","Charise Milan","Corazon Burrus","Coreen Dehner","Coretta Stillwell","Cornell Fierros","Deedee Ruggerio","Demetrice Mcclaren","Desiree Marcano","Dimple Harig","Divina Fahie","Don Thill","Ellena Fredrick","Elmo Routh","Elsie Raulerson","Ervin Bardsley","Estela Alverson","Eufemia Sheely","Fawn Opie","Fred Ralphs","Genevie Spires","Genna Quin","Gerri Aden","Gianna Shears","Gilda Doyel","Glady Peguero","Guy Sondag","Herschel Flowers","Hilda Hamm","Hiroko Mccarley","Jackeline Millington","Jacqualine Twiss","Jacquelyne Worsley","Janelle Broman","Jani Reddish","Jasper Krone","Jene Gump","Jimmie Cooley","Kellye Wiest","Kristie Jules","Kymberly Moodie","Latesha Netter","Lavelle Lasala","Lesli Czapla","Lorette Prescott","Lorie Hoeft","Lyndia Schwalm","Mable Marron","Marcelino Spence","Marcie Yopp","Margrett Spagnuolo","Maris Ruff","Marvella Bowlby","Mauro Winberg","Maybelle Chute","Meghan Burts","Micah Hoggan","Mireille Eastin","Mitsue Ohler","Monica Mccall","Morris Cappel","Myong Bale","Nannie Poore","Noella Gledhill","Ofelia Bane","Phoebe Bui","Quincy Sweeting","Raguel Ross","Raymundo Headlee","Ressie Helt","Rikki Gilligan","Roselee Swain","Shanda Ballew","Stephine Dimauro","Tamesha Roop","Temple Mcbain","Tiesha Crumley","Tova Kiel","Wade Fossum","Willodean Ferguson","Winfred High","Winter Furrow","Yvone Edge"]
+//	}
 
-        ListElement
-        {
-            name: "Б"
-            type: "serviceItem"
-        }
-    }
+	SwipeView
+	{
+		id: swiper;
 
-    ListModel
-    {
-        id: dealerModel1;
+		currentIndex: 0;
+		anchors.fill: parent;
 
-        ListElement
-        {
-            name: "A"
-            type: "serviceItem"
-        }
+		Item
+		{
+			Column
+			{
+				id: mainItem;
 
-        ListElement
-        {
-            name: "Алма-Аты"
-            type: "playableItem"
-        }
+				anchors.fill: parent;
+				anchors.topMargin: 100;
+				anchors.bottomMargin: 100;
+				anchors.leftMargin: 150;
+				anchors.rightMargin: 150;
+				spacing: 50;
 
-        ListElement
-        {
-            name: "Б"
-            type: "serviceItem"
-        }
-    }
+				Text
+				{
+					text: signInText;
+					anchors.left: parent.left;
+					anchors.right: parent.right;
+					horizontalAlignment: Text.AlignHCenter;
+					font.family: font.hyundaiSansHeadBold;
+					font.pixelSize: 80;
+					font.bold: true;
+					wrapMode: Text.Wrap;
+					color: "white";
+				}
+
+				Text
+				{
+					text: signInDescText;
+					anchors.left: parent.left;
+					anchors.right: parent.right;
+					horizontalAlignment: Text.AlignHCenter;
+					font.family: font.hyundaiSansHeadRegular;
+					font.pixelSize: 50;
+					wrapMode: Text.Wrap;
+					color: "white";
+				}
+
+				Button
+				{
+					id: citiesBtn;
+
+					text: citiesBtnText;
+
+					anchors.left: parent.left;
+					anchors.right: parent.right;
+
+					onClicked:
+					{
+						swiper.currentIndex = 1;
+					}
+
+					contentItem: Text
+					{
+						text: parent.text;
+						font.family: font.hyundaiSansHeadLight;
+						font.pixelSize: 30;
+						color: "#fff";
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+						elide: Text.ElideRight
+					}
+
+					background: Rectangle
+					{
+						implicitWidth: 500;
+						implicitHeight: 150;
+						radius: 100;
+						color: "#000";
+						border.color: "#112041";
+					}
+				}
+
+				Button
+				{
+					id: dealerBtn;
+
+					text: dealerBtnText;
+
+					anchors.left: parent.left;
+					anchors.right: parent.right;
+
+					onClicked:
+					{
+						swiper.currentIndex = 2;
+					}
+
+					contentItem: Text
+					{
+						text: parent.text;
+						font.family: font.hyundaiSansHeadLight;
+						font.pixelSize: 30;
+						color: "#fff";
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+						elide: Text.ElideRight
+					}
+
+					background: Rectangle
+					{
+						implicitWidth: 500;
+						implicitHeight: 150;
+						radius: 100;
+						color: "#000";
+						border.color: "#112041";
+					}
+				}
+			}
+		}
+
+		// _____________END MAIN ITEM____________________
+
+		Item
+		{
+			TestDriveListView
+			{
+				id: citiesListView;
+//				model: citiesModel;
+				model: ["Adan Gula","Alexandria Armand","Alverta Gorney","Annalisa Dixion","Arlene Drapeau","Ashely Euler","Ashleigh Terry","Audra Vannorman","Bibi Fraire", "Branda Melgoza","Breanna Rotenberry","Brigette Delk","Bruno Raso","Calandra Dudney","Carrol Dedeaux","Celina Bichrest","Celinda Frutos","Celsa Moen","Charise Milan","Corazon Burrus","Coreen Dehner","Coretta Stillwell","Cornell Fierros","Deedee Ruggerio","Demetrice Mcclaren","Desiree Marcano","Dimple Harig","Divina Fahie","Don Thill","Ellena Fredrick","Elmo Routh","Elsie Raulerson","Ervin Bardsley","Estela Alverson","Eufemia Sheely","Fawn Opie","Fred Ralphs","Genevie Spires","Genna Quin","Gerri Aden","Gianna Shears","Gilda Doyel","Glady Peguero","Guy Sondag","Herschel Flowers","Hilda Hamm","Hiroko Mccarley","Jackeline Millington","Jacqualine Twiss","Jacquelyne Worsley","Janelle Broman","Jani Reddish","Jasper Krone","Jene Gump","Jimmie Cooley","Kellye Wiest","Kristie Jules","Kymberly Moodie","Latesha Netter","Lavelle Lasala","Lesli Czapla","Lorette Prescott","Lorie Hoeft","Lyndia Schwalm","Mable Marron","Marcelino Spence","Marcie Yopp","Margrett Spagnuolo","Maris Ruff","Marvella Bowlby","Mauro Winberg","Maybelle Chute","Meghan Burts","Micah Hoggan","Mireille Eastin","Mitsue Ohler","Monica Mccall","Morris Cappel","Myong Bale","Nannie Poore","Noella Gledhill","Ofelia Bane","Phoebe Bui","Quincy Sweeting","Raguel Ross","Raymundo Headlee","Ressie Helt","Rikki Gilligan","Roselee Swain","Shanda Ballew","Stephine Dimauro","Tamesha Roop","Temple Mcbain","Tiesha Crumley","Tova Kiel","Wade Fossum","Willodean Ferguson","Winfred High","Winter Furrow","Yvone Edge"]
+
+			}
+
+			Rectangle
+			{
+				width: 5;
+				anchors.right: parent.right;
+				anchors.top: parent.top;
+				height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
+				color: "#0893b7";
+			}
+
+		}
+
+
+		Item
+		{
+			Column
+			{
+				id: dealerItem;
+
+				anchors.fill: parent;
+				anchors.topMargin: 100;
+				anchors.bottomMargin: 100;
+				anchors.leftMargin: 150;
+				anchors.rightMargin: 150;
+				spacing: 50;
+			}
+		}
+
+
+
+	}// ________________END SWIPER________________________
+
+
+
+
+
+
+
+
+
+
 
 
     ColumnLayout
@@ -84,9 +242,20 @@ Item
 
      }
 
+
+	FontManager
+	{
+		id: font;
+	}
+
+	Consts
+	{
+		id: consts;
+	}
+
     ColumnLayout
     {
-        id:columns;
+		id:columns;
         spacing: 100;
         visible: false;
         y:400;
@@ -94,6 +263,7 @@ Item
 
         ComboBox
         {
+			visible: false;
             id: citiesComboBox;
             currentIndex: 0;
             implicitWidth: 500;
@@ -112,6 +282,7 @@ Item
         ComboBox
         {
             id: dealersComboBox;
+			visible: false;
             currentIndex: 0;
             implicitWidth: 500;
             model:ListModel
