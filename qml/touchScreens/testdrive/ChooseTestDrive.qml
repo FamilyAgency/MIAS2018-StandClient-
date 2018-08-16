@@ -175,9 +175,16 @@ Item
 			TestDriveListView
 			{
 				id: citiesListView;
-//				model: citiesModel;
-				model: ["Adan Gula","Alexandria Armand","Alverta Gorney","Annalisa Dixion","Arlene Drapeau","Ashely Euler","Ashleigh Terry","Audra Vannorman","Bibi Fraire", "Branda Melgoza","Breanna Rotenberry","Brigette Delk","Bruno Raso","Calandra Dudney","Carrol Dedeaux","Celina Bichrest","Celinda Frutos","Celsa Moen","Charise Milan","Corazon Burrus","Coreen Dehner","Coretta Stillwell","Cornell Fierros","Deedee Ruggerio","Demetrice Mcclaren","Desiree Marcano","Dimple Harig","Divina Fahie","Don Thill","Ellena Fredrick","Elmo Routh","Elsie Raulerson","Ervin Bardsley","Estela Alverson","Eufemia Sheely","Fawn Opie","Fred Ralphs","Genevie Spires","Genna Quin","Gerri Aden","Gianna Shears","Gilda Doyel","Glady Peguero","Guy Sondag","Herschel Flowers","Hilda Hamm","Hiroko Mccarley","Jackeline Millington","Jacqualine Twiss","Jacquelyne Worsley","Janelle Broman","Jani Reddish","Jasper Krone","Jene Gump","Jimmie Cooley","Kellye Wiest","Kristie Jules","Kymberly Moodie","Latesha Netter","Lavelle Lasala","Lesli Czapla","Lorette Prescott","Lorie Hoeft","Lyndia Schwalm","Mable Marron","Marcelino Spence","Marcie Yopp","Margrett Spagnuolo","Maris Ruff","Marvella Bowlby","Mauro Winberg","Maybelle Chute","Meghan Burts","Micah Hoggan","Mireille Eastin","Mitsue Ohler","Monica Mccall","Morris Cappel","Myong Bale","Nannie Poore","Noella Gledhill","Ofelia Bane","Phoebe Bui","Quincy Sweeting","Raguel Ross","Raymundo Headlee","Ressie Helt","Rikki Gilligan","Roselee Swain","Shanda Ballew","Stephine Dimauro","Tamesha Roop","Temple Mcbain","Tiesha Crumley","Tova Kiel","Wade Fossum","Willodean Ferguson","Winfred High","Winter Furrow","Yvone Edge"]
-
+				model: ListModel
+				{
+					id: cityModel;
+				}
+				//model: ["Adan Gula","Alexandria Armand","Alverta Gorney","Annalisa Dixion","Arlene Drapeau","Ashely Euler","Ashleigh Terry","Audra Vannorman","Bibi Fraire", "Branda Melgoza","Breanna Rotenberry","Brigette Delk","Bruno Raso","Calandra Dudney","Carrol Dedeaux","Celina Bichrest","Celinda Frutos","Celsa Moen","Charise Milan","Corazon Burrus","Coreen Dehner","Coretta Stillwell","Cornell Fierros","Deedee Ruggerio","Demetrice Mcclaren","Desiree Marcano","Dimple Harig","Divina Fahie","Don Thill","Ellena Fredrick","Elmo Routh","Elsie Raulerson","Ervin Bardsley","Estela Alverson","Eufemia Sheely","Fawn Opie","Fred Ralphs","Genevie Spires","Genna Quin","Gerri Aden","Gianna Shears","Gilda Doyel","Glady Peguero","Guy Sondag","Herschel Flowers","Hilda Hamm","Hiroko Mccarley","Jackeline Millington","Jacqualine Twiss","Jacquelyne Worsley","Janelle Broman","Jani Reddish","Jasper Krone","Jene Gump","Jimmie Cooley","Kellye Wiest","Kristie Jules","Kymberly Moodie","Latesha Netter","Lavelle Lasala","Lesli Czapla","Lorette Prescott","Lorie Hoeft","Lyndia Schwalm","Mable Marron","Marcelino Spence","Marcie Yopp","Margrett Spagnuolo","Maris Ruff","Marvella Bowlby","Mauro Winberg","Maybelle Chute","Meghan Burts","Micah Hoggan","Mireille Eastin","Mitsue Ohler","Monica Mccall","Morris Cappel","Myong Bale","Nannie Poore","Noella Gledhill","Ofelia Bane","Phoebe Bui","Quincy Sweeting","Raguel Ross","Raymundo Headlee","Ressie Helt","Rikki Gilligan","Roselee Swain","Shanda Ballew","Stephine Dimauro","Tamesha Roop","Temple Mcbain","Tiesha Crumley","Tova Kiel","Wade Fossum","Willodean Ferguson","Winfred High","Winter Furrow","Yvone Edge"]
+				onItemChoosen:
+				{
+					calculateDealersByCityId(index);
+					swiper.currentIndex = 2;
+				}
 			}
 
 			Rectangle
@@ -189,26 +196,50 @@ Item
 				color: "#0893b7";
 			}
 
+			CloseButton
+			{
+				onClicked:
+				{
+					swiper.currentIndex = 0;
+				}
+			}
 		}
 
 
 		Item
 		{
-			Column
+			TestDriveListView
 			{
-				id: dealerItem;
+				id: dealersListView;
+				model:ListModel
+				{
+					id: dealersModel;
+				}
 
-				anchors.fill: parent;
-				anchors.topMargin: 100;
-				anchors.bottomMargin: 100;
-				anchors.leftMargin: 150;
-				anchors.rightMargin: 150;
-				spacing: 50;
+				onItemChoosen:
+				{
+					calculateDealersByCityId(index);
+					swiper.currentIndex = 0;
+				}
+			}
+
+			Rectangle
+			{
+				width: 5;
+				anchors.right: parent.right;
+				anchors.top: parent.top;
+				height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
+				color: "#0893b7";
+			}
+
+			CloseButton
+			{
+				onClicked:
+				{
+					swiper.currentIndex = 0;
+				}
 			}
 		}
-
-
-
 	}// ________________END SWIPER________________________
 
 
@@ -268,10 +299,10 @@ Item
             currentIndex: 0;
             implicitWidth: 500;
 
-            model:ListModel
-            {
-                id: cityModel;
-            }
+//            model:ListModel
+//            {
+//                id: cityModel;
+//            }
 
             onCurrentIndexChanged:
             {
@@ -285,10 +316,10 @@ Item
 			visible: false;
             currentIndex: 0;
             implicitWidth: 500;
-            model:ListModel
-            {
-                id: dealersModel;
-            }
+//            model:ListModel
+//            {
+//                id: dealersModel;
+//            }
         }
     }
 

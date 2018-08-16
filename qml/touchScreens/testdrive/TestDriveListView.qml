@@ -8,6 +8,8 @@ ListView
 {
 	id: listView;
 
+	signal itemChoosen(int index);
+
 	model: ["none"];
 
 	anchors.fill: parent;
@@ -106,7 +108,8 @@ ListView
 			   anchors.fill: parent;
 			   onClicked:
 			   {
-				   console.log("oh YEAH!" + visibleArea.yPosition  + "   "+ (listView.contentY+listView.height)/listView.contentHeight)
+				   itemChoosen(modelData);
+				   //console.log("oh YEAH!" + visibleArea.yPosition  + "   "+ (listView.contentY+listView.height)/listView.contentHeight)
 			   }
 		   }
 		}
@@ -120,9 +123,6 @@ ListView
 			height: 500;
 		}
 	}
-
-
-
 
 	FontLoader
 	{
