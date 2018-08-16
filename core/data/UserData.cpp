@@ -162,6 +162,16 @@ OneStageData UserData::getCurrentStage() const
     return _gameUserData.getCurrentStage();
 }
 
+QVector<QPointF> UserData::getStartPath() const
+{
+    return _gameUserData.startPath;
+}
+
+QVector<QPointF> UserData::getFinalPath() const
+{
+    return _gameUserData.finalPath;
+}
+
 void UserData::currentStageCompleted(int time)
 {
     _gameUserData.currentStageCompleted(time);
@@ -280,6 +290,9 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
         stages.push_back(oneGameData);
         stageTimes.push_back(0.0f);
     }
+
+    startPath = game.startPath;
+    finalPath = game.finalPath;
 
     _hasGames = true;
 }

@@ -26,16 +26,6 @@ Item
 
     Connections
     {
-        target:gameModule;
-
-        onAllStagesComleteEvent:
-        {
-            visible = true;
-        }
-    }
-
-    Connections
-    {
         target:gameTaskManager;
         onUpdateCanvas:
         {
@@ -47,7 +37,7 @@ Item
         onPreTaskStartEvent:
         {
             canvasCirc.percentLimit = gameTaskManager.getMindwaveLimit();
-            visible = true;
+           // visible = true;
             updatePosition();
         }
     }

@@ -222,6 +222,9 @@ public:
     QString iconName = "iconName";
 
     QVector<OneStageConfig> stages;
+    QVector<QPointF> startPath;
+    QVector<QPointF> finalPath;
+
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)
 

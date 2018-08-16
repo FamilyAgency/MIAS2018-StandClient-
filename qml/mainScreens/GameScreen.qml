@@ -16,224 +16,58 @@ Item
 
     Image
     {
-        id:road
+        id:map
         anchors.fill: parent;
         smooth:true;
     }
 
-    Canvas
+    Road
     {
-        id: canvas;
-        anchors.fill: parent;
-        antialiasing: true;
-
-        onPaint:
-        {
-            var scaleFactor = consts.scaleFactor;
-            var ctx = getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            if(gameTaskManager.isPreTaskState() || gameTaskManager.isRunning())
-            {
-                drawGuidePaths(ctx);
-                // drawCircles(ctx);
-                // moveCar();
-
-
-                // if(gameTaskManager.isRunning())
-                //  {
-                //    drawGuidePaths(ctx);
-                var list = gameTaskManager.getCompletedPath();
-
-                ctx.lineWidth = consts.lineWidth;
-                ctx.strokeStyle =  "#ffff00";
-
-                ctx.lineCap = consts.lineCap;
-                ctx.lineJoin = consts.lineJoin;
-
-                if(list.length > 1)
-                {
-                    ctx.beginPath();
-                    ctx.moveTo(list[0].x * scaleFactor, list[0].y * scaleFactor);
-                    for(var i = 1; i < list.length; i++)
-                    {
-                        ctx.lineTo(list[i].x * scaleFactor, list[i].y * scaleFactor);
-                    }
-
-                    var curPoint = gameTaskManager.getCurPoint();
-                    ctx.lineTo(curPoint.x * scaleFactor, curPoint.y * scaleFactor);
-                    ctx.stroke();
-                    ctx.closePath();
-                }
-
-
-
-                //                else
-                //                {
-                //                    ctx.beginPath();
-                //                    var startPoint = gameTaskManager.getStartPoint();
-                //                    ctx.moveTo(startPoint.x * scaleFactor, startPoint.y * scaleFactor);
-                //                }
-                drawCircles(ctx);
-                moveCar();
-            }
-        }
+        id:road;
     }
 
-    //    FinishBullet
-    //    {
-    //        id: finishBullet;
-    //        visible: false;
-    //        y: consts.canvasY;
-    //    }
-
-    //    StartBullet
-    //    {
-    //        id: startBullet;
-    //        visible: false;
-    //        y: consts.canvasY;
-    //    }
-
-    Image
+    CarUnit
     {
-        id: shadow;
-        y: consts.canvasY;
-        visible: false;
-        source: consts.carShadowUrl;
-        smooth:true;
-        antialiasing :true;
-        transform: Translate { x: -shadow.width * 0.5; y: -shadow.height * 0.5 }
+        id:car;
     }
 
-    Image
-    {
-        id:car
-        visible: false;
-        y: consts.canvasY;
-        width: consts.carWidth;
-        height: consts.carHeight;
-        source: consts.carUrl;
-        smooth:true;
-        antialiasing :true;
-        transform: Translate { x: -car.width* 0.5; y: -car.height * 0.5}
-    }
-
-    CircularProgress
-    {
-        id: circProgress;
-        visible: false;
-        y: consts.canvasY;
-    }
-
-    PreTaskPopup
+    Popup
     {
         id: pretaskPopup;
     }
 
     Component.onCompleted:
     {
-        road.source = standData.getStandMap();
+        map.source = standData.getStandMap();
     }
-
-//    Connections
-//    {
-//        target:gameModule;
-
-//        onAllStagesComleteEventMap:
-//        {
-
-//        }
-//    }
 
     Connections
     {
-        target:gameTaskManager;
+        target: gameTaskManager;
 
         onUpdateCanvas:
-        {
-            canvas.requestPaint();
+        {           
+            road.draw();
+            car.moveCar();
         }
 
-        onPreTaskStartEvent:
-        {
-            consts.animateGuideColor();
-        }
-    }
-
-    function drawGuidePaths(ctx)
-    {
-        var scaleFactor = consts.scaleFactor;
-        var list = gameTaskManager.getFullGamePath();
-
-        ctx.beginPath();
-        ctx.moveTo(list[0].x * scaleFactor, list[0].y * scaleFactor);
-        ctx.strokeStyle =  "#ff0000";
-        ctx.lineWidth = consts.lineWidth;
-
-        for(var i = 1; i < list.length; i++)
-        {
-            ctx.lineTo(list[i].x * scaleFactor, list[i].y * scaleFactor);
-        }
-        ctx.stroke();
-        ctx.closePath();
-    }
-
-    function drawCircles(ctx)
-    {
-        var circles = gameTaskManager.getTargetPoints();
-        for(var k = 0; k < circles.length; k++)
-        {
-            ctx.beginPath();
-            // console.log(circles[k].x, circles[k].y)
-            ctx.fillStyle =  "#ffffff";
-            ctx.strokeStyle =  "#ff0000";
-            ctx.lineWidth = 18;
-            var ellipseSize = 20;
-            ctx.ellipse(circles[k].x - ellipseSize * 0.5, circles[k].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
-            ctx.stroke();
-            ctx.fill();
-            ctx.closePath();
-        }
-    }
-
-    function moveCar()
-    {
-        var scaleFactor = consts.scaleFactor;
-        var canvasY = consts.canvasY;
-
-        var curPoint = gameTaskManager.getCurPoint();
-
-        car.x = curPoint.x * scaleFactor;
-        car.y = canvasY + curPoint.y * scaleFactor;
-        car.visible = true;
-        car.scale = consts.artScaleFactor;
-
-        var rotation = gameTaskManager.getForwardVectorRotation();
-        var degrees = rotation * consts.toDegrees;
-        car.rotation = degrees + consts.carAddAngle;
-
-        shadow.x = car.x;
-        shadow.y = car.y;
-        shadow.scale = car.scale;
-        shadow.visible = true;
-        shadow.rotation = car.rotation;
+//        onPreTaskStartEvent:
+//        {
+//            consts.animateGuideColor();
+//        }
     }
 
     function gameStop()
     {
         console.log("=================== game stop ===================")
         car.visible = false;
-        shadow.visible = false;
-        circProgress.visible = false;
-        //startBullet.visible = false;
-        pretaskPopup.visible = false;
         pretaskPopup.visible = false;
     }
 
     function gameStart()
     {
         console.log("=================== game start ===================")
-        circProgress.visible = true;
+        car.visible = true;
         pretaskPopup.visible = true;
     }
 }

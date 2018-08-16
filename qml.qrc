@@ -18,7 +18,6 @@
         <file>qml/mainScreens/elements/CircularProgress.qml</file>
         <file>qml/mainScreens/elements/FinishBullet.qml</file>
         <file>qml/mainScreens/elements/StartBullet.qml</file>
-        <file>qml/mainScreens/popups/PreTaskPopup.qml</file>
         <file>qml/controlScreens/StandData.qml</file>
         <file>qml/controlScreens/AppState.qml</file>
         <file>qml/controlScreens/Logger.qml</file>
@@ -71,5 +70,9 @@
         <file>resources/arrow.png</file>
         <file>resources/arrow_pack.png</file>
         <file>qml/touchScreens/intro/IntroTitles.qml</file>
+        <file>qml/tests/VideoWindow.qml</file>
+        <file>qml/mainScreens/elements/CarUnit.qml</file>
+        <file>qml/mainScreens/elements/Road.qml</file>
+        <file>qml/mainScreens/popups/Popup.qml</file>
     </qresource>
 </RCC>

@@ -181,6 +181,23 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
 
                     oneGameconfig.stages.push_back(oneStage);
                 }
+
+                auto startPathJson = gameObj["startPath"].toArray();
+                for(auto path: startPathJson)
+                {
+                    auto x = (path.toObject()["x"].toDouble());
+                    auto y = (path.toObject()["y"].toDouble());
+                    oneGameconfig.startPath.push_back(QPointF(x, y));
+                }
+
+                auto finalPathJson = gameObj["finalPath"].toArray();
+                for(auto path: finalPathJson)
+                {
+                    auto x = (path.toObject()["x"].toDouble());
+                    auto y = (path.toObject()["y"].toDouble());
+                    oneGameconfig.finalPath.push_back(QPointF(x, y));
+                }
+
                 standGamesConfig->games.push_back(oneGameconfig);
             }
 

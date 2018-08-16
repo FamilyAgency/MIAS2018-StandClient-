@@ -83,6 +83,9 @@ public:
     QVariantList fullGamePath;
     QVariantList targetPoints;
 
+    QVector<QPointF> startPath;
+    QVector<QPointF> finalPath;
+
     GameUserData();
 
     void setupConfigGameData(const StandOneGameConfig& game);
@@ -175,6 +178,10 @@ public:
     bool finished() const;
 
     SuperGameConfig getSuperGameData() const;
+
+    QVector<QPointF> getStartPath() const;
+    QVector<QPointF> getFinalPath() const;
+
 
 private:
     BaseUserData _baseUserData;
