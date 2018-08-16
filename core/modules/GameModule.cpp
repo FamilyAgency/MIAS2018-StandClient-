@@ -67,17 +67,17 @@ void GameModule::startStage()
 }
 
 void GameModule::onStageComleteEvent(int completionTime)
-{    
-    currentUser->currentStageCompleted(completionTime);
-
+{
     if(!currentUser->isFinalStage())
     {
         setCanContinue(false);
         dispatchAdvantageData();
+        currentUser->currentStageCompleted(completionTime);
         serverComponent->updateGameRequest(currentUser->baseUserData().id);
     }
     else
     {
+        currentUser->currentStageCompleted(completionTime);
         continueGame();
     }
     // gameSession->addTaskTime(completionTime);

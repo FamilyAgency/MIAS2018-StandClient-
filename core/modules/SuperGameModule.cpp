@@ -10,6 +10,11 @@ SuperGameModule::SuperGameModule(QObject *parent) : BaseModule(parent)
     gameCountDown.reset(new GameCountDown());
     connect(gameCountDown.data(), SIGNAL(update(float)), this, SLOT(onCountDownUpdate(float)));
     connect(gameCountDown.data(), SIGNAL(complete()), this, SLOT(onCountDownComplete()));
+
+    gameTask.reset(new GameTask());
+    connect(gameTask.data(), SIGNAL(updateEvent()), this, SLOT(onTaskUpdateEvent()));
+    connect(gameTask.data(), SIGNAL(completeEvent()), this, SLOT(onTaskCompleteEvent()));
+    connect(gameTask.data(), SIGNAL(newCompletedPoint(const QPointF&)), this, SLOT(onNewCompletedPoint(const QPointF&)));
 }
 
 SuperGameModule::~SuperGameModule()
@@ -40,6 +45,12 @@ void SuperGameModule::setConfig(ConfigPtr config)
     BaseModule::setConfig(config);
 }
 
+void SuperGameModule::setMindWaveClient(QSharedPointer<MindwaveComponentBase> value)
+{
+    //mindWave = value;
+    gameTask->setMindWaveClient(value);
+}
+
 void SuperGameModule::setServerComponent(QSharedPointer<ServerComponent> value)
 {
     serverComponent = value;
@@ -49,7 +60,16 @@ void SuperGameModule::start()
 {
     qDebug()<<"======================= SuperGameModule START =======================";
     connectComponents();
-    superGameTime = currentUser->getSuperGameData().time;
+
+    setTaskRunning(false);
+
+    gameCompletedPath.clear();
+
+    auto superGameData = currentUser->getSuperGameData();
+    gameTask->setData(superGameData.getPath(), superGameData.getDifficult());
+
+    superGameTime = superGameData.getMaxTime();
+    qDebug()<<"superGameTime "<<superGameTime;
     emit updateSuperGameTime(superGameTime);
 }
 
@@ -63,13 +83,37 @@ void SuperGameModule::stop()
 
 void SuperGameModule::onCountDownUpdate(float countDown)
 {
-    emit countDownUpdate(countDown);
+   emit countDownUpdate(countDown);
 }
 
 void SuperGameModule::onCountDownComplete()
 {
     emit countDownComplete();
     superGameTimer->start(superGameTimerMills);
+    gameTask->init();
+    gameTask->start();
+    setTaskRunning(true);
+}
+
+void SuperGameModule::onTaskUpdateEvent()
+{
+    emit updateCanvas();
+}
+
+void SuperGameModule::onNewCompletedPoint(const QPointF& point)
+{
+    gameCompletedPath.append(point);
+}
+
+void SuperGameModule::onTaskCompleteEvent()
+{
+    qDebug()<<"super game onTaskCompleteEvent";
+    gameTask->stop();
+    superGameTimer->stop();
+    superGameWinTime = gameTask->getCompletionTime();
+
+    serverComponent->finishGameRequest(currentUser->baseUserData().id);
+    //emit taskComleteEvent(completionTime);
 }
 
 void SuperGameModule::startGame()
@@ -117,6 +161,36 @@ float SuperGameModule::getPercent() const
     return percent;
 }
 
+void SuperGameModule::setTaskRunning(bool value)
+{
+    _taskRunning = value;
+}
+
+bool SuperGameModule::isRunning() const
+{
+    return _taskRunning;
+}
+
+bool SuperGameModule::isPreTaskState() const
+{
+    return !_taskRunning;
+}
+
+QVariantList SuperGameModule::getCompletedPath() const
+{
+   return gameCompletedPath;
+}
+
+QVariantList SuperGameModule::getFullGamePath() const
+{
+    return gameTask->getFullPath();
+}
+
+float SuperGameModule::getMindwaveLimit() const
+{
+    return gameTask->getMindwaveLimit();
+}
+
 QString SuperGameModule::getName() const
 {
     return "Super Game location";
@@ -136,6 +210,21 @@ void SuperGameModule::disconnectComponents()
     {
         disconnect(serverComponent.data(), SIGNAL(userFinishedGame()), this, SLOT(onUserFinishedGame()));
     }
+}
+
+QPointF SuperGameModule::getStartPoint() const
+{
+    return gameTask->getStartPoint();
+}
+
+QPointF SuperGameModule::getCurPoint() const
+{
+    return gameTask->getCurPoint();
+}
+
+float SuperGameModule::getForwardVectorRotation() const
+{
+    return gameTask->getForwardVectorRotation();
 }
 
 //===================TESTS===================

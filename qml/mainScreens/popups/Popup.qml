@@ -218,12 +218,12 @@ Item
 
         onAllStagesComleteEventMap:
         {
-            openGameComplete();
+            openGameComplete(description, imageWinName);
         }
 
         onStageComleteEventMap:
         {
-            openStageComplete();
+            openStageComplete(description);
         }
     }
 
@@ -247,7 +247,7 @@ Item
         }
     }
 
-    function openGameComplete()
+    function openGameComplete(description, imageWinName)
     {
         preTask.visible = false;
         postTask.visible = false;
@@ -262,7 +262,7 @@ Item
         placeIcon.source = standData.getStandImage(imageWinName);
     }
 
-    function openStageComplete()
+    function openStageComplete(description)
     {
         descrText.text = description;
 

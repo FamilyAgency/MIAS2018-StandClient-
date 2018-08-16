@@ -5,8 +5,6 @@ OneStageData::OneStageData()
 
 }
 
-
-
 void OneStageData::setPath(const QVector<QPointF>& value)
 {
     path = value;

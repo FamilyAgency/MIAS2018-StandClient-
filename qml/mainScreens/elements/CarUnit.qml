@@ -49,5 +49,13 @@ Item
         var degrees = rotation * consts.toDegrees;
         car.rotation = degrees + consts.carAddAngle;
         shadow.rotation = car.rotation;
+
+        circProgress.setCarPosition(currentPoint);
+        circProgress.update();
+    }
+
+    function setMindwaveLimitPercent(percent)
+    {
+        circProgress.setMindwaveLimitPercent(percent);
     }
 }

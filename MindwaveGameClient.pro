@@ -60,7 +60,8 @@ SOURCES += main.cpp \
     core/data/DilerData.cpp \
     core/game/GameCountDown.cpp \
     core/game/GameCountDown.cpp \
-    core/game/GameCountDown.cpp
+    core/game/GameCountDown.cpp \
+    core/data/SuperGameData.cpp
 
 
 RESOURCES += qml.qrc
@@ -157,7 +158,8 @@ HEADERS += \
     core/modules/TestDriveModule.h \
     tools/FileReader.h \
     core/data/DilerData.h \
-    core/game/GameCountDown.h
+    core/game/GameCountDown.h \
+    core/data/SuperGameData.h
 
 DISTFILES += \
     modules/components/components.pri

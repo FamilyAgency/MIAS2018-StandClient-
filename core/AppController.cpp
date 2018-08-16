@@ -96,6 +96,7 @@ void AppController::createEngine()
     superGameModule.reset(new SuperGameModule());
     superGameModule->setUser(userData);
     superGameModule->setServerComponent(serverComponent);
+    superGameModule->setMindWaveClient(mindWaveComponent);
     connect(superGameModule.data(), SIGNAL(superGameFailed()), this, SLOT(onSuperGameFailed()));
     connect(superGameModule.data(), SIGNAL(superGameSuccess(int)), this, SLOT(onSuperGameSuccess(int)));
 

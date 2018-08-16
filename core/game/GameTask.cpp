@@ -79,6 +79,9 @@ void GameTask::setPoints()
     position = QPointF(0, 0);
     endPoint = path[currentPointIndex + 1];
 
+    qDebug()<<"startPoint "<< startPoint;
+    qDebug()<<"endPoint "<< endPoint;
+
     velocityDirection = QVector2D(endPoint - startPoint);
     velocityDirection.normalize();
 }

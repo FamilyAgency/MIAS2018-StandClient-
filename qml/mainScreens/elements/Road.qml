@@ -4,6 +4,16 @@ Item
 {
     anchors.fill: parent;
 
+    property var isRunning;
+    property var isPreTaskState;
+    property var completedPath;
+    property var currentPoint;
+    property var startPoint;
+    property bool isDrawCircles: false;
+    property var fullGamePath;
+
+    property var circles;
+
     Canvas
     {
         id: canvas;
@@ -12,14 +22,13 @@ Item
 
         onPaint:
         {
-
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            if(gameTaskManager.isPreTaskState() || gameTaskManager.isRunning())
+            if(isPreTaskState || isRunning)
             {
-                drawGuidePaths(ctx);             
-                var list = gameTaskManager.getCompletedPath();
+                drawGuidePaths(ctx);
+                var list = completedPath;
 
                 ctx.lineWidth = consts.lineWidth;
                 ctx.strokeStyle =  "#ffff00";
@@ -27,7 +36,7 @@ Item
                 ctx.lineCap = consts.lineCap;
                 ctx.lineJoin = consts.lineJoin;
 
-                var curPoint = gameTaskManager.getCurPoint();
+                var curPoint = currentPoint;
                 if(list.length > 1)
                 {
                     ctx.beginPath();
@@ -43,7 +52,6 @@ Item
                 }
                 else
                 {
-                    var startPoint = gameTaskManager.getStartPoint();
                     ctx.beginPath();
                     ctx.moveTo(startPoint.x, startPoint.y );
                     ctx.lineTo(curPoint.x, curPoint.y);
@@ -52,8 +60,11 @@ Item
 
                 }
 
-                drawCircles(ctx);
-                drawFlag(ctx);
+                if(isDrawCircles)
+                {
+                    drawCircles(ctx);
+                    drawFlag(ctx);
+                }
             }
         }
     }
@@ -65,7 +76,7 @@ Item
 
     function drawGuidePaths(ctx)
     {
-        var list = gameTaskManager.getFullGamePath();
+        var list = fullGamePath;//gameTaskManager.getFullGamePath();
 
         ctx.beginPath();
         ctx.moveTo(list[0].x, list[0].y);
@@ -82,7 +93,7 @@ Item
 
     function drawCircles(ctx)
     {
-        var circles = gameTaskManager.getTargetPoints();
+        console.log("draw circles", circles.length)
         for(var k = 0; k < circles.length - 1; k++)
         {
             ctx.beginPath();
@@ -99,7 +110,6 @@ Item
 
     function drawFlag(ctx)
     {
-        var circles = gameTaskManager.getTargetPoints();
         var k =  circles.length - 1;
         ctx.beginPath();
         ctx.fillStyle =  "#ffffff";

@@ -44,8 +44,8 @@ void GameTaskManager::startStage(QSharedPointer<UserData> user)
 {
     qDebug()<<"Game Started";
     auto game = user->getCurrentStage();
-    currentUser = user;  
-    setupCurrentGame(game);    
+    currentUser = user;
+    setupCurrentGame(game);
 
     setTaskState(TaskState::PreGame);
 }
@@ -62,8 +62,8 @@ void GameTaskManager::setupCurrentGame(const OneStageData& oneStageData)
 }
 
 void GameTaskManager::setTaskState(TaskState taskState)
-{  
-    currentTaskState = taskState;  
+{
+    currentTaskState = taskState;
 
     switch(taskState)
     {
@@ -154,7 +154,7 @@ QVariantList GameTaskManager::getCompletedPath() const
 }
 
 QVariantList GameTaskManager::getFullGamePath() const
-{    
+{
     return currentUser->getFullGamePath();
 }
 

@@ -1,5 +1,5 @@
-#ifndef ONEGAMEDATA_H
-#define ONEGAMEDATA_H
+#ifndef SUPERGAMEDATA_H
+#define SUPERGAMEDATA_H
 
 #include <QObject>
 #include <QPointF>
@@ -8,36 +8,37 @@
 #include "core/game/VelocityCalculator.h"
 #include "config/Config.h"
 
-class OneStageData
+class SuperGameData
 {
 public:
-    explicit OneStageData();
+    explicit SuperGameData();
 
     void setPath(const QVector<QPointF>& path);
     void setDifficult(const VelocityCalculator& value);
-    void setAdvantage(const OneAdvantageConfig& value);
-
     void clearUserData();
 
     QVector<QPointF> getPath() const;
     VelocityCalculator getDifficult() const;
-    OneAdvantageConfig getAdvantage() const;
 
     void setId(int value);
     int getId() const;
 
     bool complete() const;
     void setComplete(bool value);
-    void setTime(int value);    
+    void setTime(int value);
     int getTime() const;
+
+    void setMaxTime(int value);
+    int getMaxTime() const;
 
 private:
     QVector<QPointF> path;
     VelocityCalculator difficult;
-    OneAdvantageConfig advantage;
+    int featureId = 1;
     int _id = 1;
     int _time = 0;
+    int _maxTime;
     bool _complete = false;
 };
 
-#endif // ONEGAMEDATA_H
+#endif // SUPERGAMEDATA_H

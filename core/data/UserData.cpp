@@ -149,6 +149,7 @@ void UserData::setGameCategory(int id)
     StandOneGameConfig choosenGame = _gameConfig.games[id];
     _gameUserData.setupConfigGameData(choosenGame);
     _gameUserData.setCurrentStageId(1);
+    _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
     emit gameUserDataChanged();
 }
 
@@ -197,12 +198,13 @@ bool UserData::hasStages() const
 void UserData::setConfig(ConfigPtr value)
 {
     setGameConfig(*value->standGamesConfig);
-    superGameConfig = _gameConfig.superGame;
+
+   // _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
 }
 
-SuperGameConfig UserData::getSuperGameData() const
+SuperGameData UserData::getSuperGameData() const
 {
-    return superGameConfig;
+    return _gameUserData.superGame;
 }
 
 void UserData::setGameConfig(StandGamesConfig config)
@@ -261,6 +263,14 @@ GameUserData::GameUserData()
     stageTimes.push_back(0.0f);
 }
 
+void GameUserData::setupConfigSuperGameData(const SuperGameConfig& superGameConfig)
+{
+   superGame.setDifficult(VelocityCalculator(2, 3, 60));
+   superGame.setPath(superGameConfig.path);
+   superGame.setComplete(false);
+   superGame.setMaxTime(superGameConfig.time);
+}
+
 void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
 {
     stages.clear();
@@ -312,8 +322,6 @@ QVariantList GameUserData::getTargetPoints() const
     return targetPoints;
 }
 
-
-
 void GameUserData::setCurrentStageId(int id)
 {
     currentStageId = id;
@@ -332,10 +340,9 @@ int GameUserData::getCurrentStageId() const
 
 bool GameUserData::isFinalStage() const
 {
+    qDebug()<<"is final stage________ "<<currentStageId;
   return currentStageId == 4;
 }
-
-
 
 void GameUserData::currentStageCompleted(int time)
 {

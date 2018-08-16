@@ -5,6 +5,7 @@
 #include <qDebug>
 #include <QQmlContext>
 #include "core/data/OneStageData.h"
+#include "core/data/SuperGameData.h"
 #include "config/Config.h"
 
 struct BaseUserData
@@ -59,10 +60,13 @@ private:
 
 public:
     QVector<OneStageData> stages;
-    int currentStageId;
-    int cleanGameTime;
     OneStageData currentStage;
+    int currentStageId;
     bool _hasGames = false;
+
+    SuperGameData superGame;
+
+    int cleanGameTime;
 
     QString description;
     QString descriptionWin;
@@ -89,6 +93,8 @@ public:
     GameUserData();
 
     void setupConfigGameData(const StandOneGameConfig& game);
+    void setupConfigSuperGameData(const SuperGameConfig& superGame);
+
     void setCurrentStageId(int id);
 
     OneStageData getCurrentStage() const;
@@ -104,7 +110,6 @@ public:
 
     QVariantList getFullGamePath() const;
     QVariantList getTargetPoints() const;
-
 
 };
 Q_DECLARE_METATYPE(GameUserData)
@@ -180,7 +185,7 @@ public:
     bool playingOnAnotherStand() const;
     bool finished() const;
 
-    SuperGameConfig getSuperGameData() const;
+    SuperGameData getSuperGameData() const;
 
     QVector<QPointF> getStartPath() const;
     QVector<QPointF> getFinalPath() const;
@@ -192,8 +197,6 @@ private:
     GameUserData _gameUserData;
 
     StandGamesConfig _gameConfig;
-    SuperGameConfig superGameConfig;
-
     QQmlContext* qmlContext;
 
     bool _canPlay = false;

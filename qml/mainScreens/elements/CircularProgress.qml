@@ -13,7 +13,7 @@ Item
 
     Connections
     {
-        target:mind;
+        target: mind;
         onAttentionChanged:
         {
             nextAttentionValue = mind.attention / 100.0;
@@ -24,33 +24,24 @@ Item
         }
     }
 
-    Connections
+    function update()
     {
-        target:gameTaskManager;
-        onUpdateCanvas:
-        {
-           // console.log("nextAttentionValue ", nextAttentionValue);
-            canvasCirc.requestPaint();
-            updatePosition();
-        }
-
-        onPreTaskStartEvent:
-        {
-            canvasCirc.percentLimit = gameTaskManager.getMindwaveLimit();
-           // visible = true;
-            updatePosition();
-        }
+        canvasCirc.requestPaint();
     }
 
-    function updatePosition()
+    function setMindWaveLimit(limit)
     {
-        var startPoint = gameTaskManager.getCurPoint();
+         canvasCirc.percentLimit =limit;// gameTaskManager.getMindwaveLimit();
+    }
+
+    function setCarPosition(currentPoint)
+    {
+        var startPoint = currentPoint;
         x = startPoint.x * consts.scaleFactor - canvasCirc.width * 0.5;
         y = consts.canvasY + startPoint.y * consts.scaleFactor - canvasCirc.height * 0.5;
-
     }
 
-    function setLimitPersent(percent)
+    function setMindwaveLimitPercent(percent)
     {
         canvasCirc.percentLimit = percent;
     }

@@ -407,7 +407,7 @@ Item
                 text:"Go to game";
                 onClicked:
                 {
-                     appController.setAppStateTest(AppState.Roulette);
+                     appController.setAppStateTest(AppState.Game);
                 }
             }
         }
@@ -435,8 +435,8 @@ Item
         onBaseUserDataRecived:
         {
            // userGameId.value = baseUserData.id;
-           // server.startGameRequest(userGameId.value);
-           // appController.setTestUserId(userGameId.value);
+          //  server.startGameRequest(userGameId.value);
+          //  appController.setTestUserId(userGameId.value);
         }
 
         onServerRequestSuccess:
