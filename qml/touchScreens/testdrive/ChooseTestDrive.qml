@@ -96,73 +96,65 @@ Item
 					color: "white";
 				}
 
-				Button
+				Item//spacer
 				{
-					id: citiesBtn;
-
-					text: citiesBtnText;
-
+					height: 150;
 					anchors.left: parent.left;
 					anchors.right: parent.right;
+				}
+
+				ChooseButton
+				{
+					id: citiesBtn;
+					btnColor: "#112041";
+					btnText: citiesBtnText;
 
 					onClicked:
 					{
 						swiper.currentIndex = 1;
 					}
 
-					contentItem: Text
+					onChoosenIndexChanged:
 					{
-						text: parent.text;
-						font.family: font.hyundaiSansHeadLight;
-						font.pixelSize: 30;
-						color: "#fff";
-						horizontalAlignment: Text.AlignHCenter
-						verticalAlignment: Text.AlignVCenter
-						elide: Text.ElideRight
-					}
-
-					background: Rectangle
-					{
-						implicitWidth: 500;
-						implicitHeight: 150;
-						radius: 100;
-						color: "#000";
-						border.color: "#112041";
+						if (choosenIndex === -1)
+						{
+							btnText = citiesBtnText;
+						}
+						else
+						{
+							btnText = allDealersData[choosenIndex].name;
+						}
 					}
 				}
 
-				Button
+				Item//spacer
 				{
-					id: dealerBtn;
-
-					text: dealerBtnText;
-
+					height: 2;
 					anchors.left: parent.left;
 					anchors.right: parent.right;
+				}
+
+				ChooseButton
+				{
+					id: dealerBtn;
+					btnColor: "#112041";
+					btnText: dealerBtnText;
 
 					onClicked:
 					{
-						swiper.currentIndex = 2;
+						swiper.currentIndex = 0;
 					}
 
-					contentItem: Text
+					onChoosenIndexChanged:
 					{
-						text: parent.text;
-						font.family: font.hyundaiSansHeadLight;
-						font.pixelSize: 30;
-						color: "#fff";
-						horizontalAlignment: Text.AlignHCenter
-						verticalAlignment: Text.AlignVCenter
-						elide: Text.ElideRight
-					}
-
-					background: Rectangle
-					{
-						implicitWidth: 500;
-						implicitHeight: 150;
-						radius: 100;
-						color: "#000";
-						border.color: "#112041";
+						if (choosenIndex === -1)
+						{
+							btnText = dealerBtnText;
+						}
+						else
+						{
+							btnText = allDealersData[citiesBtn.choosenIndex].dealers[dealerBtn.choosenIndex].name;
+						}
 					}
 				}
 			}
@@ -175,14 +167,21 @@ Item
 			TestDriveListView
 			{
 				id: citiesListView;
+
 				model: ListModel
 				{
 					id: cityModel;
 				}
-				//model: ["Adan Gula","Alexandria Armand","Alverta Gorney","Annalisa Dixion","Arlene Drapeau","Ashely Euler","Ashleigh Terry","Audra Vannorman","Bibi Fraire", "Branda Melgoza","Breanna Rotenberry","Brigette Delk","Bruno Raso","Calandra Dudney","Carrol Dedeaux","Celina Bichrest","Celinda Frutos","Celsa Moen","Charise Milan","Corazon Burrus","Coreen Dehner","Coretta Stillwell","Cornell Fierros","Deedee Ruggerio","Demetrice Mcclaren","Desiree Marcano","Dimple Harig","Divina Fahie","Don Thill","Ellena Fredrick","Elmo Routh","Elsie Raulerson","Ervin Bardsley","Estela Alverson","Eufemia Sheely","Fawn Opie","Fred Ralphs","Genevie Spires","Genna Quin","Gerri Aden","Gianna Shears","Gilda Doyel","Glady Peguero","Guy Sondag","Herschel Flowers","Hilda Hamm","Hiroko Mccarley","Jackeline Millington","Jacqualine Twiss","Jacquelyne Worsley","Janelle Broman","Jani Reddish","Jasper Krone","Jene Gump","Jimmie Cooley","Kellye Wiest","Kristie Jules","Kymberly Moodie","Latesha Netter","Lavelle Lasala","Lesli Czapla","Lorette Prescott","Lorie Hoeft","Lyndia Schwalm","Mable Marron","Marcelino Spence","Marcie Yopp","Margrett Spagnuolo","Maris Ruff","Marvella Bowlby","Mauro Winberg","Maybelle Chute","Meghan Burts","Micah Hoggan","Mireille Eastin","Mitsue Ohler","Monica Mccall","Morris Cappel","Myong Bale","Nannie Poore","Noella Gledhill","Ofelia Bane","Phoebe Bui","Quincy Sweeting","Raguel Ross","Raymundo Headlee","Ressie Helt","Rikki Gilligan","Roselee Swain","Shanda Ballew","Stephine Dimauro","Tamesha Roop","Temple Mcbain","Tiesha Crumley","Tova Kiel","Wade Fossum","Willodean Ferguson","Winfred High","Winter Furrow","Yvone Edge"]
+
 				onItemChoosen:
 				{
+
+					//var cityIndex = citiesComboBox.currentIndex;
+					//var dealerIndex = dealersComboBox.currentIndex;
+					//var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
+					console.log(index, allDealersData[index].name);
 					calculateDealersByCityId(index);
+					citiesBtn.choosenIndex = index;
 					swiper.currentIndex = 2;
 				}
 			}
@@ -218,7 +217,10 @@ Item
 
 				onItemChoosen:
 				{
+					// var dealerName = allDealersData[chooseCityIndex].dealers[index].name;
+					//console.log(index, dealerName);
 					calculateDealersByCityId(index);
+					dealerBtn.choosenIndex = index;
 					swiper.currentIndex = 0;
 				}
 			}
@@ -284,44 +286,44 @@ Item
 		id: consts;
 	}
 
-    ColumnLayout
-    {
+	ColumnLayout
+	{
 		id:columns;
-        spacing: 100;
-        visible: false;
-        y:400;
-        anchors.horizontalCenter: parent.horizontalCenter;
+		spacing: 100;
+		visible: false;
+		y:400;
+		anchors.horizontalCenter: parent.horizontalCenter;
 
-        ComboBox
-        {
+		ComboBox
+		{
 			visible: false;
-            id: citiesComboBox;
-            currentIndex: 0;
-            implicitWidth: 500;
+			id: citiesComboBox;
+			currentIndex: 0;
+			implicitWidth: 500;
 
 //            model:ListModel
 //            {
 //                id: cityModel;
 //            }
 
-            onCurrentIndexChanged:
-            {
-                calculateDealersByCityId(currentIndex);
-            }
-        }
+			onCurrentIndexChanged:
+			{
+				calculateDealersByCityId(currentIndex);
+			}
+		}
 
-        ComboBox
-        {
-            id: dealersComboBox;
+		ComboBox
+		{
+			id: dealersComboBox;
 			visible: false;
-            currentIndex: 0;
-            implicitWidth: 500;
+			currentIndex: 0;
+			implicitWidth: 500;
 //            model:ListModel
 //            {
 //                id: dealersModel;
 //            }
-        }
-    }
+		}
+	}
 
     BigRedButton
     {
@@ -391,6 +393,8 @@ Item
 
     function start()
     {
+		cleanUp();
+
         visible = true;
 
         columns.visible = true;
@@ -404,4 +408,14 @@ Item
     {
         visible = false;
     }
+
+	function cleanUp()
+	{
+		citiesListView.positionViewAtBeginning();
+		dealersListView.positionViewAtBeginning();
+		citiesBtn.choosenIndex = -1;
+		dealerBtn.choosenIndex = -1;
+
+
+	}
 }

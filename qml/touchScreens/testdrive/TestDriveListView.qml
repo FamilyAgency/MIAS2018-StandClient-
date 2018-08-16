@@ -108,8 +108,7 @@ ListView
 			   anchors.fill: parent;
 			   onClicked:
 			   {
-				   itemChoosen(modelData);
-				   //console.log("oh YEAH!" + visibleArea.yPosition  + "   "+ (listView.contentY+listView.height)/listView.contentHeight)
+				   itemChoosen(index);
 			   }
 		   }
 		}

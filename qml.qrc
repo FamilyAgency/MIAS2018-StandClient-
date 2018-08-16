@@ -78,5 +78,6 @@
         <file>qml/touchScreens/testdrive/RegularText.qml</file>
         <file>resources/Close.png</file>
         <file>qml/touchScreens/testdrive/CloseButton.qml</file>
+        <file>qml/touchScreens/testdrive/ChooseButton.qml</file>
     </qresource>
 </RCC>
