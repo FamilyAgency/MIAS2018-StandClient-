@@ -76,5 +76,7 @@
         <file>qml/mainScreens/popups/Popup.qml</file>
         <file>qml/mainScreens/MapAnimator.qml</file>
         <file>qml/mainScreens/elements/OneMapAnim.qml</file>
+        <file>resources/flag.png</file>
+        <file>resources/superarrow.png</file>
     </qresource>
 </RCC>

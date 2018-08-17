@@ -80,8 +80,8 @@ Item
             road.startPoint = gameTaskManager.getStartPoint();
             road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
             road.circles = gameTaskManager.getTargetPoints();
-            road.isDrawCircles = true;
             road.isSuperGame = false;
+            road.hideSuperTrack();
             road.visible = true;
             road.draw();
             car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
@@ -89,13 +89,16 @@ Item
 
         onPreTaskStartEvent:
         {
-           car.showIndicator();
-           car.setMindwaveLimitPercent(gameTaskManager.getMindwaveLimit());
+            car.showIndicator();
+            car.setMindwaveLimitPercent(gameTaskManager.getMindwaveLimit());
         }
 
         onGameStarted:
         {
             road.visible = true;
+            var circles = gameTaskManager.getTargetPoints();
+            var lastPoint = circles[circles.length - 1];
+            road.setFlagPosition(lastPoint.x, lastPoint.y);
             road.show();
         }
     }
@@ -113,7 +116,6 @@ Item
             road.currentPoint = superGameModule.getCurPoint();
             road.startPoint = superGameModule.getStartPoint();
             road.uncompletedPath =  superGameModule.getGameUncompletedPath();
-            road.isDrawCircles = false;
             road.visible = true;
             road.isSuperGame = true;
             road.draw();
@@ -123,6 +125,18 @@ Item
         onCountDownComplete:
         {
             road.visible = true;
+            var circles = superGameModule.getGameUncompletedPath();
+            var lastPoint = circles[circles.length - 1];
+            road.setFlagPosition(lastPoint.x, lastPoint.y);
+
+            var startPoint = superGameModule.getStartPoint();
+            road.setSuperTrackPosition(startPoint);
+            road.setSuperTrackRotation(superGameModule.getForwardVectorRotation());
+
+            road.calcSuperTrackLength(startPoint, lastPoint);
+
+            road.showSuperTrack();
+
             road.show();
             car.showIndicator();
             car.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());

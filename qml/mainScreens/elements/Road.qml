@@ -11,9 +11,10 @@ Item
     property var uncompletedPath;
     property var currentPoint;
     property var startPoint;
-    property bool isDrawCircles: false;
     property var circles;
     property bool isSuperGame: false;
+
+    property real arrowSize: 20.0;
 
     Canvas
     {
@@ -31,7 +32,8 @@ Item
             {
                 if(isSuperGame)
                 {
-                    drawSuperGameGuidePaths(ctx);
+                    // drawSuperGameGuidePaths(ctx);
+                    animateSuperTrack();
                     return;
                 }
 
@@ -66,13 +68,38 @@ Item
                     ctx.closePath();
                 }
 
-                if(isDrawCircles)
+                drawCircles(ctx);
+            }
+        }
+    }
+
+    Item
+    {
+        id: superTrackHolder;
+        rotation: 10;
+
+        Row
+        {
+            id: superTrack;
+            Repeater
+            {
+                id: repeater;
+                model: 0;
+                Image
                 {
-                    drawCircles(ctx);
-                    drawFlag(ctx);
+                    id: arrow;
+                    source: "qrc:/resources/superarrow.png"
                 }
             }
         }
+    }
+
+    Image
+    {
+        id: flag;
+        source: "qrc:/resources/flag.png"
+        x: 0;
+        y: 0;
     }
 
     OpacityAnimator on opacity
@@ -83,6 +110,58 @@ Item
         duration: 700;
         running: false;
         easing.type: "InOutCubic";
+    }
+
+    property int animatedItemIndex: 0;
+
+    function animateSuperTrack()
+    {
+        console.log();
+        var size = repeater.model;
+
+        if(size > 0)
+        {
+            for(var i = 0; i < size; i++)
+            {
+                repeater.itemAt(i).opacity = 1;
+            }
+
+            repeater.itemAt(animatedItemIndex).opacity = 0;
+            animatedItemIndex = (animatedItemIndex + 1) % size;
+        }
+    }
+
+    function calcSuperTrackLength(startPosition, endPosition)
+    {
+        var a = endPosition.x - startPosition.x;
+        var b = endPosition.y - startPosition.y;
+
+        var c = Math.sqrt( a*a + b*b );
+
+        repeater.model = Math.floor(c / arrowSize);
+    }
+
+    function setSuperTrackRotation(forwardVector)
+    {
+        var rotation = forwardVector;
+        var degrees = rotation * consts.toDegrees;
+        superTrackHolder.rotation = degrees;
+    }
+
+    function setSuperTrackPosition(position)
+    {
+        superTrackHolder.x = position.x - arrowSize * 0.5;
+        superTrackHolder.y = position.y - arrowSize * 0.5;
+    }
+
+    function showSuperTrack()
+    {
+        superTrack.visible = true;
+    }
+
+    function hideSuperTrack()
+    {
+        superTrack.visible = false;
     }
 
     function show()
@@ -147,6 +226,13 @@ Item
             ctx.closePath();
         }
     }
+
+    function setFlagPosition(x, y)
+    {
+        flag.x = x - 20;// - flag.width;
+        flag.y = y - 64;// flag.height;
+    }
+
 
     function drawFlag(ctx)
     {

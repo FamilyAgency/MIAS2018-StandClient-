@@ -88,13 +88,13 @@ void SuperGameModule::onCountDownUpdate(float countDown)
 
 void SuperGameModule::onCountDownComplete()
 {
-    startTime = QDateTime::currentMSecsSinceEpoch();
-
-    emit countDownComplete();
+    startTime = QDateTime::currentMSecsSinceEpoch();   
     superGameTimer->start(superGameTimerMills);
     gameTask->init();
     gameTask->start();
     setTaskRunning(true);
+
+    emit countDownComplete();
 }
 
 void SuperGameModule::onTaskUpdateEvent()
