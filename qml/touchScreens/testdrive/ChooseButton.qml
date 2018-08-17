@@ -10,10 +10,7 @@ Button
 	property string btnText: "Выбери меня";
 	property int choosenIndex: -1;
 
-	onChoosenIndexChanged:
-	{
-
-	}
+	signal indexChanged();
 
 	text: btnText;
 
@@ -48,5 +45,11 @@ Button
 	function clear()
 	{
 		choosenIndex = -1;
+	}
+
+	function setIndex(index)
+	{
+		choosenIndex = index;
+		indexChanged();
 	}
 }

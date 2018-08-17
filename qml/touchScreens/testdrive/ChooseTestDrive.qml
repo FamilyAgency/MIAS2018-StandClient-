@@ -32,7 +32,7 @@ Item
         {
             Column
             {
-                id: mainItem;
+				id: mainItem;
 
                 anchors.fill: parent;
                 anchors.topMargin: 100;
@@ -86,7 +86,7 @@ Item
                         startBtn.hide();
                     }
 
-                    onChoosenIndexChanged:
+					onIndexChanged:
                     {
                         if (choosenIndex === -1)
                         {
@@ -123,7 +123,7 @@ Item
                         }
                     }
 
-                    onChoosenIndexChanged:
+					onIndexChanged:
                     {
                         if (choosenIndex === -1)
                         {
@@ -159,7 +159,7 @@ Item
                     //var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
                     console.log(index, allDealersData[index].name);
                     calculateDealersByCityId(index);
-                    citiesBtn.choosenIndex = index;
+					citiesBtn.setIndex(index);
                     swiper.currentIndex = 2;
                 }
             }
@@ -187,6 +187,7 @@ Item
             TestDriveListView
             {
                 id: dealersListView;
+
                 model:ListModel
                 {
                     id: dealersModel;
@@ -195,7 +196,7 @@ Item
                 onItemChoosen:
                 {
                     calculateDealersByCityId(index);
-                    dealerBtn.choosenIndex = index;
+					dealerBtn.setIndex(index);
                     swiper.currentIndex = 0;
                     startBtn.show();
                 }
@@ -307,8 +308,8 @@ Item
     {
         citiesListView.positionViewAtBeginning();
         dealersListView.positionViewAtBeginning();
-        citiesBtn.choosenIndex = -1;
-        dealerBtn.choosenIndex = -1;
+		citiesBtn.setIndex(-1);
+		dealerBtn.setIndex(-1);
         swiper.currentIndex = 0;
     }
 }
