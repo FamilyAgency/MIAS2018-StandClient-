@@ -49,7 +49,6 @@ Item
         map.source = standData.getStandMap();
     }
 
-
     Connections
     {
         target: rouletteModule;
@@ -79,8 +78,7 @@ Item
             road.currentPoint = gameTaskManager.getCurPoint();
             road.startPoint = gameTaskManager.getStartPoint();
             road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
-            road.circles = gameTaskManager.getTargetPoints();
-            console.log(gameTaskManager.getTargetPoints())
+            road.circles = gameTaskManager.getTargetPoints();          
             road.isSuperGame = false;
             road.hideSuperTrack();
             road.visible = true;

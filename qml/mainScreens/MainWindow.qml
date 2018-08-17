@@ -56,8 +56,15 @@ Window
         id: mainGameScreen;
     }
 
+    SuperGameWinScreen
+    {
+        id: supergameWin;
+    }
+
     function setState(appState)
     {
+        supergameWin.hide();
+
         switch(appState)
         {
         case AppState.Intro:
@@ -72,8 +79,15 @@ Window
 
             // case AppState.GameResult:
         case AppState.SuperGame:
+            mainGameScreen.gameStop();
+            break;
+
         case AppState.TestDrive:
+            mainGameScreen.gameStop();
+            break;
+
         case AppState.SuperGameResult:
+            supergameWin.show();
             mainGameScreen.gameStop();
             break;
         }
