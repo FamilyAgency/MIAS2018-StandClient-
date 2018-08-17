@@ -5,6 +5,7 @@ Item
     property alias hyundaiSansHeadMedium: hyundaiSansHeadMedium.name;
     property alias hyundaiSansHeadRegular: hyundaiSansHeadRegular.name;
     property alias hyundaiSansHeadBold: hyundaiSansHeadBold.name;
+	property alias hyundaiSansHeadLight: hyundaiSansHeadLight.name;
 
     FontLoader
     {
@@ -23,4 +24,10 @@ Item
         id: hyundaiSansHeadRegular;
         source: configController.getFileInAppDir("content/fonts/HyundaiSansHeadOffice-Regular.ttf");
     }
+
+	FontLoader
+	{
+		id: hyundaiSansHeadLight;
+		source: configController.getFileInAppDir("content/fonts/HyundaiSansHeadOffice-Light.ttf");
+	}
 }

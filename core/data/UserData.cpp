@@ -276,8 +276,7 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
     stages.clear();
     stageTimes.clear();
 
-    description = game.description;
-    qDebug()<<"description   "<<description;
+    description = game.description;   
     descriptionWin = game.descriptionWin;
     iconName = game.iconName;
     imageWinName = game.imageWinName;
@@ -305,6 +304,8 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
         stages.push_back(oneGameData);
         stageTimes.push_back(0.0f);
     }
+
+     qDebug()<<"targetPoints   "<<targetPoints.length();
 
     startPath = game.startPath;
     finalPath = game.finalPath;

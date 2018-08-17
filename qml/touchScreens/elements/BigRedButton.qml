@@ -30,6 +30,7 @@ Item
             id: startBtn;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.bottom: parent.bottom;
+            enabled: false;
             //anchors.top: parent.top;
 
             background: Rectangle
@@ -77,7 +78,6 @@ Item
 
             onClicked:
             {
-                console.log("clicccked", content.text)
                 bigRedButton.clicked();
             }
 
@@ -113,6 +113,13 @@ Item
             duration: 500
             running: false;
             easing.type: "InOutQuad";
+            onStopped:
+            {
+                if(startBtn.scale == 1)
+                {
+                    startBtn.enabled = true;
+                }
+            }
         }
     }
 
@@ -147,6 +154,7 @@ Item
     function hide()
     {
        // visible = false;
+        startBtn.enabled = false;
         scaleAnimator.from = 1;
         scaleAnimator.to = 0.0;
         scaleAnimator.start();

@@ -33,13 +33,12 @@ ApplicationWindow
     MainWindow
     {
         id:mainWindow;
-       // visible:false;
+        visible:true;
     }   
 
 //    ControlsWindow
 //    {
 //        id:controlsWindow;
 //    }
-
 
 }

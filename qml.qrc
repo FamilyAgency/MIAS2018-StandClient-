@@ -78,5 +78,13 @@
         <file>qml/mainScreens/elements/OneMapAnim.qml</file>
         <file>resources/flag.png</file>
         <file>resources/superarrow.png</file>
+        <file>qml/touchScreens/testdrive/TestDriveListView.qml</file>
+        <file>qml/touchScreens/testdrive/FinalTitle.qml</file>
+        <file>qml/touchScreens/testdrive/ChooseTestDrive.qml</file>
+        <file>qml/touchScreens/testdrive/MediumText.qml</file>
+        <file>qml/touchScreens/testdrive/RegularText.qml</file>
+        <file>resources/Close.png</file>
+        <file>qml/touchScreens/testdrive/CloseButton.qml</file>
+        <file>qml/touchScreens/testdrive/ChooseButton.qml</file>
     </qresource>
 </RCC>

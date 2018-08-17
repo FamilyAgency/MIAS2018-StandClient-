@@ -80,6 +80,7 @@ Item
             road.startPoint = gameTaskManager.getStartPoint();
             road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
             road.circles = gameTaskManager.getTargetPoints();
+            console.log(gameTaskManager.getTargetPoints())
             road.isSuperGame = false;
             road.hideSuperTrack();
             road.visible = true;

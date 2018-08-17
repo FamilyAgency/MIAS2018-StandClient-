@@ -192,7 +192,6 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                     oneGameconfig.startPath.push_back(QPointF(x, y));
                 }
 
-
                 //final path
 
                 OneStageConfig oneStage;
@@ -203,6 +202,8 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                     auto y = (path.toObject()["y"].toDouble());
                     oneStage.path.push_back(QPointF(x, y));
                 }
+
+
                 oneGameconfig.stages.push_back(oneStage);
                 //
 
