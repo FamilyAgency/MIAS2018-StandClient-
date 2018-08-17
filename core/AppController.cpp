@@ -112,6 +112,8 @@ void AppController::createEngine()
     testDriveModule->setUser(userData);
     testDriveModule->setDilerData(dilerData);
     modules.append(testDriveModule);
+
+    animationManager.reset(new AnimationManager());
 }
 
 AppController::~AppController()
@@ -135,7 +137,6 @@ AppController::~AppController()
     disconnect(gameResultModule.data(), SIGNAL(superGameRejected()), this, SLOT(onSuperGameRejected()));
 
     disconnect(superGameResultModule.data(), SIGNAL(superGameResultReaded()), this, SLOT(onSuperGameResultReaded()));
-
 }
 
 void AppController::setQmlContext(QQmlContext* qmlContext)
@@ -153,6 +154,8 @@ void AppController::setQmlContext(QQmlContext* qmlContext)
     userData->setQmlContext(qmlContext);
     standData->setQmlContext(qmlContext);
     gameSession->setQmlContext(qmlContext);
+
+    animationManager->setQmlContext(qmlContext);
 }
 
 void AppController::onConfigLoaded(ConfigPtr config)
@@ -188,6 +191,9 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
     standData->setConfig(config);
     userData->setConfig(config);
+    
+    animationManager->setConfig(config);
+    
     start();
 }
 
@@ -205,7 +211,6 @@ void AppController::start()
     }
 
     setAppState(AppState::Intro);
-
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -364,7 +369,7 @@ void AppController::setTestUserId(int id)
 {
     BaseUserData baseUserData;
     baseUserData.id = id;
-   userData->setBaseUserData(baseUserData);
+    userData->setBaseUserData(baseUserData);
 }
 
 

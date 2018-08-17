@@ -10,6 +10,7 @@ Config::Config()
     loggerConfig.reset(new LoggerConfig);
     monitoringConfig.reset(new MonitoringConfig);
     standGamesConfig.reset(new StandGamesConfig);
+    standAnimConfig.reset(new StandAnimConfig);
 }
 
 Config::~Config()

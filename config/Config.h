@@ -230,6 +230,26 @@ public:
 };
 Q_DECLARE_METATYPE(StandOneGameConfig)
 
+struct StandOneAnimConfig
+{
+private:
+    Q_GADGET
+    Q_PROPERTY(int x MEMBER x)
+    Q_PROPERTY(int y MEMBER y)
+    Q_PROPERTY(QString path MEMBER path)
+    Q_PROPERTY(int frames MEMBER frames)
+
+public:
+    int x = 0;
+    int y = 0;
+    QString path = "";
+    int frames = 0;
+
+};
+Q_DECLARE_METATYPE(StandOneAnimConfig)
+
+
+
 struct SuperGameConfig
 {
     int time;
@@ -241,6 +261,12 @@ struct StandGamesConfig
     QVector<StandOneGameConfig> games;
     SuperGameConfig superGame;
 };
+
+struct StandAnimConfig
+{
+     QVector<StandOneAnimConfig> animations;
+};
+
 
 class Config
 {
@@ -257,6 +283,8 @@ public:
     QSharedPointer<LoggerConfig> loggerConfig;
     QSharedPointer<MonitoringConfig> monitoringConfig;
     QSharedPointer<StandGamesConfig> standGamesConfig;
+    QSharedPointer<StandAnimConfig> standAnimConfig;
+
 
     QString getRawData() const;
     void setRawData(const QString& value);

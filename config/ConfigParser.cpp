@@ -35,6 +35,7 @@ void ConfigParser::parse(const QString& configData)
         parseLoggerConfig(config->loggerConfig, jsonObj["logger"].toObject());
         parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
         parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
+        parseStandAnimConfig(config->standAnimConfig, jsonObj["animations"].toArray());
 
 
         if(!wasParsingError)
@@ -231,5 +232,33 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
     {
         wasParsingError = true;
         parseError("No games for this stand id = " + QString::number(config->mainConfig->appId));
+    }
+}
+
+
+void ConfigParser::parseStandAnimConfig(QSharedPointer<StandAnimConfig> standAnimConfig, const QJsonArray& jsonArray)
+{
+
+    for(auto jsonStandAnim : jsonArray)
+    {
+        auto oneAnimMapJsonObj = jsonStandAnim.toObject();
+        if(oneAnimMapJsonObj["appId"].toInt() == config->mainConfig->appId)
+        {
+            auto data = oneAnimMapJsonObj["mapAnimations"].toArray();
+
+            for(auto anims : data)
+            {
+                StandOneAnimConfig oneAnimation;
+                auto animsObj = anims.toObject();
+                oneAnimation.x = animsObj["x"].toInt();
+                oneAnimation.y = animsObj["y"].toInt();
+                oneAnimation.path = animsObj["path"].toString();
+                oneAnimation.frames = animsObj["frames"].toInt();
+
+                standAnimConfig->animations.push_back(oneAnimation);
+            }
+
+            break;
+        }
     }
 }

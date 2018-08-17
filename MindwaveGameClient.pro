@@ -61,7 +61,8 @@ SOURCES += main.cpp \
     core/game/GameCountDown.cpp \
     core/game/GameCountDown.cpp \
     core/game/GameCountDown.cpp \
-    core/data/SuperGameData.cpp
+    core/data/SuperGameData.cpp \
+    tools/AnimationManager.cpp
 
 
 RESOURCES += qml.qrc
@@ -159,7 +160,8 @@ HEADERS += \
     tools/FileReader.h \
     core/data/DilerData.h \
     core/game/GameCountDown.h \
-    core/data/SuperGameData.h
+    core/data/SuperGameData.h \
+    tools/AnimationManager.h
 
 DISTFILES += \
     modules/components/components.pri

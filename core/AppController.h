@@ -28,7 +28,9 @@
 #include "modules/TestDriveModule.h"
 #include "Types.h"
 #include "tests/MindwaveComponentTest.h"
+
 #include "tools/AppSettings.h"
+#include "tools/AnimationManager.h"
 
 class AppController : public QObject
 {
@@ -84,7 +86,10 @@ private:
 
     QSharedPointer<StandData> standData;
     QSharedPointer<UserData> userData;
-    QSharedPointer<DilerData> dilerData;
+    QSharedPointer<DilerData> dilerData;    
+
+    QSharedPointer<AnimationManager> animationManager;
+
 
     ConfigPtr config;
     QSharedPointer<GameSession> gameSession;
