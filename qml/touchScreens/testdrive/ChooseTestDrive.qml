@@ -11,7 +11,6 @@ Item
     property var allDealersData;
     property real btnMarginBottom: 100 * consts.designScale;
 
-
     property string signInText: "Запись\nна тест-драйв";
     property string signInDescText: "Познакомься с увлекательным\nмиром Sata Fe!";
     property string citiesBtnText: "Выберите ваш город";
@@ -192,7 +191,6 @@ Item
 
                 titleText: "Выбор дилера";
                 subTitleText: "Укажите вашего дилера";
-
 
                 model:ListModel
                 {
