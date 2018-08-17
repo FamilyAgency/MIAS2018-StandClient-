@@ -44,6 +44,20 @@ Item
 //        video3.setSource(instructionPath);
 //    }
 
+        Video
+        {
+            id: player1;
+            anchors.fill: parent;
+            anchors.centerIn: parent;
+            fillMode: VideoOutput.PreserveAspectFit
+            width: 1080;
+            loops: MediaPlayer.Infinite;
+            playlist: Playlist
+            {
+                id: playlist1;
+            }
+        }
+
 
     //    Video
     //    {
@@ -133,36 +147,38 @@ Item
     //        }
     //    }
 
-    BgParticles
-    {
-        id: bgParticles;
-        z: 1;
-        visible: true;
+//    BgParticles
+//    {
+//        id: bgParticles;
+//        z: 1;
+//        visible: true;
 
-        OpacityAnimator on opacity
+//        OpacityAnimator on opacity
+//        {
+//            id:particlesAnim;
+//            from: 0;
+//            to: 1;
+//            duration: 500;
+//            running:false;
+//            target: bgParticles;
+
+//            onStopped:
+//            {
+//                if(bgParticles.opacity == 1)
+//                {
+//                    currentPlayer.seek(0);
+//                    currentPlayer.pause();
+//                    currentPlayer.visible = false;
+//                }
+//            }
+//        }
+//    }
+
+        Component.onCompleted:
         {
-            id:particlesAnim;
-            from: 0;
-            to: 1;
-            duration: 500;
-            running:false;
-            target: bgParticles;
-
-            onStopped:
-            {
-                if(bgParticles.opacity == 1)
-                {
-                    currentPlayer.seek(0);
-                    currentPlayer.pause();
-                    currentPlayer.visible = false;
-                }
-            }
+            playlist1.addItem(bgLoop);
+            player1.play();
         }
-    }
-
-    //    Component.onCompleted:
-    //    {
-    //        playlist1.addItem(intro1Path);
     //        playlist1.addItem(intro2Path);
     //        playlist1.addItem(instructionPath);
     //        playlist1.addItem(bgLoop);
@@ -191,15 +207,15 @@ Item
     //    property var currentPlaylist: playlist2;
     //    property var currentVideoAnim: videoAnim2;
 
-    //    Connections
-    //    {
-    //        target: appController;
+        Connections
+        {
+            target: appController;
 
-    //        onAppStateChanged:
-    //        {
-    //            setState(appState);
-    //        }
-    //    }
+            onAppStateChanged:
+            {
+                setState(appState);
+            }
+        }
 
     //    Connections
     //    {
@@ -270,14 +286,14 @@ Item
     //    }
 
 
-    //    function setState(appState)
-    //    {
-    //        // return;
+        function setState(appState)
+        {
+            // return;
 
 
     //        positionTimer.stop();
 
-    //        player1.loops = MediaPlayer.Infinite;
+            player1.loops = MediaPlayer.Infinite;
     //        player2.loops = MediaPlayer.Infinite;
 
     //        switch(appState)
@@ -334,7 +350,7 @@ Item
     //        }
     //        currentState = appState;
     //        positionTimer.start();
-    //    }
+        }
 
     //    property bool needLoop: false;
     //    property real loopThreshold: 0;
