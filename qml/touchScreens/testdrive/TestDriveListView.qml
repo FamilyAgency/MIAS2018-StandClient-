@@ -8,6 +8,9 @@ ListView
 {
 	id: listView;
 
+    property string titleText;
+    property string subTitleText;
+
 	signal itemChoosen(int index);
 
 	model: ["none"];
@@ -37,8 +40,8 @@ ListView
 			y: 150;
 
 			MediumText
-			{
-				text: "Выбор города";
+			{               
+                text: titleText;
 				font.pixelSize: 90;
 				anchors.top: parent.top;
 				anchors.topMargin: 100;
@@ -46,7 +49,7 @@ ListView
 
 			RegularText
 			{
-				text: "Укажите ваш город, чтобы выбрать удобного дилера";
+                text:subTitleText;
 				font.pixelSize: 38;
 				anchors.top: parent.top;
 				anchors.topMargin: 250;
@@ -127,4 +130,5 @@ ListView
 	{
 		id: font;
 	}
+
 }

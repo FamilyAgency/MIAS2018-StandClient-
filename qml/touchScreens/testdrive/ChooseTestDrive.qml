@@ -145,6 +145,8 @@ Item
             TestDriveListView
             {
                 id: citiesListView;
+                titleText: "Выбор города";
+                subTitleText: "Укажите ваш город, чтобы выбрать удобного дилера";
 
                 model: ListModel
                 {
@@ -187,6 +189,10 @@ Item
             TestDriveListView
             {
                 id: dealersListView;
+
+                titleText: "Выбор дилера";
+                subTitleText: "Укажите вашего дилера";
+
 
                 model:ListModel
                 {
