@@ -46,6 +46,14 @@ Item
         antialiasing: true;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
+
+        gradient: Gradient
+        {
+
+            GradientStop { position: 1.0; color: "#0b9abf" }
+            GradientStop { position: 0.0; color: "#0aabd4" }
+
+        }
     }
 
     Item
@@ -81,15 +89,19 @@ Item
         Text
         {
             id: stopText;
+
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize: 35 * consts.designScale;
+            font.letterSpacing: 14;
+
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.verticalCenter: parent.verticalCenter;
             anchors.verticalCenterOffset: -280;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 35 * consts.designScale;
+
             color: greenColor;
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
-            text: "О С Т А Н О В К А";
+            text: "ОСТАНОВКА";
         }
 
         Text
@@ -172,7 +184,7 @@ Item
             id: winDescrText;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: 80;
+            anchors.verticalCenterOffset: 60;
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 70;
             color: "#ffffff";

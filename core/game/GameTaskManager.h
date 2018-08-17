@@ -25,7 +25,7 @@ public:
     Q_INVOKABLE QPointF getCurPoint() const;
     Q_INVOKABLE QPointF getEndPoint() const;
     Q_INVOKABLE QVariantList getCompletedPath() const;
-    Q_INVOKABLE QVariantList getFullGamePath() const;
+    Q_INVOKABLE QVariantList getGameUncompletedPath() const;
     Q_INVOKABLE QVariantList getTargetPoints() const;
     Q_INVOKABLE float getForwardVectorRotation() const;
     Q_INVOKABLE float getMindwaveLimit() const;
@@ -38,11 +38,12 @@ public:
         PostGame
     };
     void startGame();
-    void startStage(QSharedPointer<UserData> value);
+    void startStage();
     void stop();
     void setMindWaveClient(QSharedPointer<MindwaveComponentBase> mindWave);
     void setTaskState(TaskState taskState);
     void setQmlContext(QQmlContext* value);
+    void setUser(QSharedPointer<UserData> value);
 
 private:
     TaskState currentTaskState;
@@ -59,7 +60,7 @@ private:
     int currentGameId = 0;
     QSharedPointer<UserData> currentUser;
 
-    QVariantList gameCompletedPath;
+    QVariantList gameCompletedPath, gameUncompletedPath, targetPoints;
 
 signals:
     void updateCanvas();   
@@ -68,6 +69,7 @@ signals:
     void preTaskStartEvent();  
     void preTaskCoundownUpdate(float time);
     void taskReset();
+    void gameStarted();
 
 private slots:
     void onTaskCompleteEvent();

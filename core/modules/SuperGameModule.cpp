@@ -63,13 +63,13 @@ void SuperGameModule::start()
 
     setTaskRunning(false);
 
-    gameCompletedPath.clear();
-
     auto superGameData = currentUser->getSuperGameData();
     gameTask->setData(superGameData.getPath(), superGameData.getDifficult());
 
-    superGameTime = superGameData.getMaxTime();
-    qDebug()<<"superGameTime "<<superGameTime;
+    superGameTime =  superGameData.getMaxTime();
+    gameCompletedPath.clear();
+    gameUncompletedPath = gameTask->getFullPath();
+
     emit updateSuperGameTime(superGameTime);
 }
 
@@ -88,6 +88,8 @@ void SuperGameModule::onCountDownUpdate(float countDown)
 
 void SuperGameModule::onCountDownComplete()
 {
+    startTime = QDateTime::currentMSecsSinceEpoch();
+
     emit countDownComplete();
     superGameTimer->start(superGameTimerMills);
     gameTask->init();
@@ -119,7 +121,6 @@ void SuperGameModule::onTaskCompleteEvent()
 void SuperGameModule::startGame()
 {
     superGameWinTime = 0;
-    startTime = QDateTime::currentMSecsSinceEpoch();
     gameCountDown->init();
     gameCountDown->run();
     emit superGameStarted();
@@ -182,9 +183,9 @@ QVariantList SuperGameModule::getCompletedPath() const
    return gameCompletedPath;
 }
 
-QVariantList SuperGameModule::getFullGamePath() const
+QVariantList SuperGameModule::getGameUncompletedPath() const
 {
-    return gameTask->getFullPath();
+   return gameUncompletedPath;
 }
 
 float SuperGameModule::getMindwaveLimit() const

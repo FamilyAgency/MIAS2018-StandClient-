@@ -74,5 +74,6 @@
         <file>qml/mainScreens/elements/CarUnit.qml</file>
         <file>qml/mainScreens/elements/Road.qml</file>
         <file>qml/mainScreens/popups/Popup.qml</file>
+        <file>qml/mainScreens/MapAnimator.qml</file>
     </qresource>
 </RCC>

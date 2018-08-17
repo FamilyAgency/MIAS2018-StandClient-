@@ -35,16 +35,23 @@ void GameTaskManager::setMindWaveClient(QSharedPointer<MindwaveComponentBase> va
     gameTask->setMindWaveClient(mindWave);
 }
 
-void GameTaskManager::startGame()
+void GameTaskManager::setUser(QSharedPointer<UserData> value)
 {
-      gameCompletedPath.clear();
+    currentUser = value;
 }
 
-void GameTaskManager::startStage(QSharedPointer<UserData> user)
+void GameTaskManager::startGame()
+{
+    gameCompletedPath.clear();
+    gameUncompletedPath = currentUser->getFullGamePath();
+    targetPoints = currentUser->getTargetPoints();
+    emit gameStarted();
+}
+
+void GameTaskManager::startStage()
 {
     qDebug()<<"Game Started";
-    auto game = user->getCurrentStage();
-    currentUser = user;
+    auto game = currentUser->getCurrentStage();
     setupCurrentGame(game);
 
     setTaskState(TaskState::PreGame);
@@ -108,12 +115,14 @@ void GameTaskManager::onTaskUpdateEvent()
 
 void GameTaskManager::onNewCompletedPoint(const QPointF& point)
 {
+    gameUncompletedPath.pop_front();
     gameCompletedPath.append(point);
 }
 
 void GameTaskManager::onTaskCompleteEvent()
 {
     gameTask->stop();
+    targetPoints.pop_front();
     auto completionTime = gameTask->getCompletionTime();
     emit taskComleteEvent(completionTime);
 }
@@ -153,14 +162,14 @@ QVariantList GameTaskManager::getCompletedPath() const
     return gameCompletedPath;
 }
 
-QVariantList GameTaskManager::getFullGamePath() const
+QVariantList GameTaskManager::getGameUncompletedPath() const
 {
-    return currentUser->getFullGamePath();
+    return gameUncompletedPath;
 }
 
 QVariantList GameTaskManager::getTargetPoints() const
 {
-    return currentUser->getTargetPoints();
+    return targetPoints;
 }
 
 float GameTaskManager::getMindwaveLimit() const

@@ -53,7 +53,7 @@ Window
 
     GameScreen
     {
-        id:mainGameScreen;
+        id: mainGameScreen;
     }
 
     function setState(appState)
@@ -70,7 +70,7 @@ Window
             mainGameScreen.gameStart()
             break;
 
-       // case AppState.GameResult:
+            // case AppState.GameResult:
         case AppState.SuperGame:
         case AppState.TestDrive:
         case AppState.SuperGameResult:

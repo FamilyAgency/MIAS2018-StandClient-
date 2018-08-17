@@ -36,7 +36,7 @@ Item
             {
                 id: bg;
                 color: "#66d5fc";
-                opacity: startBtn.down ? 0.8 : 1;
+                opacity: startBtn.down ? 0.95 : 1;
                 border.width: 0;
 
                 gradient: Gradient

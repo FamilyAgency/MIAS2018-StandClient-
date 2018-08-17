@@ -37,6 +37,7 @@ void GameModule::setQmlContext(QQmlContext* value)
 void GameModule::setUser(QSharedPointer<UserData> value)
 {
     currentUser = value;
+    gameTaskManager->setUser(value);
 }
 
 void GameModule::setConfig(ConfigPtr config)
@@ -63,7 +64,7 @@ void GameModule::stop()
 
 void GameModule::startStage()
 {
-    gameTaskManager->startStage(currentUser);
+    gameTaskManager->startStage();
 }
 
 void GameModule::onStageComleteEvent(int completionTime)

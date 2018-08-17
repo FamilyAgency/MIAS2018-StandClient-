@@ -199,7 +199,7 @@ void UserData::setConfig(ConfigPtr value)
 {
     setGameConfig(*value->standGamesConfig);
 
-   // _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
+    _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
 }
 
 SuperGameData UserData::getSuperGameData() const

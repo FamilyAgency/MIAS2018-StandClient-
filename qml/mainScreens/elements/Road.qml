@@ -1,4 +1,5 @@
-import QtQuick 2.0
+import QtQuick 2.2
+import QtQuick.Controls.Styles 1.4
 
 Item
 {
@@ -7,18 +8,19 @@ Item
     property var isRunning;
     property var isPreTaskState;
     property var completedPath;
+    property var uncompletedPath;
     property var currentPoint;
     property var startPoint;
     property bool isDrawCircles: false;
-    property var fullGamePath;
-
     property var circles;
+    property bool isSuperGame: false;
 
     Canvas
     {
         id: canvas;
         anchors.fill: parent;
         antialiasing: true;
+        smooth: true;
 
         onPaint:
         {
@@ -27,12 +29,17 @@ Item
 
             if(isPreTaskState || isRunning)
             {
+                if(isSuperGame)
+                {
+                    drawSuperGameGuidePaths(ctx);
+                    return;
+                }
+
                 drawGuidePaths(ctx);
                 var list = completedPath;
 
-                ctx.lineWidth = consts.lineWidth;
-                ctx.strokeStyle =  "#ffff00";
-
+                ctx.lineWidth = consts.lineWidth * 0.6;
+                ctx.strokeStyle = "#797e84";
                 ctx.lineCap = consts.lineCap;
                 ctx.lineJoin = consts.lineJoin;
 
@@ -57,7 +64,6 @@ Item
                     ctx.lineTo(curPoint.x, curPoint.y);
                     ctx.stroke();
                     ctx.closePath();
-
                 }
 
                 if(isDrawCircles)
@@ -69,14 +75,30 @@ Item
         }
     }
 
+    OpacityAnimator on opacity
+    {
+        id: opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 700;
+        running: false;
+        easing.type: "InOutCubic";
+    }
+
+    function show()
+    {
+        opacity = 0;
+        opacityAnim.start();
+    }
+
     function draw()
     {
         canvas.requestPaint();
     }
 
-    function drawGuidePaths(ctx)
+    function drawSuperGameGuidePaths(ctx)
     {
-        var list = fullGamePath;//gameTaskManager.getFullGamePath();
+        var list = uncompletedPath;
 
         ctx.beginPath();
         ctx.moveTo(list[0].x, list[0].y);
@@ -87,6 +109,25 @@ Item
         {
             ctx.lineTo(list[i].x, list[i].y);
         }
+
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    function drawGuidePaths(ctx)
+    {
+        var list = uncompletedPath;
+
+        ctx.beginPath();
+        ctx.moveTo(currentPoint.x, currentPoint.y);
+        ctx.strokeStyle =  "#ff0000";
+        ctx.lineWidth = consts.lineWidth;
+
+        for(var i = 0; i < list.length; i++)
+        {
+            ctx.lineTo(list[i].x, list[i].y);
+        }
+
         ctx.stroke();
         ctx.closePath();
     }
@@ -109,7 +150,7 @@ Item
 
     function drawFlag(ctx)
     {
-        var k =  circles.length - 1;
+        var k = circles.length - 1;
         ctx.beginPath();
         ctx.fillStyle =  "#ffffff";
         ctx.strokeStyle =  "#ff0000";

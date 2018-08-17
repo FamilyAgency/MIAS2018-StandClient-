@@ -54,8 +54,29 @@ Item
         circProgress.update();
     }
 
-    function setMindwaveLimitPercent(percent)
+    function hideIndicator()
     {
+        circProgress.visible = false;
+    }
+
+    function showIndicator()
+    {
+        circProgress.visible = true;
+    }
+
+    function setMindwaveLimitPercent(percent)
+    {      
         circProgress.setMindwaveLimitPercent(percent);
+    }
+
+    function moveFromCanvas()
+    {
+        car.x = 0;
+        car.y = 3000;
+        shadow.x = car.x;
+        shadow.y = car.y;
+
+        circProgress.setCarPosition({x: 0, y: 3000});
+        circProgress.update();
     }
 }

@@ -23,7 +23,7 @@ Item
 
     Road
     {
-        id:road;
+        id: road;
         visible: false;
     }
 
@@ -31,6 +31,11 @@ Item
     {
         id:car;
         visible: false;
+    }
+
+    MapAnimator
+    {
+        id: mapAnimator;
     }
 
     Popup
@@ -52,6 +57,7 @@ Item
         onShowSmallCar:
         {
             console.log("show small car !!!!!!!!!!!!");
+            car.hideIndicator();
             car.visible = true;
         }
 
@@ -72,9 +78,10 @@ Item
             road.completedPath = gameTaskManager.getCompletedPath()
             road.currentPoint = gameTaskManager.getCurPoint();
             road.startPoint = gameTaskManager.getStartPoint();
-            road.fullGamePath =  gameTaskManager.getFullGamePath();
+            road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
             road.circles = gameTaskManager.getTargetPoints();
             road.isDrawCircles = true;
+            road.isSuperGame = false;
             road.visible = true;
             road.draw();
             car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
@@ -82,7 +89,14 @@ Item
 
         onPreTaskStartEvent:
         {
+           car.showIndicator();
            car.setMindwaveLimitPercent(gameTaskManager.getMindwaveLimit());
+        }
+
+        onGameStarted:
+        {
+            road.visible = true;
+            road.show();
         }
     }
 
@@ -98,15 +112,19 @@ Item
             road.completedPath = superGameModule.getCompletedPath()
             road.currentPoint = superGameModule.getCurPoint();
             road.startPoint = superGameModule.getStartPoint();
-            road.fullGamePath =  superGameModule.getFullGamePath();
+            road.uncompletedPath =  superGameModule.getGameUncompletedPath();
             road.isDrawCircles = false;
             road.visible = true;
+            road.isSuperGame = true;
             road.draw();
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
         }
 
         onCountDownComplete:
         {
+            road.visible = true;
+            road.show();
+            car.showIndicator();
             car.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
         }
 
@@ -119,9 +137,11 @@ Item
     function gameStop()
     {
         console.log("=================== game stop ===================")
+
         car.visible = false;
         road.visible = false;
         pretaskPopup.visible = false;
+        car.moveFromCanvas();
     }
 
     function gameStart()

@@ -26,7 +26,7 @@ public:
     Q_INVOKABLE void startGame();
     Q_INVOKABLE float getPercent() const;
     Q_INVOKABLE float getSuperGameTime() const;
-    Q_INVOKABLE QVariantList getFullGamePath() const;
+    Q_INVOKABLE QVariantList getGameUncompletedPath() const;
     Q_INVOKABLE float getMindwaveLimit() const;
 
 
@@ -61,7 +61,7 @@ private:
     QSharedPointer<GameCountDown> gameCountDown = nullptr;
 
     QSharedPointer<GameTask> gameTask = nullptr;
-    QVariantList gameCompletedPath;
+    QVariantList gameCompletedPath, gameUncompletedPath;
     void connectComponents();
     void disconnectComponents();
 
