@@ -82,6 +82,7 @@ Item
                     onClicked:
                     {
                         citiesListView.positionViewAtBeginning();
+						citiesListView.visible = true;
                         swiper.currentIndex = 1;
                         startBtn.hide();
                     }
@@ -118,6 +119,7 @@ Item
                         {
                             dealersListView.positionViewAtBeginning();
                             calculateDealersByCityId(citiesBtn.choosenIndex);
+							citiesListView.visible = false;
                             swiper.currentIndex = 2;
                             startBtn.hide();
                         }
@@ -140,91 +142,90 @@ Item
 
         // _____________END MAIN ITEM____________________
 
-        Item
-        {
-            TestDriveListView
-            {
-                id: citiesListView;
-                titleText: "Выбор города";
-                subTitleText: "Укажите ваш город, чтобы выбрать удобного дилера";
+		Item
+		{
+			TestDriveListView
+			{
+				id: citiesListView;
+				titleText: "Выбор города";
+				subTitleText: "Укажите ваш город, чтобы выбрать удобного дилера";
 
-                model: ListModel
-                {
-                    id: cityModel;
-                }
+				model: ListModel
+				{
+					id: cityModel;
+				}
 
-                onItemChoosen:
-                {
-
-                    //var cityIndex = citiesComboBox.currentIndex;
-                    //var dealerIndex = dealersComboBox.currentIndex;
-                    //var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
-                    console.log(index, allDealersData[index].name);
-                    calculateDealersByCityId(index);
+				onItemChoosen:
+				{
+					console.log("city choosen: ", index, allDealersData[index].name);
+					calculateDealersByCityId(index);
 					citiesBtn.setIndex(index);
-                    swiper.currentIndex = 2;
-                }
-            }
+					swiper.currentIndex = 2;
+				}
+			}
 
-            Rectangle
-            {
-                width: 5;
-                anchors.right: parent.right;
-                anchors.top: parent.top;
-                height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
-                color: "#0893b7";
-            }
+			Rectangle
+			{
+				width: 5;
+				anchors.right: parent.right;
+				anchors.top: parent.top;
+				height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
+				color: "#0893b7";
+			}
 
-            CloseButton
-            {
-                onClicked:
-                {
-                    swiper.currentIndex = 0;
-                }
-            }
-        }
+			CloseButton
+			{
+				onClicked:
+				{
+					swiper.currentIndex = 0;
+				}
+			}
+		}
 
-        Item
-        {
-            TestDriveListView
-            {
-                id: dealersListView;
+		Item
+		{
+			TestDriveListView
+			{
+				id: dealersListView;
 
-                titleText: "Выбор дилера";
-                subTitleText: "Укажите вашего дилера";
+				titleText: "Выбор дилера";
+				subTitleText: "Укажите вашего дилера";
 
 
-                model:ListModel
-                {
-                    id: dealersModel;
-                }
+				model:ListModel
+				{
+					id: dealersModel;
+				}
 
-                onItemChoosen:
-                {
-                    calculateDealersByCityId(index);
+				onItemChoosen:
+				{
+					calculateDealersByCityId(index);
 					dealerBtn.setIndex(index);
-                    swiper.currentIndex = 0;
-                    startBtn.show();
-                }
-            }
+					swiper.currentIndex = 0;
+					citiesListView.visible = false;
+					startBtn.show();
+				}
+			}
 
-            Rectangle
-            {
-                width: 5;
-                anchors.right: parent.right;
-                anchors.top: parent.top;
-                height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
-                color: "#0893b7";
-            }
+			Rectangle
+			{
+				width: 5;
+				anchors.right: parent.right;
+				anchors.top: parent.top;
+				height: citiesListView.height * citiesListView.visibleArea.yPosition * 1 + 100;
+				color: "#0893b7";
+			}
 
-            CloseButton
-            {
-                onClicked:
-                {
-                    swiper.currentIndex = 0;
-                }
-            }
-        }
+			CloseButton
+			{
+				onClicked:
+				{
+					swiper.currentIndex = 0;
+					citiesListView.visible = false;
+				}
+			}
+		}
+
     }// ________________END SWIPER________________________
 
 
