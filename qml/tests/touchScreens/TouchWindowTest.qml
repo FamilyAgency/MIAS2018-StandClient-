@@ -27,7 +27,7 @@ Item
     {
         id: mindWaveComp;
         x: 50;
-        y: 160;
+        y: 260;
     }
 
     Component.onCompleted:

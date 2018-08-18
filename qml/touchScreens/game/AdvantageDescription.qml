@@ -15,7 +15,7 @@ Item
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property int circleSize: 150;
     property real nameMarginTop: 60 * consts.designScale;
-    property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ!";
+    property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ";
     property real btnMarginBottom: 500 * consts.designScale;
 
     signal advantageReaded;

@@ -14,6 +14,8 @@ public:
     Q_INVOKABLE QVariantList getScreensInfo() const;
     Q_INVOKABLE QString getStandImage(const QString& path) const;
     Q_INVOKABLE QString getStandMap() const;
+    Q_INVOKABLE QString getStandMapOver() const;
+
 
     explicit StandData(QObject *parent = nullptr);
     void setQmlContext(QQmlContext* value);
@@ -25,7 +27,9 @@ public:
 
 private:   
     QQmlContext* qmlContext;
-    MainConfig _mainConfig;   
+    MainConfig _mainConfig;
+
+    QString getStandPath() const;
 
 signals:
     void mainConfigChanged();

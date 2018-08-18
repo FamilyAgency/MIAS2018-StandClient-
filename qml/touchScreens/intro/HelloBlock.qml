@@ -12,9 +12,9 @@ Item
     anchors.fill: parent;
     opacity: 0;
 
-    property string addTitleHelloText: "Познакомься с увлекательным,<br/>миром santa fe!<br/><br/>Представляешь,\
- управлять<br/>автомобилем santa fe стало<br/>возможно силой мысли!";
-    property string buttonText: "НАЧНЕМ?";
+    property string addTitleHelloText: "Вы готовы отправиться в интересное<br/>путешествие на новом SANTA FE?<br/><br/>В пути мы сделаем три остановки,\
+ <br/>чтобы познакомиться с уникальными<br/>преимуществами этого автомобиля.";
+    property string buttonText: "НАЧАТЬ";
 
     property real btnMarginBottom: 305 * consts.designScale;
     property real nameMarginTop: 294 * consts.designScale;
@@ -102,7 +102,7 @@ Item
         onTriggered:
         {
             startOpacityAnim(0, 1);
-            mainText.text = "Привет,<br/>" + userData.baseUserData.name;
+            mainText.text = "Привет,<br/>" + userData.baseUserData.name + "!";
             brb.visible = true;
             brb.show();
         }

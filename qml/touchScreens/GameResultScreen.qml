@@ -15,12 +15,12 @@ Item
     signal animComplete();
     signal animStart();
 
-    property string mainTitleDefault: "Поздравляем!<br/>тебя ждет второй этап!<br/>Теперь ты знаешь <br/>все о Santa Fe <br/>и можешь управлять <br/>силой своих мыслей.";
+    property string mainTitleDefault: "Ура, до получения<br/>приза совсем немного!<br/>Осталось выполнить<br/>одно задание.";
     property string buttonTakeColaText: "НЕТ, СПАСИБО";
     property string buttonSuperGameText: "ХОЧУ<br/>СЫГРАТЬ";
 
     property string superGameTitle: "СУПЕРИГРА";
-    property string descrTitleDefault: "Сыграй в супер-игру<br/>и получи в подарок<br/>освежающий напиток";
+    property string descrTitleDefault: "Готовы бороться за приз?<br/>Тогда начнем!";
 
 
     property real btnMarginBottom: 100 * consts.designScale;

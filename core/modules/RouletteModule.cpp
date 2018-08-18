@@ -316,13 +316,13 @@ void RouletteModule::startRoll()
     switch(choosenCategory)
     {
     case 0:
-        degrees = 360 + 90;//task2
+        degrees = 360 + 90;//task1
         break;
     case 1:
-        degrees = 360 + 270;//task3
+        degrees = 360 + 270;//
         break;
     case 2:
-        degrees = 360 + 180;//task1
+        degrees = 360 + 180;//
         break;
     }
 
@@ -336,7 +336,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-    // onUserStartedGame();
+    //onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()

@@ -10,7 +10,7 @@ Item
 {
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Santa Fe.<br/>Управляй<br/>силой мысли";
+    property string mainTitleDefault: "SANTA FE.<br/>Управляй<br/>силой мысли.";
     property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ";
 
 

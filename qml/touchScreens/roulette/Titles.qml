@@ -9,7 +9,7 @@ Item
 {
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Выбери уникальный<br/>маршрут";
+    property string mainTitleDefault: "Выберите уникальный<br/>маршрут";
 
     FontManager
     {
@@ -59,7 +59,8 @@ Item
             verticalAlignment: Text.AlignVCenter;
             // textFormat: Text.StyledText;
             opacity : 0.7;
-            text: "В А Ш   М А Р Ш Р У Т";
+            text: "ВАШ МАРШРУТ";
+            font.letterSpacing: 14;
         }
     }
 
@@ -69,9 +70,9 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 168 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
-        text: "А теперь тебе нужно<br/>концентрироваться<br/>на автомобиле.<br/>Поехали!";
+        text: "Сконцентрируйтесь на Hyundai SANTA FE,<br/>чтобы автомобиль начал движение.<br/><br/>Чем выше концентрация — <br/>тем быстрее вы едете.";
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60 * consts.designScale;
+        font.pixelSize: 50 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;

@@ -173,8 +173,8 @@ Item
             smooth: true;
             antialiasing: true;
             anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: -410;
-            anchors.horizontalCenterOffset: -100;
+            anchors.verticalCenterOffset: -230;
+            anchors.horizontalCenterOffset: 0;
             anchors.horizontalCenter: parent.horizontalCenter;
             //source: configController.getFileInAppDir("content/tasks/1.png");
         }

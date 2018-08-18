@@ -27,11 +27,19 @@ Item
         visible: false;
     }
 
+    Image
+    {
+        id:mapover
+        anchors.fill: parent;
+        smooth:true;
+    }
+
+
     CarUnit
     {
         id:car;
         visible: false;
-    }
+    }   
 
     MapAnimator
     {
@@ -47,6 +55,7 @@ Item
     Component.onCompleted:
     {
         map.source = standData.getStandMap();
+        mapover.source = standData.getStandMapOver();
     }
 
     Connections

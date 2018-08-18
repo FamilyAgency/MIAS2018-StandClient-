@@ -11,8 +11,8 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
-    property string mainTitleDefault: "У С Т Р О Й С Т В О<br/>А К Т И В И Р О В А Н О";
-    property string journeyTitleDefault: "отправляемся<br/>в путешествие";
+    property string mainTitleDefault: "УСТРОЙСТВО<br/>АКТИВИРОВАНО";
+    property string journeyTitleDefault: "ВПЕРЕД<br/>К ПРИКЛЮЧЕНИЯМ!";
 
     signal animComplete();
     signal animStart();
@@ -39,6 +39,7 @@ Item
         anchors.verticalCenter:  parent.verticalCenter;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
+        font.letterSpacing: 14;
     }
 
     Text
@@ -47,12 +48,13 @@ Item
         id: journeyText;
         text: journeyTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60 * consts.designScale;
+        font.pixelSize: 40 * consts.designScale;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter:  parent.verticalCenter;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
+        font.letterSpacing: 14;
     }
 
     function start()

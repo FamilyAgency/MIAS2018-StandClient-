@@ -17,11 +17,11 @@ Item
         id: backBtn;
         text: "";
         visible: true;
-        width: 200;
-        height: 200;
+        width: 100;
+        height: 100;
         anchors.top: parent.top;
         anchors.topMargin: 0;
-        anchors.right: parent.right;
+        anchors.left: parent.left;
         anchors.rightMargin: 0;
         onClicked:
         {

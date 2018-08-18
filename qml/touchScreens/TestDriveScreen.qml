@@ -28,7 +28,6 @@ Item
         id: font;
     }
 
-
     ChooseTestDrive
     {
         id: chooseTestDrive;

@@ -11,7 +11,7 @@ Item
 {
     anchors.fill: parent;
     property int circleSize: 300;
-    property int offset: 80;
+    property int offset: 70;
 
     FontManager
     {
@@ -121,13 +121,13 @@ Item
             switch(id)
             {
             case 0:
-                choosen.source = standData.getStandImage("task2/icon.png");
+                choosen.source = standData.getStandImage("task1/icon.png");
                 break;
             case 1:
                 choosen.source = standData.getStandImage("task3/icon.png");
                 break;
             case 2:
-                choosen.source = standData.getStandImage("task1/icon.png");
+                choosen.source = standData.getStandImage("task2/icon.png");
                 break;
             }
         }

@@ -10,7 +10,7 @@ Item
     id: gameScreen;
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Концентрируйся<br/>на Santa fe.<br/>Двигайся к точке.";
+    property string mainTitleDefault: "Концентрируйся<br/>на Hyundai SANTA FE<br/>и продолжайте<br/>движение.";
 
     signal animComplete();
     signal animStart();

@@ -15,9 +15,9 @@ Item
     anchors.centerIn: parent;
 
     property string superGameTitle: "СУПЕРИГРА";
-    property string descrTitleDefault: "Успей проехать трассу<br/>на время, от тебя нужна<br/>максимальна <br/>концентрация";
+    property string descrTitleDefault: "Уложитесь в заданное<br/>время и максимально<br/>сконцетрируйтесь —<br/>от этого зависит<br/>ваша скорость!";
 
-    property string buttonText: "ПОЕХАЛИ";
+    property string buttonText: "Я ГОТОВ!";
 
     property real btnMarginBottom: 100 * consts.designScale;
 

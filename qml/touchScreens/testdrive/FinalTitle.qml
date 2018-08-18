@@ -7,7 +7,7 @@ import "../../tools"
 
 Item
 {
-    property string okText: "Спасибо!<br/>Ваш запрос отправлен.";
+    property string okText: "Запрос успешно отправлен!<br/><br/>С вами свяжется менеджер<br/>для уточнения информации.";
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -22,7 +22,6 @@ Item
         id: consts;
     }
 
-
     Text
     {
         id: okFiled;
@@ -30,7 +29,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         text: okText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 80 * consts.designScale;
+        font.pixelSize: 60 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;

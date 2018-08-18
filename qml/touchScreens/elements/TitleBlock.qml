@@ -43,7 +43,7 @@ Item
         anchors.topMargin: titleBlock.offsetY * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 80 * consts.designScale;
+        font.pixelSize: 70 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;

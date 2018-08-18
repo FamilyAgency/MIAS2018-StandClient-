@@ -160,7 +160,7 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
             {
                 auto gameObj = game.toObject();
                 StandOneGameConfig oneGameconfig;
-                oneGameconfig.category = gameObj["category"].toString();
+               // oneGameconfig.category = gameObj["category"].toString();// todo check
                 oneGameconfig.description = gameObj["description"].toString();
                 oneGameconfig.descriptionWin = gameObj["descriptionwin"].toString();
                 oneGameconfig.imageWinName = gameObj["imagewinpath"].toString();

@@ -14,7 +14,7 @@ Item
     anchors.centerIn: parent;
 
     property string superGameTitle: "ПОЗДРАВЛЯЕМ";
-    property string descrTitleDefault: "Прямо сейчас<br/>на стойке выдаче<br/>подарков вас ждет<br/>бесплатный подарок";
+    property string descrTitleDefault: "Заберите ваш<br/>прохладительный напиток<br/>у стойки выдачи подарков.";
     property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
     property real btnMarginBottom: 100 * consts.designScale;
 

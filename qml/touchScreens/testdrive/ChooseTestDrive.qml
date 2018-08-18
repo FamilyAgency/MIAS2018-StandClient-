@@ -12,11 +12,11 @@ Item
     property real btnMarginBottom: 100 * consts.designScale;
 
 
-    property string signInText: "Запись\nна тест-драйв";
-    property string signInDescText: "Познакомься с увлекательным\nмиром Sata Fe!";
-    property string citiesBtnText: "Выберите ваш город";
-    property string dealerBtnText: "Выберите вашего дилера";
-    property string buttonText: "ЗАПИСАТЬСЯ";
+    property string signInText: "Запись на <br/>тест-драйв нового <br/>Hyundai SANTA FE.";
+    property string signInDescText: "";
+    property string citiesBtnText: "Выберите город";
+    property string dealerBtnText: "Выберите дилера";
+    property string buttonText: "ОТПРАВИТЬ";
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -150,7 +150,7 @@ Item
             {
                 id: citiesListView;
                 titleText: "Выбор города";
-                subTitleText: "Укажите ваш город, чтобы выбрать удобного дилера";
+                subTitleText: "";
 
                 model: ListModel
                 {
@@ -191,8 +191,7 @@ Item
                 id: dealersListView;
 
                 titleText: "Выбор дилера";
-                subTitleText: "Укажите вашего дилера";
-
+                subTitleText: "";
 
                 model:ListModel
                 {
