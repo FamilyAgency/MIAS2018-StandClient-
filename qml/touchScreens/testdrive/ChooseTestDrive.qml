@@ -11,6 +11,7 @@ Item
     property var allDealersData;
     property real btnMarginBottom: 100 * consts.designScale;
 
+
     property string signInText: "Запись\nна тест-драйв";
     property string signInDescText: "Познакомься с увлекательным\nмиром Sata Fe!";
     property string citiesBtnText: "Выберите ваш город";
@@ -31,7 +32,7 @@ Item
         {
             Column
             {
-				id: mainItem;
+                id: mainItem;
 
                 anchors.fill: parent;
                 anchors.topMargin: 100;
@@ -81,11 +82,12 @@ Item
                     onClicked:
                     {
                         citiesListView.positionViewAtBeginning();
+                        citiesMainHolder.visible = true;
                         swiper.currentIndex = 1;
                         startBtn.hide();
                     }
 
-					onIndexChanged:
+                    onIndexChanged:
                     {
                         if (choosenIndex === -1)
                         {
@@ -117,12 +119,14 @@ Item
                         {
                             dealersListView.positionViewAtBeginning();
                             calculateDealersByCityId(citiesBtn.choosenIndex);
+
+                            citiesMainHolder.visible = false;
                             swiper.currentIndex = 2;
                             startBtn.hide();
                         }
                     }
 
-					onIndexChanged:
+                    onIndexChanged:
                     {
                         if (choosenIndex === -1)
                         {
@@ -141,6 +145,7 @@ Item
 
         Item
         {
+            id: citiesMainHolder;
             TestDriveListView
             {
                 id: citiesListView;
@@ -154,13 +159,9 @@ Item
 
                 onItemChoosen:
                 {
-
-                    //var cityIndex = citiesComboBox.currentIndex;
-                    //var dealerIndex = dealersComboBox.currentIndex;
-                    //var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
-                    console.log(index, allDealersData[index].name);
+                    console.log("city choosen: ", index, allDealersData[index].name);
                     calculateDealersByCityId(index);
-					citiesBtn.setIndex(index);
+                    citiesBtn.setIndex(index);
                     swiper.currentIndex = 2;
                 }
             }
@@ -192,6 +193,7 @@ Item
                 titleText: "Выбор дилера";
                 subTitleText: "Укажите вашего дилера";
 
+
                 model:ListModel
                 {
                     id: dealersModel;
@@ -200,7 +202,8 @@ Item
                 onItemChoosen:
                 {
                     calculateDealersByCityId(index);
-					dealerBtn.setIndex(index);
+                    dealerBtn.setIndex(index);
+                    citiesMainHolder.visible = false;
                     swiper.currentIndex = 0;
                     startBtn.show();
                 }
@@ -219,11 +222,15 @@ Item
             {
                 onClicked:
                 {
+                    citiesMainHolder.visible = false;
                     swiper.currentIndex = 0;
                 }
             }
         }
+
     }// ________________END SWIPER________________________
+
+
 
 
     FontManager
@@ -312,8 +319,8 @@ Item
     {
         citiesListView.positionViewAtBeginning();
         dealersListView.positionViewAtBeginning();
-		citiesBtn.setIndex(-1);
-		dealerBtn.setIndex(-1);
+        citiesBtn.setIndex(-1);
+        dealerBtn.setIndex(-1);
         swiper.currentIndex = 0;
     }
 }
