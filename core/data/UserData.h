@@ -17,6 +17,7 @@ private:
     Q_PROPERTY(QString surname MEMBER surname)
     Q_PROPERTY(QString email MEMBER email)
     Q_PROPERTY(QString phone MEMBER phone)
+    Q_PROPERTY(QString gender MEMBER gender)
     Q_PROPERTY(int test MEMBER test)
 
 public:
@@ -25,6 +26,7 @@ public:
     QString surname = "";
     QString email = "";
     QString phone = "";
+    QString gender = "M";
     int test = 0;
     int confirmed = 0;
     int remainSeconds = 0;

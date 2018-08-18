@@ -374,6 +374,7 @@ void ServerRemoteComponent::createBaseUserData(const QJsonObject& object)
     baseUserData.confirmed = object["confirmed"].toInt();
     baseUserData.remainSeconds = object["remainSeconds"].toInt();
     baseUserData.test = object["test"].toInt();
+    baseUserData.gender = object["gender"].toString();
     baseUserData.print();
     setBaseUserData(baseUserData);
 }
