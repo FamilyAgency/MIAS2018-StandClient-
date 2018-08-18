@@ -217,6 +217,15 @@ void ACR122CardHandler::onWritingUpdate()
     qDebug()<<"blocksNeeded: "<<blocksNeeded;
     int blockOffset = 0;
 
+    const int MAX_BLOCK_FOR_WRITE = blockAdresses.size();
+
+    if(blocksNeeded > MAX_BLOCK_FOR_WRITE)
+    {
+        releaseCardReader();
+        emit cardReaderError(CardReaderError::WriteError);
+        return;
+    }
+
     for(int i = 0; i < blocksNeeded; i++)
     {
         blockAdress = blockAdresses[i];
