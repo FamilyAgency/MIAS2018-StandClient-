@@ -11,6 +11,9 @@ InstructionModule::InstructionModule(QObject *parent) : BaseModule(parent)
     showTextTimer = new QTimer(this);
     connect(showTextTimer, SIGNAL(timeout()), this, SLOT(onShownTextComplete()));
 
+    instructionEndTimer = new QTimer(this);
+    connect(instructionEndTimer, SIGNAL(timeout()), this, SLOT(onInstructionEndTimerComplete()));
+
     opacity1Animator = new QPropertyAnimation(this);
     opacity1Animator->setTargetObject(this);
     opacity1Animator->setPropertyName("opacity1");
@@ -66,6 +69,13 @@ InstructionModule::~InstructionModule()
     }
 
     animations.clear();
+
+    if(instructionEndTimer)
+    {
+        instructionEndTimer->stop();
+        disconnect(instructionEndTimer, SIGNAL(timeout()), this, SLOT(onInstructionEndTimerComplete()));
+        delete instructionEndTimer;
+    }
 }
 
 void InstructionModule::setConfig(ConfigPtr config)
@@ -96,6 +106,7 @@ void InstructionModule::stop()
     delayReadTimer->stop();
     animDelayTimer->stop();
     showTextTimer->stop();
+    instructionEndTimer->stop();
 
     for (auto &anim : animations)
     {
@@ -114,6 +125,9 @@ void InstructionModule::onDelayTimerComplete()
     emit mindwaveReady();
 
     animDelayTimer->start(animDelayTimerMills);
+
+
+    instructionEndTimer->start(instructionEndTimerMills);
 }
 
 void InstructionModule::onAnimDelayTimerComplete()
@@ -133,7 +147,7 @@ void InstructionModule::onShownTextComplete()
 {
     showTextTimer->stop();
 
-    if( textAnimated == TextAnimated::Text1)
+    if(textAnimated == TextAnimated::Text1)
     {
         opacity1Animator->setStartValue(1);
         opacity1Animator->setEndValue(0);
@@ -163,8 +177,14 @@ void InstructionModule::onOpacity1AnimatorCompleted()
 
 
         //test
-        mediaEnded();
+        //mediaEnded();
     }
+}
+
+void InstructionModule::onInstructionEndTimerComplete()
+{
+    instructionEndTimer->start();
+    emit instructionComplete();
 }
 
 float InstructionModule::opacity1() const

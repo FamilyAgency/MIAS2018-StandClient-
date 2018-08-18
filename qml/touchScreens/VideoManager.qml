@@ -277,7 +277,7 @@ Item
 
         if(index === 2)
         {
-            instructionModule.mediaEnded();
+           // instructionModule.mediaEnded();
         }
 
         //        if(currentState == AppState.Instruction)

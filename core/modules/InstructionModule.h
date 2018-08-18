@@ -38,9 +38,11 @@ private:
     QTimer* delayReadTimer = nullptr;
     QTimer* animDelayTimer = nullptr;
     QTimer* showTextTimer = nullptr;
+    QTimer* instructionEndTimer = nullptr;
 
-    const float delayTimerMills = 500.0f;
+    const float delayTimerMills = 5000.0f;
     const float animDelayTimerMills = 1500.0f;
+    const float instructionEndTimerMills = 9000.0f;
 
     QSharedPointer<MindwaveComponentBase> mindWaveComponent;
 
@@ -71,6 +73,8 @@ private slots:
     void onShownTextComplete();
 
     void onOpacity1AnimatorCompleted();
+
+    void onInstructionEndTimerComplete();
 
 };
 
