@@ -21,6 +21,10 @@ private:
     QByteArray readData;
     void writeSerialData(const QByteArray &data);
     void writeCommand();
+    void tryReconnect();
+
+
+    QTimer* reconnectTimer;
 
 protected slots:
     virtual void onConnectionSuccess();
@@ -28,6 +32,8 @@ protected slots:
 private slots:
     virtual void onReadyRead();
     void onReadError(QSerialPort::SerialPortError serialPortError);
+    void onReconnectHandle();
+
 };
 
 #endif // MINDWAVEREADERSERIAL_H

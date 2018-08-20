@@ -59,6 +59,7 @@ void MindwaveComponentBase::onDisconnectionSuccess()
 
 void MindwaveComponentBase::start()
 {
+    qDebug()<<"mindwave component start -------------------";
     timeoutTimer->start(_mindwaveConfig.timeoutMills);
     mindwaveReader->start();
 }

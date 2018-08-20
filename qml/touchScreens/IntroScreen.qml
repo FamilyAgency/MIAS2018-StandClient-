@@ -82,7 +82,7 @@ Item
 
             switch(reason)
             {
-            case CantPlayReason.WasRecently:   
+            case CantPlayReason.WasRecently:
             case CantPlayReason.YouArePlaying:
                 var seconds = userData.getSecondsToStart();
                 cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStart(seconds));
@@ -98,6 +98,22 @@ Item
             }
         }
     }
+
+    Connections
+    {
+        target:rfid;
+
+        onCardReaderError:
+        {
+            switch(error)
+            {
+            case CardReaderError.CardParsing:
+                cantPlayHandler("Похоже, что тебя<br/>не существует!");
+                break;
+            }
+        }
+    }
+
 
 
     function start()

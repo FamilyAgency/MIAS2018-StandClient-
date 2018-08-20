@@ -9,7 +9,7 @@ GameTask::GameTask()
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
 
-    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
+    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!"<<this;
 }
 
 GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velCalc)
@@ -19,7 +19,7 @@ GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velC
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
 
-    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!";
+    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!"<<this;
 }
 
 void GameTask::setData(const QVector<QPointF>& value, const VelocityCalculator& velCalc)

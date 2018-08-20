@@ -206,7 +206,6 @@ signals:
     void mainIconOpacityChanged();
     void mainIconYChanged();
 
-
     void allIconsScaleChanged();
     void showSmallCar();
 

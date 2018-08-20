@@ -265,10 +265,10 @@ GameUserData::GameUserData()
 
 void GameUserData::setupConfigSuperGameData(const SuperGameConfig& superGameConfig)
 {
-   superGame.setDifficult(VelocityCalculator(2, 3, 60));
-   superGame.setPath(superGameConfig.path);
-   superGame.setComplete(false);
-   superGame.setMaxTime(superGameConfig.time);
+    superGame.setDifficult(getSuperGameDifficult());
+    superGame.setPath(superGameConfig.path);
+    superGame.setComplete(false);
+    superGame.setMaxTime(superGameConfig.time);
 }
 
 void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
@@ -276,13 +276,13 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
     stages.clear();
     stageTimes.clear();
 
-    description = game.description;   
+    description = game.description;
     descriptionWin = game.descriptionWin;
     iconName = game.iconName;
     imageWinName = game.imageWinName;
 
     fullGamePath.clear();
-    targetPoints.clear();    
+    targetPoints.clear();
 
     for(int i = 0; i < game.stages.size(); i++)
     {
@@ -300,17 +300,42 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
 
         targetPoints.append(path[path.size() - 1]);
 
-        oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
+        oneGameData.setDifficult(getStageDifficult(i + 1));
         stages.push_back(oneGameData);
         stageTimes.push_back(0.0f);
     }
 
-     qDebug()<<"targetPoints   "<<targetPoints.length();
+    qDebug()<<"targetPoints   "<<targetPoints.length();
 
     startPath = game.startPath;
     finalPath = game.finalPath;
 
     _hasGames = true;
+}
+
+VelocityCalculator GameUserData::getStageDifficult(int id)
+{
+    switch(id)
+    {
+    case 1:
+        return VelocityCalculator(1, 2, 40);
+
+    case 2:
+        return VelocityCalculator(1, 3, 60);
+
+    case 3:
+        return VelocityCalculator(1, 3, 80);
+
+    case 4:
+        return VelocityCalculator(1, 3, 70);
+    }
+
+    return VelocityCalculator(1, 3, 40);
+}
+
+VelocityCalculator GameUserData::getSuperGameDifficult()
+{
+    return VelocityCalculator(1, 3, 80);
 }
 
 QVariantList GameUserData::getFullGamePath() const
@@ -342,7 +367,7 @@ int GameUserData::getCurrentStageId() const
 bool GameUserData::isFinalStage() const
 {
     qDebug()<<"is final stage________ "<<currentStageId;
-  return currentStageId == 4;
+    return currentStageId == 4;
 }
 
 void GameUserData::currentStageCompleted(int time)

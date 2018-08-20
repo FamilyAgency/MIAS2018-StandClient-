@@ -113,6 +113,9 @@ public:
     QVariantList getFullGamePath() const;
     QVariantList getTargetPoints() const;
 
+private:
+    VelocityCalculator getStageDifficult(int id);
+    VelocityCalculator getSuperGameDifficult();
 };
 Q_DECLARE_METATYPE(GameUserData)
 

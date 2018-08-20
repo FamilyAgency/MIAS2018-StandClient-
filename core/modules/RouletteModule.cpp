@@ -336,11 +336,11 @@ void RouletteModule::startRoll()
         break;
     case 1:
         degrees = 360 + 270;//task3
-        iconPath = "task3/icon.png";
+        iconPath = "task2/icon.png";
         break;
     case 2:
         degrees = 360 + 180;//task2
-        iconPath = "task2/icon.png";
+        iconPath = "task3/icon.png";
         break;
     }
 

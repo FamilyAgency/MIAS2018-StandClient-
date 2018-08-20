@@ -47,11 +47,11 @@ Item
     {
         anchors.left: parent.left;
         anchors.top: parent.top;
-        anchors.topMargin: 50;
-        anchors.leftMargin: 50;
+        anchors.topMargin: 10;
+        anchors.leftMargin: 10;
         running: true;
-        implicitHeight: 100;
-        implicitWidth: 100;
+        implicitHeight: 50;
+        implicitWidth: 50;
     }
 
     Timer

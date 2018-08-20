@@ -144,28 +144,29 @@ void ACR122CardHandler::stopAll()
 bool ACR122CardHandler::cardPreparedSuccess()
 {
     bool cardPrepared = true;
+    bool cardReaderStatus = true;
 
     if(!establishContext())
     {
         qDebug()<<"cant establish context";
+        cardReaderStatus = false;
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
-
     else if(!checkIsDeviceConnected())
     {
         qDebug()<<"cant device connected";
+        cardReaderStatus = false;
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
-
     else if(!cardConnect())
     {
         emit cardReaderError(CardReaderError::NoCard);
         cardPrepared = false;
     }
     else if(!loadKey())
-    {
+    {        
         emit cardReaderError(CardReaderError::LoadKeyError);
         cardPrepared = false;
     }
@@ -175,6 +176,8 @@ bool ACR122CardHandler::cardPreparedSuccess()
         releaseCardReader();
     }
 
+    emit cardReaderEnabled(cardReaderStatus);
+   // qDebug()<<"all prepared completed";
     return cardPrepared;
 }
 
@@ -483,7 +486,15 @@ bool ACR122CardHandler::compareAllData(const QString& data1, const QString& data
 
 void ACR122CardHandler::onCardReaderError(CardReaderError error)
 {
+
     setCardReaderState(CardReaderState::Stopped);
+
+    if(error == CardReaderError::CardParsing)
+    {
+        qDebug()<<"xxxxxxxxxxx CardReaderError xxxxxxxxxxxxxxxxxx"<< (int)error;
+
+        //resetReadingState();
+    }
 }
 
 void ACR122CardHandler::resetReadingState()

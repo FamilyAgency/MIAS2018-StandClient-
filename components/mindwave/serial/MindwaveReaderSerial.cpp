@@ -5,6 +5,11 @@ MindwaveReaderSerial::MindwaveReaderSerial(QObject *parent) : MindwaveReaderBase
     serialPort = new QSerialPort();
     connect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(serialPort, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(onReadError(QSerialPort::SerialPortError)));
+
+
+    reconnectTimer = new QTimer(this);
+    connect(reconnectTimer, SIGNAL(timeout()), this, SLOT(onReconnectHandle()));
+
 }
 
 MindwaveReaderSerial::~MindwaveReaderSerial()
@@ -38,17 +43,21 @@ void MindwaveReaderSerial::startReading(int modelIndex)
 
     if (!serialPort->open(QIODevice::ReadWrite))
     {
+        //tryReconnect();
         qDebug()<<"serialPort opening error";
     }
     else
     {
         qDebug()<<"serialPort opened";
+
         // serialPort->setBaudRate(QSerialPort::Baud57600);
     }
 }
 
 void MindwaveReaderSerial::onReadyRead()
 {
+    //qDebug()<<"onReadyRead ";
+
     QByteArray bytes = serialPort->readAll();
     dataRecieve(bytes);
 }
@@ -60,6 +69,8 @@ void MindwaveReaderSerial::onReadError(QSerialPort::SerialPortError serialPortEr
     {
 
     }
+
+   // tryReconnect();
 }
 
 void MindwaveReaderSerial::setConfig(const MindwaveConfig& config)
@@ -128,6 +139,26 @@ void MindwaveReaderSerial::writeSerialData(const QByteArray &data)
     qDebug() << "Data Write Sucessfull";
     return;
 }
+
+void MindwaveReaderSerial::tryReconnect()
+{
+    if(!serialPort->isOpen())
+    {
+        reconnectTimer->stop();
+        reconnectTimer->start(1000);
+    }
+
+}
+
+void MindwaveReaderSerial::onReconnectHandle()
+{
+    reconnectTimer->stop();
+    startReading(0);
+}
+
+
+
+
 
 
 

@@ -88,5 +88,6 @@
         <file>qml/touchScreens/testdrive/ChooseButton.qml</file>
         <file>qml/mainScreens/SuperGameWinScreen.qml</file>
         <file>resources/Error.png</file>
+        <file>qml/touchScreens/elements/Indicators.qml</file>
     </qresource>
 </RCC>

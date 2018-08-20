@@ -44,7 +44,6 @@ Item
     MonitoringComponent
     {
         id:monitoringComp;
-
     }
 
     MindwaveComponent

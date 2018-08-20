@@ -50,6 +50,11 @@ Item
         z: 4;
     }
 
+    Indicators
+    {
+        id: indicators;
+    }
+
     ServerErrorPopup
     {
         id: serverErrorPopup;

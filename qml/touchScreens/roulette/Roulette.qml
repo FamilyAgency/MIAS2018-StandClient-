@@ -40,13 +40,13 @@ Item
             anchors.bottomMargin: -offset;
             smooth: true;
             rotation: -rouletteModule.rotation;
-            source: standData.getStandImage("task2/icon.png");
+            source: standData.getStandImage("task3/icon.png");
         }
 
         Image
         {
             id: image2;
-             rotation: -rouletteModule.rotation;
+            rotation: -rouletteModule.rotation;
             scale: rouletteModule.allIconsScale;
             anchors.verticalCenter: parent.verticalCenter;
             anchors.left: parent.left;
@@ -64,7 +64,7 @@ Item
             anchors.right: parent.right;
             anchors.rightMargin: -offset;
             smooth: true;
-            source: standData.getStandImage("task3/icon.png");
+            source: standData.getStandImage("task2/icon.png");
         }
     }
 

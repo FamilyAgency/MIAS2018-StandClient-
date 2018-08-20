@@ -116,13 +116,14 @@ private:
     void blockZeroDataInit();
 
     int readerTimeout = 2000;
-    int checkMills = 100;
+    int checkMills = 1000;
 
 signals:
     void cardReaderError(CardReaderError error);
     void userWriteSuccess();   
     void validationSuccess();
     void validationFailed();
+    void cardReaderEnabled(bool enabled);
 
 private slots:
     void onReadingUpdate();
