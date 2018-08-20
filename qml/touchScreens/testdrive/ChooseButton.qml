@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+import QtGraphicalEffects 1.0
+
 import "../../tools"
 
 Button
@@ -34,7 +36,16 @@ Button
 		implicitHeight: 150;
 		radius: 100;
 		color: "#000";
-		border.color: btnColor;
+		//border.color: btnColor;
+	}
+
+	layer.enabled: true;
+	layer.effect: Glow
+	{
+		radius: 150;
+        samples: 200;
+        color: btnColor + "66";
+		transparentBorder: true;
 	}
 
 	FontManager

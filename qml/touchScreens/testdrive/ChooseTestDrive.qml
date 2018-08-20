@@ -76,7 +76,7 @@ Item
                 ChooseButton
                 {
                     id: citiesBtn;
-                    btnColor: "#112041";
+					btnColor: "#335792";
                     btnText: citiesBtnText;
 
                     onClicked:
@@ -110,7 +110,7 @@ Item
                 ChooseButton
                 {
                     id: dealerBtn;
-                    btnColor: "#112041";
+					btnColor: "#923347";
                     btnText: dealerBtnText;
 
                     onClicked:
@@ -161,7 +161,8 @@ Item
                 {
                     console.log("city choosen: ", index, allDealersData[index].name);
                     calculateDealersByCityId(index);
-                    citiesBtn.setIndex(index);
+					if (citiesBtn.choosenIndex !== index) {dealerBtn.setIndex(-1)} ;
+					citiesBtn.setIndex(index);
                     swiper.currentIndex = 2;
                 }
             }
