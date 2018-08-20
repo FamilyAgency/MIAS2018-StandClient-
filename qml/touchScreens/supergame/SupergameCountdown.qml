@@ -17,7 +17,7 @@ Item
 
     Tools
     {
-        id:tools;
+        id: tools;
     }
 
     Consts
@@ -72,7 +72,7 @@ Item
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
-                    canvasCirc.radius, 0, 2 *  Math.PI* percent );//
+                    canvasCirc.radius, 0, 2 * Math.PI * percent );//
             //  2 * Math.PI * percent, 0);
             ctx.stroke();
             ctx.closePath();
@@ -119,7 +119,7 @@ Item
         font.pixelSize: 160 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
+        horizontalAlignment: Text.AlignHCenter;
         text: "00:00";
 
         Text

@@ -10,7 +10,9 @@ Item
 {
     id: error;
 
-    property real btnMarginBottom: 305 ;//* consts.designScale;
+    property real btnMarginBottom: 305;//* consts.designScale;
+    property string errorTitle:  "Обратитесь за помощью <br/>к промо персоналу.<br/>Игра не может <br/>быть продолжена";
+    property string btnTtile: "OK";
 
     anchors.fill: parent;
 
@@ -36,8 +38,7 @@ Item
     {
         id: mainText;
         font.family: font.hyundaiSansHeadRegular;
-        text: "Обратитесь за помощью <br/>к промо персоналу.<br/>Игра не может <br/>быть продолжена";
-
+        text: errorTitle;
         font.pixelSize: 54;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -85,7 +86,7 @@ Item
     Component.onCompleted:
     {
         visible = false;
-        okBtn.setTitle("OK");
+        okBtn.setTitle(btnTtile);
     }
 
     Connections

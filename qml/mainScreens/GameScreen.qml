@@ -27,19 +27,18 @@ Item
         visible: false;
     }
 
+    CarUnit
+    {
+        id:car;
+        visible: false;
+    }
+
     Image
     {
         id:mapover
         anchors.fill: parent;
         smooth:true;
-    }
-
-
-    CarUnit
-    {
-        id:car;
-        visible: false;
-    }   
+    }    
 
     MapAnimator
     {

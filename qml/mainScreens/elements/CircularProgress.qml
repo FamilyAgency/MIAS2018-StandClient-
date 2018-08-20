@@ -53,7 +53,7 @@ Item
         height: 250;
         property int centerWidth: 250 * 0.5
         property int centerHeight: 250 * 0.5
-        property int radius: 80;
+        property int radius: 10;
 
         property real percentLimit: 0.0;
         property real percentAttention: 0.0;

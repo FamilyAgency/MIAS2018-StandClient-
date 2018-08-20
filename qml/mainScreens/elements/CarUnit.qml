@@ -29,7 +29,6 @@ Item
         id: circProgress;
     }
 
-
     function moveCar(currentPoint, forwardVector)
     {
        var canvasY = 0;
