@@ -138,6 +138,8 @@ Item
     function show()
     {
         visible = true;
+        console.log(" show--------------");
+
 
         startBtn.scale = 0;
 

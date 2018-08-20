@@ -1,32 +1,49 @@
-import QtQuick 2.0
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 1.4
+import QtQuick 2.2
+import QtQuick.Controls 2.0
+import QtQuick.Controls.Styles 1.2
 import com.app 1.0
+
+import "../../tools"
 
 Item
 {
     id: error;
+
+    property real btnMarginBottom: 305 ;//* consts.designScale;
+
     anchors.fill: parent;
 
-    Rectangle
+    Consts
     {
+        id: consts;
+    }
+
+    FontManager
+    {
+        id: font;
+    }
+
+    Image
+    {
+        id: errorBg;
         anchors.fill: parent;
-        opacity: 0.7;
-        color: "red";
+        smooth: true;
+        source: "qrc:/resources/Error.png";
     }
 
     Text
     {
         id: mainText;
-        anchors.top: parent.top;
-        anchors.topMargin: 100;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        text: "Обратитесь за помощью к промоутеру<br/>Игра не может быть продолжена";
-        font.family: "Helvetica";
-        font.pixelSize: 25;
+        font.family: font.hyundaiSansHeadRegular;
+        text: "Обратитесь за помощью <br/>к промо персоналу.<br/>Игра не может <br/>быть продолжена";
+
+        font.pixelSize: 54;
         color: "#ffffff";
-        textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.top:  parent.top;
+        anchors.topMargin: 600;
+        horizontalAlignment: Text.AlignHCenter;
     }
 
     Button
@@ -35,11 +52,17 @@ Item
         opacity: 0.0;
     }
 
-    Button
+    BigRedButton
     {
-        anchors.centerIn: parent;
-        opacity: 1.0;
-        text: "OK. Close Error";
+        id: okBtn;
+
+        anchors.bottomMargin: btnMarginBottom;
+        visible: false;
+        anchors.fill: parent;
+        btnWidth: 350 * consts.designScale;
+        btnHeight: 350 * consts.designScale;
+        btnRadius: 175 * consts.designScale;
+
         onClicked:
         {
             appController.backToIntro();
@@ -48,9 +71,21 @@ Item
         }
     }
 
+    OpacityAnimator on opacity
+    {
+        id: opacityAnim;
+        from: 0;
+        to: 1;
+        duration: 700;
+        running:false;
+        easing.type: "InOutCubic";
+    }
+
+
     Component.onCompleted:
     {
         visible = false;
+        okBtn.setTitle("OK");
     }
 
     Connections
@@ -59,15 +94,18 @@ Item
 
         onServerRequestError:
         {
-           // cantPlayHandler("Что-то пошло не так!<br/>Обратитесь к промоутеру.");
-            console.log("server error");
+            opacity = 0;
             visible = true;
+            opacityAnim.start();
+            okBtn.show();
         }
 
         onServerGlobalError:
         {
-            console.log("server error");
+            opacity = 0;
             visible = true;
+            opacityAnim.start();
+            okBtn.show();
         }
     }
 }
