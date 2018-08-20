@@ -43,8 +43,8 @@ Button
 	layer.effect: Glow
 	{
 		radius: 150;
-		samples: 30;
-		color: btnColor+"66";
+        samples: 200;
+        color: btnColor + "66";
 		transparentBorder: true;
 	}
 
