@@ -344,7 +344,6 @@ void RouletteModule::startRoll()
         break;
     }
 
-
     emit updateChoosenCategoryImagePath(iconPath);
     emit gameCategoryUpdate(choosenCategory);
     rollAnimation->setEndValue(degrees);
@@ -378,6 +377,8 @@ void RouletteModule::onUserStartedGame()
 
 void RouletteModule::onScaleAnimationCompleted()
 {
+    emit startCarMasking();
+
     carYAnimation2->start();
     taskOpacityAnimation->setStartValue(0);
     taskOpacityAnimation->setEndValue(1);
@@ -420,6 +421,8 @@ void RouletteModule::onCircleFinalYAnimationCompleted()
 
 void RouletteModule::onPulsarAnimationCompleted()
 {
+    emit endCarMasking();
+
     helpTextAnimation->setStartValue(1);
     helpTextAnimation->setEndValue(0);
     helpTextAnimation->start();

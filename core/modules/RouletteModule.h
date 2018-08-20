@@ -212,6 +212,8 @@ signals:
 
     void updateCanvas();
 
+    void endCarMasking();
+    void startCarMasking();
 
 private slots:
     void onMindwaveUpdate();
