@@ -282,7 +282,8 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
     imageWinName = game.imageWinName;
 
     fullGamePath.clear();
-    targetPoints.clear();
+    targetPoints.clear();    
+
     for(int i = 0; i < game.stages.size(); i++)
     {
         OneStageData oneGameData;
@@ -300,7 +301,6 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
         targetPoints.append(path[path.size() - 1]);
 
         oneGameData.setDifficult(VelocityCalculator(2, 3, 60));
-        oneGameData.setAdvantage(game.stages[i].advantage);
         stages.push_back(oneGameData);
         stageTimes.push_back(0.0f);
     }

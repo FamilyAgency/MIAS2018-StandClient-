@@ -59,6 +59,7 @@ Item
         addLocation(AppState.Intro, "IntroScreenTest");
         addLocation(AppState.SuperGame, "SuperGameScreenTest");
         setState(appController.getAppState());
+        toggleTestInterface();
     }
 
     Connections

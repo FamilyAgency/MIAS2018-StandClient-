@@ -33,6 +33,7 @@ void AppController::createEngine()
     standData.reset(new StandData());
     dilerData.reset(new DilerData());
     gameSession.reset(new GameSession());
+    advantagesData.reset(new AdvantagesData());
 
     //////////////////// components //////////////////////
 
@@ -85,6 +86,7 @@ void AppController::createEngine()
     gameModule->setGameSession(gameSession);
     gameModule->setUser(userData);
     gameModule->setServerComponent(serverComponent);
+    gameModule->setAdvantagesData(advantagesData);
     connect(gameModule.data(), SIGNAL(allStagesComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
@@ -191,6 +193,7 @@ void AppController::onConfigLoaded(ConfigPtr config)
 
     standData->setConfig(config);
     userData->setConfig(config);
+    advantagesData->setConfig(config);
     
     animationManager->setConfig(config);
     

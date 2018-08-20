@@ -15,13 +15,11 @@ public:
 
     void setPath(const QVector<QPointF>& path);
     void setDifficult(const VelocityCalculator& value);
-    void setAdvantage(const OneAdvantageConfig& value);
 
     void clearUserData();
 
     QVector<QPointF> getPath() const;
     VelocityCalculator getDifficult() const;
-    OneAdvantageConfig getAdvantage() const;
 
     void setId(int value);
     int getId() const;
@@ -34,7 +32,6 @@ public:
 private:
     QVector<QPointF> path;
     VelocityCalculator difficult;
-    OneAdvantageConfig advantage;
     int _id = 1;
     int _time = 0;
     bool _complete = false;

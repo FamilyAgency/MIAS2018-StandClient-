@@ -32,6 +32,8 @@ private:
     void parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj);
     void parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray);
     void parseStandAnimConfig(QSharedPointer<StandAnimConfig> standAnimConfig, const QJsonArray& jsonArray);
+    void parseAdvantagesConfig(QSharedPointer<AdvantagesConfig> advantagesConfig, const QJsonArray& jsonArray);
+
 };
 
 #endif // CONFIGPARSER_H

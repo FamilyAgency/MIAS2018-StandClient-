@@ -8,6 +8,7 @@
 #include "components/ServerComponent.h"
 #include "core/game/GameTaskManager.h"
 #include "core/data/UserData.h"
+#include "core/data/AdvantagesData.h"
 #include "core/GameSession.h"
 
 class GameModule : public BaseModule
@@ -35,7 +36,8 @@ public:
     void setGameSession(QSharedPointer<GameSession> value);
     void setMindwave(QSharedPointer<MindwaveComponentBase> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);
-    void setUser(QSharedPointer<UserData> value);
+    void setUser(QSharedPointer<UserData> value);    
+    void setAdvantagesData(QSharedPointer<AdvantagesData> value);
 
 private:
     QSharedPointer<MindwaveComponentBase> mindWaveComponent;
@@ -43,6 +45,7 @@ private:
     QSharedPointer<GameSession> gameSession;
     QSharedPointer<UserData> currentUser;
     QSharedPointer<ServerComponent> serverComponent;
+    QSharedPointer<AdvantagesData> advantagesData;
 
     bool _canContinue = false;
 

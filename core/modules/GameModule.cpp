@@ -40,6 +40,11 @@ void GameModule::setUser(QSharedPointer<UserData> value)
     gameTaskManager->setUser(value);
 }
 
+void GameModule::setAdvantagesData(QSharedPointer<AdvantagesData> value)
+{
+    advantagesData = value;
+}
+
 void GameModule::setConfig(ConfigPtr config)
 {
     BaseModule::setConfig(config);
@@ -50,6 +55,7 @@ void GameModule::start()
     qDebug()<<"======================= GameModule START =======================";
 
     connectComponents();
+    advantagesData->shuffle();
     gameTaskManager->startGame();
     startStage();
 }
@@ -86,11 +92,11 @@ void GameModule::onStageComleteEvent(int completionTime)
 
 void GameModule::dispatchAdvantageData()
 {
-    auto userGameData = currentUser->getCurrentStage();
-    QString advantageDescription = userGameData.getAdvantage().description;
-    QString advantageTitle = userGameData.getAdvantage().title;
-    QString videoPath = userGameData.getAdvantage().videoPath;
-    QString advantageDescriptionMap = userGameData.getAdvantage().descriptionMap;
+    auto advantage = advantagesData->getNextAdvantage();
+    QString advantageDescription = advantage.description;
+    QString advantageTitle = advantage.title;
+    QString videoPath = advantage.videoPath;
+    QString advantageDescriptionMap = advantage.descriptionMap;
     emit stageComleteEvent(advantageTitle, advantageDescription, videoPath);
     emit stageComleteEventMap(advantageDescriptionMap);
 }

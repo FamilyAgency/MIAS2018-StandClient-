@@ -202,7 +202,6 @@ struct OneAdvantageConfig
 
 struct OneStageConfig
 {
-    OneAdvantageConfig advantage;
     QVector<QPointF> path;
 };
 
@@ -267,6 +266,10 @@ struct StandAnimConfig
      QVector<StandOneAnimConfig> animations;
 };
 
+struct AdvantagesConfig
+{
+     QVector<OneAdvantageConfig> advantages;
+};
 
 class Config
 {
@@ -284,6 +287,7 @@ public:
     QSharedPointer<MonitoringConfig> monitoringConfig;
     QSharedPointer<StandGamesConfig> standGamesConfig;
     QSharedPointer<StandAnimConfig> standAnimConfig;
+    QSharedPointer<AdvantagesConfig> advantagesConfig;
 
 
     QString getRawData() const;

@@ -11,6 +11,7 @@ Config::Config()
     monitoringConfig.reset(new MonitoringConfig);
     standGamesConfig.reset(new StandGamesConfig);
     standAnimConfig.reset(new StandAnimConfig);
+    advantagesConfig.reset(new AdvantagesConfig);
 }
 
 Config::~Config()

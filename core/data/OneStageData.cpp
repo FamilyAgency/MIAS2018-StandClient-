@@ -15,16 +15,6 @@ void OneStageData::setDifficult(const VelocityCalculator& value)
     difficult = value;
 }
 
-void OneStageData::setAdvantage(const OneAdvantageConfig& value)
-{
-    advantage = value;
-}
-
-OneAdvantageConfig OneStageData::getAdvantage() const
-{
-    return advantage;
-}
-
 QVector<QPointF> OneStageData::getPath() const
 {
     return path;

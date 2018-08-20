@@ -310,8 +310,7 @@ void RouletteModule::startRoll()
         return;
     }
 
-    categoryIndex++;
-    if(categoryIndex >= maxCategories)
+    if(++categoryIndex >= maxCategories)
     {
         std::random_shuffle(categories.begin(), categories.end());
         categoryIndex = 0;

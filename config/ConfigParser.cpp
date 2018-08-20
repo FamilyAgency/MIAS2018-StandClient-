@@ -36,6 +36,7 @@ void ConfigParser::parse(const QString& configData)
         parseMonitoringConfig(config->monitoringConfig, jsonObj["monitoring"].toObject());
         parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
         parseStandAnimConfig(config->standAnimConfig, jsonObj["animations"].toArray());
+        parseAdvantagesConfig(config->advantagesConfig, jsonObj["advantages"].toArray());
 
 
         if(!wasParsingError)
@@ -171,11 +172,6 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
                 for(auto oneStageJson : stagesJson)
                 {
                     OneStageConfig oneStage;
-                    auto advantageObject = oneStageJson.toObject()["advantage"].toObject();
-                    oneStage.advantage.title = advantageObject["title"].toString();
-                    oneStage.advantage.description = advantageObject["description"].toString();
-                    oneStage.advantage.descriptionMap = advantageObject["descriptionmap"].toString();
-                    oneStage.advantage.videoPath = advantageObject["videoPath"].toString();
                     for(auto path: oneStageJson.toObject()["path"].toArray())
                     {
                         oneStage.path.push_back(QPointF(path.toObject()["x"].toDouble(), path.toObject()["y"].toDouble()));
@@ -263,3 +259,19 @@ void ConfigParser::parseStandAnimConfig(QSharedPointer<StandAnimConfig> standAni
         }
     }
 }
+
+void ConfigParser::parseAdvantagesConfig(QSharedPointer<AdvantagesConfig> advantagesConfig, const QJsonArray& jsonArray)
+{
+    for(auto jsonAdvantage : jsonArray)
+    {
+        auto oneAdvantageJsonObj = jsonAdvantage.toObject();
+
+        OneAdvantageConfig oneAdvantage;
+        oneAdvantage.title = oneAdvantageJsonObj["title"].toString();
+        oneAdvantage.description = oneAdvantageJsonObj["description"].toString();
+        oneAdvantage.descriptionMap = oneAdvantageJsonObj["descriptionmap"].toString();
+        oneAdvantage.videoPath = oneAdvantageJsonObj["videoPath"].toString();
+        advantagesConfig->advantages.push_back(oneAdvantage);
+    }
+}
+
