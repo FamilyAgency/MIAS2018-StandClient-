@@ -177,6 +177,10 @@ private:
     QVector2D velocityDirection;
 
 
+    const int maxCategories = 3;
+    QVector<int> categories = {0, 1, 2};
+    int categoryIndex = 0;
+
 signals:
     void mainTitleOpacityChanged();
     void carYChanged();
@@ -184,6 +188,8 @@ signals:
     void stateChanged();
     void carStarting();
     void gameCategoryUpdate(int id);
+    void updateChoosenCategoryImagePath(const QString& path);
+
     void carHeightChanged();
     void scaleChanged();
     void taskOpacityChanged();

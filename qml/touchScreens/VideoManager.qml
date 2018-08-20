@@ -123,16 +123,16 @@ Item
 
         onStatusChanged:
         {
-            console.log("status ", status);
+           // console.log("status ", status);
 
             if(status == MediaPlayer.Loaded)
             {
-                console.log("MediaPlayer.Loaded");
+               // console.log("MediaPlayer.Loaded");
             }
 
             if(status == MediaPlayer.Loading)
             {
-                 console.log("MediaPlayer.Loading", player2.source);
+               //  console.log("MediaPlayer.Loading", player2.source);
             }
         }
 

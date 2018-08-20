@@ -40,7 +40,7 @@ Item
             anchors.bottomMargin: -offset;
             smooth: true;
             rotation: -rouletteModule.rotation;
-            source: standData.getStandImage("task1/icon.png");
+            source: standData.getStandImage("task2/icon.png");
         }
 
         Image
@@ -52,7 +52,7 @@ Item
             anchors.left: parent.left;
             anchors.leftMargin: -offset;
             smooth: true;
-            source: standData.getStandImage("task2/icon.png");
+            source: standData.getStandImage("task1/icon.png");
         }
 
         Image
@@ -102,7 +102,7 @@ Item
     Image
     {
         id: choosen
-        visible:rouletteModule.mainIconVisibility;
+        visible: rouletteModule.mainIconVisibility;
         scale: rouletteModule.mainIconScale;
         opacity: rouletteModule.mainIconOpacity;
 
@@ -110,28 +110,15 @@ Item
         anchors.top: roullete.top;
         anchors.topMargin: -offset + rouletteModule.mainIconY;
         smooth: true;
-        source: standData.getStandImage("task1/icon.png");
+       // source: standData.getStandImage("task1/icon.png");
     }
 
     Connections
     {
         target: rouletteModule;
-        onGameCategoryUpdate:
+        onUpdateChoosenCategoryImagePath:
         {
-            switch(id)
-            {
-            case 0:
-                choosen.source = standData.getStandImage("task1/icon.png");
-                break;
-            case 1:
-                choosen.source = standData.getStandImage("task3/icon.png");
-                break;
-            case 2:
-                choosen.source = standData.getStandImage("task2/icon.png");
-                break;
-            }
+            choosen.source = standData.getStandImage(path);
         }
-
     }
-
 }

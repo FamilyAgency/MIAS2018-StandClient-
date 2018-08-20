@@ -14,6 +14,7 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 1200;
         anchors.left: parent.left;
+        opacity: 0.0;
 
         contentItem: Text
         {
@@ -40,6 +41,7 @@ Item
     Button
     {
         id: failBtn;
+        opacity: 0.0;
 
         anchors.top: parent.top;
         anchors.topMargin: 1400;

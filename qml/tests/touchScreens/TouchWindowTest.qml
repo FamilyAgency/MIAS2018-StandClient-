@@ -18,9 +18,33 @@ Item
 
     anchors.fill: parent;
 
+    Button
+    {
+        id: hideBtn;
+        text: "";
+        visible: true;
+        width: 100;
+        height: 100;
+        anchors.top: parent.top;
+        anchors.topMargin: 0;
+        anchors.left: parent.left;
+        anchors.leftMargin: 100;
+        opacity: 0.0;
+        onClicked:
+        {
+           toggleTestInterface();
+        }
+    }
+
     SkipLocationTest
     {
-       id:skipsLocs;       
+        id:skipsLocs;
+    }
+
+    MonitoringComponent
+    {
+        id:monitoringComp;
+
     }
 
     MindwaveComponent
@@ -47,6 +71,13 @@ Item
         }
     }
 
+    function toggleTestInterface()
+    {
+        skipsLocs.visible = !skipsLocs.visible;
+        mindWaveComp.visible = !mindWaveComp.visible;
+        monitoringComp.visible = !monitoringComp.visible;
+    }
+
     function addLocation(type, component)
     {
         var componentQML = Qt.createComponent(component + ".qml");
@@ -61,7 +92,7 @@ Item
         for(var i = 0; i < locations.length; i++)
         {
             if(locations[i].type === appState)
-            {               
+            {
                 locations[i].loc.start();
                 break;
             }

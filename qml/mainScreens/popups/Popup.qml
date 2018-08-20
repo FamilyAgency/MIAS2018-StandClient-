@@ -183,14 +183,17 @@ Item
         {
             id: winDescrText;
             anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: 60;
+            anchors.top: placeIcon.bottom;
+            anchors.topMargin: 10;
+            //anchors.verticalCenter: parent.verticalCenter;
+           // anchors.verticalCenterOffset: 70;
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 70;
             color: "#ffffff";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignHCenter;
             text: "Ура! Ты проехал<br/>по маршруту<br/>до Третьяковской<br/>галереи";
+            lineHeight: 0.9;
         }
     }
 

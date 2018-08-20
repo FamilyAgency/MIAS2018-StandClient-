@@ -91,7 +91,8 @@ Item
     }
 
     function show()
-    {
+    {    
+        opacityAnim.stop();
         opacity = 0;
         opacityAnim.from = 0;
         opacityAnim.to = 1;
@@ -101,6 +102,7 @@ Item
 
     function hide()
     {
+        opacityAnim.stop();
         opacityAnim.from = 1;
         opacityAnim.to = 0;
         opacityAnim.duration = 2000;

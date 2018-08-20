@@ -6,7 +6,7 @@ Item
 {
     id: backbtn;
     anchors.fill:  parent;
-    opacity: 0.1;
+    opacity: 0.0;
 
     property int maxClicks: 1;
     property int mills: 2000;

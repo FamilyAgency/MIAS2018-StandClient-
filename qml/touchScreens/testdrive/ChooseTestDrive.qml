@@ -180,6 +180,11 @@ Item
                 onClicked:
                 {
                     swiper.currentIndex = 0;
+
+                    if(allItemChoosen())
+                    {
+                        startBtn.show();
+                    }
                 }
             }
         }
@@ -223,6 +228,11 @@ Item
                 {
                     citiesMainHolder.visible = false;
                     swiper.currentIndex = 0;
+
+                    if(allItemChoosen())
+                    {
+                        startBtn.show();
+                    }
                 }
             }
         }
@@ -230,6 +240,10 @@ Item
     }// ________________END SWIPER________________________
 
 
+    function allItemChoosen()
+    {
+        return citiesBtn.choosenIndex != -1 && dealerBtn.choosenIndex != -1;
+    }
 
 
     FontManager

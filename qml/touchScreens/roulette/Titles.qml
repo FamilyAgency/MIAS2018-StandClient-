@@ -34,34 +34,35 @@ Item
 
     Text
     {
+        id: taskTextTitle;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 40 * consts.designScale;
+        color: "#ffffff";
+        anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.verticalCenterOffset: -180;
+        horizontalAlignment: Text.AlignHCenter;
+        verticalAlignment: Text.AlignVCenter;
+        // textFormat: Text.StyledText;
+        text: "ВАШ МАРШРУТ";
+        font.letterSpacing: 14;
+        opacity: rouletteModule.taskOpacity * 0.7;
+    }
+
+    Text
+    {
         id: taskText;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 60 * consts.designScale;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter: parent.verticalCenter;
-        anchors.verticalCenterOffset: -10;
+        anchors.top: taskTextTitle.top;
+        anchors.topMargin: 80;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
         textFormat: Text.StyledText;
         opacity: rouletteModule.taskOpacity;
-
-        Text
-        {
-            id: taskTextTitle;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 40 * consts.designScale;
-            color: "#ffffff";
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: -120;
-            horizontalAlignment: Text.AlignHCenter;
-            verticalAlignment: Text.AlignVCenter;
-            // textFormat: Text.StyledText;
-            opacity : 0.7;
-            text: "ВАШ МАРШРУТ";
-            font.letterSpacing: 14;
-        }
+        lineHeight: 0.9;
     }
 
     Text

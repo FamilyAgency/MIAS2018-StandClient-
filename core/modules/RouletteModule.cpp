@@ -1,4 +1,6 @@
 #include "RouletteModule.h"
+#include "tools/MathTools.h"
+#include <algorithm>
 
 RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
 {
@@ -308,26 +310,43 @@ void RouletteModule::startRoll()
         return;
     }
 
-    int min = 0;
-    int max = 2;
-    choosenCategory = qrand() % ((max + 1) - min) + min;
+    categoryIndex++;
+    if(categoryIndex >= maxCategories)
+    {
+        std::random_shuffle(categories.begin(), categories.end());
+        categoryIndex = 0;
+    }
+
+    choosenCategory = categories[categoryIndex];
+
+    qDebug()<<"categoryIndex: "<<categoryIndex;
+    qDebug()<<"vector: "<<categories;
+    qDebug()<<"choosenCategory: "<<choosenCategory;
+
+    //choosenCategory = MathTools::randomInRange(0, 2);
+   // choosenCategory = MathTools::clamp(choosenCategory, 0, 2);
     float degrees = 360;
+
+    QString iconPath = "";
 
     switch(choosenCategory)
     {
     case 0:
         degrees = 360 + 90;//task1
+        iconPath = "task1/icon.png";
         break;
     case 1:
-        degrees = 360 + 270;//
+        degrees = 360 + 270;//task3
+        iconPath = "task3/icon.png";
         break;
     case 2:
-        degrees = 360 + 180;//
+        degrees = 360 + 180;//task2
+        iconPath = "task2/icon.png";
         break;
     }
 
-    qDebug()<<"choosenCategory============= "<<choosenCategory;
 
+    emit updateChoosenCategoryImagePath(iconPath);
     emit gameCategoryUpdate(choosenCategory);
     rollAnimation->setEndValue(degrees);
     rollAnimation->start();

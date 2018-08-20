@@ -63,11 +63,12 @@ Item
         id: title2;
         text: superGameTitle2;
         anchors.top: superTime.bottom;
+
        // anchors.topMargin: -15;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 54;
-        color: "#e5263c";
+        color: "#0aabd4";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
     }

@@ -12,10 +12,7 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
-    MonitoringComponent
-    {
 
-    }
 
     RowLayout
     {
