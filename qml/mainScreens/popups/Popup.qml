@@ -151,7 +151,8 @@ Item
             anchors.top:  descrText2.bottom;
             anchors.topMargin: 40;
             anchors.horizontalCenter: parent.horizontalCenter;
-            source: "qrc:/resources/arrowpopup.png";
+            source: configController.getFileInAppDir("content/misc/arrowpopup.png");
+
         }
     }
 
