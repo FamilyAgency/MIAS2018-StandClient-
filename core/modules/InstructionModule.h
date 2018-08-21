@@ -39,6 +39,9 @@ private:
     QTimer* animDelayTimer = nullptr;
     QTimer* showTextTimer = nullptr;
     QTimer* instructionEndTimer = nullptr;
+    QTimer* mindwaveTimer = nullptr;
+
+    int mindwaveAttentionThreshold = 40;
 
     const float delayTimerMills = 5000.0f;
     const float animDelayTimerMills = 1500.0f;
@@ -71,11 +74,9 @@ private slots:
     void onDelayTimerComplete();
     void onAnimDelayTimerComplete();
     void onShownTextComplete();
-
     void onOpacity1AnimatorCompleted();
-
     void onInstructionEndTimerComplete();
-
+    void onMindwaveUpdate();
 };
 
 #endif // INSTRUCTIONMODULE_H

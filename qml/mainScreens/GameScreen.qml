@@ -38,7 +38,12 @@ Item
         id:mapover
         anchors.fill: parent;
         smooth:true;
-    }    
+    }
+
+    CircularProgress
+    {
+        id: mindIndicator;
+    }
 
     MapAnimator
     {
@@ -64,13 +69,14 @@ Item
         onShowSmallCar:
         {
             console.log("show small car !!!!!!!!!!!!");
-            car.hideIndicator();
+            mindIndicator.hideIndicator();
             car.visible = true;
         }
 
         onUpdateCanvas:
         {
             car.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
+            mindIndicator.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
         }
     }
 
@@ -86,27 +92,37 @@ Item
             road.currentPoint = gameTaskManager.getCurPoint();
             road.startPoint = gameTaskManager.getStartPoint();
             road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
-            road.circles = gameTaskManager.getTargetPoints();          
+            // road.circles = gameTaskManager.getTargetPoints();
             road.isSuperGame = false;
             road.hideSuperTrack();
             road.visible = true;
             road.draw();
             car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
+            mindIndicator.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
         }
 
         onPreTaskStartEvent:
         {
-            car.showIndicator();
-            car.setMindwaveLimitPercent(gameTaskManager.getMindwaveLimit());
+            mindIndicator.showIndicator();
+            mindIndicator.setMindwaveLimitPercent(gameTaskManager.getMindwaveLimit());
         }
 
         onGameStarted:
         {
+            road.init();
             road.visible = true;
+            //  road.circles = gameTaskManager.getTargetPoints();
             var circles = gameTaskManager.getTargetPoints();
             var lastPoint = circles[circles.length - 1];
+            road.circles = circles;
             road.setFlagPosition(lastPoint.x, lastPoint.y);
             road.show();
+        }
+
+        onTaskComleteEvent:
+        {
+            console.log("========task complete=========");
+            road.taskComplete();
         }
     }
 
@@ -127,6 +143,7 @@ Item
             road.isSuperGame = true;
             road.draw();
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
+            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
         }
 
         onCountDownComplete:
@@ -145,8 +162,8 @@ Item
             road.showSuperTrack();
 
             road.show();
-            car.showIndicator();
-            car.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
+            mindIndicator.showIndicator();
+            mindIndicator.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
         }
 
         onSuperGameFailed:
@@ -163,6 +180,7 @@ Item
         road.visible = false;
         pretaskPopup.visible = false;
         car.moveFromCanvas();
+        mindIndicator.moveFromCanvas();
     }
 
     function gameStart()

@@ -94,6 +94,7 @@ Item
         {
             if(mind.poorSignalLevel == 100)
             {
+               //  console.log("poorSignalLevel 100");
                 mindwaveIndicator.color = goodColor;
             }
             else
@@ -110,7 +111,7 @@ Item
 
     function deviceStateChanged(state)
     {
-        console.log("device state", state);
+       // console.log("device state", state);
         switch(state)
         {
         case DeviceState.Scanning:

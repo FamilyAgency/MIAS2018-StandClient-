@@ -12,6 +12,7 @@ Item
     anchors.fill: parent;
     property int circleSize: 300;
     property int offset: 70;
+    property int vertOffset: 0;
 
     FontManager
     {
@@ -49,6 +50,7 @@ Item
             rotation: -rouletteModule.rotation;
             scale: rouletteModule.allIconsScale;
             anchors.verticalCenter: parent.verticalCenter;
+            anchors.verticalCenterOffset: vertOffset;
             anchors.left: parent.left;
             anchors.leftMargin: -offset;
             smooth: true;
@@ -60,7 +62,8 @@ Item
             id: image3;
              rotation: -rouletteModule.rotation;
             scale: rouletteModule.allIconsScale;
-            anchors.verticalCenter: parent.verticalCenter;
+            anchors.verticalCenter: parent.verticalCenter;            
+            anchors.verticalCenterOffset: vertOffset;
             anchors.right: parent.right;
             anchors.rightMargin: -offset;
             smooth: true;

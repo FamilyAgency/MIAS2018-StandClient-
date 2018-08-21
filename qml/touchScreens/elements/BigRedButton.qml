@@ -139,6 +139,7 @@ Item
     {
         visible = true;
         console.log(" show--------------");
+        startBtn.enabled = true;//test
 
 
         startBtn.scale = 0;

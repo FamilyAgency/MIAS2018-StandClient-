@@ -67,6 +67,7 @@ void AppController::createEngine()
     modules.append(introModule);
 
     instructionModule.reset(new InstructionModule());
+    instructionModule->setMindwave(mindWaveComponent);
     modules.append(instructionModule);
     connect(instructionModule.data(), SIGNAL(instructionComplete()), this, SLOT(onInstructionComplete()));
     

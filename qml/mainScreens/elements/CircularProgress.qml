@@ -24,6 +24,28 @@ Item
         }
     }
 
+    function hideIndicator()
+    {
+        visible = false;
+    }
+
+    function showIndicator()
+    {
+        visible = true;
+    }
+
+    function moveCar(currentPoint, forwardVector)
+    {
+        setCarPosition(currentPoint);
+        update();
+    }
+
+    function moveFromCanvas()
+    {
+        setCarPosition({x: 0, y: 3000});
+        update();
+    }
+
     function update()
     {
         canvasCirc.requestPaint();
@@ -53,7 +75,7 @@ Item
         height: 250;
         property int centerWidth: 250 * 0.5
         property int centerHeight: 250 * 0.5
-        property int radius: 10;
+        property int radius: 80;
 
         property real percentLimit: 0.0;
         property real percentAttention: 0.0;

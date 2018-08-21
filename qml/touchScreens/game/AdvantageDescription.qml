@@ -103,7 +103,7 @@ Item
     {
         id: brbdelay;
         running: false;
-        interval: 2000;
+        interval: 5000;
         onTriggered:
         {
             brbdelay.stop();

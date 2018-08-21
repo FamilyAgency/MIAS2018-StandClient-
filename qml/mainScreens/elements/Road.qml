@@ -16,6 +16,8 @@ Item
 
     property real arrowSize: 20.0;
 
+    property int pointsCompleted: 0;
+
     Canvas
     {
         id: canvas;
@@ -116,7 +118,6 @@ Item
 
     function animateSuperTrack()
     {
-        console.log();
         var size = repeater.model;
 
         if(size > 0)
@@ -175,6 +176,16 @@ Item
         canvas.requestPaint();
     }
 
+    function init()
+    {
+        pointsCompleted = 0;
+    }
+
+    function taskComplete()
+    {
+        pointsCompleted++;
+    }
+
     function drawSuperGameGuidePaths(ctx)
     {
         var list = uncompletedPath;
@@ -213,13 +224,26 @@ Item
 
     function drawCircles(ctx)
     {
-        for(var k = 0; k < circles.length - 1; k++)
+        var ellipseSize = 20;
+
+        for(var i = 0; i < pointsCompleted; i++)
+        {
+            ctx.beginPath();
+            ctx.fillStyle =  "#ffffff";
+            ctx.strokeStyle =  "#797e84";
+            ctx.lineWidth = 18;
+            ctx.ellipse(circles[i].x - ellipseSize * 0.5, circles[i].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        for(var k = pointsCompleted; k < circles.length - 1; k++)
         {
             ctx.beginPath();
             ctx.fillStyle =  "#ffffff";
             ctx.strokeStyle =  "#ff0000";
             ctx.lineWidth = 18;
-            var ellipseSize = 20;
             ctx.ellipse(circles[k].x - ellipseSize * 0.5, circles[k].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
             ctx.stroke();
             ctx.fill();
@@ -233,15 +257,15 @@ Item
         flag.y = y - 64;// flag.height;
     }
 
-
     function drawFlag(ctx)
     {
+        var ellipseSize = 35;
+
         var k = circles.length - 1;
         ctx.beginPath();
         ctx.fillStyle =  "#ffffff";
         ctx.strokeStyle =  "#ff0000";
         ctx.lineWidth = 21;
-        var ellipseSize = 35;
         ctx.ellipse(circles[k].x - ellipseSize * 0.5, circles[k].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
         ctx.stroke();
         ctx.fill();

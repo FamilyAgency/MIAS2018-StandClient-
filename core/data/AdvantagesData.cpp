@@ -14,13 +14,13 @@ void AdvantagesData::setConfig(ConfigPtr value)
 
 OneAdvantageConfig AdvantagesData::getNextAdvantage()
 {
-    if(++advantageIndex >= advantagesConfig.advantages.length())
+    if(advantageIndex >= advantagesConfig.advantages.length())
     {
         std::random_shuffle(advantages.begin(), advantages.end());
         advantageIndex = 0;
     }
 
-    return advantages[advantageIndex];
+    return advantages[advantageIndex++];
 }
 
 void AdvantagesData::shuffle()

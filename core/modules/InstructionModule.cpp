@@ -14,6 +14,9 @@ InstructionModule::InstructionModule(QObject *parent) : BaseModule(parent)
     instructionEndTimer = new QTimer(this);
     connect(instructionEndTimer, SIGNAL(timeout()), this, SLOT(onInstructionEndTimerComplete()));
 
+    mindwaveTimer = new QTimer(this);
+    connect(mindwaveTimer, SIGNAL(timeout()), this, SLOT(onMindwaveUpdate()));
+
     opacity1Animator = new QPropertyAnimation(this);
     opacity1Animator->setTargetObject(this);
     opacity1Animator->setPropertyName("opacity1");
@@ -57,6 +60,13 @@ InstructionModule::~InstructionModule()
         disconnect(showTextTimer, SIGNAL(timeout()), this, SLOT(onShownTextComplete()));
         delete showTextTimer;
     }
+
+    if(mindwaveTimer)
+    {
+        disconnect(mindwaveTimer, SIGNAL(timeout()), this, SLOT(onMindwaveUpdate()));
+        delete mindwaveTimer;
+    }
+
 
     disconnect(opacity1Animator, SIGNAL(finished()), this, SLOT(onOpacity1AnimatorCompleted()));
 
@@ -107,6 +117,7 @@ void InstructionModule::stop()
     animDelayTimer->stop();
     showTextTimer->stop();
     instructionEndTimer->stop();
+    mindwaveTimer->stop();
 
     for (auto &anim : animations)
     {
@@ -122,12 +133,19 @@ void InstructionModule::setMindwave(QSharedPointer<MindwaveComponentBase> value)
 void InstructionModule::onDelayTimerComplete()
 {
     delayReadTimer->stop();
-    emit mindwaveReady();
+    mindwaveTimer->start();
+}
 
-    animDelayTimer->start(animDelayTimerMills);
+void InstructionModule::onMindwaveUpdate()
+{
+    if(mindWaveComponent->attention() > mindwaveAttentionThreshold)
+    {
+        mindwaveTimer->stop();
 
-
-    instructionEndTimer->start(instructionEndTimerMills);
+        emit mindwaveReady();
+        animDelayTimer->start(animDelayTimerMills);
+        instructionEndTimer->start(instructionEndTimerMills);
+    }
 }
 
 void InstructionModule::onAnimDelayTimerComplete()
