@@ -182,6 +182,7 @@ void MindwaveParserSerial::parseSerialData(uchar extendedCodeLevel,
         {
         case PARSER_CODE_BATTERY:
             batteryData = value[0] & 0xFF;
+            qDebug()<<"-----------battery data "<<batteryData;
             break;
 
         case PARSER_CODE_POOR_QUALITY:

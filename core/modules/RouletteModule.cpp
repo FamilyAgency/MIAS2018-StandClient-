@@ -316,6 +316,8 @@ void RouletteModule::startRoll()
         categoryIndex = 0;
     }
 
+  // categoryIndex = 2;
+
     choosenCategory = categories[categoryIndex];
 
     qDebug()<<"categoryIndex: "<<categoryIndex;

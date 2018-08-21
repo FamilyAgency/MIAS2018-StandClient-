@@ -2,6 +2,8 @@
 #define MINDWAVEREADERSERIAL_H
 
 #include <QSerialPort>
+#include <QThread>
+#include "SerialThread.h"
 #include "components/mindwave/MindwaveReaderBase.h"
 
 class MindwaveReaderSerial : public MindwaveReaderBase
@@ -11,29 +13,26 @@ public:
     explicit MindwaveReaderSerial(QObject *parent = nullptr);
     virtual ~MindwaveReaderSerial();
 
-    virtual void startReading(int modelIndex);
-
     virtual void setConfig(const MindwaveConfig& value) override;
     virtual void start() override;
 
 private:
-    QSerialPort* serialPort = nullptr;
     QByteArray readData;
     void writeSerialData(const QByteArray &data);
     void writeCommand();
-    void tryReconnect();
 
-
-    QTimer* reconnectTimer;
+    SerialThread* serialThread;
+    QThread* serialWorkerThread;
 
 protected slots:
     virtual void onConnectionSuccess();
+    void onDataRecieve(const QByteArray& dataReady);
 
-private slots:
-    virtual void onReadyRead();
-    void onReadError(QSerialPort::SerialPortError serialPortError);
-    void onReconnectHandle();
+signals:
+    void destroyMindwaveReader();
 
+//private slots:
+  //  virtual void onReadyRead();
 };
 
 #endif // MINDWAVEREADERSERIAL_H

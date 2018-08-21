@@ -63,7 +63,8 @@ SOURCES += main.cpp \
     core/game/GameCountDown.cpp \
     core/data/SuperGameData.cpp \
     tools/AnimationManager.cpp \
-    core/data/AdvantagesData.cpp
+    core/data/AdvantagesData.cpp \
+    components/mindwave/serial/SerialThread.cpp
 
 
 RESOURCES += qml.qrc
@@ -163,7 +164,8 @@ HEADERS += \
     core/game/GameCountDown.h \
     core/data/SuperGameData.h \
     tools/AnimationManager.h \
-    core/data/AdvantagesData.h
+    core/data/AdvantagesData.h \
+    components/mindwave/serial/SerialThread.h
 
 DISTFILES += \
     modules/components/components.pri \

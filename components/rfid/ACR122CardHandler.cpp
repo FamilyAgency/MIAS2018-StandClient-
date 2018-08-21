@@ -148,14 +148,14 @@ bool ACR122CardHandler::cardPreparedSuccess()
 
     if(!establishContext())
     {
-        qDebug()<<"cant establish context";
+        //qDebug()<<"cant establish context";
         cardReaderStatus = false;
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
     }
     else if(!checkIsDeviceConnected())
     {
-        qDebug()<<"cant device connected";
+       // qDebug()<<"cant device connected";
         cardReaderStatus = false;
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;

@@ -14,7 +14,7 @@ AppController::AppController(QObject *parent) : QObject(parent)
 template <class MindwaveComponentT>
 void AppController::createMindwave()
 {
-    mindWaveComponent.reset(new MindwaveComponentT());
+    mindWaveComponent.reset(new MindwaveComponentT(this));
     components.append(mindWaveComponent);
 }
 
