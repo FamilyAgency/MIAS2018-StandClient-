@@ -13,7 +13,7 @@ Item
     anchors.centerIn: parent;
 
     property string superGameTitle: "";
-    property string descrTitleDefault: "ПОПРОБУЙТЕ<br/>ПОВТОРИТЬ ПОПЫТКУ<br/>ЧЕРЕЗ 20 МИНУТ";
+    property string descrTitleDefault: "Попробуйте<br/>повторить попытку<br/>через 20 минут.";
     property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
     property real btnMarginBottom: 100 * consts.designScale;
 

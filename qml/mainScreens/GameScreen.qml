@@ -27,6 +27,26 @@ Item
         visible: false;
     }
 
+
+    Image
+    {
+        id: flag;
+        visible: false;
+        property int currentImage: 1
+        x: 0
+        y: 0
+        source: configController.getFileInAppDir("content/misc/flag/" + currentImage + ".png");
+        NumberAnimation on currentImage
+        {
+            from: 0;
+            to: 71;
+            duration: 71 * 1000. / 30.;
+            running: true;
+            loops: Animation.Infinite;
+        }
+    }
+
+
     CarUnit
     {
         id:car;
@@ -115,7 +135,8 @@ Item
             var circles = gameTaskManager.getTargetPoints();
             var lastPoint = circles[circles.length - 1];
             road.circles = circles;
-            road.setFlagPosition(lastPoint.x, lastPoint.y);
+            setFlagPosition(lastPoint.x, lastPoint.y);
+            showFlag();
             road.show();
         }
 
@@ -149,9 +170,11 @@ Item
         onCountDownComplete:
         {
             road.visible = true;
+
             var circles = superGameModule.getGameUncompletedPath();
             var lastPoint = circles[circles.length - 1];
-            road.setFlagPosition(lastPoint.x, lastPoint.y);
+            setFlagPosition(lastPoint.x, lastPoint.y);
+            showFlag();
 
             var startPoint = superGameModule.getStartPoint();
             road.setSuperTrackPosition(startPoint);
@@ -179,6 +202,7 @@ Item
         car.visible = false;
         road.visible = false;
         pretaskPopup.visible = false;
+        hideFlag();
         car.moveFromCanvas();
         mindIndicator.moveFromCanvas();
     }
@@ -190,4 +214,20 @@ Item
         road.visible = true;
         pretaskPopup.visible = true;
     }
+    function setFlagPosition(x, y)
+    {
+        flag.x = x - 10;
+        flag.y = y - 66;
+    }
+
+    function showFlag()
+    {
+        flag.visible = true;
+    }
+
+    function hideFlag()
+    {
+        flag.visible = false;
+    }
+
 }

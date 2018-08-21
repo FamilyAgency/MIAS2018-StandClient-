@@ -5,6 +5,7 @@ import "../../tools"
 Item
 {
     property double nextAttentionValue: 0.0;
+    visible:false;
 
     Consts
     {

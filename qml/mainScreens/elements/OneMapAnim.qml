@@ -15,9 +15,9 @@ Item
         NumberAnimation on currentImage
         {
             id: anim;
-            from: 1;
+            from: 0;
             to: 35
-            duration: 1000
+            duration: 2000
             running: false;
             loops: Animation.Infinite;
         }
@@ -32,6 +32,7 @@ Item
         image.x = data.x;
         image.y = data.y;
         anim.to = data.frames;
+        anim.duration = anim.to * 1000.0/ 30.0;
         anim.start();
     }
 }

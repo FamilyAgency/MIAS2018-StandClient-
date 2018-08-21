@@ -321,13 +321,13 @@ VelocityCalculator GameUserData::getStageDifficult(int id)
         return VelocityCalculator(1, 2, 40);
 
     case 2:
-        return VelocityCalculator(1, 3, 60);
+        return VelocityCalculator(1, 3, 50);
 
     case 3:
-        return VelocityCalculator(1, 3, 80);
+        return VelocityCalculator(1, 3, 60);
 
     case 4:
-        return VelocityCalculator(1, 3, 70);
+        return VelocityCalculator(1, 3, 40);
     }
 
     return VelocityCalculator(1, 3, 40);

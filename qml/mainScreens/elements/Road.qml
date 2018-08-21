@@ -96,14 +96,6 @@ Item
         }
     }
 
-    Image
-    {
-        id: flag;
-        source: "qrc:/resources/flag.png"
-        x: 0;
-        y: 0;
-    }
-
     OpacityAnimator on opacity
     {
         id: opacityAnim;
@@ -251,11 +243,11 @@ Item
         }
     }
 
-    function setFlagPosition(x, y)
-    {
-        flag.x = x - 20;// - flag.width;
-        flag.y = y - 64;// flag.height;
-    }
+//    function setFlagPosition(x, y)
+//    {
+//        flag.x = x - 20;// - flag.width;
+//        flag.y = y - 64;// flag.height;
+//    }
 
     function drawFlag(ctx)
     {
