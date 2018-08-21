@@ -67,7 +67,6 @@
         <file>qml/touchScreens/elements/BgParticles.qml</file>
         <file>resources/particleA.png</file>
         <file>resources/Round.png</file>
-        <file>resources/arrow.png</file>
         <file>resources/arrow_pack.png</file>
         <file>qml/touchScreens/intro/IntroTitles.qml</file>
         <file>qml/tests/VideoWindow.qml</file>
@@ -89,5 +88,6 @@
         <file>qml/mainScreens/SuperGameWinScreen.qml</file>
         <file>resources/Error.png</file>
         <file>qml/touchScreens/elements/Indicators.qml</file>
+        <file>resources/arrowpopup.png</file>
     </qresource>
 </RCC>

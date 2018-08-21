@@ -49,10 +49,8 @@ Item
 
         gradient: Gradient
         {
-
             GradientStop { position: 1.0; color: "#0b9abf" }
             GradientStop { position: 0.0; color: "#0aabd4" }
-
         }
     }
 
@@ -153,7 +151,7 @@ Item
             anchors.top:  descrText2.bottom;
             anchors.topMargin: 40;
             anchors.horizontalCenter: parent.horizontalCenter;
-            source: "qrc:/resources/arrow.png";
+            source: "qrc:/resources/arrowpopup.png";
         }
     }
 
