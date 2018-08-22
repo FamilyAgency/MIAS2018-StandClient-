@@ -40,7 +40,7 @@ Item
         {
             from: 0;
             to: 71;
-            duration: 71 * 1000. / 30.;
+            duration: 71 * 1000. / consts.animFPS;
             running: true;
             loops: Animation.Infinite;
         }

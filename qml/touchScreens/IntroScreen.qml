@@ -114,8 +114,6 @@ Item
         }
     }
 
-
-
     function start()
     {
         visible = true;

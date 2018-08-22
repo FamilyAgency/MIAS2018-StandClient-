@@ -73,7 +73,7 @@ Item
 
         onStopped:
         {
-           opacity == 1 ? core.inAnimComplete() : core.outAnimComplete();
+            opacity == 1 ? core.inAnimComplete() : core.outAnimComplete();
         }
     }
 
@@ -128,6 +128,7 @@ Item
 
     function startHelloState()
     {
+        opacityAnim.stop();
         mainText.visible = true;
         addText.visible = true;
         addText.text = addTitleHelloText;
@@ -140,6 +141,7 @@ Item
 
     function startErrorState(errorMsg)
     {
+        opacityAnim.stop();
         mainText.visible = false;
         addText.text = errorMsg;
         brb.setTitle("ОК");
@@ -151,6 +153,8 @@ Item
 
     function stop()
     {
+        delayTimer.stop();
+        opacityAnim.stop();
         mainText.text =  "";
         addText.text =  "";
 

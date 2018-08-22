@@ -31,6 +31,7 @@ public:
 
     Q_INVOKABLE QString poorSignalColor() const;
     Q_INVOKABLE DeviceState getDeviceState() const;
+    Q_INVOKABLE bool isSignalLevelMax() const;
 
     virtual void setQmlContext(QQmlContext* value) override;
     virtual void setConfig(ConfigPtr value) override;

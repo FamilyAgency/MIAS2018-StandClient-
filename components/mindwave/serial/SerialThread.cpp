@@ -73,12 +73,12 @@ void SerialThread::startReading()
     {
         emit connectionError();
         tryReconnect();
-        qDebug()<<"serialPort opening error";
+       // qDebug()<<"serialPort opening error";
     }
     else
     {
         emit connectionSuccess();
-        qDebug()<<"serialPort opened";
+       // qDebug()<<"serialPort opened";
     }
 
     noDataTimer->start(noDataTimeoutMills);
@@ -93,12 +93,12 @@ void SerialThread::onReadyRead()
 
 void SerialThread::onReadError(QSerialPort::SerialPortError serialPortError)
 {
-    qDebug()<<"serialPortError "<< serialPortError;
+    //qDebug()<<"serialPortError "<< serialPortError;
 }
 
 void SerialThread::onNoDataTimerHandle()
 {
-    qDebug()<<"timeout ";
+   // qDebug()<<"timeout ";
     emit noDataTimeout();
     noDataTimer->stop();
     tryReconnect();
@@ -106,7 +106,7 @@ void SerialThread::onNoDataTimerHandle()
 
 void SerialThread::tryReconnect()
 {
-    qDebug()<<"tryReconnect ";
+   // qDebug()<<"tryReconnect ";
     if(serialPort->isOpen())
     {
         serialPort->close();

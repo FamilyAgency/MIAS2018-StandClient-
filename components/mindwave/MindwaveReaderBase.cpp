@@ -12,7 +12,7 @@ MindwaveReaderBase::~MindwaveReaderBase()
 
 void MindwaveReaderBase::onConnectionSuccess()
 {
-    qDebug()<<"MindwaveReader : connected............";
+   // qDebug()<<"MindwaveReader : connected............";
     setConnected(true);
     emit connectionSuccess();
 }
@@ -29,8 +29,8 @@ void MindwaveReaderBase::start()
 
 void MindwaveReaderBase::onDisconnectionSuccess()
 {
-    qDebug()<<"MindwaveReader : disconnected............";
-    setConnected(false);    
+   // qDebug()<<"MindwaveReader : disconnected............";
+    setConnected(false);
     emit disconnectionSuccess();
 }
 
@@ -39,7 +39,7 @@ void MindwaveReaderBase::onItemDataRecieve(const QString& data)
     emit dataRecieve(data);
 }
 
- void MindwaveReaderBase::setConnected(bool value)
- {
-     _connected = value;
- }
+void MindwaveReaderBase::setConnected(bool value)
+{
+    _connected = value;
+}

@@ -238,6 +238,21 @@ Item
         }
     }
 
+    Connections
+    {
+        target:rfid;
+
+        onCardReaderError:
+        {
+            switch(error)
+            {
+            case CardReaderError.CardParsing:
+                startIndex(1);
+                break;
+            }
+        }
+    }
+
     property bool superGameSuccess: false;
 
     Connections

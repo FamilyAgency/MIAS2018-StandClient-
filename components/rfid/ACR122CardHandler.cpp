@@ -155,7 +155,7 @@ bool ACR122CardHandler::cardPreparedSuccess()
     }
     else if(!checkIsDeviceConnected())
     {
-       // qDebug()<<"cant device connected";
+        // qDebug()<<"cant device connected";
         cardReaderStatus = false;
         emit cardReaderError(CardReaderError::NoCardReader);
         cardPrepared = false;
@@ -166,7 +166,7 @@ bool ACR122CardHandler::cardPreparedSuccess()
         cardPrepared = false;
     }
     else if(!loadKey())
-    {        
+    {
         emit cardReaderError(CardReaderError::LoadKeyError);
         cardPrepared = false;
     }
@@ -177,7 +177,7 @@ bool ACR122CardHandler::cardPreparedSuccess()
     }
 
     emit cardReaderEnabled(cardReaderStatus);
-   // qDebug()<<"all prepared completed";
+    // qDebug()<<"all prepared completed";
     return cardPrepared;
 }
 
@@ -344,7 +344,6 @@ void ACR122CardHandler::readId()
         return;
     }
 
-    qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     if(SCardEndTransaction(card_handle_, SCARD_LEAVE_CARD) != SCARD_S_SUCCESS)
     {
@@ -400,6 +399,13 @@ void ACR122CardHandler::readAllData()
             return;
         }
 
+        if(data.size() == 0)
+        {
+            releaseCardReader();
+            emit cardReaderError(CardReaderError::ReadError);
+            return;
+        }
+
         fulldata.append(data);
 
         int lastSymbol = data.indexOf(BRACKET_2);
@@ -411,6 +417,14 @@ void ACR122CardHandler::readAllData()
                 break;
             }
         }
+
+//        if (i == 0 && data.indexOf(BRACKET_1) == -1)
+//        {
+//            releaseCardReader();
+//            emit cardReaderError(CardReaderError::ReadError);
+//            return;
+//        }
+
     }
     qDebug()<<"fulldata "<<QString(fulldata);
     qDebug()<<"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";

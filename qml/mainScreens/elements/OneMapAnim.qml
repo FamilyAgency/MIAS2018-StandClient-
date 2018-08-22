@@ -1,9 +1,14 @@
 import QtQuick 2.0
-
+import "../../tools"
 Item
 {
     id: animationItem
     anchors.fill: parent;
+
+    Consts
+    {
+        id:consts;
+    }
 
     Image
     {
@@ -15,7 +20,7 @@ Item
         NumberAnimation on currentImage
         {
             id: anim;
-            from: 0;
+            from: 1;
             to: 35
             duration: 2000
             running: false;
@@ -32,7 +37,7 @@ Item
         image.x = data.x;
         image.y = data.y;
         anim.to = data.frames;
-        anim.duration = anim.to * 1000.0/ 30.0;
+        anim.duration = anim.to * 1000.0 / consts.animFPS;
         anim.start();
     }
 }

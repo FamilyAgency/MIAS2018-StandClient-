@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 Item
 {
+    property real animFPS: 24.0;
     property real designScale: 1.0;//standData.mainConfig.touchScreen.width / 1080.0;
 
     property string infoTextColor: "#009999";

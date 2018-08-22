@@ -135,6 +135,11 @@ int MindwaveComponentBase::poorSignalLevel() const
     return _poorSignalLevel;
 }
 
+bool MindwaveComponentBase::isSignalLevelMax() const
+{
+    return _poorSignalLevel == 100;
+}
+
 void MindwaveComponentBase::setAttention(int value)
 {
     _attention = value;
