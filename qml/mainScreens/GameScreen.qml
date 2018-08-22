@@ -2,17 +2,12 @@ import QtQuick 2.0
 
 import "elements"
 import "popups"
-import "../tools"
+
 
 Item
 {
     id: gameView;
     anchors.fill: parent;
-
-    Consts
-    {
-        id:consts;
-    }
 
     Image
     {
@@ -27,25 +22,11 @@ Item
         visible: false;
     }
 
-
-    Image
+    Flag
     {
         id: flag;
         visible: false;
-        property int currentImage: 1
-        x: 0
-        y: 0
-        source: configController.getFileInAppDir("content/misc/flag/" + currentImage + ".png");
-        NumberAnimation on currentImage
-        {
-            from: 0;
-            to: 71;
-            duration: 71 * 1000. / consts.animFPS;
-            running: true;
-            loops: Animation.Infinite;
-        }
     }
-
 
     CarUnit
     {
@@ -60,14 +41,14 @@ Item
         smooth:true;
     }
 
-    CircularProgress
-    {
-        id: mindIndicator;
-    }
-
     MapAnimator
     {
         id: mapAnimator;
+    }
+
+    CircularProgress
+    {
+        id: mindIndicator;
     }
 
     Popup
@@ -80,6 +61,19 @@ Item
     {
         map.source = standData.getStandMap();
         mapover.source = standData.getStandMapOver();
+    }
+
+
+    Connections
+    {
+        target: gameModule;
+        onAllStagesComleteEvent:
+        {
+            hideFlag();
+            car.moveFromCanvas();
+            mindIndicator.moveFromCanvas();
+            mindIndicator.hideIndicator();
+        }
     }
 
     Connections
@@ -145,6 +139,11 @@ Item
             console.log("========task complete=========");
             road.taskComplete();
         }
+
+//        onAllStagesComleteEvent:
+//        {
+
+//        }
     }
 
     Connections
@@ -179,12 +178,10 @@ Item
             var startPoint = superGameModule.getStartPoint();
             road.setSuperTrackPosition(startPoint);
             road.setSuperTrackRotation(superGameModule.getForwardVectorRotation());
-
             road.calcSuperTrackLength(startPoint, lastPoint);
-
             road.showSuperTrack();
-
             road.show();
+
             mindIndicator.showIndicator();
             mindIndicator.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
         }
@@ -212,22 +209,23 @@ Item
         console.log("=================== game start ===================")
         car.visible = true;
         road.visible = true;
+
         pretaskPopup.visible = true;
     }
+
     function setFlagPosition(x, y)
     {
-        flag.x = x - 10;
-        flag.y = y - 66;
+        flag.setFlagPosition(x, y);
     }
 
     function showFlag()
     {
-        flag.visible = true;
+        flag.showFlag();
     }
 
     function hideFlag()
     {
-        flag.visible = false;
+        flag.hideFlag();
     }
 
 }

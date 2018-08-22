@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls.Styles 1.4
+import "../../tools"
 
 Item
 {
@@ -14,9 +15,16 @@ Item
     property var circles;
     property bool isSuperGame: false;
 
-    property real arrowSize: 20.0;
-
+    property real arrowSize: 26.0;
     property int pointsCompleted: 0;
+
+    property string activeLineColor: "#f3095d";
+    property string nonActiveLineColor: "#20346e";
+
+    Consts
+    {
+        id:consts;
+    }
 
     Canvas
     {
@@ -24,6 +32,15 @@ Item
         anchors.fill: parent;
         antialiasing: true;
         smooth: true;
+
+        property string greycircle: "qrc:/resources/Star_blue.png";
+        property string redcircle: "qrc:/resources/Star_white.png";
+
+        Component.onCompleted:
+        {
+            loadImage(canvas.greycircle);
+            loadImage(canvas.redcircle);
+        }
 
         onPaint:
         {
@@ -42,8 +59,8 @@ Item
                 drawGuidePaths(ctx);
                 var list = completedPath;
 
-                ctx.lineWidth = consts.lineWidth * 0.6;
-                ctx.strokeStyle = "#797e84";
+                ctx.lineWidth = consts.lineWidth;
+                ctx.strokeStyle =  nonActiveLineColor;
                 ctx.lineCap = consts.lineCap;
                 ctx.lineJoin = consts.lineJoin;
 
@@ -89,8 +106,10 @@ Item
                 model: 0;
                 Image
                 {
+                    smooth:true;
+                    antialiasing: true;
                     id: arrow;
-                    source: "qrc:/resources/superarrow.png"
+                    source: "qrc:/resources/superarrow1.png"
                 }
             }
         }
@@ -202,7 +221,7 @@ Item
 
         ctx.beginPath();
         ctx.moveTo(currentPoint.x, currentPoint.y);
-        ctx.strokeStyle =  "#ff0000";
+        ctx.strokeStyle =  activeLineColor;
         ctx.lineWidth = consts.lineWidth;
 
         for(var i = 0; i < list.length; i++)
@@ -220,33 +239,19 @@ Item
 
         for(var i = 0; i < pointsCompleted; i++)
         {
-            ctx.beginPath();
-            ctx.fillStyle =  "#ffffff";
-            ctx.strokeStyle =  "#797e84";
-            ctx.lineWidth = 18;
-            ctx.ellipse(circles[i].x - ellipseSize * 0.5, circles[i].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
-            ctx.stroke();
-            ctx.fill();
-            ctx.closePath();
+            ctx.drawImage(canvas.greycircle, circles[i].x - 25, circles[i].y - 25);
         }
 
         for(var k = pointsCompleted; k < circles.length - 1; k++)
         {
-            ctx.beginPath();
-            ctx.fillStyle =  "#ffffff";
-            ctx.strokeStyle =  "#ff0000";
-            ctx.lineWidth = 18;
-            ctx.ellipse(circles[k].x - ellipseSize * 0.5, circles[k].y - ellipseSize * 0.5, ellipseSize, ellipseSize);
-            ctx.stroke();
-            ctx.fill();
-            ctx.closePath();
+            ctx.drawImage(canvas.redcircle, circles[k].x - 25, circles[k].y - 25);
         }
     }
 
 //    function setFlagPosition(x, y)
 //    {
 //        flag.x = x - 20;// - flag.width;
-//        flag.y = y - 64;// flag.height;
+//        flag.y = y - 64;// - flag.height;
 //    }
 
     function drawFlag(ctx)

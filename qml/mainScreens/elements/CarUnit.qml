@@ -1,8 +1,15 @@
 import QtQuick 2.0
 
+import "../../tools"
+
 Item
 {
     anchors.fill: parent;
+
+    Consts
+    {
+        id:consts;
+    }
 
     Image
     {

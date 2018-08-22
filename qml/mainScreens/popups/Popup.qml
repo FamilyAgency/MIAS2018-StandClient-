@@ -21,6 +21,11 @@ Item
         id: font;
     }
 
+    Consts
+    {
+        id:consts;
+    }
+
     DropShadow
     {
         anchors.fill: bg;

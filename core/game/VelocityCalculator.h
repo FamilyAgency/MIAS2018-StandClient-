@@ -11,17 +11,17 @@ public:
                        float maxVelocity,
                        float humanValueThresholdMin,
                        float humanValueThresholdMax = 100.0f,
-                       float minBackVelocity = -5.0f,
-                       float maxBackVelocity = 1.0f);
+                       float minBackVelocity = -1.0f,
+                       float maxBackVelocity = -.5f);
 
     float calculate(int humanValue);
 
-    void  setLimits(float minVelocity,
+    void setLimits(float minVelocity,
                     float maxVelocity,
                     float humanValueThresholdMin,
                     float humanValueThresholdMax = 100.0f,
-                    float minBackVelocity = -5.0f,
-                    float maxBackVelocity = 1.0f);
+                    float minBackVelocity = -1.0f,
+                    float maxBackVelocity = -.5f);
 
     float getThreshold() const
     {
@@ -35,10 +35,10 @@ public:
     float minVelocity = 0;
     float maxVelocity = 3;
 
-    float minBackVelocity =  -5;
+    float minBackVelocity =  -2;
     float maxBackVelocity =  -1;
 
-    bool backMove = false;   
+    bool backMove = true;
 };
 
 #endif // VELOCITYCALCULATOR_H

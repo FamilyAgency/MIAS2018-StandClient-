@@ -5,7 +5,6 @@
         <file>resources/car2.png</file>
         <file>resources/shadow.png</file>
         <file>resources/finish.png</file>
-        <file>resources/gameplay-new.jpg</file>
         <file>qml/components/MindwaveComponent.qml</file>
         <file>qml/components/HealthCheckerComponent.qml</file>
         <file>qml/touchScreens/TouchWindow.qml</file>
@@ -89,5 +88,10 @@
         <file>qml/touchScreens/elements/Indicators.qml</file>
         <file>resources/arrowpopup.png</file>
         <file>resources/btnarrow.png</file>
+        <file>resources/superarrow1.png</file>
+        <file>qml/mainScreens/elements/Flag.qml</file>
+        <file>resources/Star_blue.png</file>
+        <file>resources/Star_white.png</file>
+        <file>resources/Glow_Car.png</file>
     </qresource>
 </RCC>

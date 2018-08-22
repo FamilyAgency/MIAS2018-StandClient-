@@ -85,7 +85,8 @@ Item
         {
             var colorBg = Qt.rgba(0., 164./255., 227.0 / 255., 0.3);
             var colorLimit =  Qt.rgba(255./255.,52./255., 12./255., 1.);
-            var colorAttention = Qt.rgba(159./255., 217./255., 239.0 / 255., 0.9);
+            var colorAttention = Qt.rgba(243./255., 9./255., 93.0 / 255., 0.9);
+            //var colorAttention = Qt.rgba(159./255., 217./255., 239.0 / 255., 0.9);
             var lineWidth = 10;
 
             var ctx = getContext("2d");

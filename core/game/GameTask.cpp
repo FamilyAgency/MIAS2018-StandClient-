@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QtMath>
 #include <QDateTime>
+#include <QtMath>
 
 GameTask::GameTask()
 {
@@ -19,7 +20,7 @@ GameTask::GameTask(const QVector<QPointF>& value, const VelocityCalculator& velC
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(onUpdate()));
 
-    qDebug()<<"!!!!!!!!!!!!!Created game task!!!!!!!!!!!!!"<<this;
+    qDebug()<<"!!!!!!!!!!!!! Created game task !!!!!!!!!!!!!"<<this;
 }
 
 void GameTask::setData(const QVector<QPointF>& value, const VelocityCalculator& velCalc)
@@ -113,7 +114,7 @@ void GameTask::update(int humanValue)
 
     QVector2D vec(endPoint - curPoint);
     auto velocity = velocityCalculator.calculate(humanValue);
-    const float epsilon = 1.1f * velocity;
+    const float epsilon = 1.1f * qFabs(velocity);
 
     if(vec.length() < epsilon)
     {
@@ -134,11 +135,17 @@ void GameTask::update(int humanValue)
     }
     else
     {
-        position.setX(position.x() + velocity);
-        position.setY(position.y() + velocity);
+        QVector2D vec1(curPoint - startPoint);
+        if(velocity < 0 && vec1.length() < epsilon)
+        {
+            velocity = 0;
+        }
 
-        curPoint.setX(startPoint.x() + position.x() * velocityDirection.x());
-        curPoint.setY(startPoint.y() + position.y() * velocityDirection.y());       
+        position.setX(position.x() + velocity * velocityDirection.x());
+        position.setY(position.y() + velocity * velocityDirection.y());
+
+        curPoint.setX(startPoint.x() + position.x());
+        curPoint.setY(startPoint.y() + position.y());
     }
 }
 
