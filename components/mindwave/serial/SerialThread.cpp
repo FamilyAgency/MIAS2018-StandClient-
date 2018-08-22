@@ -53,6 +53,16 @@ void SerialThread::setPortName(const QString& value)
     portName = value;
 }
 
+void SerialThread::setNoDataTimeoutMills(int value)
+{
+    noDataTimeoutMills = value;
+}
+
+void SerialThread::setReconnectionMills(int value)
+{
+    reconnectionMills = value;
+}
+
 void SerialThread::startReading()
 {
     serialPort->setPortName(portName);
@@ -61,21 +71,22 @@ void SerialThread::startReading()
 
     if (!serialPort->open(QIODevice::ReadWrite))
     {
+        emit connectionError();
         tryReconnect();
         qDebug()<<"serialPort opening error";
     }
     else
     {
+        emit connectionSuccess();
         qDebug()<<"serialPort opened";
     }
 
-    noDataTimer->start(2000);
+    noDataTimer->start(noDataTimeoutMills);
 }
 
 void SerialThread::onReadyRead()
 {
-    //qDebug()<<"onReadyRead";
-    noDataTimer->start(2000);
+    noDataTimer->start(noDataTimeoutMills);
     QByteArray bytes = serialPort->readAll();
     emit dataRecieve(bytes);
 }
@@ -83,15 +94,12 @@ void SerialThread::onReadyRead()
 void SerialThread::onReadError(QSerialPort::SerialPortError serialPortError)
 {
     qDebug()<<"serialPortError "<< serialPortError;
-    if (serialPortError == QSerialPort::ReadError)
-    {
-
-    }
 }
 
 void SerialThread::onNoDataTimerHandle()
 {
     qDebug()<<"timeout ";
+    emit noDataTimeout();
     noDataTimer->stop();
     tryReconnect();
 }
@@ -105,7 +113,7 @@ void SerialThread::tryReconnect()
     }
 
     reconnectTimer->stop();
-    reconnectTimer->start(1000);
+    reconnectTimer->start(reconnectionMills);
 }
 
 void SerialThread::onReconnectHandle()

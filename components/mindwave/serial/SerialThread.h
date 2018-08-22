@@ -15,15 +15,19 @@ public:
     void initThread(QThread* thread);
     void setPortName(const QString& value);
 
+    void setNoDataTimeoutMills(int value);
+    void setReconnectionMills(int value);
 
 private:
+
+    int noDataTimeoutMills = 2000;
+    int reconnectionMills = 1000;
+
     QTimer* reconnectTimer = nullptr;
     QTimer* noDataTimer = nullptr;
     QSerialPort* serialPort = nullptr;
 
     QString portName;
-
-
     void tryReconnect();
 
 private slots:
@@ -36,6 +40,9 @@ private slots:
 
 signals:
      void dataRecieve(const QByteArray&);
+     void connectionError();
+     void noDataTimeout();
+     void connectionSuccess();
 };
 
 

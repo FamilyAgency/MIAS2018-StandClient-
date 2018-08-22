@@ -37,7 +37,7 @@ void MindwaveParserTCP::parse(const QString& data)
             QJsonObject jsonObj   = jsonDoc.object();
 
             int signalValue = jsonObj.value("poorSignalLevel").toInt();
-            mindwaveData.poorSignalLevel = remapPoorSignalLevel(signalValue);
+            mindwaveData.poorSignalLevel = signalValue;
 
             QString status = jsonObj.value("status").toString();
             emit scanningInfo(mindwaveData.poorSignalLevel, status);
@@ -58,9 +58,7 @@ MindwaveData MindwaveParserTCP::parseOneDataChunck(const QString& data)
     mindwaveData.meditation = eSenseJson.value("meditation").toInt();
 
     int signalValue = jsonObj.value("poorSignalLevel").toInt();
-    mindwaveData.poorSignalLevel = remapPoorSignalLevel(signalValue);
-
-    mindwaveData.poorSignalColor = getPoorSignalColor(signalValue);
+    mindwaveData.poorSignalLevel = signalValue;
     mindwaveData.valid = true;
     return mindwaveData;
 }

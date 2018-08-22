@@ -4,20 +4,12 @@
 MindwaveComponentBase::MindwaveComponentBase(QObject *parent) : ExternalSystemComponent(parent)
 {
     name = "Mindwave";
-
-    timeoutTimer = new QTimer(this);
-    connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
-
     setDeviceState(DeviceState::None);
 }
 
 MindwaveComponentBase::~MindwaveComponentBase()
 {
-    if(timeoutTimer)
-    {
-        disconnect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeoutHandle()));
-        delete timeoutTimer;
-    }
+
 }
 
 void MindwaveComponentBase::setQmlContext(QQmlContext* value)
@@ -54,48 +46,40 @@ void MindwaveComponentBase::onConnectionSuccess()
 void MindwaveComponentBase::onDisconnectionSuccess()
 {
     setDeviceState(DeviceState::None);
+    setPoorSignalLevel(200);
+    setAttention(0);
+    setMeditation(0);
+
     setConnected(false);
 }
 
 void MindwaveComponentBase::start()
 {
-    qDebug()<<"mindwave component start -------------------";
-    timeoutTimer->start(_mindwaveConfig.timeoutMills);
+    qDebug()<<"------------------- mindwave component start -------------------";
     mindwaveReader->start();
 }
 
 void MindwaveComponentBase::stop()
 {
-    timeoutTimer->stop();
+    qDebug()<<"------------------- mindwave component stop -------------------";
 }
 
 void MindwaveComponentBase::onSignalLevelParsed(int value)
 {
-    setPoorSignalLevel(value);
-    _poorSignalColor = mindwaveParser->getPoorSignalColor(value);
-
-    //qDebug()<<"onSignalLevelParsed "<<value;
     setDeviceState(DeviceState::Reading);
-    timeoutTimer->start(_mindwaveConfig.timeoutMills);
-
     setPoorSignalLevel(value);
+    _poorSignalColor = value;
 }
 
 void MindwaveComponentBase::onMeditationParsed(int value)
 {
-    //qDebug()<<"onMeditationParsed "<<value;
     setDeviceState(DeviceState::Reading);
-    timeoutTimer->start(_mindwaveConfig.timeoutMills);
-
     setMeditation(value);
 }
 
 void MindwaveComponentBase::onAttentionParsed(int value)
 {
-    qDebug()<<"onAttentionParsed "<<value;
     setDeviceState(DeviceState::Reading);
-    timeoutTimer->start(_mindwaveConfig.timeoutMills);
-
     setAttention(value);
 }
 
@@ -106,11 +90,9 @@ void MindwaveComponentBase::onDataParsed(const MindwaveData& mindwaveData)
         setMeditation(mindwaveData.meditation);
         setAttention(mindwaveData.attention);
 
-        _poorSignalColor = mindwaveParser->getPoorSignalColor(mindwaveData.poorSignalLevel);
         setPoorSignalLevel(mindwaveData.poorSignalLevel);
 
         setDeviceState(DeviceState::Reading);
-        timeoutTimer->start(_mindwaveConfig.timeoutMills);
     }
 }
 
@@ -119,9 +101,6 @@ void MindwaveComponentBase::onScanningInfo(int signalValue, const QString& statu
     setMeditation(0);
     setAttention(0);
     setPoorSignalLevel(signalValue);
-    _poorSignalColor = mindwaveParser->getPoorSignalColor(signalValue);
-
-    timeoutTimer->stop();
 
     if(status == "scanning")
     {
@@ -130,15 +109,6 @@ void MindwaveComponentBase::onScanningInfo(int signalValue, const QString& statu
     else if(status == "notscanning")
     {
         setDeviceState(DeviceState::NotScanning);
-    }
-}
-
-void MindwaveComponentBase::onTimeoutHandle()
-{
-    if(deviceState == DeviceState::Reading)
-    {
-        qDebug()<<"==================onTimeoutHandle==================";
-        setDeviceState(DeviceState::None);
     }
 }
 
@@ -155,7 +125,8 @@ MindwaveComponentBase::DeviceState MindwaveComponentBase::getDeviceState() const
 
 void MindwaveComponentBase::setPoorSignalLevel(int value)
 {
-    _poorSignalLevel = value;
+    _poorSignalLevel = remapPoorSignalLevel(value);
+    _poorSignalColor = getPoorSignalColor(_poorSignalLevel);
     emit poorSignalLevelChanged();
 }
 
@@ -205,4 +176,27 @@ bool MindwaveComponentBase::connected() const
 bool MindwaveComponentBase::isHealthy()
 {
     return true;
+}
+
+int MindwaveComponentBase::remapPoorSignalLevel(int signalValue)
+{
+    return MathTools::map<float>(signalValue, 0,  200, 100,  0);
+}
+
+QString MindwaveComponentBase::getPoorSignalColor(int value)
+{
+    if(value >= 66 && value <= 100)
+    {
+        return "#009900";
+    }
+    else if(value >= 30 && value <= 66)
+    {
+        return "#999900";
+    }
+    else if(value >= 0 && value <= 30)
+    {
+        return  "#999999";
+    }
+
+    return "#999999";
 }

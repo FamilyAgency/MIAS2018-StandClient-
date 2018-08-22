@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "config/Config.h"
+#include "tools/MathTools.h"
 
 struct MindwaveData
 {
@@ -15,7 +16,6 @@ struct MindwaveData
     int attention = 0;
     int meditation = 0;
     int poorSignalLevel = 0;
-    QString poorSignalColor = "#999999";
 };
 
 class MindwaveParserBase : public QObject
@@ -28,11 +28,8 @@ public:
     virtual void parse(const QString& data);
     virtual void parse(const QByteArray& data);
 
-    QString getPoorSignalColor(int value) const;
-
 protected:
     MindwaveConfig mindwaveConfig;
-    int remapPoorSignalLevel(int signalValue) const;
 
 public slots:
     virtual void onDataRecieve(const QString& data);

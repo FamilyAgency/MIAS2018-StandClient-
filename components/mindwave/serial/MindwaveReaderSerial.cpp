@@ -7,46 +7,61 @@ MindwaveReaderSerial::MindwaveReaderSerial(QObject *parent) : MindwaveReaderBase
 
 MindwaveReaderSerial::~MindwaveReaderSerial()
 {
+    qDebug()<<"Destroy MindwaveReaderSerial";
+
     disconnect(serialWorkerThread, SIGNAL(started()), serialThread, SLOT(startReading()));
+    disconnect(serialWorkerThread, SIGNAL(finished()), serialThread, SLOT(deleteLater()));
+
     disconnect(serialThread, SIGNAL(dataRecieve(const QByteArray&)), this, SLOT(onDataRecieve(const QByteArray&)));
+    disconnect(serialThread, SIGNAL(connectionError()), this, SLOT(onConnectionError()));
+    disconnect(serialThread, SIGNAL(noDataTimeout()), this, SLOT(onNoDataTimeout()));
+    disconnect(serialThread, SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
 
     serialWorkerThread->quit();
     serialWorkerThread->wait();
 
-   // emit destroyMindwaveReader();
+    qDebug()<<"Destroy serialWorkerThread";
 }
 
 void MindwaveReaderSerial::start()
 {
-    serialWorkerThread = new QThread(this);
-    serialThread = new SerialThread();
-    serialThread->setPortName(mindwaveConfig.com);
-    connect(serialWorkerThread, SIGNAL(started()), serialThread, SLOT(startReading()));
-    connect(serialWorkerThread, SIGNAL(finished()), serialThread, SLOT(deleteLater()));
+    if(!serialThread)
+    {
+        serialWorkerThread = new QThread(this);
+        serialThread = new SerialThread();
+        serialThread->setPortName(mindwaveConfig.com);
+        serialThread->setNoDataTimeoutMills(mindwaveConfig.timeoutMills);
+        serialThread->setReconnectionMills(1000);
 
-    connect(serialThread, SIGNAL(dataRecieve(const QByteArray&)), this, SLOT(onDataRecieve(const QByteArray&)));
-    connect(this, SIGNAL(destroyMindwaveReader()), serialWorkerThread, SLOT(quit()));
+        connect(serialWorkerThread, SIGNAL(started()), serialThread, SLOT(startReading()));
+        connect(serialWorkerThread, SIGNAL(finished()), serialThread, SLOT(deleteLater()));
 
-    serialThread->initThread(serialWorkerThread);
+        connect(serialThread, SIGNAL(dataRecieve(const QByteArray&)), this, SLOT(onDataRecieve(const QByteArray&)));
+        connect(serialThread, SIGNAL(connectionError()), this, SLOT(onConnectionError()));
+        connect(serialThread, SIGNAL(noDataTimeout()), this, SLOT(onNoDataTimeout()));
+        connect(serialThread, SIGNAL(connectionSuccess()), this, SLOT(onConnectionSuccess()));
+        serialThread->initThread(serialWorkerThread);
 
-    serialThread->moveToThread(serialWorkerThread);
-    serialWorkerThread->start();
+        serialThread->moveToThread(serialWorkerThread);
+        serialWorkerThread->start();
+    }
+}
+
+void MindwaveReaderSerial::onConnectionError()
+{
+    onDisconnectionSuccess();
+}
+
+void MindwaveReaderSerial::onNoDataTimeout()
+{
+    onDisconnectionSuccess();
 }
 
 void MindwaveReaderSerial::onDataRecieve(const QByteArray& bytes)
 {  
-     dataRecieve(bytes);
+     emit dataRecieve(bytes);
 }
 
-void MindwaveReaderSerial::setConfig(const MindwaveConfig& config)
-{
-    MindwaveReaderBase::setConfig(config);
-}
-
-void MindwaveReaderSerial::onConnectionSuccess()
-{
-    MindwaveReaderBase::onConnectionSuccess();
-}
 
 void MindwaveReaderSerial::writeCommand()
 {
@@ -100,6 +115,6 @@ void MindwaveReaderSerial::writeSerialData(const QByteArray &data)
 //        return;
 //    }
 
-    qDebug() << "Data Write Sucessfull";
-    return;
+//    qDebug() << "Data Write Sucessfull";
+//    return;
 }

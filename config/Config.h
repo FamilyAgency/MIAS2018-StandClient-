@@ -46,7 +46,7 @@ public:
     QString initialCommand = "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r";
     QString authCommand = "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r";
     QString type = "serial";
-    int timeoutMills = 4000;
+    int timeoutMills = 2000;
     QString com = "COM6";
 
 };

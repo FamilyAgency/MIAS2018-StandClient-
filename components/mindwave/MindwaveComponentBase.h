@@ -60,8 +60,6 @@ protected:
     QSharedPointer<MindwaveReaderBase> mindwaveReader;
     QSharedPointer<MindwaveParserBase> mindwaveParser;
 
-    QTimer* timeoutTimer = nullptr;
-
     int _attention = 0;
     int _meditation = 0;
     int _poorSignalLevel = 0;
@@ -69,10 +67,12 @@ protected:
     QString _poorSignalColor = "black";
 
     void parse(const QString& data);
-
-    void setDeviceState(DeviceState value);    
+    void setDeviceState(DeviceState value);
 
     DeviceState deviceState = DeviceState::None;
+
+    static QString getPoorSignalColor(int value);
+    static int remapPoorSignalLevel(int signalValue);
 
 signals:
     void attentionChanged();
@@ -86,7 +86,6 @@ signals:
 private slots:
     virtual void onDataParsed(const MindwaveData& mindwaveData);
     virtual void onScanningInfo(int, const QString&);
-    virtual void onTimeoutHandle();
 
     void onSignalLevelParsed(int value);
     void onMeditationParsed(int value);
