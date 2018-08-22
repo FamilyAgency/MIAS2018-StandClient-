@@ -32,6 +32,7 @@ Button
 
 	background: Rectangle
 	{
+        id: rect;
 		implicitWidth: 500;
 		implicitHeight: 150;
 		radius: 100;
@@ -47,6 +48,16 @@ Button
         color: btnColor + "66";
 		transparentBorder: true;
 	}
+
+    Image
+    {
+        id:arrow
+        anchors.right: rect.right;
+        anchors.verticalCenter: rect.verticalCenter;
+        anchors.rightMargin: 60;
+        smooth:true;
+        source: "qrc:/resources/btnarrow.png";
+    }
 
 	FontManager
 	{

@@ -88,5 +88,6 @@
         <file>resources/Error.png</file>
         <file>qml/touchScreens/elements/Indicators.qml</file>
         <file>resources/arrowpopup.png</file>
+        <file>resources/btnarrow.png</file>
     </qresource>
 </RCC>
