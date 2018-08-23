@@ -16,8 +16,6 @@ Item
 
     property var locations: [];
 
-
-
     VideoManager
     {
         id: videos;
