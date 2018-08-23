@@ -1,6 +1,7 @@
 import QtQuick 2.2
 import QtQuick.Controls.Styles 1.4
 import "../../tools"
+import "../../components"
 
 Item
 {
@@ -21,9 +22,28 @@ Item
     property string activeLineColor: "#f3095d";
     property string nonActiveLineColor: "#20346e";
 
+    property string blueArrow: "qrc:/resources/superarrow.png";
+    property string redArrow: "qrc:/resources/superarrow1.png";
+
+
     Consts
     {
         id:consts;
+    }
+
+
+    AnimationPlayer
+    {
+        id: pulsAnim;
+        currentImage: 2;
+        endFrame: 46;
+        startFrame: 2;
+        Component.onCompleted:
+        {
+            pulsAnim.setSource("content/misc/puls/", ".png");
+            pulsAnim.setFPS(30);
+            pulsAnim.init();
+        }
     }
 
     Canvas
@@ -52,7 +72,7 @@ Item
                 if(isSuperGame)
                 {
                     // drawSuperGameGuidePaths(ctx);
-                    animateSuperTrack();
+                    // animateSuperTrack();
                     return;
                 }
 
@@ -109,7 +129,7 @@ Item
                     smooth:true;
                     antialiasing: true;
                     id: arrow;
-                    source: "qrc:/resources/superarrow1.png"
+                    source: redArrow;
                 }
             }
         }
@@ -151,6 +171,21 @@ Item
         var c = Math.sqrt( a*a + b*b );
 
         repeater.model = Math.floor(c / arrowSize);
+
+        for(var i = 0; i <  repeater.model; i++)
+        {
+            repeater.itemAt(i).source = redArrow;
+        }
+    }
+
+
+    function setSuperGamePercent(percent)
+    {
+        var countToShow = Math.floor(repeater.model * percent);
+        for(var i = 0; i < countToShow; i++)
+        {
+            repeater.itemAt(i).source = blueArrow;
+        }
     }
 
     function setSuperTrackRotation(forwardVector)
@@ -246,13 +281,15 @@ Item
         {
             ctx.drawImage(canvas.redcircle, circles[k].x - 25, circles[k].y - 25);
         }
+
+        pulsAnim.setLocation(circles[pointsCompleted].x - 82, circles[pointsCompleted].y - 82);
     }
 
-//    function setFlagPosition(x, y)
-//    {
-//        flag.x = x - 20;// - flag.width;
-//        flag.y = y - 64;// - flag.height;
-//    }
+    //    function setFlagPosition(x, y)
+    //    {
+    //        flag.x = x - 20;// - flag.width;
+    //        flag.y = y - 64;// - flag.height;
+    //    }
 
     function drawFlag(ctx)
     {

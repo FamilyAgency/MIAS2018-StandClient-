@@ -22,7 +22,6 @@ Item
     property string superGameTitle: "СУПЕРИГРА";
     property string descrTitleDefault: "Готовы бороться за приз?<br/>Тогда начнем!";
 
-
     property real btnMarginBottom: 100 * consts.designScale;
 
     signal startSuperGame();

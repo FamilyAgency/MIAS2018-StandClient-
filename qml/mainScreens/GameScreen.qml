@@ -164,6 +164,9 @@ Item
             road.draw();
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
             mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
+
+            var completedLength = vecLength(road.currentPoint, superGameLastPoint);
+            road.setSuperGamePercent(1 - completedLength/superGameLength);
         }
 
         onCountDownComplete:
@@ -182,6 +185,9 @@ Item
             road.showSuperTrack();
             road.show();
 
+            superGameLength = vecLength(startPoint, lastPoint);
+            superGameLastPoint = lastPoint;
+
             mindIndicator.showIndicator();
             mindIndicator.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
         }
@@ -190,6 +196,16 @@ Item
         {
 
         }
+    }
+
+    property var superGameLength: 0;
+    property var superGameLastPoint: 0;
+
+    function vecLength(point1, point2)
+    {
+        var x = point2.x - point1.x;
+        var y = point2.y - point1.y;
+        return Math.sqrt( x*x + y*y );
     }
 
     function gameStop()

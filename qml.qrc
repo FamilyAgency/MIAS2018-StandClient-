@@ -93,5 +93,6 @@
         <file>resources/Star_blue.png</file>
         <file>resources/Star_white.png</file>
         <file>resources/Glow_Car.png</file>
+        <file>qml/components/AnimationPlayer.qml</file>
     </qresource>
 </RCC>

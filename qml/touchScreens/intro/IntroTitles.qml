@@ -73,12 +73,38 @@ Item
             {
                 from: 1
                 to: 29
-                duration: 1000
+                duration: 28 * 1000. / consts.animFPS;
                 running: true;
                 loops: Animation.Infinite;
             }
         }
     }
+
+
+//    Item
+//    {
+//        id: animationPalkaItem
+//        anchors.fill: parent;
+//        Image
+//        {
+//            property int currentImage: 1
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.bottom: parent.bottom
+//            anchors.bottomMargin: 100;
+//            id: image1
+//            x: 0
+//            y: 0
+//            source: configController.getFileInAppDir("content/misc/palka/" + currentImage + ".png");
+//            NumberAnimation on currentImage
+//            {
+//                from: 1
+//                to: 48
+//                duration: 47 * 1000. / consts.animFPS;
+//                running: true;
+//                loops: Animation.Infinite;
+//            }
+//        }
+//    }
 
     OpacityAnimator on opacity
     {
