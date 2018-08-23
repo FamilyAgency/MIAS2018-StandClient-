@@ -132,36 +132,36 @@ Item
 
     function setState(appState)
     {
-        rfidIndicator.visible = false;
+//        rfidIndicator.visible = false;
 
-        switch(appState)
-        {
-        case AppState.Intro:
-            if(showMindwaveError() || showRfidError())
-            {
-                mindwaveIndicator.visible = true;
-                rfidIndicator.visible = true;
-            }
-            else
-            {
-                mindwaveIndicator.visible = false;
-                rfidIndicator.visible = false;
-            }
-            break;
+//        switch(appState)
+//        {
+//        case AppState.Intro:
+//            if(showMindwaveError() || showRfidError())
+//            {
+//                mindwaveIndicator.visible = true;
+//                rfidIndicator.visible = true;
+//            }
+//            else
+//            {
+//                mindwaveIndicator.visible = false;
+//                rfidIndicator.visible = false;
+//            }
+//            break;
 
-        case AppState.Instruction:
-        case AppState.Roulette:
-        case AppState.Game:
-        case AppState.GameResult:
-        case AppState.SuperGame:
-            showMindwaveError();
-            break;
+//        case AppState.Instruction:
+//        case AppState.Roulette:
+//        case AppState.Game:
+//        case AppState.GameResult:
+//        case AppState.SuperGame:
+//            showMindwaveError();
+//            break;
 
-        case AppState.SuperGameResult:
-        case AppState.TestDrive:
-            mindwaveIndicator.visible = false;
-            break;
-        }
+//        case AppState.SuperGameResult:
+//        case AppState.TestDrive:
+//            mindwaveIndicator.visible = false;
+//            break;
+//        }
     }
 
     function showMindwaveError()
