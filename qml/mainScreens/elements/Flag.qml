@@ -25,8 +25,8 @@ Item
         source: configController.getFileInAppDir("content/misc/flag/" + currentImage + ".png");
         NumberAnimation on currentImage
         {
-            from: 0;
-            to: 71;
+            from: 1;
+            to: 72;
             duration: 71 * 1000. / consts.animFPS;
             running: true;
             loops: Animation.Infinite;

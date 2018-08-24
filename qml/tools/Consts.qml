@@ -17,7 +17,7 @@ Item
     property double artScaleFactor: 1;//0.925;
 
     property string carUrl: "qrc:/resources/car2.png";
-    property string carShadowUrl: "qrc:/resources/shadow.png";
+    property string carShadowUrl: "qrc:/resources/Glow_Car.png";
     property int carWidth: 64;//30;
     property int carHeight: 124;//54;
     property int carAddAngle: -90 + 180;

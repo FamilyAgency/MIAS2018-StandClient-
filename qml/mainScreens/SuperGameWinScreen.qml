@@ -2,11 +2,13 @@ import QtQuick 2.2
 import QtQuick.Controls.Styles 1.4
 
 import "../tools"
+import "../components"
 
 Item
 {
     property string superGameTitle1: "Поздравляем!";
     property string superGameTitle2: "ТВОЙ РЕЗУЛЬТАТ";
+    property bool superGameSuccess: false;
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -26,7 +28,22 @@ Item
     {
         anchors.fill: parent;
         color: "#021025";
-        opacity: 0.7;
+        opacity: 0.0;
+    }
+
+    AnimationPlayer
+    {
+        id: confAnim;
+        currentImage: 1;
+        endFrame: 191;
+        startFrame: 1;
+        Component.onCompleted:
+        {
+            confAnim.setSource("content/misc/confeti/", ".png");
+            confAnim.setFPS(30);
+            confAnim.setRunning(false);
+            confAnim.init();
+        }
     }
 
     Text
@@ -63,12 +80,10 @@ Item
         id: title2;
         text: superGameTitle2;
         anchors.top: superTime.bottom;
-
-       // anchors.topMargin: -15;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 54;
-        color: "#0aabd4";
+        color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
     }
@@ -82,8 +97,6 @@ Item
         running: false;
         easing.type: "InOutCubic";
     }
-
-    property bool superGameSuccess: false;
 
     Connections
     {
@@ -106,6 +119,7 @@ Item
         if(superGameSuccess)
         {
             visible = true;
+            confAnim.setRunning(true);
             opacity = 0;
             opacityAnim.start();
         }
@@ -113,6 +127,7 @@ Item
 
     function hide()
     {
-        visible = false;
+        visible = false;        
+        confAnim.setRunning(false);
     }
 }

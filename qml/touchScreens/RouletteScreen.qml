@@ -60,7 +60,6 @@ Item
         id: maskHolder;
         property bool maskEnable: false;
 
-
         anchors.fill: parent;
 
         Image
@@ -122,7 +121,8 @@ Item
         maskHolder.maskEnable = false;
         core.animComplete();
         brb.visible = true;
-        brb.show();
+        brb.show();        
+        roulette.show();
 
         visible = true;
     }
@@ -131,5 +131,6 @@ Item
     {
         visible = false;
         brb.visible = false;
+        roulette.hide();
     }
 }

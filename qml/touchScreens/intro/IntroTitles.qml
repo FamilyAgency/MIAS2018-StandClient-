@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import "../../tools"
+import "../../components"
 
 Item
 {
@@ -56,53 +57,33 @@ Item
 
     }
 
-    Item
-    {
-        id: animationItem
-        anchors.fill: parent;
-        Image
-        {
-            property int currentImage: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: parent.bottom
-            id: image
-            x: 0
-            y: 0
-            source: configController.getFileInAppDir("content/misc/redRound/round" + currentImage + ".png");
-            NumberAnimation on currentImage
-            {
-                from: 1
-                to: 29
-                duration: 28 * 1000. / consts.animFPS;
-                running: true;
-                loops: Animation.Infinite;
-            }
-        }
-    }
-
-
-//    Item
+//    AnimationPlayer
 //    {
-//        id: animationPalkaItem
-//        anchors.fill: parent;
-//        Image
+//        id: redRoundAnim;
+//        currentImage: 1;
+//        endFrame: 29;
+//        startFrame: 1;
+//        Component.onCompleted:
 //        {
-//            property int currentImage: 1
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            anchors.bottom: parent.bottom
-//            anchors.bottomMargin: 100;
-//            id: image1
-//            x: 0
-//            y: 0
-//            source: configController.getFileInAppDir("content/misc/palka/" + currentImage + ".png");
-//            NumberAnimation on currentImage
-//            {
-//                from: 1
-//                to: 48
-//                duration: 47 * 1000. / consts.animFPS;
-//                running: true;
-//                loops: Animation.Infinite;
-//            }
+//            redRoundAnim.setSource("content/misc/redRound/", ".png");
+//            redRoundAnim.setFPS(30);
+//            //redRoundAnim.setLocation(490, 1265);
+//            redRoundAnim.init();
+//        }
+//    }
+
+//    AnimationPlayer
+//    {
+//        id: palkaAnim;
+//        currentImage: 1;
+//        endFrame: 48;
+//        startFrame: 1;
+//        Component.onCompleted:
+//        {
+//            palkaAnim.setSource("content/misc/palka/", ".png");
+//            palkaAnim.setFPS(30);
+//            palkaAnim.setLocation(490, 1265);
+//            palkaAnim.init();
 //        }
 //    }
 
@@ -117,7 +98,7 @@ Item
     }
 
     function show()
-    {    
+    {
         opacityAnim.stop();
         opacity = 0;
         opacityAnim.from = 0;

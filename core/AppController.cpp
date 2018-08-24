@@ -6,6 +6,9 @@
 #include "components/server/ServerRemoteComponent.h"
 #include "tests/ServerRemoteComponentTest.h"
 
+#include <QBluetoothDeviceInfo>
+#include <QBluetoothDeviceDiscoveryAgent>
+
 AppController::AppController(QObject *parent) : QObject(parent)
 {
 
@@ -215,6 +218,23 @@ void AppController::start()
     }
 
     setAppState(AppState::Intro);
+
+
+//    // Create a discovery agent and connect to its signals
+//       QBluetoothDeviceDiscoveryAgent *discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
+//       connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
+//               this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
+
+//       // Start a discovery
+//       discoveryAgent->start();
+
+//       //...
+}
+
+// In your local slot, read information about the found devices
+void AppController::deviceDiscovered(const QBluetoothDeviceInfo &device)
+{
+    qDebug() << "Found new device:" << device.name() << '(' << device.address().toString() << ')';
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -365,6 +385,10 @@ void AppController::setAppStateTest(AppState appState)
     {
         userData->setGameCategory(0);
     }
+    else if(appState == AppState::SuperGame)
+    {
+        userData->setGameCategory(0);
+    }
 
     setAppState(appState);
 }
@@ -375,7 +399,4 @@ void AppController::setTestUserId(int id)
     baseUserData.id = id;
     userData->setBaseUserData(baseUserData);
 }
-
-
-
 

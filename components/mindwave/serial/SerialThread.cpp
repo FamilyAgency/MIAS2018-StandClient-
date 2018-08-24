@@ -1,5 +1,6 @@
 #include "SerialThread.h"
 #include <QDebug>
+#include <QSerialPortInfo>
 
 SerialThread::SerialThread(QObject *parent): QObject(parent)
 {
@@ -26,6 +27,7 @@ void SerialThread::initThread(QThread* thread)
 SerialThread::~SerialThread()
 {
     qDebug()<<"Destroy thread";
+    serialPort->close();
 
     disconnect(serialPort, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     disconnect(serialPort, SIGNAL(errorOccurred(QSerialPort::SerialPortError)), this, SLOT(onReadError(QSerialPort::SerialPortError)));
@@ -65,20 +67,45 @@ void SerialThread::setReconnectionMills(int value)
 
 void SerialThread::startReading()
 {
+//    const auto infos = QSerialPortInfo::availablePorts();
+//       for (const QSerialPortInfo &info : infos)
+//       {
+//           QString s = QObject::tr("Port: ") + info.portName() + "\n"
+//                       + QObject::tr("Location: ") + info.systemLocation() + "\n"
+//                       + QObject::tr("Description: ") + info.description() + "\n"
+//                       + QObject::tr("Manufacturer: ") + info.manufacturer() + "\n"
+//                       + QObject::tr("Serial number: ") + info.serialNumber() + "\n"
+//                       + QObject::tr("Vendor Identifier: ") + (info.hasVendorIdentifier() ? QString::number(info.vendorIdentifier(), 16) : QString()) + "\n"
+//                       + QObject::tr("Product Identifier: ") + (info.hasProductIdentifier() ? QString::number(info.productIdentifier(), 16) : QString()) + "\n"
+//                       + QObject::tr("Busy: ") + (info.isBusy() ? QObject::tr("Yes") : QObject::tr("No")) + "\n";
+
+//           qDebug()<<s;
+
+//       }
+
+
+
+
+
+
+
+
+    qDebug()<<"connect serial to "<<portName;
     serialPort->setPortName(portName);
     auto serialPortBaudRate = QSerialPort::Baud9600;
     serialPort->setBaudRate(serialPortBaudRate);
+    //serialPort->setFlowControl(QSerialPort::HardwareControl);
 
     if (!serialPort->open(QIODevice::ReadWrite))
     {
         emit connectionError();
         tryReconnect();
-       // qDebug()<<"serialPort opening error";
+        qDebug()<<"serialPort opening error";
     }
     else
     {
         emit connectionSuccess();
-       // qDebug()<<"serialPort opened";
+        qDebug()<<"serialPort opened";
     }
 
     noDataTimer->start(noDataTimeoutMills);
@@ -86,8 +113,11 @@ void SerialThread::startReading()
 
 void SerialThread::onReadyRead()
 {
+    noDataTimer->stop();
     noDataTimer->start(noDataTimeoutMills);
     QByteArray bytes = serialPort->readAll();
+   // qDebug()<<"serialPort onReadyRead"<<serialPort->readAll();
+
     emit dataRecieve(bytes);
 }
 
@@ -98,7 +128,7 @@ void SerialThread::onReadError(QSerialPort::SerialPortError serialPortError)
 
 void SerialThread::onNoDataTimerHandle()
 {
-   // qDebug()<<"timeout ";
+    qDebug()<<"timeout ";
     emit noDataTimeout();
     noDataTimer->stop();
     tryReconnect();
@@ -106,7 +136,7 @@ void SerialThread::onNoDataTimerHandle()
 
 void SerialThread::tryReconnect()
 {
-   // qDebug()<<"tryReconnect ";
+    qDebug()<<"tryReconnect ";
     if(serialPort->isOpen())
     {
         serialPort->close();

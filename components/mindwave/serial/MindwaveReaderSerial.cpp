@@ -30,7 +30,7 @@ void MindwaveReaderSerial::start()
         serialWorkerThread = new QThread(this);
         serialThread = new SerialThread();
         serialThread->setPortName(mindwaveConfig.com);
-        serialThread->setNoDataTimeoutMills(mindwaveConfig.timeoutMills);
+        serialThread->setNoDataTimeoutMills(10000);//mindwaveConfig.timeoutMills);
         serialThread->setReconnectionMills(1000);
 
         connect(serialWorkerThread, SIGNAL(started()), serialThread, SLOT(startReading()));

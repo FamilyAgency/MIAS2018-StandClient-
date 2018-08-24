@@ -157,8 +157,22 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     animations.push_back(circleOpacityAnimation);
     connect(circleOpacityAnimation, SIGNAL(finished()), this, SLOT(onCircleOpacityCompleted()));
 
+    carYAnimation4 = new QPropertyAnimation(this);
+    carYAnimation4->setTargetObject(this);
+    carYAnimation4->setPropertyName("carY");
+    carYAnimation4->setDuration(5000);
+    carYAnimation4->setEasingCurve(QEasingCurve::Linear);
+    animations.push_back(carYAnimation4);
+
+
+
     smallCarTimer = new QTimer(this);
     connect(smallCarTimer, SIGNAL(timeout()), this, SLOT(onSmallCarUpdate()));
+
+    smallCarPrepareTimer = new QTimer(this);
+    connect(smallCarPrepareTimer, SIGNAL(timeout()), this, SLOT(onStartSmallCarAnimation()));
+
+
 }
 
 RouletteModule::~RouletteModule()
@@ -200,6 +214,14 @@ RouletteModule::~RouletteModule()
         disconnect(smallCarTimer, SIGNAL(timeout()), this, SLOT(onSmallCarUpdate()));
         delete smallCarTimer;
     }
+
+    if(smallCarTimer)
+    {
+        smallCarPrepareTimer->stop();
+        disconnect(smallCarPrepareTimer, SIGNAL(timeout()), this, SLOT(onStartSmallCarAnimation()));
+        delete smallCarPrepareTimer;
+    }
+
 }
 
 void RouletteModule::setQmlContext(QQmlContext* qmlContext)
@@ -289,6 +311,7 @@ void RouletteModule::stop()
     mindwaveTimer->stop();
     readTaskTimer->stop();
     smallCarTimer->stop();
+    smallCarPrepareTimer->stop();
 
     for (auto &anim : animations)
     {
@@ -356,7 +379,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-    //onUserStartedGame();
+   // onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()
@@ -435,27 +458,43 @@ void RouletteModule::onPulsarAnimationCompleted()
 
 void RouletteModule::onCircleOpacityCompleted()
 {
-    mindwaveTimer->start(mindwaveTimerMills);
+    emit showMindwaveControls();
+   // mindwaveTimer->start(mindwaveTimerMills);
 }
 
 void RouletteModule::onMindwaveUpdate()
 {
-    if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
-    {
-        if(_carY > carTopThreshold - _carHeight * 0.5)
-        {
-            setCarY(_carY + carDecriment);
-        }
-        else if(_carY <= carTopThreshold)
-        {
-            mindwaveTimer->stop();
-            startSmallCarAnimation();
-        }
-    }
+//    if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
+//    {
+//        if(_carY > carTopThreshold - _carHeight * 0.5)
+//        {
+//            setCarY(_carY + carDecriment);
+//        }
+//        else if(_carY <= carTopThreshold)
+//        {
+//            mindwaveTimer->stop();
+//            //startSmallCarAnimation();
+//        }
+//    }
 }
 
-void RouletteModule::startSmallCarAnimation()
+void RouletteModule::finalizeCarAnimation()
 {
+    qDebug()<<"finalize car animation";
+
+    carYAnimation4->setStartValue(_carY);
+    carYAnimation4->setEndValue(-1920 - _carHeight);
+    carYAnimation4->start();
+
+     smallCarPrepareTimer->start(smallCarPrepareTimerMills);
+
+    //startSmallCarAnimation();
+}
+
+void RouletteModule::onStartSmallCarAnimation()
+{
+    smallCarPrepareTimer->stop();
+
     startPoint = currentUser->gameUserData().startPath[0];// QPointF(420, 2010);
     curPoint = startPoint;
     position = QPointF(0, 0);
@@ -471,7 +510,7 @@ void RouletteModule::startSmallCarAnimation()
 void RouletteModule::onSmallCarUpdate()
 {
     QVector2D vec(endPoint - curPoint);
-    auto velocity = 1;
+    auto velocity = 1.5;
     const float epsilon = 1.1f * velocity;
 
     if(vec.length() < epsilon)
@@ -481,7 +520,7 @@ void RouletteModule::onSmallCarUpdate()
     }
     else
     {
-        setCarY(_carY + carDecriment);
+       // setCarY(_carY + carDecriment);
 
         position.setX(position.x() + velocity);
         position.setY(position.y() + velocity);

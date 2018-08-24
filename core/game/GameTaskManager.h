@@ -30,6 +30,9 @@ public:
     Q_INVOKABLE float getForwardVectorRotation() const;
     Q_INVOKABLE float getMindwaveLimit() const;
 
+    Q_INVOKABLE QPointF getStartPoint1() const;
+    Q_INVOKABLE QPointF getStartPoint2() const;
+
     enum class TaskState
     {
         None,

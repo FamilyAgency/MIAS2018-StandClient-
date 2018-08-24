@@ -176,3 +176,14 @@ float GameTaskManager::getMindwaveLimit() const
 {
     return gameTask->getMindwaveLimit();
 }
+
+QPointF GameTaskManager::getStartPoint1() const
+{
+    return currentUser->gameUserData().startPath[0];
+}
+
+
+QPointF GameTaskManager::getStartPoint2() const
+{
+   return currentUser->gameUserData().startPath[1];
+}

@@ -80,9 +80,15 @@ Item
                 var list = completedPath;
 
                 ctx.lineWidth = consts.lineWidth;
-                ctx.strokeStyle =  nonActiveLineColor;
+                ctx.strokeStyle = nonActiveLineColor;
                 ctx.lineCap = consts.lineCap;
                 ctx.lineJoin = consts.lineJoin;
+
+                ctx.beginPath();
+                ctx.moveTo(startPoint1.x, startPoint1.y);
+                ctx.lineTo(startPoint2.x, startPoint2.y);
+                ctx.stroke();
+                ctx.closePath();
 
                 var curPoint = currentPoint;
                 if(list.length > 1)
@@ -146,6 +152,14 @@ Item
     }
 
     property int animatedItemIndex: 0;
+    property var startPoint1;
+    property var startPoint2;
+
+    function setStartPath(point1, point2)
+    {
+        startPoint1 = point1;
+        startPoint2 = point2;
+    }
 
     function animateSuperTrack()
     {
@@ -178,13 +192,17 @@ Item
         }
     }
 
-
     function setSuperGamePercent(percent)
     {
         var countToShow = Math.floor(repeater.model * percent);
         for(var i = 0; i < countToShow; i++)
         {
             repeater.itemAt(i).source = blueArrow;
+        }
+
+        for(var i = countToShow; i < repeater.model; i++)
+        {
+            repeater.itemAt(i).source = redArrow;
         }
     }
 
@@ -203,6 +221,8 @@ Item
 
     function showSuperTrack()
     {
+        pulsAnim.visible = false;
+        pulsAnim.setRunning(false);
         superTrack.visible = true;
     }
 
@@ -214,6 +234,9 @@ Item
     function show()
     {
         opacity = 0;
+        pulsAnim.visible = true;
+        pulsAnim.setRunning(true);
+
         opacityAnim.start();
     }
 
@@ -231,6 +254,7 @@ Item
     {
         pointsCompleted++;
     }
+
 
     function drawSuperGameGuidePaths(ctx)
     {

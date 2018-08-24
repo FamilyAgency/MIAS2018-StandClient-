@@ -7,6 +7,18 @@ Item
         return '8' + (Math.floor((Math.random() * (9999999999 - 1111111111)) + 1111111111));
     }
 
+    function mapRange(value, low1, high1, low2, high2)
+    {
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    }
+
+    function mapRangeClamp(value, low1, high1, low2, high2)
+    {
+        if(value < low1) return low2;
+        if(value > high1) return high2;
+        return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+    }
+
     function randomEmail()
     {
         var email = "";

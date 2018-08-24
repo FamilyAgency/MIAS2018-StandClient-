@@ -83,22 +83,17 @@ Item
 
         onPaint:
         {
-            var colorBg = Qt.rgba(0., 164./255., 227.0 / 255., 0.3);
-            var colorLimit =  Qt.rgba(255./255.,52./255., 12./255., 1.);
-            var colorAttention = Qt.rgba(243./255., 9./255., 93.0 / 255., 0.9);
-            //var colorAttention = Qt.rgba(159./255., 217./255., 239.0 / 255., 0.9);
             var lineWidth = 10;
 
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, 250, 250);
 
-            ctx.strokeStyle = consts.redColor;
-            ctx.lineCap = consts.lineCap;
-            ctx.lineJoin = consts.lineJoin;
+            ctx.lineCap = "square";
+            ctx.lineJoin = "round";
 
             ctx.lineWidth = lineWidth;
 
-            ctx.strokeStyle = colorBg;
+            ctx.strokeStyle = "#36565b";;
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
@@ -118,17 +113,17 @@ Item
 //            ctx.stroke();
 //            ctx.closePath();
 
-            var col = colorAttention;
-            if(canvasCirc.percentAttention > canvasCirc.percentLimit )
-            {
-                col = colorLimit;
-            }
-            else
-            {
-                col = colorAttention;
-            }
+            var col =  "#ffffff";
+//            if(canvasCirc.percentAttention > canvasCirc.percentLimit )
+//            {
+//                col =  "#f50a5c";;
+//            }
+//            else
+//            {
+//                col = "#f50a5c";
+//            }
 
-            ctx.strokeStyle = col;
+            ctx.strokeStyle = "#f50a5c";
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,

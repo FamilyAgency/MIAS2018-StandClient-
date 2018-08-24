@@ -20,7 +20,7 @@ public:
 
 private:
 
-    int noDataTimeoutMills = 2000;
+    int noDataTimeoutMills = 5000;
     int reconnectionMills = 1000;
 
     QTimer* reconnectTimer = nullptr;

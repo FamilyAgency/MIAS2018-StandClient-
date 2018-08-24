@@ -54,4 +54,9 @@ Item
         image.x = x;
         image.y = y;
     }
+
+    function setRunning(value)
+    {
+        animAnim.running = value;
+    }
 }

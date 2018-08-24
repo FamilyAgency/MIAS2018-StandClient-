@@ -289,7 +289,6 @@ public:
     QSharedPointer<StandAnimConfig> standAnimConfig;
     QSharedPointer<AdvantagesConfig> advantagesConfig;
 
-
     QString getRawData() const;
     void setRawData(const QString& value);
 

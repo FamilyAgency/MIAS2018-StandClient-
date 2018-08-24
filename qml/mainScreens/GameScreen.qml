@@ -3,7 +3,6 @@ import QtQuick 2.0
 import "elements"
 import "popups"
 
-
 Item
 {
     id: gameView;
@@ -55,14 +54,13 @@ Item
     {
         id: pretaskPopup;
         visible: false;
-    }
+    }  
 
     Component.onCompleted:
     {
         map.source = standData.getStandMap();
         mapover.source = standData.getStandMapOver();
     }
-
 
     Connections
     {
@@ -123,6 +121,7 @@ Item
 
         onGameStarted:
         {
+            road.setStartPath(gameTaskManager.getStartPoint1(), gameTaskManager.getStartPoint2());
             road.init();
             road.visible = true;
             //  road.circles = gameTaskManager.getTargetPoints();
@@ -139,11 +138,6 @@ Item
             console.log("========task complete=========");
             road.taskComplete();
         }
-
-//        onAllStagesComleteEvent:
-//        {
-
-//        }
     }
 
     Connections
@@ -194,7 +188,12 @@ Item
 
         onSuperGameFailed:
         {
+            gameStop();
+        }
 
+        onSuperGameSuccess:
+        {
+             gameStop();
         }
     }
 
@@ -243,5 +242,4 @@ Item
     {
         flag.hideFlag();
     }
-
 }

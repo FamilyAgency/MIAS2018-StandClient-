@@ -73,7 +73,7 @@ Item
 
     Rectangle
     {
-        id:bgPulsar;
+        id: bgPulsar;
         implicitHeight: 1200 * consts.designScale;
         implicitWidth: 1200 * consts.designScale;
 
@@ -88,7 +88,7 @@ Item
 
     Rectangle
     {
-        id:bg;
+        id: bg;
         implicitHeight: 950 * consts.designScale;
         implicitWidth: 950 * consts.designScale;
         radius: 475 * consts.designScale;
@@ -116,12 +116,46 @@ Item
        // source: standData.getStandImage("task1/icon.png");
     }
 
+    MindwaveAttention
+    {
+        y: 100;
+        id: mindwaveAttention;
+        visible: false;
+
+        onMindwaveReady:
+        {
+            rouletteModule.finalizeCarAnimation();
+            mindwaveAttention.hide();
+        }
+
+        Component.onCompleted:
+        {
+            mindwaveAttention.setLocation(0, 60);
+        }
+    }
+
+    function show()
+    {
+
+    }
+
+    function hide()
+    {
+        mindwaveAttention.visible = false;
+        mindwaveAttention.hide();
+    }
+
     Connections
     {
         target: rouletteModule;
         onUpdateChoosenCategoryImagePath:
         {
-            choosen.source = standData.getStandImage(path);
+            choosen.source = standData.getStandImage(path);            
+        }
+
+        onShowMindwaveControls:
+        {
+            mindwaveAttention.show();
         }
     }
 }

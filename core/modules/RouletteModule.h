@@ -37,6 +37,8 @@ public:
     virtual ~RouletteModule();
 
     Q_INVOKABLE void startRoll();
+    Q_INVOKABLE void finalizeCarAnimation();
+
 
     virtual void setQmlContext(QQmlContext* qmlContext) override;
     virtual void setConfig(ConfigPtr config) override;
@@ -110,6 +112,8 @@ private:
     QPropertyAnimation* carYAnimation2 = nullptr;
     QPropertyAnimation* taskOpacityAnimation = nullptr;
     QPropertyAnimation* carYAnimation3 = nullptr;
+    QPropertyAnimation* carYAnimation4 = nullptr;
+
     QPropertyAnimation* scaleAnimation2 = nullptr;
     QPropertyAnimation* circleFinalYAnimation = nullptr;
     QPropertyAnimation* helpTextAnimation = nullptr;
@@ -121,12 +125,11 @@ private:
     QPropertyAnimation* mainIconYAnimation = nullptr;
     QPropertyAnimation* allIconsScaleAnimation = nullptr;
 
-
-
     QList<QPropertyAnimation*> animations;
 
     const float mindwaveTimerMills = 100.0f/60.0f;
     const float prepareTimerDelay = 2000.0f;
+    const float smallCarPrepareTimerMills = 4500.0f;
 
     const float carInitialPosition = 0.0f;
     int carMiddleThreshold = -850;
@@ -141,6 +144,9 @@ private:
     QTimer* mindwaveTimer = nullptr;
     QTimer* readTaskTimer = nullptr;
     QTimer* smallCarTimer = nullptr;
+    QTimer* smallCarPrepareTimer = nullptr;
+
+
 
     QSharedPointer<MindwaveComponentBase> mindwaveComponent;
     QSharedPointer<ServerComponent> serverComponent;
@@ -170,7 +176,6 @@ private:
     void connectComponents();
     void disconnectComponents();
 
-    void startSmallCarAnimation();
 
     QPointF curPoint = QPointF(0.0f, 0.0f);
     QPointF startPoint, endPoint, position;
@@ -200,6 +205,8 @@ signals:
     void circleOpacityChanged();
     void showBrb();
 
+    void showMindwaveControls();
+
 
     void mainIconVisibilityChanged();
     void mainIconScaleChanged();
@@ -228,6 +235,9 @@ private slots:
     void onPulsarAnimationCompleted();
     void onCircleOpacityCompleted();
     void onSmallCarUpdate();
+
+    void onStartSmallCarAnimation();
+
 };
 
 
