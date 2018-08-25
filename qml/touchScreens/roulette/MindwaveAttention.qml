@@ -7,7 +7,7 @@ import "../../tools"
 
 Item
 {
-    id:indicator;
+    id: indicator;
     anchors.fill: parent;
 
     property double nextAttentionValue: 0.0;
@@ -166,6 +166,7 @@ Item
         visible = true;
 
         opacity = 0;
+        opacityAnim.stop();
         opacityAnim.from = 0;
         opacityAnim.to = 1;
         opacityAnim.start();
@@ -186,12 +187,13 @@ Item
         minAttentionAnim.duration = 500;
         minAttentionAnim.start();
 
-        opacityAnim.stop();
-        opacityAnim.from = 1;
-        opacityAnim.to = 0;
-        opacityAnim.start();
-
-        console.log("hide-----------------------")
+       //if(opacity == 1)
+       {
+           opacityAnim.stop();
+           opacityAnim.from = 1;
+           opacityAnim.to = 0;
+           opacityAnim.start();
+       }
     }
 
     function drawCircle(ctx, radius, lineWidth, color, percent)

@@ -267,8 +267,8 @@ void RouletteModule::start()
     carInAnimation->start();
 
     //test
-   // emit gameCategoryUpdate(0);
-  //  mindwaveTimer->start(mindwaveTimerMills);
+    // emit gameCategoryUpdate(0);
+    //  mindwaveTimer->start(mindwaveTimerMills);
     //
 }
 
@@ -339,7 +339,7 @@ void RouletteModule::startRoll()
         categoryIndex = 0;
     }
 
-  // categoryIndex = 2;
+    // categoryIndex = 2;
 
     choosenCategory = categories[categoryIndex];
 
@@ -348,7 +348,7 @@ void RouletteModule::startRoll()
     qDebug()<<"choosenCategory: "<<choosenCategory;
 
     //choosenCategory = MathTools::randomInRange(0, 2);
-   // choosenCategory = MathTools::clamp(choosenCategory, 0, 2);
+    // choosenCategory = MathTools::clamp(choosenCategory, 0, 2);
     float degrees = 360;
 
     QString iconPath = "";
@@ -379,7 +379,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-   // onUserStartedGame();
+    //onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()
@@ -448,45 +448,44 @@ void RouletteModule::onCircleFinalYAnimationCompleted()
 void RouletteModule::onPulsarAnimationCompleted()
 {
     emit endCarMasking();
-
-    helpTextAnimation->setStartValue(1);
-    helpTextAnimation->setEndValue(0);
-    helpTextAnimation->start();
-
     circleOpacityAnimation->start();
 }
 
 void RouletteModule::onCircleOpacityCompleted()
 {
     emit showMindwaveControls();
-   // mindwaveTimer->start(mindwaveTimerMills);
+    // mindwaveTimer->start(mindwaveTimerMills);
 }
 
 void RouletteModule::onMindwaveUpdate()
 {
-//    if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
-//    {
-//        if(_carY > carTopThreshold - _carHeight * 0.5)
-//        {
-//            setCarY(_carY + carDecriment);
-//        }
-//        else if(_carY <= carTopThreshold)
-//        {
-//            mindwaveTimer->stop();
-//            //startSmallCarAnimation();
-//        }
-//    }
+    //    if(mindwaveComponent->attention() > mindwaveAttentionThreshold)
+    //    {
+    //        if(_carY > carTopThreshold - _carHeight * 0.5)
+    //        {
+    //            setCarY(_carY + carDecriment);
+    //        }
+    //        else if(_carY <= carTopThreshold)
+    //        {
+    //            mindwaveTimer->stop();
+    //            //startSmallCarAnimation();
+    //        }
+    //    }
 }
 
 void RouletteModule::finalizeCarAnimation()
 {
     qDebug()<<"finalize car animation";
 
+    helpTextAnimation->setStartValue(1);
+    helpTextAnimation->setEndValue(0);
+    helpTextAnimation->start();
+
     carYAnimation4->setStartValue(_carY);
     carYAnimation4->setEndValue(-1920 - _carHeight);
     carYAnimation4->start();
 
-     smallCarPrepareTimer->start(smallCarPrepareTimerMills);
+    smallCarPrepareTimer->start(smallCarPrepareTimerMills);
 
     //startSmallCarAnimation();
 }
@@ -520,7 +519,7 @@ void RouletteModule::onSmallCarUpdate()
     }
     else
     {
-       // setCarY(_carY + carDecriment);
+        // setCarY(_carY + carDecriment);
 
         position.setX(position.x() + velocity);
         position.setY(position.y() + velocity);

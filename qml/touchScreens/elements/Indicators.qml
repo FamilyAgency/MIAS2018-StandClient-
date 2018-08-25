@@ -31,7 +31,6 @@ Item
             radius: bgCircleSize * 0.5;
             color: rfidIndicator.color;
             opacity: 0.6;
-            visible: rfidIndicator.visible;
 
             Rectangle
             {
@@ -56,7 +55,6 @@ Item
             radius: bgCircleSize * 0.5;
             color: mindwaveIndicator.color;
             opacity: 0.6;
-            visible: mindwaveIndicator.visible;
 
             Rectangle
             {
@@ -80,6 +78,11 @@ Item
         onCardReaderEnabled:
         {
             rfidIndicator.color = enabled ? goodColor : badColor;
+
+            if(AppState.Intro === appController.getAppState())
+            {
+                checkRFID();
+            }
         }
     }
 
@@ -96,6 +99,7 @@ Item
     Component.onCompleted:
     {
         deviceStateChanged(mind.getDeviceState());
+        setState(appController.getAppState());
     }
 
     Connections
@@ -109,7 +113,6 @@ Item
 
     function deviceStateChanged(state)
     {
-        // console.log("device state", state);
         switch(state)
         {
         case DeviceState.Scanning:
@@ -128,51 +131,67 @@ Item
             mindwaveIndicator.color = badColor;
             break;
         }
+
+
+        var appState = appController.getAppState();
+        if(AppState.SuperGameResult !== appState && AppState.TestDrive !== appState)
+        {
+            checkMind();
+        }
     }
 
     function setState(appState)
     {
-//        rfidIndicator.visible = false;
+        rfidIndicator.visible = false;
+        rfidIndicatorBg.visible = false;
+        mindwaveIndicator.visible = false;
+        mindwaveIndicatorBg.visible = false;
 
-//        switch(appState)
-//        {
-//        case AppState.Intro:
-//            if(showMindwaveError() || showRfidError())
-//            {
-//                mindwaveIndicator.visible = true;
-//                rfidIndicator.visible = true;
-//            }
-//            else
-//            {
-//                mindwaveIndicator.visible = false;
-//                rfidIndicator.visible = false;
-//            }
-//            break;
+        switch(appState)
+        {
+        case AppState.Intro:
+            checkRFID();
+            checkMind();
+            show2IfOneBad();
+            break;
 
-//        case AppState.Instruction:
-//        case AppState.Roulette:
-//        case AppState.Game:
-//        case AppState.GameResult:
-//        case AppState.SuperGame:
-//            showMindwaveError();
-//            break;
+        case AppState.Instruction:
+        case AppState.Roulette:
+        case AppState.Game:
+        case AppState.GameResult:
+        case AppState.SuperGame:
+            checkMind();
+            break;
 
-//        case AppState.SuperGameResult:
-//        case AppState.TestDrive:
-//            mindwaveIndicator.visible = false;
-//            break;
-//        }
+        case AppState.SuperGameResult:
+        case AppState.TestDrive:
+            break;
+        }
     }
 
-    function showMindwaveError()
+    function checkRFID()
     {
-        mindwaveIndicator.visible = mindwaveIndicator.color != goodColor;
-        return mindwaveIndicator.visible;
+        rfidIndicator.visible =  (rfidIndicator.color == badColor);
+        rfidIndicatorBg.visible =  (rfidIndicator.color == badColor);
     }
 
-    function showRfidError()
+    function checkMind()
     {
-        rfidIndicator.visible = rfidIndicator.color != goodColor;
-        return rfidIndicator.visible;
+        mindwaveIndicator.visible =  (mindwaveIndicator.color == badColor);
+        mindwaveIndicatorBg.visible =  (mindwaveIndicator.color == badColor);
+    }
+
+    function show2IfOneBad()
+    {
+        if(mindwaveIndicator.visible)
+        {
+            rfidIndicator.visible = true;
+            rfidIndicatorBg.visible = true;
+        }
+        else if( rfidIndicator.visible)
+        {
+            mindwaveIndicator.visible = true;
+            mindwaveIndicatorBg.visible = true;
+        }
     }
 }

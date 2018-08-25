@@ -138,7 +138,7 @@ Item
     function show()
     {
         visible = true;
-        console.log(" show--------------");
+       // console.log(" show--------------");
         startBtn.enabled = true;//test
 
 

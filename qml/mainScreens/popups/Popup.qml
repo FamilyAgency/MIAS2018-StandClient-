@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.0
 
 import "../../tools"
+import "../../components"
 
 Item
 {
@@ -67,6 +68,22 @@ Item
         antialiasing: true;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
+
+//        AnimationPlayer
+//        {
+//            id: countdowAnim;
+//            currentImage: 0;
+//            endFrame: 105;
+//            startFrame: 0;
+//            Component.onCompleted:
+//            {
+//                countdowAnim.setSource("content/misc/321/", ".png");
+//                countdowAnim.setFPS(30);
+//                countdowAnim.init();
+//                countdowAnim.setRunning(false);
+//                countdowAnim.setLocation(-1077 * 0.5, -1920 * 0.5)
+//            }
+//        }
 
         Text
         {
@@ -300,6 +317,9 @@ Item
         scale = 0;
         scaleAnimator.start();
         visible = true;
+
+       // countdowAnim.currentImage = 0;
+       // countdowAnim.setRunning(true);
     }
 
     function countDownUpdate(time)

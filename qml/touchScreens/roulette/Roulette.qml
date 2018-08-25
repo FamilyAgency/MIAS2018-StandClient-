@@ -60,9 +60,9 @@ Item
         Image
         {
             id: image3;
-             rotation: -rouletteModule.rotation;
+            rotation: -rouletteModule.rotation;
             scale: rouletteModule.allIconsScale;
-            anchors.verticalCenter: parent.verticalCenter;            
+            anchors.verticalCenter: parent.verticalCenter;
             anchors.verticalCenterOffset: vertOffset;
             anchors.right: parent.right;
             anchors.rightMargin: -offset;
@@ -113,7 +113,7 @@ Item
         anchors.top: roullete.top;
         anchors.topMargin: -offset + rouletteModule.mainIconY;
         smooth: true;
-       // source: standData.getStandImage("task1/icon.png");
+        // source: standData.getStandImage("task1/icon.png");
     }
 
     MindwaveAttention
@@ -124,13 +124,15 @@ Item
 
         onMindwaveReady:
         {
+
+            console.log("-----------------------onMindwaveReady-----------------------")
             rouletteModule.finalizeCarAnimation();
             mindwaveAttention.hide();
         }
 
         Component.onCompleted:
         {
-            mindwaveAttention.setLocation(0, 60);
+            mindwaveAttention.setLocation(0.0, 60.0);
         }
     }
 
@@ -142,15 +144,16 @@ Item
     function hide()
     {
         mindwaveAttention.visible = false;
-        mindwaveAttention.hide();
+       // mindwaveAttention.hide();
     }
 
     Connections
     {
         target: rouletteModule;
+
         onUpdateChoosenCategoryImagePath:
         {
-            choosen.source = standData.getStandImage(path);            
+            choosen.source = standData.getStandImage(path);
         }
 
         onShowMindwaveControls:

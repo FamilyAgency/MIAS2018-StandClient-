@@ -318,24 +318,24 @@ VelocityCalculator GameUserData::getStageDifficult(int id)
     switch(id)
     {
     case 1:
-        return VelocityCalculator(0.3, 1.0, 40);
+        return VelocityCalculator(1.3, 2.0, 40);
 
     case 2:
-        return VelocityCalculator(0.3, 0.7, 50);
+        return VelocityCalculator(1.3, 2.7, 50);
 
     case 3:
-        return VelocityCalculator(0.1, 0.6, 55);
+        return VelocityCalculator(1.1, 2.6, 55);
 
     case 4:
-        return VelocityCalculator(0.4, 1.1, 50);
+        return VelocityCalculator(1.4, 2.1, 50);
     }
 
-    return VelocityCalculator(1, 3, 40);
+    return VelocityCalculator(2, 3, 40);
 }
 
 VelocityCalculator GameUserData::getSuperGameDifficult()
 {
-    return VelocityCalculator(0.4, 1.1, 50);
+    return VelocityCalculator(1.4, 2.1, 50);
 }
 
 QVariantList GameUserData::getFullGamePath() const
