@@ -113,7 +113,6 @@ Item
         anchors.top: roullete.top;
         anchors.topMargin: -offset + rouletteModule.mainIconY;
         smooth: true;
-        // source: standData.getStandImage("task1/icon.png");
     }
 
     MindwaveAttention
@@ -121,14 +120,6 @@ Item
         y: 100;
         id: mindwaveAttention;
         visible: false;
-
-        onMindwaveReady:
-        {
-
-            console.log("-----------------------onMindwaveReady-----------------------")
-            rouletteModule.finalizeCarAnimation();
-            mindwaveAttention.hide();
-        }
 
         Component.onCompleted:
         {
@@ -138,13 +129,12 @@ Item
 
     function show()
     {
-
+        mindwaveAttention.visible = true;
     }
 
     function hide()
     {
         mindwaveAttention.visible = false;
-       // mindwaveAttention.hide();
     }
 
     Connections
@@ -154,11 +144,6 @@ Item
         onUpdateChoosenCategoryImagePath:
         {
             choosen.source = standData.getStandImage(path);
-        }
-
-        onShowMindwaveControls:
-        {
-            mindwaveAttention.show();
         }
     }
 }

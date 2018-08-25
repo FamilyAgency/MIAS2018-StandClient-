@@ -10,9 +10,15 @@ void OneStageData::setPath(const QVector<QPointF>& value)
     path = value;
 }
 
-void OneStageData::setDifficult(const VelocityCalculator& value)
+void OneStageData::setComplexity(const OneGameComplexityConfig& value)
 {
-    difficult = value;
+    difficult.setLimits(value.velocityMin,
+                        value.velocityMax,
+                        value.attentionMin,
+                        value.attentionMax,
+                        value.velocityBackMin,
+                        value.velocityBackMax,
+                        value.backMove);
 }
 
 QVector<QPointF> OneStageData::getPath() const

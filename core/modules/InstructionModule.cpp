@@ -88,15 +88,15 @@ InstructionModule::~InstructionModule()
     }
 }
 
-void InstructionModule::setConfig(ConfigPtr config)
-{
-
-}
-
 void InstructionModule::setQmlContext(QQmlContext* qmlContext)
 {
     BaseModule::setQmlContext(qmlContext);
     qmlContext->setContextProperty("instructionModule", this);
+}
+
+void InstructionModule::setGameComplexity(QSharedPointer<GameComplexityData> value)
+{
+    gameComplexityData = value;
 }
 
 void InstructionModule::start()
@@ -107,6 +107,8 @@ void InstructionModule::start()
     setOpacity1(0.0f);
     setOpacity2(0.0f);
 
+    mindwaveAttentionThreshold = gameComplexityData->instruction;
+    qDebug()<<"gameComplexityData->instruction "<<mindwaveAttentionThreshold;
     delayReadTimer->start(delayTimerMills);
 }
 

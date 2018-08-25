@@ -82,6 +82,7 @@ Item
             if(AppState.Intro === appController.getAppState())
             {
                 checkRFID();
+                show2IfOneBad();
             }
         }
     }

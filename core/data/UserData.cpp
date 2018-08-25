@@ -143,13 +143,18 @@ GameUserData UserData::gameUserData() const
     return _gameUserData;
 }
 
+void UserData::setGameComplexity(QSharedPointer<GameComplexityData> value)
+{
+    gameComplexityData = value;
+}
+
 void UserData::setGameCategory(int id)
 {
     qDebug()<<"setGameCategory  "<< id;
     StandOneGameConfig choosenGame = _gameConfig.games[id];
-    _gameUserData.setupConfigGameData(choosenGame);
+    _gameUserData.setupConfigGameData(choosenGame, gameComplexityData->gameComplexities);
     _gameUserData.setCurrentStageId(1);
-    _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
+    _gameUserData.setupConfigSuperGameData(_gameConfig.superGame, gameComplexityData->superGameComplexity);
     emit gameUserDataChanged();
 }
 
@@ -198,8 +203,7 @@ bool UserData::hasStages() const
 void UserData::setConfig(ConfigPtr value)
 {
     setGameConfig(*value->standGamesConfig);
-
-    _gameUserData.setupConfigSuperGameData(_gameConfig.superGame);
+   // _gameUserData.setupConfigSuperGameData(_gameConfig.superGame, complexityConfig);
 }
 
 SuperGameData UserData::getSuperGameData() const
@@ -263,15 +267,15 @@ GameUserData::GameUserData()
     stageTimes.push_back(0.0f);
 }
 
-void GameUserData::setupConfigSuperGameData(const SuperGameConfig& superGameConfig)
+void GameUserData::setupConfigSuperGameData(const SuperGameConfig& superGameConfig, const OneGameComplexityConfig& complexity)
 {
-    superGame.setDifficult(getSuperGameDifficult());
+    superGame.setComplexity(complexity);
     superGame.setPath(superGameConfig.path);
     superGame.setComplete(false);
     superGame.setMaxTime(superGameConfig.time);
 }
 
-void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
+void GameUserData::setupConfigGameData(const StandOneGameConfig& game, const QVector<OneGameComplexityConfig>& complexities)
 {
     stages.clear();
     stageTimes.clear();
@@ -300,7 +304,7 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
 
         targetPoints.append(path[path.size() - 1]);
 
-        oneGameData.setDifficult(getStageDifficult(i + 1));
+        oneGameData.setComplexity(complexities[i]);
         stages.push_back(oneGameData);
         stageTimes.push_back(0.0f);
     }
@@ -311,31 +315,6 @@ void GameUserData::setupConfigGameData(const StandOneGameConfig& game)
     finalPath = game.finalPath;
 
     _hasGames = true;
-}
-
-VelocityCalculator GameUserData::getStageDifficult(int id)
-{
-    switch(id)
-    {
-    case 1:
-        return VelocityCalculator(1.3, 2.0, 40);
-
-    case 2:
-        return VelocityCalculator(1.3, 2.7, 50);
-
-    case 3:
-        return VelocityCalculator(1.1, 2.6, 55);
-
-    case 4:
-        return VelocityCalculator(1.4, 2.1, 50);
-    }
-
-    return VelocityCalculator(2, 3, 40);
-}
-
-VelocityCalculator GameUserData::getSuperGameDifficult()
-{
-    return VelocityCalculator(1.4, 2.1, 50);
 }
 
 QVariantList GameUserData::getFullGamePath() const

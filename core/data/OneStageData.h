@@ -14,7 +14,8 @@ public:
     explicit OneStageData();
 
     void setPath(const QVector<QPointF>& path);
-    void setDifficult(const VelocityCalculator& value);
+ //   void setDifficult(const VelocityCalculator& value);
+    void setComplexity(const OneGameComplexityConfig& value);
 
     void clearUserData();
 

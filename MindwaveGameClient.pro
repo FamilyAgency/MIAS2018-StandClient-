@@ -64,7 +64,8 @@ SOURCES += main.cpp \
     core/data/SuperGameData.cpp \
     tools/AnimationManager.cpp \
     core/data/AdvantagesData.cpp \
-    components/mindwave/serial/SerialThread.cpp
+    components/mindwave/serial/SerialThread.cpp \
+    core/data/GameComplexityData.cpp
 
 
 RESOURCES += qml.qrc
@@ -165,7 +166,8 @@ HEADERS += \
     core/data/SuperGameData.h \
     tools/AnimationManager.h \
     core/data/AdvantagesData.h \
-    components/mindwave/serial/SerialThread.h
+    components/mindwave/serial/SerialThread.h \
+    core/data/GameComplexityData.h
 
 DISTFILES += \
     modules/components/components.pri \

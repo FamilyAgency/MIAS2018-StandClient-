@@ -37,6 +37,7 @@ void AppController::createEngine()
     dilerData.reset(new DilerData());
     gameSession.reset(new GameSession());
     advantagesData.reset(new AdvantagesData());
+    gameComplexityData.reset(new GameComplexityData());
 
     //////////////////// components //////////////////////
 
@@ -71,13 +72,15 @@ void AppController::createEngine()
 
     instructionModule.reset(new InstructionModule());
     instructionModule->setMindwave(mindWaveComponent);
+    instructionModule->setGameComplexity(gameComplexityData);
     modules.append(instructionModule);
     connect(instructionModule.data(), SIGNAL(instructionComplete()), this, SLOT(onInstructionComplete()));
     
 
     rouletteModule.reset(new RouletteModule());
     rouletteModule->setMindwave(mindWaveComponent);
-    rouletteModule->setServerComponent(serverComponent);
+    rouletteModule->setServerComponent(serverComponent);    
+    rouletteModule->setGameComplexity(gameComplexityData);
     rouletteModule->setUser(userData);
 
     connect(rouletteModule.data(), SIGNAL(gameCategoryUpdate(int)), this, SLOT(onGameCategoryUpdate(int)));
@@ -90,7 +93,7 @@ void AppController::createEngine()
     gameModule->setGameSession(gameSession);
     gameModule->setUser(userData);
     gameModule->setServerComponent(serverComponent);
-    gameModule->setAdvantagesData(advantagesData);
+    gameModule->setAdvantagesData(advantagesData);    
     connect(gameModule.data(), SIGNAL(allStagesComleteEvent()), this, SLOT(onAllTaskComleteEvent()));
     modules.append(gameModule);
 
@@ -120,6 +123,10 @@ void AppController::createEngine()
     modules.append(testDriveModule);
 
     animationManager.reset(new AnimationManager());
+
+    userData->setGameComplexity(gameComplexityData);
+    //gameComplexityData->setServerComponent(serverComponent);
+
 }
 
 AppController::~AppController()
@@ -198,7 +205,8 @@ void AppController::onConfigLoaded(ConfigPtr config)
     standData->setConfig(config);
     userData->setConfig(config);
     advantagesData->setConfig(config);
-    
+    gameComplexityData->setConfig(config);
+
     animationManager->setConfig(config);
     
     start();
@@ -340,6 +348,11 @@ void AppController::setAppState(AppState value)
 
     QString message = "___App state changed : " + currentModule->getName();
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
+
+    if(value == AppState::Intro)
+    {
+        gameComplexityData->update();
+    }
 }
 
 AppController::AppState AppController::getAppState() const

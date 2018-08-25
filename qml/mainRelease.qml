@@ -7,12 +7,15 @@ import com.app 1.0
 
 ApplicationWindow
 {    
-    title: qsTr("App");
-    x: 0;
-    y: 0;
-    width: 100;
-    height: 100;
+    title: "Touch Window";
+    x: standData.mainConfig.touchScreen.x;
+    y: standData.mainConfig.touchScreen.y;
+    width: standData.mainConfig.touchScreen.width;
+    height: standData.mainConfig.touchScreen.height;
     visible: true;
+    flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
+   // color: "#101010";
+    color: "#000000";
 
     id: core;
 

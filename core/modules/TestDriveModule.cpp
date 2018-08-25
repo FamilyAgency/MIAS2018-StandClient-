@@ -46,7 +46,6 @@ void TestDriveModule::start()
     {
         serverComponent->getDealersRequest();
     }
-
 }
 
 void TestDriveModule::stop()
@@ -71,7 +70,7 @@ void TestDriveModule::onTestDriveRequestSuccess()
 
 void TestDriveModule::makeTestDrive(int dealerId)
 {
-    serverComponent->testDriveRequest(1500/*currentUser->baseUserData().id*/, dealerId);
+    serverComponent->testDriveRequest(currentUser->baseUserData().id, dealerId);
 }
 
 QString TestDriveModule::getName() const

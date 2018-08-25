@@ -37,6 +37,7 @@ void ConfigParser::parse(const QString& configData)
         parseStandGamesConfig(config->standGamesConfig, jsonObj["games"].toArray());
         parseStandAnimConfig(config->standAnimConfig, jsonObj["animations"].toArray());
         parseAdvantagesConfig(config->advantagesConfig, jsonObj["advantages"].toArray());
+        parseComplexityConfig(config->complexityConfig, jsonObj["complexity"].toObject());
 
 
         if(!wasParsingError)
@@ -274,4 +275,38 @@ void ConfigParser::parseAdvantagesConfig(QSharedPointer<AdvantagesConfig> advant
         advantagesConfig->advantages.push_back(oneAdvantage);
     }
 }
+
+void ConfigParser::parseComplexityConfig(QSharedPointer<ComplexityConfig> complexityConfig, const QJsonObject& jsonObject)
+{
+    complexityConfig->instruction = jsonObject["instruction"].toInt();
+    complexityConfig->roulette = jsonObject["roulette"].toInt();
+
+    auto gamesComplArray = jsonObject["game"].toArray();
+
+    for(auto compl: gamesComplArray)
+    {
+        OneGameComplexityConfig complConfig;
+        auto complObj = compl.toObject();
+        complConfig.attentionMin = complObj["attentionMin"].toInt();
+        complConfig.attentionMax = complObj["attentionMax"].toInt();
+
+        complConfig.velocityMin = complObj["velocityMin"].toDouble();
+        complConfig.velocityMax = complObj["velocityMax"].toDouble();
+        complConfig.backMove = complObj["backMove"].toBool();
+
+        complConfig.velocityBackMin = complObj["velocityBackMin"].toDouble();
+        complConfig.velocityBackMax = complObj["velocityBackMax"].toDouble();
+
+        complexityConfig->gameComplexities.push_back(complConfig);
+    }
+}
+
+
+
+
+
+
+
+
+
 

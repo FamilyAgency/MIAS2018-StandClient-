@@ -10,9 +10,16 @@ void SuperGameData::setPath(const QVector<QPointF>& value)
     path = value;
 }
 
-void SuperGameData::setDifficult(const VelocityCalculator& value)
+
+void SuperGameData::setComplexity(const OneGameComplexityConfig& value)
 {
-    difficult = value;
+    difficult.setLimits(value.velocityMin,
+                        value.velocityMax,
+                        value.attentionMin,
+                        value.attentionMax,
+                        value.velocityBackMin,
+                        value.velocityBackMax,
+                        value.backMove);
 }
 
 QVector<QPointF> SuperGameData::getPath() const

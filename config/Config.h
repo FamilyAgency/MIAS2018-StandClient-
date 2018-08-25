@@ -271,6 +271,25 @@ struct AdvantagesConfig
      QVector<OneAdvantageConfig> advantages;
 };
 
+struct OneGameComplexityConfig
+{
+    int attentionMin = 40;
+    int attentionMax = 80;
+    float velocityMin = 0.3f;
+    float velocityMax = 0.9f;
+
+    bool backMove = true;
+    float velocityBackMin = -2.0f;
+    float velocityBackMax = -1.0f;
+};
+
+struct ComplexityConfig
+{
+     QVector<OneGameComplexityConfig> gameComplexities;
+     int instruction;
+     int roulette;
+};
+
 class Config
 {
 public:
@@ -288,6 +307,8 @@ public:
     QSharedPointer<StandGamesConfig> standGamesConfig;
     QSharedPointer<StandAnimConfig> standAnimConfig;
     QSharedPointer<AdvantagesConfig> advantagesConfig;
+    QSharedPointer<ComplexityConfig> complexityConfig;
+
 
     QString getRawData() const;
     void setRawData(const QString& value);

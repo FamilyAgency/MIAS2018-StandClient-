@@ -14,7 +14,8 @@ public:
     explicit SuperGameData();
 
     void setPath(const QVector<QPointF>& path);
-    void setDifficult(const VelocityCalculator& value);
+    void setComplexity(const OneGameComplexityConfig& value);
+
     void clearUserData();
 
     QVector<QPointF> getPath() const;

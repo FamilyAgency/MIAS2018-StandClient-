@@ -12,6 +12,7 @@ Config::Config()
     standGamesConfig.reset(new StandGamesConfig);
     standAnimConfig.reset(new StandAnimConfig);
     advantagesConfig.reset(new AdvantagesConfig);
+    complexityConfig.reset(new ComplexityConfig);
 }
 
 Config::~Config()

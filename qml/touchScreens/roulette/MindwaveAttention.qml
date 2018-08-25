@@ -9,6 +9,7 @@ Item
 {
     id: indicator;
     anchors.fill: parent;
+    opacity: rouletteModule.mindwaveCtrlOpacity;
 
     property double nextAttentionValue: 0.0;
 
@@ -42,7 +43,6 @@ Item
 
     property bool notifyOnce: false;
 
-    signal mindwaveReady;
 
     onPercentInnerChanged:
     {
@@ -51,7 +51,7 @@ Item
             if(!notifyOnce)
             {
                 notifyOnce = true;
-                indicator.mindwaveReady();
+                rouletteModule.finalizeCarAnimation();
             }
         }
     }
@@ -135,21 +135,13 @@ Item
         }
     }
 
-    OpacityAnimator on opacity
+    Connections
     {
-        id: opacityAnim;
-        from: 0;
-        to: 1;
-        duration: 1000;
-        running: false;
-        easing.type: "InOutCubic";
+        target: rouletteModule;
 
-        onStopped:
+        onShowMindwaveControls:
         {
-            if(opacity == 0)
-            {
-                visible = false;
-            }
+            show();
         }
     }
 
@@ -163,13 +155,7 @@ Item
     {
         cavasUpdater.running = true;
         starting = true;
-        visible = true;
-
-        opacity = 0;
-        opacityAnim.stop();
-        opacityAnim.from = 0;
-        opacityAnim.to = 1;
-        opacityAnim.start();
+        visible = true;  
     }
 
     function hide()
@@ -186,14 +172,6 @@ Item
         minAttentionAnim.to = 0;
         minAttentionAnim.duration = 500;
         minAttentionAnim.start();
-
-       //if(opacity == 1)
-       {
-           opacityAnim.stop();
-           opacityAnim.from = 1;
-           opacityAnim.to = 0;
-           opacityAnim.start();
-       }
     }
 
     function drawCircle(ctx, radius, lineWidth, color, percent)

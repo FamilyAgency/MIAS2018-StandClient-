@@ -164,14 +164,20 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     carYAnimation4->setEasingCurve(QEasingCurve::Linear);
     animations.push_back(carYAnimation4);
 
-
+    mindwaveCtrlOpacityAnimation = new QPropertyAnimation(this);
+    mindwaveCtrlOpacityAnimation->setTargetObject(this);
+    mindwaveCtrlOpacityAnimation->setPropertyName("mindwaveCtrlOpacity");
+    mindwaveCtrlOpacityAnimation->setDuration(1000);
+    mindwaveCtrlOpacityAnimation->setEasingCurve(QEasingCurve::Linear);
+    mindwaveCtrlOpacityAnimation->setStartValue(0);
+    mindwaveCtrlOpacityAnimation->setEndValue(1);
+    animations.push_back(mindwaveCtrlOpacityAnimation);
 
     smallCarTimer = new QTimer(this);
     connect(smallCarTimer, SIGNAL(timeout()), this, SLOT(onSmallCarUpdate()));
 
     smallCarPrepareTimer = new QTimer(this);
     connect(smallCarPrepareTimer, SIGNAL(timeout()), this, SLOT(onStartSmallCarAnimation()));
-
 
 }
 
@@ -245,6 +251,11 @@ void RouletteModule::setUser(QSharedPointer<UserData> value)
     currentUser = value;
 }
 
+void RouletteModule::setGameComplexity(QSharedPointer<GameComplexityData> value)
+{
+    gameComplexityData = value;
+}
+
 void RouletteModule::setConfig(ConfigPtr config)
 {
     carMiddleThreshold = - config->mainConfig->touchScreen.height() / 2. - _carHeight * 0.5f - 60.0f;
@@ -255,11 +266,14 @@ void RouletteModule::setConfig(ConfigPtr config)
     carYAnimation2->setEndValue(carMiddleThreshold + 500);
     carYAnimation3->setStartValue(carMiddleThreshold + 500);
     carYAnimation3->setEndValue(carMiddleThreshold + 120);
+    BaseModule::setConfig(config);
 }
 
 void RouletteModule::start()
 {
     qDebug()<<"======================= RouletteModule START =======================";
+
+    mindwaveAttentionThreshold = gameComplexityData->roulette;
 
     connectComponents();
     initParams();
@@ -282,6 +296,7 @@ void RouletteModule::initParams()
     setCircleOpacity(1.0);
     setCircleY(circleYDefault);
     setTaskOpacity(0.0);
+    setMindwaveCtrlOpacity(0.0);
 
     setHelpTextOpacity(0.0f);
 
@@ -293,7 +308,6 @@ void RouletteModule::initParams()
     setMainIconScale(1.0f);
 
     setAllIconsScale(0.0f);
-
 
     mainTitleOpacityAnimation->setStartValue(0);
     mainTitleOpacityAnimation->setEndValue(1);
@@ -379,7 +393,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-    //onUserStartedGame();
+   // onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()
@@ -453,6 +467,9 @@ void RouletteModule::onPulsarAnimationCompleted()
 
 void RouletteModule::onCircleOpacityCompleted()
 {
+    mindwaveCtrlOpacityAnimation->setStartValue(0);
+    mindwaveCtrlOpacityAnimation->setEndValue(1);
+    mindwaveCtrlOpacityAnimation->start();
     emit showMindwaveControls();
     // mindwaveTimer->start(mindwaveTimerMills);
 }
@@ -486,6 +503,10 @@ void RouletteModule::finalizeCarAnimation()
     carYAnimation4->start();
 
     smallCarPrepareTimer->start(smallCarPrepareTimerMills);
+
+   // mindwaveCtrlOpacityAnimation->setStartValue(0);
+    mindwaveCtrlOpacityAnimation->setEndValue(0);
+    mindwaveCtrlOpacityAnimation->start();
 
     //startSmallCarAnimation();
 }
@@ -630,7 +651,6 @@ void RouletteModule::setHelpTextOpacity(float value)
     emit helpTextOpacityChanged();
 }
 
-
 bool RouletteModule::particlesVisibility() const
 {
     return _particlesVisibility;
@@ -675,10 +695,20 @@ void RouletteModule::setMainIconVisibility(bool value)
     emit mainIconVisibilityChanged();
 }
 
-
 float RouletteModule::mainIconScale() const
 {
     return _mainIconScale;
+}
+
+void RouletteModule::setAllIconsScale(float value)
+{
+    _allIconsScale = value;
+    emit allIconsScaleChanged();
+}
+
+float RouletteModule::allIconsScale() const
+{
+    return _allIconsScale;
 }
 
 void RouletteModule::setMainIconScale(float value)
@@ -710,15 +740,15 @@ void RouletteModule::setMainIconY(float value)
 }
 
 
-float RouletteModule::allIconsScale() const
+float RouletteModule::mindwaveCtrlOpacity() const
 {
-    return _allIconsScale;
+    return _mindwaveCtrlOpacity;
 }
 
-void RouletteModule::setAllIconsScale(float value)
+void RouletteModule::setMindwaveCtrlOpacity(float value)
 {
-    _allIconsScale = value;
-    emit allIconsScaleChanged();
+    _mindwaveCtrlOpacity = value;
+    emit mindwaveCtrlOpacityChanged();
 }
 
 QString RouletteModule::getName() const

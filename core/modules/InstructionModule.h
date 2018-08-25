@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "BaseModule.h"
 #include "components/mindwave/MindwaveComponentBase.h"
+#include "core/data/GameComplexityData.h"
 
 class InstructionModule : public BaseModule
 {
@@ -18,11 +19,11 @@ public:
     virtual ~InstructionModule();
 
     virtual void setQmlContext(QQmlContext* qmlContext) override;
-    virtual void setConfig(ConfigPtr config) override;
     virtual void start() override;
     virtual void stop() override;
 
     void setMindwave(QSharedPointer<MindwaveComponentBase> value);
+    void setGameComplexity(QSharedPointer<GameComplexityData> value);
 
 
     virtual QString getName() const override;
@@ -52,6 +53,9 @@ private:
     QPropertyAnimation* opacity1Animator = nullptr;
     QPropertyAnimation* opacity2Animator = nullptr;
     QList<QPropertyAnimation*> animations;
+
+    QSharedPointer<GameComplexityData> gameComplexityData;
+
 
     float _opacity1 = 0;
     float _opacity2 = 0;

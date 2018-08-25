@@ -69,6 +69,11 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
 
+        CountdownAnim
+        {
+            id:countdown;
+        }
+
 //        AnimationPlayer
 //        {
 //            id: countdowAnim;
@@ -85,18 +90,18 @@ Item
 //            }
 //        }
 
-        Text
-        {
-            id: countdownText;
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.verticalCenter: parent.verticalCenter;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 300 * consts.designScale;
-            color: "#ffffff";
-            textFormat: Text.StyledText;
-            horizontalAlignment :Text.AlignHCenter;
-            text: "3";
-        }
+//        Text
+//        {
+//            id: countdownText;
+//            anchors.horizontalCenter: parent.horizontalCenter;
+//            anchors.verticalCenter: parent.verticalCenter;
+//            font.family: font.hyundaiSansHeadMedium;
+//            font.pixelSize: 300 * consts.designScale;
+//            color: "#ffffff";
+//            textFormat: Text.StyledText;
+//            horizontalAlignment :Text.AlignHCenter;
+//            text: "3";
+//        }
     }
 
     Item
@@ -311,6 +316,7 @@ Item
 
     function openCountDown()
     {
+        countdown.show();
         preTask.visible = true;
         postTask.visible = false;
         allTask.visible = false;
@@ -324,13 +330,13 @@ Item
 
     function countDownUpdate(time)
     {
-        countdownText.font.pixelSize = 350 * consts.designScale;
-        countdownText.text = time.toFixed(0);
+//        countdownText.font.pixelSize = 350 * consts.designScale;
+//        countdownText.text = time.toFixed(0);
 
-        if( countdownText.text == "0")
-        {
-            countdownText.font.pixelSize = 120 * consts.designScale;
-            countdownText.text = "ПОЕХАЛИ";
-        }
+//        if( countdownText.text == "0")
+//        {
+//            countdownText.font.pixelSize = 120 * consts.designScale;
+//            countdownText.text = "ПОЕХАЛИ";
+//        }
     }
 }

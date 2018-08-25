@@ -4,10 +4,12 @@
 #include <QObject>
 #include <QTimer>
 #include <QVector2D>
+#include <QSharedPointer>
 
 #include "BaseModule.h"
 #include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
+#include "core/data/GameComplexityData.h"
 
 class RouletteModule : public BaseModule
 {
@@ -31,6 +33,10 @@ class RouletteModule : public BaseModule
     Q_PROPERTY(float mainIconY READ mainIconY WRITE setMainIconY NOTIFY mainIconYChanged)
 
     Q_PROPERTY(float allIconsScale READ allIconsScale WRITE setAllIconsScale NOTIFY allIconsScaleChanged)
+
+
+    Q_PROPERTY(float mindwaveCtrlOpacity READ mindwaveCtrlOpacity WRITE setMindwaveCtrlOpacity NOTIFY mindwaveCtrlOpacityChanged)
+
 
 public:
     explicit RouletteModule(QObject *parent = nullptr);
@@ -101,8 +107,13 @@ public:
     float allIconsScale() const;
     void setAllIconsScale(float value);
 
-    Q_INVOKABLE QPointF getCurPoint() const;
+    float mindwaveCtrlOpacity() const;
+    void setMindwaveCtrlOpacity(float value);
+
+    Q_INVOKABLE QPointF getCurPoint() const;    
     Q_INVOKABLE float getForwardVectorRotation() const;
+    void setGameComplexity(QSharedPointer<GameComplexityData> value);
+
 
 private:
     QPropertyAnimation* mainTitleOpacityAnimation = nullptr;
@@ -124,8 +135,12 @@ private:
     QPropertyAnimation* mainIconScaleAnimation = nullptr;
     QPropertyAnimation* mainIconYAnimation = nullptr;
     QPropertyAnimation* allIconsScaleAnimation = nullptr;
+    QPropertyAnimation* mindwaveCtrlOpacityAnimation = nullptr;
+
 
     QList<QPropertyAnimation*> animations;
+    QSharedPointer<GameComplexityData> gameComplexityData;
+
 
     const float mindwaveTimerMills = 100.0f/60.0f;
     const float prepareTimerDelay = 2000.0f;
@@ -136,7 +151,8 @@ private:
     int carTopThreshold = -1200;
     const float carDecriment = -1.0f;
     const float circleYDefault = 418;
-    const int mindwaveAttentionThreshold = 40;
+
+    int mindwaveAttentionThreshold = 40;
 
     const int smallCarTimerMills = 10;
 
@@ -171,6 +187,8 @@ private:
     float _mainIconOpacity = 1;
     float _mainIconY = 1;
     float _allIconsScale = 1;
+
+    float _mindwaveCtrlOpacity = 0;
 
     void initParams();
     void connectComponents();
@@ -220,6 +238,8 @@ signals:
 
     void endCarMasking();
     void startCarMasking();
+
+    void mindwaveCtrlOpacityChanged();
 
 private slots:
     void onMindwaveUpdate();

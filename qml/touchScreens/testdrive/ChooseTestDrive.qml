@@ -273,7 +273,6 @@ Item
             var cityIndex = citiesBtn.choosenIndex;
             var dealerIndex = dealerBtn.choosenIndex;
             var dealerId = allDealersData[cityIndex].dealers[dealerIndex].id;
-            console.log("send test drive ", dealerId)
             testDriveModule.makeTestDrive(dealerId);
         }
     }

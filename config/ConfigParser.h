@@ -33,6 +33,7 @@ private:
     void parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray);
     void parseStandAnimConfig(QSharedPointer<StandAnimConfig> standAnimConfig, const QJsonArray& jsonArray);
     void parseAdvantagesConfig(QSharedPointer<AdvantagesConfig> advantagesConfig, const QJsonArray& jsonArray);
+    void parseComplexityConfig(QSharedPointer<ComplexityConfig> complexityConfig, const QJsonObject& jsonArray);
 
 };
 

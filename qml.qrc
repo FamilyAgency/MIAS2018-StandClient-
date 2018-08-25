@@ -95,5 +95,6 @@
         <file>resources/Glow_Car.png</file>
         <file>qml/components/AnimationPlayer.qml</file>
         <file>qml/touchScreens/roulette/MindwaveAttention.qml</file>
+        <file>qml/mainScreens/popups/CountdownAnim.qml</file>
     </qresource>
 </RCC>

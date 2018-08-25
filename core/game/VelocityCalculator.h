@@ -12,7 +12,8 @@ public:
                        float humanValueThresholdMin,
                        float humanValueThresholdMax = 100.0f,
                        float minBackVelocity = -1.0f,
-                       float maxBackVelocity = -.5f);
+                       float maxBackVelocity = -.5f,
+                       bool backMove = true);
 
     float calculate(int humanValue);
 
@@ -21,7 +22,8 @@ public:
                     float humanValueThresholdMin,
                     float humanValueThresholdMax = 100.0f,
                     float minBackVelocity = -1.0f,
-                    float maxBackVelocity = -.5f);
+                    float maxBackVelocity = -.5f,
+                    bool backMove = true);
 
     float getThreshold() const
     {

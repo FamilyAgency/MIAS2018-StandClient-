@@ -124,7 +124,7 @@ signals:
     void serverRequestSuccess(ResponseType responseType);
     void serverGlobalError(ServerGlobalErrorType globalErrorType);
 
-    void newUserEntered(const UserObject&);
+    void newUserEntered(const UserObject& user);
 
     void userNotFound();
     void userAlreadyExists();

@@ -176,8 +176,9 @@ Item
             road.setSuperTrackPosition(startPoint);
             road.setSuperTrackRotation(superGameModule.getForwardVectorRotation());
             road.calcSuperTrackLength(startPoint, lastPoint);
-            road.showSuperTrack();
             road.show();
+
+            road.showSuperTrack();
 
             superGameLength = vecLength(startPoint, lastPoint);
             superGameLastPoint = lastPoint;

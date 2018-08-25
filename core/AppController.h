@@ -19,6 +19,7 @@
 #include "data/UserData.h"
 #include "data/DilerData.h"
 #include "data/AdvantagesData.h"
+#include "data/GameComplexityData.h"
 
 #include "config/Config.h"
 
@@ -92,6 +93,7 @@ private:
     QSharedPointer<UserData> userData;
     QSharedPointer<DilerData> dilerData;
     QSharedPointer<AdvantagesData> advantagesData;
+    QSharedPointer<GameComplexityData> gameComplexityData;
 
 
     QSharedPointer<AnimationManager> animationManager;

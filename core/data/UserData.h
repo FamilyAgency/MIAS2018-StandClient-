@@ -4,8 +4,10 @@
 #include <QObject>
 #include <qDebug>
 #include <QQmlContext>
+#include <QSharedPointer>
 #include "core/data/OneStageData.h"
 #include "core/data/SuperGameData.h"
+#include "core/data/GameComplexityData.h"
 #include "config/Config.h"
 
 struct BaseUserData
@@ -94,8 +96,10 @@ public:
 
     GameUserData();
 
-    void setupConfigGameData(const StandOneGameConfig& game);
-    void setupConfigSuperGameData(const SuperGameConfig& superGame);
+    void setupConfigSuperGameData(const SuperGameConfig& superGameConfig, const OneGameComplexityConfig& complexity);
+    void setupConfigGameData(const StandOneGameConfig& game, const QVector<OneGameComplexityConfig>& complexities);
+
+
 
     void setCurrentStageId(int id);
 
@@ -113,9 +117,9 @@ public:
     QVariantList getFullGamePath() const;
     QVariantList getTargetPoints() const;
 
-private:
-    VelocityCalculator getStageDifficult(int id);
-    VelocityCalculator getSuperGameDifficult();
+//private:
+//    VelocityCalculator getStageDifficult(int id);
+//    VelocityCalculator getSuperGameDifficult();
 };
 Q_DECLARE_METATYPE(GameUserData)
 
@@ -195,6 +199,8 @@ public:
     QVector<QPointF> getStartPath() const;
     QVector<QPointF> getFinalPath() const;
 
+    void setGameComplexity(QSharedPointer<GameComplexityData> value);
+
 
 private:
     BaseUserData _baseUserData;
@@ -202,6 +208,8 @@ private:
     GameUserData _gameUserData;
 
     StandGamesConfig _gameConfig;
+    QSharedPointer<GameComplexityData> gameComplexityData;
+
     QQmlContext* qmlContext;
 
     bool _canPlay = false;
