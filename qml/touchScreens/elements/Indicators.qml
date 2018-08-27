@@ -178,8 +178,8 @@ Item
 
     function checkMind()
     {
-        mindwaveIndicator.visible =  (mindwaveIndicator.color == badColor);
-        mindwaveIndicatorBg.visible =  (mindwaveIndicator.color == badColor);
+        mindwaveIndicator.visible =  (mindwaveIndicator.color == badColor || mindwaveIndicator.color == middleColor);
+        mindwaveIndicatorBg.visible =  (mindwaveIndicator.color == badColor || mindwaveIndicator.color == middleColor);
     }
 
     function show2IfOneBad()
