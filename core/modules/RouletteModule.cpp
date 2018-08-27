@@ -56,7 +56,7 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     taskOpacityAnimation->setPropertyName("taskOpacity");
     taskOpacityAnimation->setStartValue(0);
     taskOpacityAnimation->setEndValue(1);
-    taskOpacityAnimation->setDuration(2000);
+    taskOpacityAnimation->setDuration(700);
     taskOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     animations.push_back(taskOpacityAnimation);
 
@@ -65,7 +65,7 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     mainIconOpacityAnimation->setPropertyName("mainIconOpacity");
     mainIconOpacityAnimation->setStartValue(0);
     mainIconOpacityAnimation->setEndValue(1);
-    mainIconOpacityAnimation->setDuration(2000);
+    mainIconOpacityAnimation->setDuration(700);
     mainIconOpacityAnimation->setEasingCurve(QEasingCurve::OutCubic);
     animations.push_back(mainIconOpacityAnimation);
 
@@ -74,7 +74,7 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     mainIconScaleAnimation->setPropertyName("mainIconScale");
     mainIconScaleAnimation->setStartValue(0);
     mainIconScaleAnimation->setEndValue(1);
-    mainIconScaleAnimation->setDuration(2000);
+    mainIconScaleAnimation->setDuration(1000);
     mainIconScaleAnimation->setEasingCurve(QEasingCurve::OutCubic);
     animations.push_back(mainIconScaleAnimation);
 
@@ -140,7 +140,7 @@ RouletteModule::RouletteModule(QObject *parent) : BaseModule(parent)
     pulsarAnimation->setTargetObject(this);
     pulsarAnimation->setPropertyName("pulsarScale");
     pulsarAnimation->setStartValue(0);
-    pulsarAnimation->setLoopCount(3);
+    pulsarAnimation->setLoopCount(1);
     pulsarAnimation->setEndValue(1);
     pulsarAnimation->setDuration(1500);
     pulsarAnimation->setEasingCurve(QEasingCurve::OutExpo);
@@ -263,9 +263,10 @@ void RouletteModule::setConfig(ConfigPtr config)
 
     carInAnimation->setEndValue(carMiddleThreshold);
     carYAnimation2->setStartValue(carMiddleThreshold);
-    carYAnimation2->setEndValue(carMiddleThreshold + 500);
-    carYAnimation3->setStartValue(carMiddleThreshold + 500);
-    carYAnimation3->setEndValue(carMiddleThreshold + 120);
+    const int shiftY = 450;
+    carYAnimation2->setEndValue(carMiddleThreshold + shiftY);
+    carYAnimation3->setStartValue(carMiddleThreshold + shiftY);
+    carYAnimation3->setEndValue(carMiddleThreshold + 110);
     BaseModule::setConfig(config);
 }
 
@@ -393,7 +394,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-   // onUserStartedGame();
+    //onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()
@@ -456,7 +457,9 @@ void RouletteModule::onCircleFinalYAnimationCompleted()
     helpTextAnimation->setStartValue(0);
     helpTextAnimation->setEndValue(1);
     helpTextAnimation->start();
-    pulsarAnimation->start();
+
+    onPulsarAnimationCompleted();
+   // pulsarAnimation->start();
 }
 
 void RouletteModule::onPulsarAnimationCompleted()
@@ -494,9 +497,9 @@ void RouletteModule::finalizeCarAnimation()
 {
     qDebug()<<"finalize car animation";
 
-    helpTextAnimation->setStartValue(1);
-    helpTextAnimation->setEndValue(0);
-    helpTextAnimation->start();
+    //helpTextAnimation->setStartValue(1);
+   // helpTextAnimation->setEndValue(0);
+   // helpTextAnimation->start();
 
     carYAnimation4->setStartValue(_carY);
     carYAnimation4->setEndValue(-1920 - _carHeight);
@@ -504,11 +507,8 @@ void RouletteModule::finalizeCarAnimation()
 
     smallCarPrepareTimer->start(smallCarPrepareTimerMills);
 
-   // mindwaveCtrlOpacityAnimation->setStartValue(0);
-    mindwaveCtrlOpacityAnimation->setEndValue(0);
-    mindwaveCtrlOpacityAnimation->start();
-
-    //startSmallCarAnimation();
+   // mindwaveCtrlOpacityAnimation->setEndValue(0);
+   // mindwaveCtrlOpacityAnimation->start();
 }
 
 void RouletteModule::onStartSmallCarAnimation()

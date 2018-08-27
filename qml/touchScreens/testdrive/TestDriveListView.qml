@@ -42,7 +42,7 @@ ListView
 			MediumText
 			{               
                 text: titleText;
-				font.pixelSize: 90;
+                font.pixelSize: 60;
 				anchors.top: parent.top;
 				anchors.topMargin: 100;
 			}

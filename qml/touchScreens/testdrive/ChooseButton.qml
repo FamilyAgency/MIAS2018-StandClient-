@@ -56,6 +56,7 @@ Button
         anchors.verticalCenter: rect.verticalCenter;
         anchors.rightMargin: 60;
         smooth:true;
+        rotation: -90;
         source: "qrc:/resources/btnarrow.png";
     }
 

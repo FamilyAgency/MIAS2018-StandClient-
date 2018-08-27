@@ -150,7 +150,6 @@ Item
     function hide()
     {
         mindwaveAttention.visible = false;
+        mindwaveAttention.hide();
     }
-
-
 }

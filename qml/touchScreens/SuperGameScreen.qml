@@ -15,19 +15,14 @@ Item
     anchors.centerIn: parent;
 
     property string superGameTitle: "СУПЕРИГРА";
-    property string descrTitleDefault: "Уложитесь в заданное<br/>время и максимально<br/>сконцетрируйтесь —<br/>от этого зависит<br/>ваша скорость!";
+    property string descrTitleDefault: "Успейте проехать маршрут<br/> за ограниченное время.<br/>  Для победы нужна<br/> максимальная  концентрация.";
+    property string buttonText: "ПОЕХАЛИ";
 
-    property string buttonText: "Я ГОТОВ!";
-
-    property real btnMarginBottom: 100 * consts.designScale;
+    property real btnMarginBottom: 100;
 
     signal animComplete();
     signal animStart();
 
-    Consts
-    {
-        id: consts;
-    }
 
     TitleBlock
     {
@@ -51,9 +46,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350 ;
+        btnHeight: 350 ;
+        btnRadius: 175 ;
 
         onClicked:
         {

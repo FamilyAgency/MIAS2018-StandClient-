@@ -11,8 +11,8 @@ Item
 {
     anchors.fill: parent;
 
-    property string mainTitleDefault: "SANTA FE.<br/>Управляй<br/>силой мысли.";
-    property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ";
+    property string mainTitleDefault: "SANTA FE.<br/>Управляй<br/>силой мысли!";
+    property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ<br/>К КРУГУ";
 
 
     FontManager

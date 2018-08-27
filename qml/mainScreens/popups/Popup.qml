@@ -17,6 +17,7 @@ Item
     property var greenColor:"#ffffff";
     property var blueColor:"#00aedc";
 
+
     FontManager
     {
         id: font;
@@ -30,13 +31,14 @@ Item
     DropShadow
     {
         anchors.fill: bg;
-        horizontalOffset: 10;
-        verticalOffset: 10;
-        radius: 20.0;
-        samples: 17;
+       // horizontalOffset: 10;
+       // verticalOffset: 10;
+        radius: 100.0;
+        samples: 50;
         color: "#80000000";
         source: bg;
-        opacity: 0.6;
+       // opacity: 10.6;
+        spread: 0
     }
 
     Rectangle
@@ -101,7 +103,7 @@ Item
             id: stopText;
 
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 35 * consts.designScale;
+            font.pixelSize: 35;
             font.letterSpacing: 14;
 
             anchors.horizontalCenter: parent.horizontalCenter;
@@ -126,6 +128,7 @@ Item
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
             text: "";
+            lineHeight: 0.9;
         }
 
         Rectangle
@@ -182,9 +185,10 @@ Item
             visible: true;
             smooth: true;
             antialiasing: true;
-            anchors.verticalCenter: parent.verticalCenter;
-            anchors.verticalCenterOffset: -230;
-            anchors.horizontalCenterOffset: 0;
+           // anchors.verticalCenter: parent.verticalCenter;
+            //anchors.verticalCenterOffset: -260;
+            anchors.bottom: parent.verticalCenter;
+            anchors.bottomMargin:100;
             anchors.horizontalCenter: parent.horizontalCenter;
             //source: configController.getFileInAppDir("content/tasks/1.png");
         }
@@ -194,9 +198,7 @@ Item
             id: winDescrText;
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.top: placeIcon.bottom;
-            anchors.topMargin: 10;
-            //anchors.verticalCenter: parent.verticalCenter;
-           // anchors.verticalCenterOffset: 70;
+            anchors.topMargin: 20;
             font.family: font.hyundaiSansHeadMedium;
             font.pixelSize: 70;
             color: "#ffffff";

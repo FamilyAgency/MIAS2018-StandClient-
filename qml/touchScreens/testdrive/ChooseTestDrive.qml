@@ -12,7 +12,7 @@ Item
     property real btnMarginBottom: 100 * consts.designScale;
 
 
-    property string signInText: "Запись на <br/>тест-драйв нового <br/>Hyundai SANTA FE.";
+    property string signInText: "Запись на тест-драйв<br/> нового Hyundai SANTA FE.";
     property string signInDescText: "";
     property string citiesBtnText: "Выберите город";
     property string dealerBtnText: "Выберите дилера";
@@ -48,7 +48,7 @@ Item
                     anchors.right: parent.right;
                     horizontalAlignment: Text.AlignHCenter;
                     font.family: font.hyundaiSansHeadBold;
-                    font.pixelSize: 80;
+                    font.pixelSize: 60;
                     font.bold: true;
                     wrapMode: Text.Wrap;
                     color: "white";
@@ -149,7 +149,7 @@ Item
             TestDriveListView
             {
                 id: citiesListView;
-                titleText: "Выбор города";
+                titleText: "Выберите город";
                 subTitleText: "";
 
                 model: ListModel
@@ -196,7 +196,7 @@ Item
             {
                 id: dealersListView;
 
-                titleText: "Выбор дилера";
+                titleText: "Выберите дилера";
                 subTitleText: "";
 
                 model:ListModel

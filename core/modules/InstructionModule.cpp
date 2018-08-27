@@ -157,10 +157,10 @@ void InstructionModule::onAnimDelayTimerComplete()
     textAnimated = TextAnimated::Text1;
     opacity1Animator->setStartValue(0);
     opacity1Animator->setEndValue(1);
-    opacity1Animator->setDuration(2000);
+    opacity1Animator->setDuration(500);
     opacity1Animator->start();
 
-    showTextTimer->start(2000);
+    showTextTimer->start(1200);
 }
 
 void InstructionModule::onShownTextComplete()
@@ -171,14 +171,14 @@ void InstructionModule::onShownTextComplete()
     {
         opacity1Animator->setStartValue(1);
         opacity1Animator->setEndValue(0);
-        opacity1Animator->setDuration(1000);
+        opacity1Animator->setDuration(500);
         opacity1Animator->start();
     }
     else
     {
         opacity2Animator->setStartValue(1);
         opacity2Animator->setEndValue(0);
-        opacity2Animator->setDuration(1000);
+        opacity2Animator->setDuration(500);
         opacity2Animator->start();
     }
 }
@@ -188,11 +188,11 @@ void InstructionModule::onOpacity1AnimatorCompleted()
     if(opacity1() == 0.0f)
     {
         textAnimated = TextAnimated::Text2;
-        showTextTimer->start(2000);
+        showTextTimer->start(3300);
 
         opacity2Animator->setStartValue(0);
         opacity2Animator->setEndValue(1);
-        opacity2Animator->setDuration(1000);
+        opacity2Animator->setDuration(500);
         opacity2Animator->start();
 
 

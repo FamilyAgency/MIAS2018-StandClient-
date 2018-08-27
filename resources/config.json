@@ -1,159 +1,253 @@
 {
-    "version" : 10,
-    "configUpdateUrl" : "http://familyagency.ru/lab/synapse/digitalframes/config.json",
-    "workingDirectory": "c:\\projects\\Qt\\MIAS2018\\AutoUpdater\\process",
-    "needRemoteUpdate": false,
-    "appId": 1,
+    "appId": 6,
     "appName": "Main stand",
+    "configUpdateUrl": "http://familyagency.ru/lab/synapse/digitalframes/config.json",
     "folderSeparator": "\\",
-    "qmlOnStart": "qrc:/qml/mainDebug.qml",
-    "release": false,
-    "videoEXT" : "mov",
-    "monitoring": {
-        "enabled": true,
-        "memoryCheckMills": 600000
-    },
-    "logger":
-    {
-        "local":
-        {
-            "enabled":true,
+    "advantages":
+      [
+      {
+
+          "title": "Довезёт и до города<br/> Санта-Фе, и до Санта<br/> Клауса!",
+          "description": "Сила мысли — это хорошо! А 200-сильный<br/>двигатель с 8-ступенчатой АКПП — лучше.<br/>8-ступенчатая коробка-автомат — это восемь<br/>степеней свободы на любой дороге.<br/>А в качестве приятного бонуса к комфортному<br/>вождению — экономия топлива!",
+          "descriptionmap": "Двигатель 200 л.с.<br/>и 8-ступенчатая<br/>АКПП",
+          "videoPath": "1"
+
+      },
+      {
+
+          "title": "Полный привод —<br/>едем с умом!",
+          "description": "Система HTRAC анализирует, по какой дороге<br/>едет автомобиль, и автоматически распределяет<br/>нагрузку между осями. Она помогает проходить<br/>повороты безопаснее, и ехать по городу<br/>и бездорожью одинаково легко.",
+          "descriptionmap": "Система управления<br/>полным приводом<br/>HTRAC",
+          "videoPath": "2"
+
+      },
+      {
+
+          "title": "Нет безвыходных<br/>ситуаций. Есть<br/> безопасный выход!",
+          "description": "Если сзади приближается другой автомобиль,<br/>система безопасного выхода предупредит<br/>об опасности и не даст разблокировать задние<br/>двери, чтобы пассажиры остались в салоне.",
+          "descriptionmap": "Система<br/>безопасного выхода<br/> Safe Exit Assist",
+          "videoPath": "3"
+      },
+      {
+
+          "title": "Весь экипаж <br/>под присмотром!",
+          "description": "Специальный датчик определяет, <br/>есть ли кто-нибудь на задних сидениях, <br/>чтобы водитель не забыл в салоне <br/>даже самого маленького пассажира.",
+          "descriptionmap": "Система<br/>распознавания <br/>присутствия задних<br/>пассажиров",
+          "videoPath": "4"
+      },
+      {
+          "title": "Глядеть по сторонам — <br/>это и наша забота!",
+          "description": "Ещё одна умная система защитит<br/> при выезде задним ходом с парковки: <br/>она «увидит» автомобиль, двигающийся<br/>наперерез, предупредит об этом и даже<br/>самостоятельно остановит Hyundai SANTA FE<br/> при необходимости.",
+          "descriptionmap": "Безопасный выезд <br/>с парковки задним<br/>ходом",
+          "videoPath": "5"
+      },
+      {
+          "title": "Всё самое важное — <br/> на лобовом стекле!",
+          "description": "Данные о скорости движения, <br/>  подсказки умных систем безопасности<br/>и навигации проецируются прямо<br/>на лобовое стекло. Так что вся информация — <br/>прямо перед глазами водителя.",
+          "descriptionmap": "Проекционный<br/>экран",
+          "videoPath": "6"
+      },
+      {
+          "title": "Когда каждое место <br/>на борту —  самое удобное!",
+          "description": "Чтобы  попасть на третий  ряд сидений, <br/> достаточно нажать на кнопку. Чтобы<br/>сложить второй ряд — тоже. Так вы<br/>всегда можете выбрать наиболее удобную<br/>схему расположения пассажирских сидений.",
+          "descriptionmap": "Легкий доступ<br/>на 3 ряд сидений",
+          "videoPath": "7"
+      }
+  ],
+    "logger": {
+        "local": {
+            "enabled": true,
             "path": "logs"
         }
     },
-    "screens":
+    "mindwave": {
+        "authCommand": "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
+        "autoConnect": true,
+        "delimeter": "\r",
+        "initialCommand": "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r",
+        "ip": "127.0.0.1",
+        "port": 13854,
+        "timeout": 4000,
+        "type": "simulation",
+        "com": "COM4",
+        "type_example": [
+            "serial",
+            "tcp",
+            "simulation"
+        ]
+    },
+    "complexity":
     {
-        "touch":
-        {
-            "x" : 0,
-            "y" : 0,
-            "width" : 540,
-            "height" : 960,
-            "splashScreen": true
-        },
+        "instruction": 10,
+        "roulette": 40,
         "game":
-        {
-            "x" : 1920,
-            "y" : 0,
-            "width" : 1080,
-            "height" : 1920,
-            "splashScreen": true
+        [
+            {
+                "attentionMin":40,
+                "attentionMax":80,
+                "velocityMin": 0.3,
+                "velocityMax": 0.9,
+                "backMove": true,
+                "velocityBackMin": -1.0,
+                "velocityBackMax": -0.2
+            },
+            {
+                "attentionMin":50,
+                "attentionMax":100,
+                "velocityMin": 0.1,
+                "velocityMax": 0.8,
+                "backMove": true,
+                "velocityBackMin": -1.0,
+                "velocityBackMax": -0.2
+            },
+            {
+                "attentionMin":55,
+                "attentionMax":80,
+                "velocityMin": 0.3,
+                "velocityMax": 0.8,
+                "backMove": true,
+                "velocityBackMin": -1.0,
+                "velocityBackMax": -0.2
+            },
+            {
+                "attentionMin":60,
+                "attentionMax":100,
+                "velocityMin": 0.4,
+                "velocityMax": 0.9,
+                "backMove": true,
+                "velocityBackMin": -1.0,
+                "velocityBackMax": -0.2
+            }
+        ]
+    },
+    "monitoring": {
+        "enabled": false,
+        "memoryCheckMills": 600000
+    },
+    "needRemoteUpdate": false,
+    "qmlOnStart": "qrc:/qml/mainDebug.qml",
+    "release": false,
+    "rfid": {
+        "autoConnect": false,
+        "baudRate": 115200,
+        "portKeyWord": "FTDI",
+        "serialPort": "COM8",
+        "type": "ACS ACR122 0",
+        "type_example": [
+            "arduino",
+            "ACS ACR122 0"
+        ],
+        "useKeyword": false,
+        "validation": "idOnly",
+        "validation_example": [
+            "none",
+            "idOnly",
+            "allData"
+        ]
+    },
+    "screens": {
+        "game": {
+            "height": 1920,
+            "splashScreen": true,
+            "width": 1080,
+            "x": 1920,
+            "y": 0
+        },
+        "touch": {
+            "height": 960,
+            "splashScreen": true,
+            "width": 540,
+            "x": 0,
+            "y": 0
         }
     },
-    "rfid":
-    {
-        "serialPort": "COM8",
-        "portKeyWord": "FTDI",
-        "baudRate": 115200,
-        "autoConnect": false,
-        "useKeyword": false,
-        "type_example": ["arduino", "ACS ACR122 0"],
-        "type": "ACS ACR122 0",
-        "validation_example":["none", "idOnly", "allData"],
-        "validation":"idOnly",
-        "beepEnabled":false
+    "server": {
+        "api": {
+            "pinNeed": true,
+            "testUser": "0"
+        },
+        "requestCount": 3,
+        "requestTimemoutInterval": 5000,
+        "url": "http://mias2018.familyagency.ru/api/v1/ADABF4D5AE73D5FD479E8E76A34E1"
     },
-    "mindwave":
-    {
-        "ip" : "127.0.0.1",
-        "port": 13854,
-        "autoConnect": true,
-        "delimeter" : "\r",
-        "initialCommand" : "{\"enableRawOutput\": false, \"format\": \"Json\"}\\r",
-        "authCommand" : "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
-        "timeout": 4000,
-        "type_example": ["serial", "tcp", "simulation"],
-        "type": "simulation",
-        "com": "COM7"
-    },
-    "slack":
-        [
+    "slack": [
         {
-            "appId":1,
+            "appId": 1,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":2,
+            "appId": 2,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":3,
+            "appId": 3,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":4,
+            "appId": 4,
             "enabled": false,
             "errorChannel": "hhttps://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":5,
+            "appId": 5,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":6,
+            "appId": 6,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":10,
+            "appId": 10,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":11,
+            "appId": 11,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":12,
+            "appId": 12,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":20,
+            "appId": 20,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":21,
+            "appId": 21,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         },
         {
-            "appId":22,
+            "appId": 22,
             "enabled": false,
             "errorChannel": "https://hooks.slack.com/services/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",
             "logChannel": "https://hooks.slack.com/services/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"
         }
     ],
-    "server":
-    {
-        "url": "http://mias2018.familyagency.ru/api/v1/ADABF4D5AE73D5FD479E8E76A34E1",
-        "requestTimemoutInterval": 5000,
-        "requestCount": 3,
-        "api":
-        {
-            "testUser": "1",
-            "pinNeed": true
-        }
-    },
-
-    "animations":
+    "version": 152,
+    "videoEXT": "mov",
+    "workingDirectory": "c:\\projects\\Qt\\MIAS2018\\AutoUpdater\\process",
+      "animations":
         [
         {
             "appId": 1,
@@ -163,70 +257,145 @@
                     "x": 694,
                     "y": 1140,
                     "path":"Instruments",
-                    "frames": 71
+                    "frames": 72
                 },
                 {
                     "x": 473,
                     "y": 186,
                     "path":"Football",
-                    "frames": 71
+                    "frames": 72
+                },
+                {
+                    "x": 641,
+                    "y": 1694,
+                    "path":"Skeleton",
+                    "frames": 72
+                }
+            ]
+        },
+        {
+            "appId": 2,
+            "mapAnimations":
+                [
+                {
+                    "x": 234,
+                    "y": 1063,
+                    "path":"Shark",
+                    "frames": 72
+                },
+                {
+                    "x": 648,
+                    "y": 1292,
+                    "path":"NFO",
+                    "frames": 72
+                },
+                {
+                    "x": 264,
+                    "y": 204,
+                    "path":"Boombox",
+                    "frames": 72
+                },
+                {
+                    "x": 8,
+                    "y": 756,
+                    "path":"Iceman",
+                    "frames": 72
+                }
+            ]
+        },
+        {
+            "appId": 3,
+            "mapAnimations":
+                [
+                {
+                    "x": 205,
+                    "y": 489,
+                    "path":"Zoo",
+                    "frames": 72
+                },
+                {
+                    "x": 601,
+                    "y": 88,
+                    "path":"GalleryPeople",
+                    "frames": 72
+                },
+                {
+                    "x": 788,
+                    "y": 938,
+                    "path":"Ship",
+                    "frames": 72
+                }
+            ]
+        },
+        {
+            "appId": 4,
+            "mapAnimations":
+                [
+                {
+                    "x": 573,
+                    "y": 120,
+                    "path":"FireCircle",
+                    "frames": 72
+                },
+                {
+                    "x": 435,
+                    "y": 158,
+                    "path":"Canon",
+                    "frames": 74
+                },
+                {
+                    "x": 984,
+                    "y": 573,
+                    "path":"Lollypop",
+                    "frames": 72
+                },
+                {
+                    "x": 659,
+                    "y": 138,
+                    "path":"Piglets",
+                    "frames": 72
+                },
+                {
+                    "x": 921,
+                    "y": 1087,
+                    "path":"BaloonGirl",
+                    "frames": 72
+                }
+            ]
+        },
+        {
+            "appId": 5,
+            "mapAnimations":
+                [
+                {
+                    "x": 168,
+                    "y": -42,
+                    "path":"HomeSmoke",
+                    "frames": 72
+                },
+                {
+                    "x": 287,
+                    "y": 744,
+                    "path":"Swan",
+                    "frames": 72
+                }
+            ]
+        },
+        {
+            "appId": 6,
+            "mapAnimations":
+                [
+                {
+                    "x": 430,
+                    "y": 797,
+                    "path":"Fontain",
+                    "frames": 72
                 }
             ]
         }
+
     ],
-    "advantages":
-      [
-      {
-
-          "title": "Довезёт и до города Санта-Фе,<br/>и до Санта Клауса!",
-          "description": "Сила мысли – это хорошо! А 200-сильный<br/>двигатель с 8-ступенчатой АКПП – лучше.<br/>8-ступенчатая коробка-автомат – это восемь<br/>степеней свободы на любой дороге.<br/>А в качестве приятного бонуса к комфортному<br/>вождению – экономия топлива!",
-          "descriptionmap": "Двигатель 200 л.с.<br/>и 8-ступенчатая АКПП.",
-          "videoPath": "1"
-
-      },
-      {
-
-          "title": "Полный привод –<br/>едем с умом!",
-          "description": "Система HTRAC анализирует, по какой дороге<br/>едет автомобиль, и автоматически распределяет<br/>нагрузку между осями. Она помогает проходить<br/>повороты безопаснее, и ехать по городу<br/>и бездорожью одинаково легко.",
-          "descriptionmap": "Система управления<br/>полным приводом<br/>HTRAC.",
-          "videoPath": "2"
-
-      },
-      {
-
-          "title": "Нет безвыходных ситуаций.<br/>Есть безопасный выход!",
-          "description": "Если сзади приближается другой автомобиль,<br/>система безопасного выхода предупредит<br/>об опасности и не даст разблокировать задние<br/>двери, чтобы пассажиры остались в салоне.",
-          "descriptionmap": "Система безопасного<br/>выхода Safe Exit Assist.",
-          "videoPath": "3"
-      },
-      {
-
-          "title": " Весь экипаж – <br/>под присмотром!",
-          "description": " Специальный датчик определяет, <br/>есть ли кто-нибудь на задних сидениях, <br/>чтобы водитель не забыл в салоне <br/>даже самого маленького пассажира. ",
-          "descriptionmap": " Система<br/>распознавания <br/>присутствия задних<br/>пассажиров.",
-          "videoPath": "4"
-      },
-      {
-          "title": " Глядеть по сторонам – <br/>это и наша забота!",
-          "description": " Ещё одна умная система защитит<br/> при выезде задним ходом с парковки: <br/>она «увидит» автомобиль, двигающийся<br/>наперерез, предупредит об этом и даже<br/>самостоятельно остановит Hyundai SANTA FE<br/> при необходимости. ",
-          "descriptionmap": " Безопасный выезд <br/>с парковки задним<br/>ходом.",
-          "videoPath": "5"
-      },
-      {
-          "title": " Всё самое важное – <br/> на лобовом стекле!",
-          "description": " Данные о скорости движения, <br/>  подсказки умных систем безопасности<br/>и навигации проецируются прямо<br/>на лобовое стекло.<br/>Так что вся информация – прямо<br/>перед глазами водителя. ",
-          "descriptionmap": " Проекционный экран.",
-          "videoPath": "6"
-      },
-      {
-          "title": " Когда каждое место на борту – <br/> самое удобное!",
-          "description": " Чтобы  попасть на третий  ряд сидений, <br/> достаточно нажать на кнопку. Чтобы<br/>сложить второй ряд – тоже. Так вы<br/>всегда можете выбрать наиболее удобную<br/>схему расположения пассажирских сидений. ",
-          "descriptionmap": " Легкий доступ<br/>на 3 ряд сидений.",
-          "videoPath": "7"
-      }
-  ],
-
-    "games":
+          "games":
         [
         {
             "appId": 1,
@@ -235,19 +404,18 @@
                 "time": 120000,
                 "path":
                     [
-                    {"x":70 ,"y":1450},
-                    {"x":947,"y":1567}
-
+                    {"x":150 ,"y":1460},
+                    {"x":930,"y":1560}
                 ]
             },
             "mainGame":
                 [{
                     "description": "На матч в Лужники",
-                    "descriptionwin": "Ура! Ты приехал<br/>на матч в Лужники.",
+                    "descriptionwin": "Ура! Вы приехали<br/>на матч<br/>в Лужники.",
                     "imagewinpath": "task1/win.png",
                     "iconpath": "task1/icon.png",
                     "startPath":[
-                        {"x":328,"y":1900},
+                        {"x":328,"y":1950},
                         {"x":328,"y":1708}
                     ],
                     "stages":
@@ -256,37 +424,39 @@
                             "path": [
                                 {"x":328,"y":1708},
                                 {"x":328,"y":1489},
-                                {"x":644,"y":1526 },
-                                {"x":753,"y":1168}
+                                {"x":644,"y":1526},
+                                {"x":680,"y":1410}
                             ]
                         },
                         {
                             "path": [
+                                {"x":680,"y":1410},
                                 {"x":753,"y":1168},
-                                {"x":612,"y":790},
-                                {"x":775,"y":753}
+                                {"x":642,"y":870}
                             ]},
                         {
                             "path": [
+                                {"x":642,"y":870},
+                                {"x":612,"y":790},
                                 {"x":775,"y":753},
-                                {"x":691,"y":528},
-                                {"x":536,"y":493}
+                                {"x":727,"y":625}
                             ]
                         }
-
                     ],
                     "finalPath":[
+                        {"x":727,"y":625},
+                        {"x":691,"y":528},
                         {"x":537,"y":489},
-                        {"x":564,"y":389}
+                        {"x":584,"y":314}
                     ]
                 },
                 {
                     "description": "На пикник<br/>в парк Царицыно",
-                    "descriptionwin": "Ура! Ты приехал<br/>на пикник в парк<br/>Царицыно.",
+                    "descriptionwin": "Ура! Вы приехали<br/>на пикник в парк<br/>Царицыно.",
                     "imagewinpath": "task2/win.png",
                     "iconpath": "task2/icon.png",
                     "startPath":[
-                        {"x":328,"y":1900},
+                        {"x":328,"y":1950},
                         {"x":328,"y":1708}
                     ],
                     "stages":
@@ -295,36 +465,38 @@
                             "path": [
                                 {"x":328,"y":1708},
                                 {"x":328,"y":1489},
-                                {"x":110,"y":1464}
+                                {"x":109,"y":1464},
+                                {"x":108,"y":1390}
                             ]
                         },
                         {
                             "path": [
-                                {"x":110,"y":1464},
+                                {"x":108,"y":1390},
                                 {"x":103,"y":1183},
-                                {"x":328,"y":1226}
-                            ]},
+                                {"x":289,"y":1213}
+                            ]
+                        },
                         {
                             "path": [
-                                {"x":328,"y":1226},
+                                {"x":289,"y":1213},
                                 {"x":718,"y":1283},
-                                {"x":753,"y":1168}
+                                {"x":735,"y":1227}
                             ]
                         }
-
                     ],
                     "finalPath":[
+                        {"x":735,"y":1227},
                         {"x":753,"y":1168},
                         {"x":674,"y":957}
                     ]
                 },
                 {
                     "description": "На классический<br/>концерт в Зарядье",
-                    "descriptionwin": "Ура! Ты приехал<br/>на классический<br/>концерт в Зарядье.",
+                    "descriptionwin": "Ура! Вы приехали<br/>на классический<br/>концерт в Зарядье.",
                     "imagewinpath": "task3/win.png",
                     "iconpath": "task3/icon.png",
                     "startPath":[
-                        {"x":328,"y":1900},
+                        {"x":328,"y":1950},
                         {"x":328,"y":1708}
                     ],
                     "stages":
@@ -334,31 +506,701 @@
                                 {"x":328,"y":1708},
                                 {"x":328,"y":1489},
                                 {"x":110,"y":1464},
-                                {"x":104,"y":1184}
+                                {"x":105,"y":1240}
                             ]
                         },
                         {
                             "path": [
+                                {"x":105,"y":1240},
                                 {"x":104,"y":1184},
                                 {"x":70,"y":910},
                                 {"x":447,"y":827},
-                                {"x":689,"y":996}
+                                {"x":519,"y":877}
                             ]},
                         {
                             "path": [
-
+                                {"x":519,"y":877},
                                 {"x":689,"y":996},
                                 {"x":753,"y":1168},
-                                {"x":644,"y":1526}
+                                {"x":738,"y":1216}
                             ]
                         }
 
                     ],
                     "finalPath":[
+                        {"x":738,"y":1216},
                         {"x":644,"y":1526},
                         {"x":775,"y":1544}
                     ]
                 }]
+        },
+        {
+            "appId": 2,
+            "superGame":
+            {
+                "time": 120000,
+                "path":
+                    [
+                    {"x":150,"y":751},
+                    {"x":930,"y":927}
+                ]
+            },
+            "mainGame":
+                [{
+                    "description": "На концерт<br/>на крыше Москва-Сити",
+                    "descriptionwin": "Ура! Вы приехали<br/>на концерт на крыше<br/> Москва-Сити.",
+                    "imagewinpath": "task1/win.png",
+                    "iconpath": "task1/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1625}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1625},
+                                {"x":279,"y":1314},
+                                {"x":457,"y":1354}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":457,"y":1354},
+                                {"x":828,"y":1439},
+                                {"x":836,"y":1345}
+                            ]},
+                        {
+                            "path": [
+                                {"x":836,"y":1345},
+                                {"x":868,"y":922},
+                                {"x":701,"y":884}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":701,"y":884},
+                        {"x":618,"y":865},
+                        {"x":680,"y":594}
+                    ]
+                },
+                {
+                    "description": "В Планетарий",
+                    "descriptionwin": "Ура!<br/> Вы приехали<br/>в Планетарий.",
+                    "imagewinpath": "task2/win.png",
+                    "iconpath": "task2/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1625}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1625},
+                                {"x":279,"y":1314},
+                                {"x":523,"y":1369},
+                                {"x":544,"y":1244}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":544,"y":1244},
+                                {"x":612,"y":858},
+                                {"x":793,"y":900}
+                            ]},
+                        {
+                            "path": [
+                                {"x":793,"y":900},
+                                {"x":863,"y":916},
+                                {"x":835,"y":1364}
+                            ]
+                        }
+
+                    ],
+                    "finalPath":[
+                        {"x":835,"y":1364},
+                        {"x":818,"y":1633},
+                        {"x":515,"y":1633}
+                    ]
+                },
+                {
+                    "description": "На пляж<br/>в Серебряный бор",
+                    "descriptionwin": "Ура! Вы приехали<br/>на пляж<br/>в Серебряный бор.",
+                    "imagewinpath": "task3/win.png",
+                    "iconpath": "task3/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1625}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1625},
+                                {"x":279,"y":1314},
+                                {"x":610,"y":1388}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":610,"y":1388},
+                                {"x":828,"y":1439},
+                                {"x":848,"y":1177}
+                            ]},
+                        {
+                            "path": [
+                                {"x":848,"y":1177},
+                                {"x":868,"y":922},
+                                {"x":686,"y":880}
+                            ]
+                        }
+
+                    ],
+                    "finalPath":[
+                        {"x":686,"y":880},
+                        {"x":207,"y":770}
+                    ]
+                }]
+        },
+        {
+            "appId": 3,
+            "superGame":
+            {
+                "time": 120000,
+                "path":
+                    [
+                    {"x":150,"y":345},
+                    {"x":930,"y":378}
+
+                ]
+            },
+            "mainGame":
+                [{
+                    "description": "В Третьяковскую<br/>галерею",
+                    "descriptionwin": "Ура! Вы приехали<br/>в Третьяковскую<br/>галерею.",
+                    "imagewinpath": "task1/win.png",
+                    "iconpath": "task1/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1603}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1600},
+                                {"x":287,"y":1387},
+                                {"x":414,"y":1410},
+                                {"x":529,"y":1320}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":529,"y":1320},
+                                {"x":701,"y":1187},
+                                {"x":642,"y":1001},
+                                {"x":635,"y":918}
+                            ]},
+                        {
+                            "path": [
+                                {"x":635,"y":918},
+                                {"x":606,"y":562}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":606,"y":562},
+                        {"x":591,"y":369},
+                        {"x":591,"y":275}
+                    ]
+                },
+                {
+                    "description": "На велосипедную прогулку<br/>в Парк Горького",
+                    "descriptionwin": "Ура! Вы приехали<br/>на велосипедную<br/> прогулку<br/>в Парк Горького.",
+                    "imagewinpath": "task2/win.png",
+                    "iconpath": "task2/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1600}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1600},
+                                {"x":287,"y":1387},
+                                {"x":307,"y":1054}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":307,"y":1054},
+                                {"x":311,"y":985},
+                                {"x":642,"y":1001},
+                                {"x":621,"y":737}
+                            ]},
+                        {
+                            "path": [
+                                {"x":621,"y":737},
+                                {"x":615,"y":672},
+                                {"x":833,"y":708},
+                                {"x":823,"y":941}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":823,"y":941} ,
+                        {"x":821,"y":1010},
+                        {"x":882,"y":1012},
+                        {"x":893,"y":1038},
+                        {"x":594,"y":1270}
+                    ]
+                },
+                {
+                    "description": "В Зоопрак",
+                    "descriptionwin": "Ура! Вы приехали<br/>в Зоопрак.",
+                    "imagewinpath": "task3/win.png",
+                    "iconpath": "task3/icon.png",
+                    "startPath":[
+                        {"x":275,"y":1950},
+                        {"x":275,"y":1600}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":275,"y":1600},
+                                {"x":287,"y":1387},
+                                {"x":302,"y":1133}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":302,"y":1133},
+                                {"x":331,"y":984},
+                                {"x":94,"y":793},
+                                {"x":110,"y":678}
+                            ]},
+                        {
+                            "path": [
+                                {"x":110,"y":678},
+                                {"x":157,"y":349},
+                                {"x":446,"y":362}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":446,"y":362},
+                        {"x":591,"y":368},
+                        {"x":610,"y":613}
+                    ]
+                }]
+        },
+        {
+            "appId": 4,
+            "superGame":
+            {
+                "time": 120000,
+                "path":
+                    [
+                    {"x":150 ,"y":1347},
+                    {"x":930,"y":1499}
+                ]
+            },
+            "mainGame":
+                [{
+                    "description": "В Аквапарк",
+                    "descriptionwin": "Ура! Вы приехали<br/>в Аквапарк.",
+                    "imagewinpath": "task1/win.png",
+                    "iconpath": "task1/icon.png",
+                    "startPath":[
+                        {"x":555,"y":1950},
+                        {"x":555,"y":1650}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":555,"y":1650},
+                                {"x":555,"y":1430},
+                                {"x":319,"y":1387},
+                                {"x":363,"y":1292}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":363,"y":1292},
+                                {"x":456,"y":1105},
+                                {"x":219,"y":982}
+                            ]},
+                        {
+                            "path": [
+                                {"x":219,"y":982},
+                                {"x":167,"y":955},
+                                {"x":77,"y":700},
+                                {"x":242,"y":690},
+                                {"x":362,"y":710}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":362,"y":710},
+                        {"x":626,"y":755},
+                        {"x":564,"y":882}
+                    ]
+                },
+                {
+                    "description": "На ярмарку<br/>у Красной Площади",
+                    "descriptionwin": "Ура! Вы приехали<br/>на ярмарку<br/>у Красной Площади.",
+                    "imagewinpath": "task2/win.png",
+                    "iconpath": "task2/icon.png",
+                    "startPath":[
+                        {"x":555,"y":1950},
+                        {"x":555,"y":1650}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":555,"y":1650},
+                                {"x":555,"y":1430},
+                                {"x":319,"y":1387},
+                                {"x":363,"y":1292}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":363,"y":1292},
+                                {"x":456,"y":1105},
+                                {"x":219,"y":982}
+                            ]},
+                        {
+                            "path": [
+                                {"x":219,"y":982},
+                                {"x":167,"y":955},
+                                {"x":110,"y":794},
+                                {"x":242,"y":690},
+                                {"x":362,"y":710}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":362,"y":710},
+                        {"x":626,"y":755},
+                        {"x":689,"y":627}
+                    ]
+                },
+                {
+                    "description": "На акробатическое<br/>шоу в Цирк",
+                    "descriptionwin": "Ура! Вы приехали<br/>на акробатическое<br/>шоу в Цирк.",
+                    "imagewinpath": "task3/win.png",
+                    "iconpath": "task3/icon.png",
+                    "startPath":[
+                        {"x":555,"y":1950},
+                        {"x":555,"y":1650}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":555,"y":1650},
+                                {"x":555,"y":1430},
+                                {"x":319,"y":1386},
+                                {"x":359,"y":1306}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":359,"y":1306},
+                                {"x":587,"y":839}
+                            ]},
+                        {
+                            "path": [
+                                {"x":587,"y":839},
+                                {"x":626,"y":756},
+                                {"x":252,"y":692},
+                                {"x":331,"y":623}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":331,"y":623},
+                        {"x":551,"y":430},
+                        {"x":595,"y":343}
+                    ]
+                }]
+        },
+        {
+            "appId": 5,
+            "superGame":
+            {
+                "time": 120000,
+                "path":
+                    [
+                    {"x":150 ,"y":852},
+                    {"x":930,"y":984}
+
+                ]
+            },
+            "mainGame":
+                [{
+                    "description": "На балет<br/>в Большой театр",
+                    "descriptionwin": "Ура! Вы приехали<br/>на балет<br/>в Большой театр.",
+                    "imagewinpath": "task1/win.png",
+                    "iconpath": "task1/icon.png",
+                    "startPath":[
+                        {"x":615,"y":1950},
+                        {"x":615,"y":1750}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":615,"y":1750},
+                                {"x":615,"y":1690},
+                                {"x":641,"y":1410}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":641,"y":1410},
+                                {"x":668,"y":1116},
+                                {"x":840,"y":1144}
+                            ]},
+                        {
+                            "path": [
+                                {"x":840,"y":1144},
+                                {"x":979,"y":1166},
+                                {"x":992,"y":1002},
+                                {"x":854,"y":978}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":854,"y":978},
+                        {"x":479,"y":915},
+                        {"x":525,"y":828}
+                    ]
+                },
+                {
+                    "description": "В Парк Развлечений",
+                    "descriptionwin": "Ура!<br/>Вы приехали<br/>В Парк Развлечений.",
+                    "imagewinpath": "task2/win.png",
+                    "iconpath": "task2/icon.png",
+                    "startPath":[
+                        {"x":615,"y":1950},
+                        {"x":615,"y":1750}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":615,"y":1750},
+                                {"x":615,"y":1690},
+                                {"x":634,"y":1478},
+                                {"x":325,"y":1446},
+                                {"x":333,"y":1379}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":333,"y":1379},
+                                {"x":356,"y":1196},
+                                {"x":599,"y":965}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":599,"y":965},
+                                {"x":627,"y":939},
+                                {"x":992,"y":1001},
+                                {"x":983,"y":1120}
+                            ]
+                        }
+                    ],
+                    "finalPath":[
+                        {"x":983,"y":1120},
+                        {"x":962,"y":1389},
+                        {"x":689,"y":1362}
+                    ]
+                },
+                {
+                    "description": "На дачу",
+                    "descriptionwin": "Ура!<br/> Вы приехали<br/>на дачу.",
+                    "imagewinpath": "task3/win.png",
+                    "iconpath": "task3/icon.png",
+                    "startPath":[
+                        {"x":615,"y":1950},
+                        {"x":615,"y":1750}
+                    ],
+                    "stages":
+                        [
+                        {
+                            "path": [
+                                {"x":615,"y":1750},
+                                {"x":615,"y":1690},
+                                {"x":653,"y":1275}
+                            ]
+                        },
+                        {
+                            "path": [
+                                {"x":653,"y":1275},
+                                {"x":668,"y":1116},
+                                {"x":473,"y":1085},
+                                {"x":574,"y":989}
+                            ]},
+                        {
+                            "path": [
+                                {"x":574,"y":989},
+                                {"x":627,"y":939},
+                                {"x":479,"y":915},
+                                {"x":624,"y":641},
+                                {"x":500,"y":570}
+                            ]
+                        }
+
+                    ],
+                    "finalPath":[
+                        {"x":500,"y":570},
+                        {"x":419,"y":523},
+                        {"x":557,"y":279}
+                    ]
+                }
+            ]
         }
+        ,
+                        {
+                            "appId": 6,
+                            "superGame":
+                            {
+                                "time": 120000,
+                                "path":
+                                    [
+                                    {"x":282 ,"y":864},
+                                    {"x":857,"y":1299}
+
+                                ]
+                            },
+                            "mainGame":
+                                [{
+                                    "description": "На заезд на роликах на ВДНХ",
+                                    "descriptionwin": "Ура! Вы приехали<br/>на заезд на роликах<br/>на ВДНХ.",
+                                    "imagewinpath": "task1/win.png",
+                                    "iconpath": "task1/icon.png",
+                                    "startPath":[
+                                        {"x":710,"y":1950},
+                                        {"x":710,"y":1650}
+                                    ],
+                                    "stages":
+                                        [
+                                        {
+                                            "path": [
+                                                {"x":710,"y":1650},
+                                                {"x":710,"y":1598},
+                                                {"x":555,"y":1519}
+                                            ]
+                                        },
+                                        {
+                                            "path": [
+                                                {"x":555,"y":1519},
+                                                {"x":405,"y":1440},
+                                                {"x":521,"y":1304}
+                                            ]},
+                                        {
+                                            "path": [
+                                                {"x":521,"y":1304},
+                                                {"x":645,"y":1159},
+                                                {"x":545,"y":1084}
+                                            ]
+                                        }
+                                    ],
+                                    "finalPath":[
+                                        {"x":545,"y":1084},
+                                        {"x":347,"y":934}
+                                    ]
+                                },
+                                {
+                                    "description": "На смотровую площадку<br/>на Останкинской башне",
+                                    "descriptionwin": "Ура! Вы приехали<br/>на смотровую<br/> площадку<br/>на Останкинской<br/> башне.",
+                                    "imagewinpath": "task2/win.png",
+                                    "iconpath": "task2/icon.png",
+                                    "startPath":[
+                                        {"x":710,"y":1950},
+                                        {"x":710,"y":1650}
+                                    ],
+                                    "stages":
+                                        [
+                                        {
+                                            "path": [
+                                                {"x":710,"y":1650},
+                                                {"x":710,"y":1600},
+                                                {"x":405,"y":1440},
+                                                {"x":438,"y":1401}
+                                            ]
+                                        },
+                                        {
+                                            "path": [
+                                                {"x":438,"y":1401},
+                                                {"x":482,"y":1349},
+                                                {"x":233,"y":1050},
+                                                {"x":253,"y":983}
+                                            ]
+                                        },
+                                        {
+                                            "path": [
+                                                {"x":253,"y":983},
+                                                {"x":282,"y":884},
+                                                {"x":591,"y":1118}
+                                            ]
+                                        }
+                                    ],
+                                    "finalPath":[
+                                        {"x":591,"y":1118},
+                                        {"x":881,"y":1337}
+                                    ]
+                                },
+                                {
+                                    "description": "В театр Кукол",
+                                    "descriptionwin": "Ура!<br/> Вы приехали<br/>в Театр Кукол.",
+                                    "imagewinpath": "task3/win.png",
+                                    "iconpath": "task3/icon.png",
+                                    "startPath":[
+                                        {"x":710,"y":1950},
+                                        {"x":710,"y":1650}
+                                    ],
+                                    "stages":
+                                        [
+                                        {
+                                            "path": [
+                                                {"x":710,"y":1650},
+                                                {"x":710,"y":1571},
+                                                {"x":881,"y":1337},
+                                                {"x":768,"y":1252}
+                                            ]
+                                        },
+                                        {
+                                            "path": [
+                                                {"x":768,"y":1252},
+                                                {"x":645,"y":1159},
+                                                {"x":482,"y":1349},
+                                                {"x":308,"y":1140}
+                                            ]},
+                                        {
+                                            "path": [
+                                                {"x":308,"y":1140},
+                                                {"x":233,"y":1050},
+                                                {"x":314,"y":774}
+                                            ]
+                                        }
+
+                                    ],
+                                    "finalPath":[
+                                        {"x":314,"y":774},
+                                        {"x":402,"y":475},
+                                        {"x":575,"y":481}
+                                    ]
+                                }]
+                        }
     ]
 }

@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE QVariantList getGameUncompletedPath() const;
     Q_INVOKABLE QVariantList getTargetPoints() const;
     Q_INVOKABLE float getForwardVectorRotation() const;
+    Q_INVOKABLE QVector2D getForwardVector() const;
     Q_INVOKABLE float getMindwaveLimit() const;
 
     Q_INVOKABLE QPointF getStartPoint1() const;

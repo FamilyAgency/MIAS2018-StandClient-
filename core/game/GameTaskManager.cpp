@@ -157,6 +157,11 @@ float GameTaskManager::getForwardVectorRotation() const
     return gameTask->getForwardVectorRotation();
 }
 
+QVector2D GameTaskManager::getForwardVector() const
+{
+    return gameTask->getForwardVector();
+}
+
 QVariantList GameTaskManager::getCompletedPath() const
 {
     return gameCompletedPath;

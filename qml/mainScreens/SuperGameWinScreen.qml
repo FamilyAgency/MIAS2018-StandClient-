@@ -1,5 +1,6 @@
 import QtQuick 2.2
 import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
 
 import "../tools"
 import "../components"
@@ -9,6 +10,8 @@ Item
     property string superGameTitle1: "Поздравляем!";
     property string superGameTitle2: "ТВОЙ РЕЗУЛЬТАТ";
     property bool superGameSuccess: false;
+    property int offsetY: 0;
+
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -24,38 +27,62 @@ Item
         id: tools;
     }
 
-    Rectangle
+    DropShadow
     {
-        anchors.fill: parent;
-        color: "#021025";
-        opacity: 0.0;
+        anchors.fill: bg;
+        radius: 100.0;
+        samples: 50;
+        color: "#00b4e2";
+        source: bg;
+        spread: 0
     }
 
-    AnimationPlayer
+    Rectangle
     {
-        id: confAnim;
-        currentImage: 1;
-        endFrame: 191;
-        startFrame: 1;
-        Component.onCompleted:
+        visible: true;
+        id: bg;
+        //color: blueColor;
+        border.width: 0;
+        implicitWidth: 900;
+        implicitHeight: 900;
+        radius: 450;
+        smooth: true;
+        antialiasing: true;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.horizontalCenter: parent.horizontalCenter;
+
+        gradient: Gradient
         {
-            confAnim.setSource("content/misc/confeti/", ".png");
-            confAnim.setFPS(30);
-            confAnim.setRunning(false);
-            confAnim.init();
+            GradientStop { position: 1.0; color: "#011025" }
+            GradientStop { position: 0.0; color: "#041936" }
         }
     }
+
+//    AnimationPlayer
+//    {
+//        id: confAnim;
+//        currentImage: 1;
+//        endFrame: 191;
+//        startFrame: 1;
+//        Component.onCompleted:
+//        {
+//            confAnim.setSource("content/misc/confeti/", ".png");
+//            confAnim.setFPS(30);
+//            confAnim.setRunning(false);
+//            confAnim.init();
+//        }
+//    }
 
     Text
     {
         id: title;
         text: superGameTitle1;
         y : 600;
-        //anchors.top: parent.top;
-       // anchors.topMargin: 100;
+        anchors.bottom: superTime.top;
+        anchors.bottomMargin: offsetY;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 100;
+        font.pixelSize: 65;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -64,10 +91,9 @@ Item
     Text
     {
         id: superTime;
-        text: "1:34";
-        anchors.top: title.bottom;
-        anchors.topMargin: 60;
+        text: "1:34";      
         anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.verticalCenter: parent.verticalCenter;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 270;
         color: "#ffffff";
@@ -80,13 +106,15 @@ Item
         id: title2;
         text: superGameTitle2;
         anchors.top: superTime.bottom;
+        anchors.topMargin: -30;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 54;
-        color: "#ffffff";
+        font.pixelSize: 48;
+        color: "#00b4e2";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
     }
+
 
     OpacityAnimator on opacity
     {
@@ -114,12 +142,17 @@ Item
         }
     }
 
+    Component.onCompleted:
+    {
+       // show();
+    }
+
     function show()
     {
         if(superGameSuccess)
         {
             visible = true;
-            confAnim.setRunning(true);
+           // confAnim.setRunning(true);
             opacity = 0;
             opacityAnim.start();
         }
@@ -128,6 +161,6 @@ Item
     function hide()
     {
         visible = false;        
-        confAnim.setRunning(false);
+       // confAnim.setRunning(false);
     }
 }

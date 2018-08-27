@@ -70,10 +70,11 @@ Item
                 id: content;
                 z: 1;
                 font.family: font.hyundaiSansHeadMedium;
-                font.pixelSize: 30 * consts.designScale;
+                font.pixelSize: 30;
                 color: "#ffffff";
                 horizontalAlignment: Text.AlignHCenter;
                 verticalAlignment: Text.AlignVCenter;
+                font.letterSpacing: 3;
             }
 
             onClicked:

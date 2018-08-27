@@ -13,16 +13,11 @@ Item
     anchors.centerIn: parent;
 
     property string superGameTitle: "";
-    property string descrTitleDefault: "Попробуйте<br/>повторить попытку<br/>через 20 минут.";
+    property string descrTitleDefault: "Вы были близки к победе. <br/><br/>Попробуйте еще раз<br/> через 20 минут. <br/>Вам обязательно повезет!";
     property string btntext: "ЗАПИСАТЬСЯ<br/>НА ТЕСТ-ДРАЙВ";
-    property real btnMarginBottom: 100 * consts.designScale;
+    property real btnMarginBottom: 100;
 
     signal gotoIntro();
-
-    Consts
-    {
-        id: consts;
-    }
 
     TitleBlock
     {
@@ -37,9 +32,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350;
+        btnHeight: 350;
+        btnRadius: 175;
 
         onClicked:
         {

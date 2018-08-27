@@ -33,6 +33,7 @@ public:
     QVariantList getCompletedPath() const;
     QVariantList getFullPath() const;
     float getForwardVectorRotation() const;
+    QVector2D getForwardVector() const;
 
     float getMindwaveLimit() const;
     void setMindWaveClient(QSharedPointer<MindwaveComponentBase> value);

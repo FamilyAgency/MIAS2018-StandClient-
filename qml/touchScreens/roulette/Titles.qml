@@ -9,7 +9,9 @@ Item
 {
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Выберите уникальный<br/>маршрут";
+    property string mainTitleDefault: "Выберите маршрут";
+    property string mainTitle2: "Концентрируйтесь<br/>на Hyundai SANTA FE.<br/><br/>Автомобиль начнет движение<br/>и появится на карте.";
+
 
     FontManager
     {
@@ -71,7 +73,7 @@ Item
         anchors.top: parent.top;
         anchors.topMargin: 168 * consts.designScale;
         anchors.horizontalCenter: parent.horizontalCenter;
-        text: "Сконцентрируйтесь на Hyundai SANTA FE,<br/>чтобы автомобиль начал движение.<br/><br/>Чем выше концентрация — <br/>тем быстрее вы едете.";
+        text: mainTitle2;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 50 * consts.designScale;
         color: "#ffffff";

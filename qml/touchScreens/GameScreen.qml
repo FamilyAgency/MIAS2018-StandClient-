@@ -10,7 +10,7 @@ Item
     id: gameScreen;
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Концентрируйся<br/>на Hyundai SANTA FE<br/>и продолжайте<br/>движение.";
+    property string mainTitleDefault: "Думайте о новом<br/>Hyundai SANTA FE.<br/><br/>Чем выше концентрация —<br/>тем выше скорость.";
 
     signal animComplete();
     signal animStart();
@@ -32,7 +32,7 @@ Item
         anchors.centerIn: parent;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize:  90 * consts.designScale;
+        font.pixelSize:  60 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;

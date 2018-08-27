@@ -32,7 +32,7 @@ Item
         font.pixelSize: 60 * consts.designScale;
         color: "#ffffff";
         textFormat: Text.StyledText;
-        horizontalAlignment :Text.AlignHCenter;
+        horizontalAlignment: Text.AlignHCenter;
 
         OpacityAnimator on opacity
         {
@@ -67,7 +67,7 @@ Item
     {
         id:outTimer;
         running: false;
-        interval: 2000;
+        interval: 4000;
         onTriggered:
         {
 

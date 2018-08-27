@@ -24,12 +24,13 @@ Item
         id: backBtn;
         anchors.bottom: parent.bottom;
         anchors.horizontalCenter: parent.horizontalCenter;
+        anchors.horizontalCenterOffset: 20;
 
         contentItem: Text
         {
             text: "В НАЧАЛО";
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 20 * consts.designScale;
+            font.pixelSize: 25;
             color: "#ffffff"
             horizontalAlignment: Text.AlignHCenter;
             verticalAlignment: Text.AlignVCenter;
@@ -46,6 +47,15 @@ Item
         {
             core.clicked();
         }
+    }
+
+    Image
+    {
+        source:"qrc:/resources/arrow-small.png";
+        anchors.right:backBtn.left;
+        anchors.rightMargin: -20;
+        anchors.verticalCenter: backBtn.verticalCenter;
+
     }
 
     OpacityAnimator on opacity

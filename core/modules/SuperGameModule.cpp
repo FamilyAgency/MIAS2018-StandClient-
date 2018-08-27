@@ -229,6 +229,12 @@ float SuperGameModule::getForwardVectorRotation() const
     return gameTask->getForwardVectorRotation();
 }
 
+QVector2D SuperGameModule::getForwardVector() const
+{
+    return gameTask->getForwardVector();
+}
+
+
 //===================TESTS===================
 
 void SuperGameModule::superGamePassedTest()

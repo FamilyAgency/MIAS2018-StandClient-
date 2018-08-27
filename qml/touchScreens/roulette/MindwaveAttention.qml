@@ -96,13 +96,13 @@ Item
         height: canvasHeight;
         antialiasing: true;
         smooth: true;
-        renderStrategy: Canvas.Cooperative
-         renderTarget: Canvas.FramebufferObject
+      //  renderStrategy: Canvas.Cooperative
+      //  renderTarget: Canvas.FramebufferObject
 
         onPaint:
         {
             var ctx = getContext("2d");
-            ctx.clearRect(0, 0, canvasWidth, canvasHalfHeight);
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
             drawCircle(ctx, innerRadius, innerLineWidth, colorInner, percentInner);
             drawCircle(ctx, outerRadius, outerLineWidth, colorOuter, percentOuter);
         }
@@ -156,11 +156,16 @@ Item
         canvasCirc.y = y;
     }
 
+    function setRotation(angle)
+    {
+        canvasCirc.rotation = angle;
+    }
+
     function show()
     {
         cavasUpdater.running = true;
         visible = true;
-         starting = true;
+        starting = true;
     }
 
     function hide()

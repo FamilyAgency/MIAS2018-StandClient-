@@ -15,22 +15,16 @@ Item
     signal animComplete();
     signal animStart();
 
-    property string mainTitleDefault: "Ура, до получения<br/>приза совсем немного!<br/>Осталось выполнить<br/>одно задание.";
-    property string buttonTakeColaText: "НЕТ, СПАСИБО";
-    property string buttonSuperGameText: "ХОЧУ<br/>СЫГРАТЬ";
+    property string mainTitleDefault: "Отлично!<br/>  Вы познакомились<br/> с преимуществами <br/>нового Hyundai SANTE FE.";
+    property string buttonSuperGameText: "ГОТОВ";
 
     property string superGameTitle: "СУПЕРИГРА";
-    property string descrTitleDefault: "Готовы бороться за приз?<br/>Тогда начнем!";
+    property string descrTitleDefault: "До получения приза <br/>осталось совсем немного!<br/> Продолжайте путешествие <br/>c Hyundai SANTE FE.";
 
-    property real btnMarginBottom: 100 * consts.designScale;
+    property real btnMarginBottom: 100;
 
     signal startSuperGame();
     signal getColaCan();
-
-    Consts
-    {
-        id: consts;
-    }
 
     FontManager
     {
@@ -44,7 +38,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 80 * consts.designScale;
+        font.pixelSize: 60 ;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -77,9 +71,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350;
+        btnHeight: 350;
+        btnRadius: 175;
 
         onClicked:
         {

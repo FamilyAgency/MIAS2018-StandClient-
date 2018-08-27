@@ -12,7 +12,7 @@ Item
     anchors.centerIn: parent;
 
     property string mainTitleDefault: "УСТРОЙСТВО<br/>АКТИВИРОВАНО";
-    property string journeyTitleDefault: "ВПЕРЕД<br/>К ПРИКЛЮЧЕНИЯМ!";
+    property string journeyTitleDefault: "Осталось выбрать<br/>маршрут в городе.<br/><br/>Вас ждут три остановки,<br/> на которых вы узнаете<br/> об уникальных преимуществах<br/> нового SANTA FE.";
 
     signal animComplete();
     signal animStart();
@@ -47,14 +47,14 @@ Item
         opacity: instructionModule.opacity2;
         id: journeyText;
         text: journeyTitleDefault;
-        font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 40 * consts.designScale;
+        font.family: font.hyundaiSansHeadRegular;
+        font.pixelSize: 54 * consts.designScale;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter:  parent.verticalCenter;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
-        font.letterSpacing: 14;
+       // font.letterSpacing: 14;
     }
 
     function start()

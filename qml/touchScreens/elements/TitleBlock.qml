@@ -17,19 +17,14 @@ Item
         id: font;
     }
 
-    Consts
-    {
-        id: consts;
-    }
-
     Text
     {
         id: text1;
         anchors.top: parent.top;
-        anchors.topMargin: 100 * consts.designScale;
+        anchors.topMargin: 100;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 40 * consts.designScale;
+        font.pixelSize: 40;
         color: "#0aabd4";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -40,10 +35,10 @@ Item
     {
         id: text2;
         anchors.top: text1.bottom;
-        anchors.topMargin: titleBlock.offsetY * consts.designScale;
+        anchors.topMargin: titleBlock.offsetY;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 70 * consts.designScale;
+        font.pixelSize: 60;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;

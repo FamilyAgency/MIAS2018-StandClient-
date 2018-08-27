@@ -11,7 +11,7 @@ Item
     id: error;
 
     property real btnMarginBottom: 305;//* consts.designScale;
-    property string errorTitle:  "Обратитесь за помощью <br/>к промо персоналу.<br/>Игра не может <br/>быть продолжена";
+    property string errorTitle:  "Ой!<br/>Что-то пошло не так.<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.";
     property string btnTtile: "OK";
 
     anchors.fill: parent;
@@ -37,9 +37,9 @@ Item
     Text
     {
         id: mainText;
-        font.family: font.hyundaiSansHeadRegular;
+        font.family: font.hyundaiSansHeadMedium;
         text: errorTitle;
-        font.pixelSize: 54;
+        font.pixelSize: 60;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top:  parent.top;

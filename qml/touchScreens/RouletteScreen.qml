@@ -15,7 +15,7 @@ Item
     id:core;
     anchors.fill: parent;
 
-    property string rollTextDefault: "КРУТИТЬ<br/>РУЛЕТКУ";
+    property string rollTextDefault: "КРУТИТЕ<br/>РУЛЕТКУ";
     property real btnMarginBottom: 100 * consts.designScale;
 
     signal animComplete();

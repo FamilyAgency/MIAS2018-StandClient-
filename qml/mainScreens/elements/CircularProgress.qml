@@ -1,42 +1,57 @@
 import QtQuick 2.0
 
 import "../../tools"
+import "../../touchScreens/roulette"
 
 Item
 {
-    property double nextAttentionValue: 0.0;
     visible:false;
+
+    property int canvasSize: 240;
 
     Consts
     {
         id:consts;
     }
 
-    Connections
+    MindwaveAttention
     {
-        target: mind;
-        onAttentionChanged:
-        {
-            nextAttentionValue = mind.attention / 100.0;
-            //canvasCirc.percentAttention = nextAttentionValue;
-            attentionAnim.to = nextAttentionValue;
-            attentionAnim.duration = 100;
-            attentionAnim.start();
-        }
+        id: mindwaveAttention;
+        visible: true;
+
+        arcPercent: 0.7;
+        innerRadius: 55;
+        outerRadius: 75;
+        innerLineWidth: 10;
+        outerLineWidth: 6;
+
+        canvasWidth: canvasSize;
+        canvasHeight: canvasSize;
+        canvasHalfWidth: canvasSize * 0.5;
+        canvasHalfHeight: canvasSize * 0.5;
+
     }
 
     function hideIndicator()
     {
         visible = false;
+        mindwaveAttention.hide();
     }
 
     function showIndicator()
     {
         visible = true;
+        mindwaveAttention.show();
     }
 
-    function moveCar(currentPoint, forwardVector)
+    function moveCar(currentPoint, forwardVector, forwardVectorRot)
     {
+        var rotation = forwardVectorRot;
+        var degrees = rotation * consts.toDegrees;
+        mindwaveAttention.setRotation(degrees + consts.carAddAngle - 40);
+
+        currentPoint.x -= forwardVector.x * 60;
+        currentPoint.y -= forwardVector.y * 60;
         setCarPosition(currentPoint);
         update();
     }
@@ -49,98 +64,23 @@ Item
 
     function update()
     {
-        canvasCirc.requestPaint();
+        // canvasCirc.requestPaint();
     }
 
     function setMindWaveLimit(limit)
     {
-         canvasCirc.percentLimit = limit;// gameTaskManager.getMindwaveLimit();
+        // canvasCirc.percentLimit = limit;
     }
 
     function setCarPosition(currentPoint)
     {
-        var startPoint = currentPoint;
-        x = startPoint.x * consts.scaleFactor - canvasCirc.width * 0.5;
-        y = consts.canvasY + startPoint.y * consts.scaleFactor - canvasCirc.height * 0.5;
+        var x = currentPoint.x - canvasSize * 0.5;
+        var y = currentPoint.y - canvasSize * 0.5;
+        mindwaveAttention.setLocation(x, y);
     }
 
     function setMindwaveLimitPercent(percent)
     {
-        canvasCirc.percentLimit = percent;
-    }
-
-    Canvas
-    {
-        id: canvasCirc;
-        width: 250;
-        height: 250;
-        property int centerWidth: 250 * 0.5
-        property int centerHeight: 250 * 0.5
-        property int radius: 80;
-
-        property real percentLimit: 0.0;
-        property real percentAttention: 0.0;
-
-        onPaint:
-        {
-            var lineWidth = 10;
-
-            var ctx = getContext("2d");
-            ctx.clearRect(0, 0, 250, 250);
-
-            ctx.lineCap = "square";
-            ctx.lineJoin = "round";
-
-            ctx.lineWidth = lineWidth;
-
-            ctx.strokeStyle = "#36565b";;
-            ctx.beginPath();
-            ctx.arc(canvasCirc.centerWidth,
-                    canvasCirc.centerHeight,
-                    canvasCirc.radius,
-                    0,
-                    2 * Math.PI);
-            ctx.stroke();
-            ctx.closePath();
-
-//            ctx.strokeStyle = colorLimit;
-//            ctx.beginPath();
-//            ctx.arc(canvasCirc.centerWidth,
-//                    canvasCirc.centerHeight,
-//                    canvasCirc.radius,
-//                    0,
-//                    2*Math.PI * canvasCirc.percentLimit);
-//            ctx.stroke();
-//            ctx.closePath();
-
-            var col =  "#ffffff";
-//            if(canvasCirc.percentAttention > canvasCirc.percentLimit )
-//            {
-//                col =  "#f50a5c";;
-//            }
-//            else
-//            {
-//                col = "#f50a5c";
-//            }
-
-            ctx.strokeStyle = "#f50a5c";
-            ctx.beginPath();
-            ctx.arc(canvasCirc.centerWidth,
-                    canvasCirc.centerHeight,
-                    canvasCirc.radius,
-                    0,
-                    2 * Math.PI * canvasCirc.percentAttention);
-            ctx.stroke();
-            ctx.closePath();
-        }
-
-        PropertyAnimation
-        {
-            id: attentionAnim;
-            target: canvasCirc;
-            property: "percentAttention";
-            to: 100;
-            duration: 50
-        }
+        // canvasCirc.percentLimit = percent;
     }
 }

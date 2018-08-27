@@ -197,3 +197,8 @@ float GameTask::getForwardVectorRotation() const
     return qAtan2(forwardVec.y(), forwardVec.x());
 }
 
+QVector2D GameTask::getForwardVector() const
+{
+     return QVector2D(endPoint - startPoint).normalized();
+}
+

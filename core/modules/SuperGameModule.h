@@ -38,6 +38,7 @@ public:
     Q_INVOKABLE QPointF getStartPoint() const;
     Q_INVOKABLE QPointF getCurPoint() const;
     Q_INVOKABLE float getForwardVectorRotation() const;
+    Q_INVOKABLE QVector2D getForwardVector() const;
 
     void setUser(QSharedPointer<UserData> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);

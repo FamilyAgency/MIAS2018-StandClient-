@@ -22,7 +22,7 @@ Item
     {
         id: tools;
     }
-    
+
     IntroTitles
     {
         id: introTitiles;
@@ -57,8 +57,6 @@ Item
             }
         }
     }
-    
-    
 
     Connections
     {
@@ -73,7 +71,7 @@ Item
 
         onUserNotFound:
         {
-            cantPlayHandler("Похоже, что тебя<br/>не существует!");
+            cantPlayHandler("Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.");
         }
 
         onUserCantStartReason:
@@ -85,15 +83,15 @@ Item
             case CantPlayReason.WasRecently:
             case CantPlayReason.YouArePlaying:
                 var seconds = userData.getSecondsToStart();
-                cantPlayHandler("Вы можете начать игру заново,<br/>через " + tools.getTimeToStart(seconds));
+                cantPlayHandler("Попробуйте снова <br/>через " + tools.getTimeToStart(seconds)+ ".<br/>Вам обязательно повезет");
                 break;
 
             case CantPlayReason.FinishedPrizesNotGot:
-                cantPlayHandler("Вы можете забрать свои призы<br/>на стойке выдачи призов!");
+                cantPlayHandler("Получите ваш<br/> прохладительный напиток<br/>у стойки выдачи подарков.");
                 break;
 
             case CantPlayReason.FinishedPrizesGot:
-                cantPlayHandler("Вы прошли игру и забрали призы.<br/>Спасибо за участие!");
+                cantPlayHandler("Вы уже получили<br/> прохладительный напиток.<br/>Спасибо за участие!");
                 break;
             }
         }
@@ -108,7 +106,7 @@ Item
             switch(error)
             {
             case CardReaderError.CardParsing:
-                cantPlayHandler("Похоже, что тебя<br/>не существует!");
+                cantPlayHandler("Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.");
                 break;
             }
         }

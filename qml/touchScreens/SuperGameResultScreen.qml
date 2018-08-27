@@ -71,7 +71,7 @@ Item
         result.animComplete();
 
        // superGameFailedHandler();
-        //superGameSuccessHandler();
+       // superGameSuccessHandler();
     }
 
     function stop()

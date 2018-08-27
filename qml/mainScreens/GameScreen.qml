@@ -88,7 +88,7 @@ Item
         onUpdateCanvas:
         {
             car.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
-            mindIndicator.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
+           // mindIndicator.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
         }
     }
 
@@ -110,7 +110,7 @@ Item
             road.visible = true;
             road.draw();
             car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
-            mindIndicator.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
+            mindIndicator.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVector(), gameTaskManager.getForwardVectorRotation());
         }
 
         onPreTaskStartEvent:
@@ -157,7 +157,7 @@ Item
             road.isSuperGame = true;
             road.draw();
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
-            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
+            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
 
             var completedLength = vecLength(road.currentPoint, superGameLastPoint);
             road.setSuperGamePercent(1 - completedLength/superGameLength);

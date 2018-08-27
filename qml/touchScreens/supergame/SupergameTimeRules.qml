@@ -11,12 +11,7 @@ Item
     anchors.centerIn: parent;
 
     property string timeTextDefault: "2:00";
-    property string triesTextDefault: "1";
-
-    Consts
-    {
-        id: consts;
-    }
+    property string triesTextDefault: "1";  
 
     Tools
     {
@@ -33,10 +28,9 @@ Item
         id: time
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
+
         smooth: true;
         source: "qrc:/resources/Time.png"
-        width: 508 * consts.designScale;
-        height: 318 * consts.designScale;
     }
 
     Text
@@ -44,10 +38,10 @@ Item
         id: timeText;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.horizontalCenterOffset: -200;
+        anchors.horizontalCenterOffset: -230;
         anchors.verticalCenterOffset: 30;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 160 * consts.designScale;
+        font.pixelSize: 160;
         text: timeTextDefault;
 
         color: "#ffffff";
@@ -61,7 +55,7 @@ Item
             anchors.top: timeText.bottom;
             anchors.topMargin: -10;
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 40 * consts.designScale;
+            font.pixelSize: 40;
             text: "МИНУТЫ";
             color: "#0aabd4";
             textFormat: Text.StyledText;
@@ -77,7 +71,7 @@ Item
         anchors.horizontalCenterOffset: 210;
         anchors.verticalCenterOffset: 30;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 160 * consts.designScale;
+        font.pixelSize: 160;
         text: triesTextDefault;        
         color: "#ffffff";
         textFormat: Text.StyledText;
@@ -90,7 +84,7 @@ Item
             anchors.top: triesText.bottom;
             anchors.topMargin: -10;
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 40 * consts.designScale;
+            font.pixelSize: 40;
             text: "ПОПЫТКА";
             color: "#0aabd4";
             textFormat: Text.StyledText;
@@ -110,7 +104,7 @@ Item
 
     function show()
     {
-        timeText.text = tools.formatSeconds(superGameModule.getSuperGameTime() / 1000.0);
+        timeText.text = tools.formatSeconds1(superGameModule.getSuperGameTime() / 1000.0);
         opacity = 0;
         opacityAnim.from = 0;
         opacityAnim.to = 1;

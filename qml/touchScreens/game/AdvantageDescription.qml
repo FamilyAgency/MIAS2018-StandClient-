@@ -14,16 +14,11 @@ Item
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property int circleSize: 150;
-    property real nameMarginTop: 60 * consts.designScale;
+    property real nameMarginTop: 60;
     property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ";
-    property real btnMarginBottom: 500 * consts.designScale;
+    property real btnMarginBottom: 100;
 
     signal advantageReaded;
-
-    Consts
-    {
-        id: consts;
-    }
 
     FontManager
     {
@@ -45,12 +40,12 @@ Item
     {
         id: promtText;
         anchors.left: parent.left;
-        anchors.leftMargin: 60 * consts.designScale;
+        anchors.leftMargin: 60;
         anchors.topMargin: nameMarginTop;
         anchors.top: parent.top;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize:  60 * consts.designScale;
+        font.pixelSize:  70;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignLeft;
@@ -60,16 +55,17 @@ Item
         {
             id: promtText2;
             anchors.left: parent.left;
-            // anchors.leftMargin: 60 * consts.designScale;
             anchors.topMargin: nameMarginTop;
             anchors.top: promtText.bottom;
             text: mainTitleDefault;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize:  40 * consts.designScale;
+            font.family: font.hyundaiSansHeadRegular;
+            font.pixelSize:  40;
             color: "#ffffff";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignLeft;
             verticalAlignment: Text.AlignVCenter;
+
+            lineHeight: 1.1;
         }
 
         OpacityAnimator on opacity
@@ -89,9 +85,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible:false;
         anchors.fill: parent;
-        btnWidth: 410 * consts.designScale;
-        btnHeight: 410 * consts.designScale;
-        btnRadius: 205 * consts.designScale;
+        btnWidth: 410;
+        btnHeight: 410;
+        btnRadius: 205;
 
         onClicked:
         {
@@ -103,7 +99,7 @@ Item
     {
         id: brbdelay;
         running: false;
-        interval: 5000;
+        interval: 8000;
         onTriggered:
         {
             brbdelay.stop();

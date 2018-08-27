@@ -12,8 +12,7 @@ Item
     anchors.fill: parent;
     opacity: 0;
 
-    property string addTitleHelloText: "Вы готовы отправиться в интересное<br/>путешествие на новом SANTA FE?<br/><br/>В пути мы сделаем три остановки,\
- <br/>чтобы познакомиться с уникальными<br/>преимуществами этого автомобиля.";
+    property string addTitleHelloText: "Вы готовы отправиться<br/>в интересное путешествие<br/>на новом Hyundai SANTA FE?<br/><br/>Управлять автомобилем<br/>вы будете при помощи<br/>силы мысли!";
     property string buttonText: "НАЧАТЬ";
 
     property real btnMarginBottom: 305 * consts.designScale;
@@ -53,8 +52,8 @@ Item
     Text
     {
         id: addText;
-        font.family: font.hyundaiSansHeadRegular;
-        font.pixelSize: 54 * consts.designScale;
+        font.family: font.hyundaiSansHeadMedium;
+        font.pixelSize: 60;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.topMargin:  titleMarginTop;

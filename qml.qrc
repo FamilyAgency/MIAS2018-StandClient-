@@ -96,5 +96,6 @@
         <file>qml/components/AnimationPlayer.qml</file>
         <file>qml/touchScreens/roulette/MindwaveAttention.qml</file>
         <file>qml/mainScreens/popups/CountdownAnim.qml</file>
+        <file>resources/arrow-small.png</file>
     </qresource>
 </RCC>

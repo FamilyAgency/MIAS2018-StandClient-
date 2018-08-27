@@ -71,6 +71,24 @@ Item
         return minutes + ":" + secs;
     }
 
+    function formatSeconds1(seconds)
+    {
+        var minutes = Math.floor(seconds / 60);
+        var secs = (seconds % 60).toFixed(0);
+
+//        if(minutes < 10)
+//        {
+//            minutes = "0" + minutes
+//        }
+
+        if(secs < 10)
+        {
+            secs = "0" + secs;
+        }
+
+        return minutes + ":" + secs;
+    }
+
     property var decCache: [];
     property var decCases : [2, 0, 1, 1, 1, 2];
 
