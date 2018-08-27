@@ -42,6 +42,8 @@ public:
     Q_INVOKABLE virtual void getDealersRequest() override;
     Q_INVOKABLE virtual void testDriveRequest(int userId, int dealerId) override;
 
+    virtual void checkComplexity( )override;
+
     virtual void start() override;
     virtual void stop() override;
 
@@ -72,11 +74,14 @@ private:
     void handleRequestError(const ServerResponse&  response);
 
     void createDealersData(const QJsonArray& jsonArray);
+    void createComplexityData(const QJsonObject& object);
 
 signals:
      void baseUserDataRecived(const BaseUserData& baseUserData);
      void dealersDataUpdated(const QVariantList& allDealers);
      void testDriveRequestSuccess();
+
+     void newGameComplexity(const ComplexityConfig& complexityConfig);
 };
 
 #endif // SERVERREMOTECOMPONENT_H

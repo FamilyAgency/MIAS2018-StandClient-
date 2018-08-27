@@ -17,6 +17,7 @@ Item
     property real nameMarginTop: 60;
     property string buttonText: "ПОЕХАЛИ<br/>ДАЛЬШЕ";
     property real btnMarginBottom: 100;
+    property int btnShowDelay: 10000;
 
     signal advantageReaded;
 
@@ -99,7 +100,7 @@ Item
     {
         id: brbdelay;
         running: false;
-        interval: 8000;
+        interval: btnShowDelay;
         onTriggered:
         {
             brbdelay.stop();

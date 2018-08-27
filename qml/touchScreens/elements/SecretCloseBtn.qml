@@ -8,8 +8,8 @@ Item
     anchors.fill:  parent;
     opacity: 0.0;
 
-    property int maxClicks: 5;
-    property int mills: 2000;
+    property int maxClicks: 10;
+    property int mills: 3000;
     property int currentClick: 0;
 
     Button
@@ -21,7 +21,7 @@ Item
         height: 100;
         anchors.top: parent.top;
         anchors.topMargin: 0;
-        anchors.left: parent.left;
+        anchors.right: parent.right;
         anchors.rightMargin: 0;
         onClicked:
         {
@@ -34,7 +34,7 @@ Item
             {
                 currentClick = 0;
                 timer.stop();
-                appController.backToIntro();
+                Qt.quit();
             }
         }
     }

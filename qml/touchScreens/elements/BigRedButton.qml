@@ -31,7 +31,6 @@ Item
             anchors.horizontalCenter: parent.horizontalCenter;
             anchors.bottom: parent.bottom;
             enabled: false;
-            //anchors.top: parent.top;
 
             background: Rectangle
             {
@@ -79,6 +78,7 @@ Item
 
             onClicked:
             {
+                startBtn.enabled = false;
                 bigRedButton.clicked();
             }
 
@@ -131,6 +131,11 @@ Item
     //        bg.radius = (width / 2) * consts.designScale;
     //    }
 
+    function setEnabled(value)
+    {
+        startBtn.enabled = value;
+    }
+
     function setTitle(title)
     {
         content.text = title;
@@ -144,6 +149,8 @@ Item
 
 
         startBtn.scale = 0;
+        scaleAnimator.stop();
+
 
         scaleAnimator.from = 0;
         scaleAnimator.to = 1;
@@ -158,6 +165,8 @@ Item
     function hide()
     {
        // visible = false;
+        scaleAnimator.stop();
+
         startBtn.enabled = false;
         scaleAnimator.from = 1;
         scaleAnimator.to = 0.0;

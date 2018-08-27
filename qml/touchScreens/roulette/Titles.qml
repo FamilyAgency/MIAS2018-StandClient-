@@ -22,10 +22,10 @@ Item
     {
         id: mainText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60 * consts.designScale;
+        font.pixelSize: 60;
         color: "#ffffff";
         anchors.top: parent.top;
-        anchors.topMargin: 168 * consts.designScale;
+        anchors.topMargin: 168;
         anchors.horizontalCenter: parent.horizontalCenter;
         text: mainTitleDefault;
         horizontalAlignment: Text.AlignHCenter;
@@ -38,7 +38,7 @@ Item
     {
         id: taskTextTitle;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 40 * consts.designScale;
+        font.pixelSize: 40;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
@@ -55,7 +55,7 @@ Item
     {
         id: taskText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60 * consts.designScale;
+        font.pixelSize: 60;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: taskTextTitle.top;
@@ -71,11 +71,11 @@ Item
     {
         id: helpText;
         anchors.top: parent.top;
-        anchors.topMargin: 168 * consts.designScale;
+        anchors.topMargin: 168;
         anchors.horizontalCenter: parent.horizontalCenter;
         text: mainTitle2;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 50 * consts.designScale;
+        font.pixelSize: 50;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;

@@ -61,6 +61,8 @@ public:
         FinishGameRequest,
         GetDealersRequest,
         TestDriveRequest,
+
+        CheckComplexity
     };
     Q_ENUM(ResponseType)
 
@@ -100,6 +102,8 @@ public:
     virtual void searchUserByIdRequest(int userId) = 0;
     virtual void getDealersRequest() = 0;
     virtual void testDriveRequest(int userId, int dealerId) = 0;
+
+    virtual void checkComplexity() = 0;
 
     ServerConfig serverConfig() const;
     void setServerConfig(const ServerConfig& );

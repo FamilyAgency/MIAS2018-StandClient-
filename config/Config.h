@@ -286,8 +286,8 @@ struct OneGameComplexityConfig
 struct ComplexityConfig
 {
      QVector<OneGameComplexityConfig> gameComplexities;
-     int instruction;
-     int roulette;
+     int instruction = -1;
+     int roulette = -1;
 };
 
 class Config
@@ -308,7 +308,6 @@ public:
     QSharedPointer<StandAnimConfig> standAnimConfig;
     QSharedPointer<AdvantagesConfig> advantagesConfig;
     QSharedPointer<ComplexityConfig> complexityConfig;
-
 
     QString getRawData() const;
     void setRawData(const QString& value);

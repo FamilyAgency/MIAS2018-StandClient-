@@ -335,5 +335,6 @@ Item
         citiesBtn.setIndex(-1);
         dealerBtn.setIndex(-1);
         swiper.currentIndex = 0;
+        startBtn.visible =  false;
     }
 }

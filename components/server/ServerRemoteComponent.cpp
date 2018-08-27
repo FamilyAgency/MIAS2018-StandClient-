@@ -226,6 +226,14 @@ void ServerRemoteComponent::testDriveRequest(int userId, int dealerId)
     commonRequest(ResponseType::TestDriveRequest, request, HTTPMethod::POST, data);
 }
 
+void ServerRemoteComponent::checkComplexity()
+{
+    QNetworkRequest request(serverConfig().url + "/complexity/");
+   // QString url = "http://familyagency.ru/lab/mias2018/complexity.json";
+   // QNetworkRequest request(url);
+
+    commonRequest(ResponseType::CheckComplexity, request, HTTPMethod::GET);
+}
 
 //======================== PARSING ========================//
 //=========================================================//
@@ -244,6 +252,11 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
 
     if(response.status != "success" || response.code != 200)
     {
+        if(response.type == ResponseType::CheckComplexity)
+        {
+            return;
+        }
+
         handleRequestError(response);
         return;
     }
@@ -335,6 +348,13 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     else if(response.type == ResponseType::TestDriveRequest)
     {
          emit testDriveRequestSuccess();
+    }
+
+    else if(response.type == ResponseType::CheckComplexity)
+    {
+        qDebug()<<"===== CheckComplexity Request =====";
+        QJsonObject dataJson = responeJson["complexity"].toObject();
+        createComplexityData(dataJson);
     }
 }
 
@@ -448,6 +468,42 @@ void ServerRemoteComponent::createDealersData(const QJsonArray& jsonArray)
     }
 
     emit dealersDataUpdated(allDealers);
+}
+
+void ServerRemoteComponent::createComplexityData(const QJsonObject& jsonObject)
+{
+    ComplexityConfig complexityConfig;
+    if(jsonObject["instruction"].isUndefined())
+    {
+        qDebug()<<"complexity load failed";
+        return;
+    }
+
+    complexityConfig.instruction = jsonObject["instruction"].toInt();
+    complexityConfig.roulette = jsonObject["roulette"].toInt();
+
+    auto gamesComplArray = jsonObject["game"].toArray();
+
+    for(auto compl: gamesComplArray)
+    {
+        OneGameComplexityConfig complConfig;
+        auto complObj = compl.toObject();
+        complConfig.attentionMin = complObj["attentionMin"].toInt();
+        complConfig.attentionMax = complObj["attentionMax"].toInt();
+
+        complConfig.velocityMin = complObj["velocityMin"].toDouble();
+        complConfig.velocityMax = complObj["velocityMax"].toDouble();
+        complConfig.backMove = complObj["backMove"].toBool();
+
+        complConfig.velocityBackMin = complObj["velocityBackMin"].toDouble();
+        complConfig.velocityBackMax = complObj["velocityBackMax"].toDouble();
+
+        complexityConfig.gameComplexities.push_back(complConfig);
+    }
+
+     qDebug()<<"complexity load true";
+
+    emit newGameComplexity(complexityConfig);
 }
 
 //======================== SET/GET ========================//

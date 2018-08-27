@@ -1,4 +1,4 @@
-QT += qml quick widgets serialport bluetooth
+QT += qml quick widgets serialport
 
 
 CONFIG += c++11

@@ -8,10 +8,9 @@ import "../components"
 Item
 {
     property string superGameTitle1: "Поздравляем!";
-    property string superGameTitle2: "ТВОЙ РЕЗУЛЬТАТ";
+    property string superGameTitle2: "ВАШ РЕЗУЛЬТАТ";
     property bool superGameSuccess: false;
     property int offsetY: 0;
-
 
     anchors.fill: parent;
     anchors.centerIn: parent;
@@ -58,20 +57,20 @@ Item
         }
     }
 
-//    AnimationPlayer
-//    {
-//        id: confAnim;
-//        currentImage: 1;
-//        endFrame: 191;
-//        startFrame: 1;
-//        Component.onCompleted:
-//        {
-//            confAnim.setSource("content/misc/confeti/", ".png");
-//            confAnim.setFPS(30);
-//            confAnim.setRunning(false);
-//            confAnim.init();
-//        }
-//    }
+    //    AnimationPlayer
+    //    {
+    //        id: confAnim;
+    //        currentImage: 1;
+    //        endFrame: 191;
+    //        startFrame: 1;
+    //        Component.onCompleted:
+    //        {
+    //            confAnim.setSource("content/misc/confeti/", ".png");
+    //            confAnim.setFPS(30);
+    //            confAnim.setRunning(false);
+    //            confAnim.init();
+    //        }
+    //    }
 
     Text
     {
@@ -91,9 +90,10 @@ Item
     Text
     {
         id: superTime;
-        text: "1:34";      
+        text: "1:34";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
+        anchors.verticalCenterOffset: 50;
         font.family: font.hyundaiSansHeadMedium;
         font.pixelSize: 270;
         color: "#ffffff";
@@ -113,6 +113,23 @@ Item
         color: "#00b4e2";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
+    }
+
+    Image
+    {
+        id: stars;
+        property int currentImage: 0;
+        y: 170
+        anchors.horizontalCenter: parent.horizontalCenter;
+        source: configController.getFileInAppDir("content/misc/Stars/" + currentImage + ".png");
+        NumberAnimation on currentImage
+        {
+            from: 0;
+            to: 150;
+            duration: 151 * 1000. / 30;
+            running: true;
+            loops: Animation.Infinite;
+        }
     }
 
 
@@ -144,15 +161,15 @@ Item
 
     Component.onCompleted:
     {
-       // show();
+        //show();
     }
 
     function show()
     {
-        if(superGameSuccess)
+         if(superGameSuccess)
         {
             visible = true;
-           // confAnim.setRunning(true);
+            // confAnim.setRunning(true);
             opacity = 0;
             opacityAnim.start();
         }
@@ -160,7 +177,7 @@ Item
 
     function hide()
     {
-        visible = false;        
-       // confAnim.setRunning(false);
+        visible = false;
+        // confAnim.setRunning(false);
     }
 }

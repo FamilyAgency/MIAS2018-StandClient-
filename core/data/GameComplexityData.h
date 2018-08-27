@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include "config/Config.h"
-//#include "components/ServerComponent.h"
 
 class GameComplexityData : public QObject
 {
@@ -19,13 +18,13 @@ public:
     int instruction;
     int roulette;
 
-    void update();
     void start();
-    //void setServerComponent(QSharedPointer<ServerComponent> value);
+    void setServerComponent(QSharedPointer<class ServerComponent> value);
+    void checkComplexity();
 
 private:
     ComplexityConfig complexityConfig;
-  //  QSharedPointer<ServerComponent> serverComponent = nullptr;
+    QSharedPointer<class ServerComponent> serverComponent = nullptr;
 
 private slots:
     void onNewGameComplexity(const ComplexityConfig& value);

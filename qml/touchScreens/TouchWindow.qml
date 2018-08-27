@@ -68,6 +68,12 @@ Item
         z: 4;
     }
 
+    SecretCloseBtn
+    {
+        id: closeBtn;
+        z: 4;
+    }
+
     MouseArea
     {
         anchors.fill: parent;

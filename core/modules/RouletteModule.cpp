@@ -284,7 +284,6 @@ void RouletteModule::start()
     //test
     // emit gameCategoryUpdate(0);
     //  mindwaveTimer->start(mindwaveTimerMills);
-    //
 }
 
 void RouletteModule::initParams()
@@ -394,7 +393,7 @@ void RouletteModule::startRoll()
 void RouletteModule::onRollAnimationCompleted()
 {
     serverComponent->startGameRequest(currentUser->baseUserData().id);
-    //onUserStartedGame();
+   // onUserStartedGame();
 }
 
 void RouletteModule::onUserStartedGame()

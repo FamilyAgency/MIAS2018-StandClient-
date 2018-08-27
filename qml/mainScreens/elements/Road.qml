@@ -71,8 +71,8 @@ Item
             {
                 if(isSuperGame)
                 {
-                    // drawSuperGameGuidePaths(ctx);
-                    // animateSuperTrack();
+                   // drawSuperGameGuidePaths(ctx);
+                   // animateSuperTrack();
                     return;
                 }
 
@@ -200,9 +200,9 @@ Item
             repeater.itemAt(i).source = blueArrow;
         }
 
-        for(var i = countToShow; i < repeater.model; i++)
+        for(var j = countToShow; j < repeater.model; j++)
         {
-            repeater.itemAt(i).source = redArrow;
+            repeater.itemAt(j).source = redArrow;
         }
     }
 
@@ -215,7 +215,7 @@ Item
 
     function setSuperTrackPosition(position)
     {
-        superTrackHolder.x = position.x - arrowSize * 0.5;
+        superTrackHolder.x = position.x;// - arrowSize * 0.5;
         superTrackHolder.y = position.y - arrowSize * 0.5;
     }
 

@@ -6,9 +6,6 @@
 #include "components/server/ServerRemoteComponent.h"
 #include "tests/ServerRemoteComponentTest.h"
 
-#include <QBluetoothDeviceInfo>
-#include <QBluetoothDeviceDiscoveryAgent>
-
 AppController::AppController(QObject *parent) : QObject(parent)
 {
 
@@ -125,7 +122,8 @@ void AppController::createEngine()
     animationManager.reset(new AnimationManager());
 
     userData->setGameComplexity(gameComplexityData);
-    //gameComplexityData->setServerComponent(serverComponent);
+
+    gameComplexityData->setServerComponent(serverComponent);
 
 }
 
@@ -225,24 +223,9 @@ void AppController::start()
         comp->start();
     }
 
+    gameComplexityData->start();
+
     setAppState(AppState::Intro);
-
-
-//    // Create a discovery agent and connect to its signals
-//       QBluetoothDeviceDiscoveryAgent *discoveryAgent = new QBluetoothDeviceDiscoveryAgent(this);
-//       connect(discoveryAgent, SIGNAL(deviceDiscovered(QBluetoothDeviceInfo)),
-//               this, SLOT(deviceDiscovered(QBluetoothDeviceInfo)));
-
-//       // Start a discovery
-//       discoveryAgent->start();
-
-//       //...
-}
-
-// In your local slot, read information about the found devices
-void AppController::deviceDiscovered(const QBluetoothDeviceInfo &device)
-{
-    qDebug() << "Found new device:" << device.name() << '(' << device.address().toString() << ')';
 }
 
 void AppController::onServerResponse(const ServerResponse& response)
@@ -251,7 +234,6 @@ void AppController::onServerResponse(const ServerResponse& response)
 }
 
 // ============== Intro Module ============== //
-
 void AppController::onUserStartPlay()
 {
     gameSession->start();
@@ -265,14 +247,12 @@ void AppController::onUserAcceptedGame()
 
 // ============== Instruction Module ============== //
 
-
 void AppController::onInstructionComplete()
 {
     setAppState(AppState::Roulette);
 }
 
 // ============== Roulette Module ============== //
-
 void AppController::onGameCategoryUpdate(int id)
 {
     userData->setGameCategory(id);
@@ -351,7 +331,7 @@ void AppController::setAppState(AppState value)
 
     if(value == AppState::Intro)
     {
-        gameComplexityData->update();
+        gameComplexityData->checkComplexity();
     }
 }
 

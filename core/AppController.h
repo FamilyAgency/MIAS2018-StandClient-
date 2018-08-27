@@ -5,9 +5,6 @@
 #include <QObject>
 #include <QList>
 
-#include <QBluetoothDeviceInfo>
-
-
 #include "components/HealthCheckerComponent.h"
 #include "components/mindwave/MindwaveComponentBase.h"
 #include "components/ServerComponent.h"
@@ -140,8 +137,6 @@ private slots:
     void onSuperGameAccepted();
     void onSuperGameRejected();
     void onSuperGameResultReaded();
-
-    void deviceDiscovered(const QBluetoothDeviceInfo &device);
 };
 
 #endif // APPCOPCONTROLLER_H

@@ -16,15 +16,11 @@ Item
     anchors.fill: parent;
 
     property string rollTextDefault: "КРУТИТЕ<br/>РУЛЕТКУ";
-    property real btnMarginBottom: 100 * consts.designScale;
+    property real btnMarginBottom: 100;
+
 
     signal animComplete();
     signal animStart();
-
-    Consts
-    {
-        id: consts;
-    }
 
     Roulette
     {
@@ -38,9 +34,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350;
+        btnHeight: 350;
+        btnRadius: 175;
 
         onClicked:
         {
@@ -69,8 +65,8 @@ Item
             smooth: true;
             source: "qrc:/resources/santafe_top.png"
             y: parent.height + rouletteModule.carY;
-            width: 251 * consts.designScale;
-            height: 555 * consts.designScale;
+            width: 251;
+            height: 555;
         }
         layer.enabled: maskEnable;
         layer.effect: OpacityMask
@@ -81,9 +77,9 @@ Item
                 height: maskHolder.height;
                 Rectangle
                 {
-                    width: 950 * consts.designScale;
-                    height: 950 * consts.designScale;
-                    radius: 475 * consts.designScale;
+                    width: 950;
+                    height: 950;
+                    radius: 475;
                     anchors.horizontalCenter: parent.horizontalCenter;
                     anchors.top: parent.top;
                     anchors.topMargin: rouletteModule.circleY;
@@ -91,6 +87,19 @@ Item
                     opacity: rouletteModule.circleOpacity;
                 }
             }
+        }
+    }
+
+    Timer
+    {
+        id: delayTimer;
+        running: false;
+        interval: 3000;
+        repeat: false;
+        onTriggered:
+        {
+             delayTimer.stop();
+            core.animComplete();
         }
     }
 
@@ -121,10 +130,11 @@ Item
         maskHolder.maskEnable = false;
         core.animComplete();
         brb.visible = true;
-        brb.show();        
-        roulette.show();
-
+        brb.show();
+        roulette.show();     
         visible = true;
+        delayTimer.start();
+        core.animStart();
     }
 
     function stop()
@@ -132,5 +142,6 @@ Item
         visible = false;
         brb.visible = false;
         roulette.hide();
+        delayTimer.stop();
     }
 }

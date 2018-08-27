@@ -14,6 +14,8 @@ Item
     property int offset: 70;
     property int vertOffset: 0;
 
+    property int canvasSize: 950;
+
     FontManager
     {
         id: font;
@@ -22,8 +24,8 @@ Item
     Image
     {
         id: roullete
-        width: 926 * consts.designScale;
-        height: 926  * consts.designScale;
+        width: 926;
+        height: 926;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
@@ -74,11 +76,11 @@ Item
     Rectangle
     {
         id: bgPulsar;
-        implicitHeight: 1200 * consts.designScale;
-        implicitWidth: 1200 * consts.designScale;
+        implicitHeight: 1200;
+        implicitWidth: 1200;
 
         color: "#7b7cfe";
-        radius: 600 * consts.designScale;
+        radius: 600;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY - 125;
@@ -89,9 +91,9 @@ Item
     Rectangle
     {
         id: bg;
-        implicitHeight: 950 * consts.designScale;
-        implicitWidth: 950 * consts.designScale;
-        radius: 475 * consts.designScale;
+        implicitHeight: 950;
+        implicitWidth: 950;
+        radius: 475;
 
         color:  "#7b7cfe";
 
@@ -116,14 +118,19 @@ Item
     }
 
     MindwaveAttention
-    {
-        y: 100;
+    {       
         id: mindwaveAttention;
         visible: false;
         opacity: rouletteModule.mindwaveCtrlOpacity;
+
+        canvasWidth: canvasSize;
+        canvasHeight: canvasSize;
+        canvasHalfWidth: canvasSize * 0.5;
+        canvasHalfHeight: canvasSize * 0.5;
+
         Component.onCompleted:
         {
-            mindwaveAttention.setLocation(0.0, 60.0);
+            mindwaveAttention.setLocation(1080 * 0.5 - canvasHalfWidth, 1920 * 0.5 - canvasHalfHeight + 50);
         }
 
         onAttentionGood:
