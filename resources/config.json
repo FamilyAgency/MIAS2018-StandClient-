@@ -125,7 +125,7 @@
         "memoryCheckMills": 600000
     },
     "needRemoteUpdate": false,
-    "qmlOnStart": "qrc:/qml/mainDebug.qml",
+    "qmlOnStart": "qrc:/qml/mainRelease.qml",
     "release": false,
     "rfid": {
         "autoConnect": false,
@@ -150,7 +150,7 @@
             "height": 1920,
             "splashScreen": true,
             "width": 1080,
-            "x": 1920,
+            "x": 0,
             "y": 0
         },
         "touch": {
@@ -158,7 +158,7 @@
             "splashScreen": true,
             "width": 1080,
             "x": 0,
-            "y": 0
+            "y": 1920
         }
     },
     "server": {
