@@ -1,5 +1,5 @@
 {
-    "appId": 6,
+    "appId": 2,
     "appName": "Main stand",
     "configUpdateUrl": "http://familyagency.ru/lab/synapse/digitalframes/config.json",
     "folderSeparator": "\\",
@@ -50,7 +50,7 @@
       {
           "title": "Когда каждое место <br/>на борту —  самое удобное!",
           "description": "Чтобы  попасть на третий  ряд сидений, <br/> достаточно нажать на кнопку. Чтобы<br/>сложить второй ряд — тоже. Так вы<br/>всегда можете выбрать наиболее удобную<br/>схему расположения пассажирских сидений.",
-          "descriptionmap": "Легкий доступ<br/>на 3 ряд сидений",
+          "descriptionmap": "Легкий доступ<br/>на 3-ий ряд сидений",
           "videoPath": "7"
       }
   ],
@@ -68,7 +68,7 @@
         "ip": "127.0.0.1",
         "port": 13854,
         "timeout": 4000,
-        "type": "simulation",
+        "type": "serial",
         "com": "COM4",
         "type_example": [
             "serial",
@@ -79,43 +79,43 @@
     "complexity":
     {
         "instruction": 10,
-        "roulette": 40,
+        "roulette": 10,
         "game":
         [
             {
                 "attentionMin":40,
                 "attentionMax":80,
                 "velocityMin": 0.3,
-                "velocityMax": 0.9,
+                "velocityMax": 1.2,
                 "backMove": true,
-                "velocityBackMin": -1.0,
+                "velocityBackMin": -0.5,
                 "velocityBackMax": -0.2
             },
             {
                 "attentionMin":50,
                 "attentionMax":100,
                 "velocityMin": 0.1,
-                "velocityMax": 0.8,
+                "velocityMax": 1.4,
                 "backMove": true,
-                "velocityBackMin": -1.0,
+                "velocityBackMin": -0.5,
                 "velocityBackMax": -0.2
             },
             {
                 "attentionMin":55,
                 "attentionMax":80,
                 "velocityMin": 0.3,
-                "velocityMax": 0.8,
+                "velocityMax": 1.1,
                 "backMove": true,
-                "velocityBackMin": -1.0,
+                "velocityBackMin": -0.4,
                 "velocityBackMax": -0.2
             },
             {
-                "attentionMin":60,
+                "attentionMin":55,
                 "attentionMax":100,
                 "velocityMin": 0.4,
-                "velocityMax": 0.9,
+                "velocityMax": 1.1,
                 "backMove": true,
-                "velocityBackMin": -1.0,
+                "velocityBackMin": -0.4,
                 "velocityBackMax": -0.2
             }
         ]
@@ -154,9 +154,9 @@
             "y": 0
         },
         "touch": {
-            "height": 960,
+            "height": 1920,
             "splashScreen": true,
-            "width": 540,
+            "width": 1080,
             "x": 0,
             "y": 0
         }
@@ -561,12 +561,12 @@
                             "path": [
                                 {"x":275,"y":1625},
                                 {"x":279,"y":1314},
-                                {"x":457,"y":1354}
+                                {"x":357,"y":1330}
                             ]
                         },
                         {
                             "path": [
-                                {"x":457,"y":1354},
+                                {"x":357,"y":1330},
                                 {"x":828,"y":1439},
                                 {"x":836,"y":1345}
                             ]},
@@ -1084,7 +1084,7 @@
                             },
                             "mainGame":
                                 [{
-                                    "description": "На заезд на роликах на ВДНХ",
+                                    "description": "На заезд<br/>на роликах на ВДНХ",
                                     "descriptionwin": "Ура! Вы приехали<br/>на заезд на роликах<br/>на ВДНХ.",
                                     "imagewinpath": "task1/win.png",
                                     "iconpath": "task1/icon.png",
@@ -1161,7 +1161,7 @@
                                     ]
                                 },
                                 {
-                                    "description": "В театр Кукол",
+                                    "description": "В Театр Кукол",
                                     "descriptionwin": "Ура!<br/> Вы приехали<br/>в Театр Кукол.",
                                     "imagewinpath": "task3/win.png",
                                     "iconpath": "task3/icon.png",

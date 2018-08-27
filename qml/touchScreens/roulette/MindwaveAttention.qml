@@ -23,7 +23,7 @@ Item
     property real percentOuter: 0.0;
 
     property real percentInnerThreshold: 0.4;
-    property real percentOuterThreshold: 0.3;
+    property real percentOuterThreshold: 0.2;
 
     property int canvasWidth: 1080;
     property int canvasHeight: 1920;
@@ -38,7 +38,7 @@ Item
 
     property bool starting: false;
 
-    property real attentionThreshold: 0.9;
+    property real attentionThreshold: 0.4;
 
     property bool notifyOnce: false;
 
