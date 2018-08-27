@@ -8,6 +8,7 @@ import "../components"
 import "elements"
 import com.app 1.0
 
+import "roulette"
 Item
 {
     id: touchCore;

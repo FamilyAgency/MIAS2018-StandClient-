@@ -54,7 +54,7 @@ Item
 
     function setMindWaveLimit(limit)
     {
-         canvasCirc.percentLimit =limit;// gameTaskManager.getMindwaveLimit();
+         canvasCirc.percentLimit = limit;// gameTaskManager.getMindwaveLimit();
     }
 
     function setCarPosition(currentPoint)

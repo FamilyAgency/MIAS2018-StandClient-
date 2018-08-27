@@ -9,7 +9,6 @@ Item
 {
     id: indicator;
     anchors.fill: parent;
-    opacity: rouletteModule.mindwaveCtrlOpacity;
 
     property double nextAttentionValue: 0.0;
 
@@ -39,19 +38,22 @@ Item
 
     property bool starting: false;
 
-    property real attentionThreshold: 0.6;
+    property real attentionThreshold: 0.9;
 
     property bool notifyOnce: false;
 
+    property real arcPercent: 1.0;
+
+    signal attentionGood();
 
     onPercentInnerChanged:
     {
-        if(starting && percentInner > attentionThreshold)
+        if(starting && percentInner >= attentionThreshold)
         {
             if(!notifyOnce)
             {
                 notifyOnce = true;
-                rouletteModule.finalizeCarAnimation();
+                indicator.attentionGood();
             }
         }
     }
@@ -72,16 +74,17 @@ Item
                 return;
             }
 
+            var timeDumper = 3000;
             nextAttentionValue = mind.attention / 100.0;
 
             var animTo = tools.mapRangeClamp(nextAttentionValue, percentInnerThreshold, 1.0,  0.0, 1.0);
             maxAttentionAnim.to = animTo;
-            maxAttentionAnim.duration = Math.abs(animTo - percentInner) * 2000;
+            maxAttentionAnim.duration = Math.max(Math.abs(animTo - percentInner) * timeDumper, 500);
             maxAttentionAnim.start();
 
             animTo = tools.mapRangeClamp(nextAttentionValue, 0.0, percentOuterThreshold,  0.0, 1.0);
             minAttentionAnim.to = animTo;
-            maxAttentionAnim.duration = Math.abs(animTo - percentInner) * 2000;
+            minAttentionAnim.duration = Math.max(Math.abs(animTo - percentOuter) * timeDumper, 500);
             minAttentionAnim.start();
         }
     }
@@ -93,6 +96,8 @@ Item
         height: canvasHeight;
         antialiasing: true;
         smooth: true;
+        renderStrategy: Canvas.Cooperative
+         renderTarget: Canvas.FramebufferObject
 
         onPaint:
         {
@@ -127,7 +132,7 @@ Item
     {
         id: cavasUpdater;
         running: false;
-        interval: 100;
+        interval: 10;
         repeat: true
         onTriggered:
         {
@@ -147,15 +152,15 @@ Item
 
     function setLocation(x, y)
     {
-       canvasCirc.x = x;
-       canvasCirc.y = y;
+        canvasCirc.x = x;
+        canvasCirc.y = y;
     }
 
     function show()
     {
         cavasUpdater.running = true;
-        starting = true;
-        visible = true;  
+        visible = true;
+         starting = true;
     }
 
     function hide()
@@ -182,13 +187,13 @@ Item
         ctx.strokeStyle = colorBg;
 
         ctx.beginPath();
-        ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI);
+        ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI * arcPercent);
         ctx.stroke();
         ctx.closePath();
 
         ctx.strokeStyle = color;
         ctx.beginPath();
-        ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI * percent);
+        ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI * percent * arcPercent);
         ctx.stroke();
         ctx.closePath();
     }

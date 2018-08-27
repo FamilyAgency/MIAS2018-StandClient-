@@ -69,39 +69,24 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
 
-        CountdownAnim
+//        CountdownAnim
+//        {
+//            id:countdown;
+//        }
+
+
+        Text
         {
-            id:countdown;
+            id: countdownText;
+            anchors.horizontalCenter: parent.horizontalCenter;
+            anchors.verticalCenter: parent.verticalCenter;
+            font.family: font.hyundaiSansHeadMedium;
+            font.pixelSize: 300 * consts.designScale;
+            color: "#ffffff";
+            textFormat: Text.StyledText;
+            horizontalAlignment :Text.AlignHCenter;
+            text: "3";
         }
-
-//        AnimationPlayer
-//        {
-//            id: countdowAnim;
-//            currentImage: 0;
-//            endFrame: 105;
-//            startFrame: 0;
-//            Component.onCompleted:
-//            {
-//                countdowAnim.setSource("content/misc/321/", ".png");
-//                countdowAnim.setFPS(30);
-//                countdowAnim.init();
-//                countdowAnim.setRunning(false);
-//                countdowAnim.setLocation(-1077 * 0.5, -1920 * 0.5)
-//            }
-//        }
-
-//        Text
-//        {
-//            id: countdownText;
-//            anchors.horizontalCenter: parent.horizontalCenter;
-//            anchors.verticalCenter: parent.verticalCenter;
-//            font.family: font.hyundaiSansHeadMedium;
-//            font.pixelSize: 300 * consts.designScale;
-//            color: "#ffffff";
-//            textFormat: Text.StyledText;
-//            horizontalAlignment :Text.AlignHCenter;
-//            text: "3";
-//        }
     }
 
     Item
@@ -316,7 +301,7 @@ Item
 
     function openCountDown()
     {
-        countdown.show();
+       // countdown.show();
         preTask.visible = true;
         postTask.visible = false;
         allTask.visible = false;
@@ -324,19 +309,19 @@ Item
         scaleAnimator.start();
         visible = true;
 
-       // countdowAnim.currentImage = 0;
-       // countdowAnim.setRunning(true);
+      //  countdowAnim.currentImage = 0;
+      //  countdowAnim.setRunning(true);
     }
 
     function countDownUpdate(time)
     {
-//        countdownText.font.pixelSize = 350 * consts.designScale;
-//        countdownText.text = time.toFixed(0);
+        countdownText.font.pixelSize = 350 * consts.designScale;
+        countdownText.text = time.toFixed(0);
 
-//        if( countdownText.text == "0")
-//        {
-//            countdownText.font.pixelSize = 120 * consts.designScale;
-//            countdownText.text = "ПОЕХАЛИ";
-//        }
+        if( countdownText.text == "0")
+        {
+            countdownText.font.pixelSize = 120 * consts.designScale;
+            countdownText.text = "ПОЕХАЛИ";
+        }
     }
 }

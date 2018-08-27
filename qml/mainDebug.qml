@@ -20,6 +20,8 @@ ApplicationWindow
 
     id: core;
 
+
+
     TouchWindow
     {
         id:touchWindow;
@@ -34,7 +36,7 @@ ApplicationWindow
     {
         id:mainWindow;
         visible:true;
-    }   
+    }
 
 //    ControlsWindow
 //    {

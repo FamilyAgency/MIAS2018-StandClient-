@@ -120,10 +120,25 @@ Item
         y: 100;
         id: mindwaveAttention;
         visible: false;
-
+        opacity: rouletteModule.mindwaveCtrlOpacity;
         Component.onCompleted:
         {
             mindwaveAttention.setLocation(0.0, 60.0);
+        }
+
+        onAttentionGood:
+        {
+            rouletteModule.finalizeCarAnimation();
+        }
+    }
+
+    Connections
+    {
+        target: rouletteModule;
+
+        onUpdateChoosenCategoryImagePath:
+        {
+            choosen.source = standData.getStandImage(path);
         }
     }
 
@@ -137,13 +152,5 @@ Item
         mindwaveAttention.visible = false;
     }
 
-    Connections
-    {
-        target: rouletteModule;
 
-        onUpdateChoosenCategoryImagePath:
-        {
-            choosen.source = standData.getStandImage(path);
-        }
-    }
 }
