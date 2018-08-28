@@ -101,8 +101,16 @@ Item
         onTriggered:
         {
             startOpacityAnim(0, 1);
-            mainText.text = "Привет,<br/>" + userData.baseUserData.name + "!";
-            brb.visible = true;
+            if(!standData.mainConfig.noname)
+            {
+                mainText.text = "Привет,<br/>" + userData.baseUserData.name + "!";
+            }
+            else
+            {
+                mainText.text = "Привет!";
+            }
+
+             brb.visible = true;
             brb.show();
         }
     }
@@ -143,7 +151,7 @@ Item
         opacityAnim.stop();
         mainText.visible = false;
         addText.text = errorMsg;
-        brb.setTitle("ОК");
+        brb.setTitle("ПОНЯТНО");
 
         opacity = 0;
         delayTimer.restart();

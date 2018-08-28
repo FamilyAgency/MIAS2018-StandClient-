@@ -12,7 +12,7 @@ Item
 
     property real btnMarginBottom: 305;//* consts.designScale;
     property string errorTitle:  "Ой!<br/>Что-то пошло не так.<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.";
-    property string btnTtile: "OK";
+    property string btnTtile: "ПОНЯТНО";
 
     anchors.fill: parent;
 

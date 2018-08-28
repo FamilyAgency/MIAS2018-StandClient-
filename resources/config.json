@@ -758,8 +758,8 @@
                     ]
                 },
                 {
-                    "description": "В Зоопрак",
-                    "descriptionwin": "Ура! Вы приехали<br/>в Зоопрак.",
+                    "description": "В Зоопарк",
+                    "descriptionwin": "Ура! Вы приехали<br/>в Зоопарк.",
                     "imagewinpath": "task3/win.png",
                     "iconpath": "task3/icon.png",
                     "startPath":[

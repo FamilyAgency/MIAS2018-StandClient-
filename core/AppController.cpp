@@ -329,7 +329,7 @@ void AppController::setAppState(AppState value)
     QString message = "___App state changed : " + currentModule->getName();
     loggerComponent->log(message, LogType::Verbose, LogRemoteType::Slack, true);
 
-    if(value == AppState::Intro)
+    if(value == AppState::Instruction)
     {
         gameComplexityData->checkComplexity();
     }

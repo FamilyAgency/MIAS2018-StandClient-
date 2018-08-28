@@ -15,11 +15,11 @@ Item
     signal animComplete();
     signal animStart();
 
-    property string mainTitleDefault: "Отлично!<br/>  Вы познакомились<br/> с преимуществами <br/>нового Hyundai SANTE FE.";
+    property string mainTitleDefault: "Отлично!<br/>  Вы познакомились<br/> с преимуществами <br/>нового Hyundai SANTA FE.";
     property string buttonSuperGameText: "ГОТОВ";
 
     property string superGameTitle: "СУПЕРИГРА";
-    property string descrTitleDefault: "До получения приза <br/>осталось совсем немного!<br/> Продолжайте путешествие <br/>c Hyundai SANTE FE.";
+    property string descrTitleDefault: "До получения приза <br/>осталось совсем немного!<br/> Продолжайте путешествие <br/>c Hyundai SANTA FE.";
 
     property real btnMarginBottom: 100;
 

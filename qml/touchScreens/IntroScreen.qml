@@ -13,6 +13,10 @@ Item
     anchors.fill: parent;
     anchors.centerIn: parent;
 
+    property string errorText1:"Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.";
+    property string errorText2:"Получите ваш<br/> прохладительный напиток<br/>у ближайшей стойки<br/>регистрации.";
+    property string errorText3:"Вы уже получили<br/> прохладительный напиток.<br/>Спасибо за участие!";
+
     property bool wasError: false;
 
     signal animComplete();
@@ -71,7 +75,7 @@ Item
 
         onUserNotFound:
         {
-            cantPlayHandler("Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.");
+            cantPlayHandler(errorText1);
         }
 
         onUserCantStartReason:
@@ -83,15 +87,15 @@ Item
             case CantPlayReason.WasRecently:
             case CantPlayReason.YouArePlaying:
                 var seconds = userData.getSecondsToStart();
-                cantPlayHandler("Попробуйте снова <br/>через " + tools.getTimeToStart(seconds)+ ".<br/>Вам обязательно повезет");
+                cantPlayHandler("Попробуйте снова <br/>через " + tools.getTimeToStart(seconds)+ ".<br/>Вам обязательно повезет.");
                 break;
 
             case CantPlayReason.FinishedPrizesNotGot:
-                cantPlayHandler("Получите ваш<br/> прохладительный напиток<br/>у стойки выдачи подарков.");
+                cantPlayHandler(errorText2);
                 break;
 
             case CantPlayReason.FinishedPrizesGot:
-                cantPlayHandler("Вы уже получили<br/> прохладительный напиток.<br/>Спасибо за участие!");
+                cantPlayHandler(errorText3);
                 break;
             }
         }
@@ -106,7 +110,7 @@ Item
             switch(error)
             {
             case CardReaderError.CardParsing:
-                cantPlayHandler("Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.");
+                cantPlayHandler(errorText1);
                 break;
             }
         }
@@ -130,6 +134,8 @@ Item
     {
         introTitiles.hide();
         wasError = true;
+        console.log("errorMsg::: ", errorMsg);
+
         helloBlock.startErrorState(errorMsg);
     }
 }

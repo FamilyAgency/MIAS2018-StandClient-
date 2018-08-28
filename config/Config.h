@@ -92,6 +92,7 @@ private:
     Q_PROPERTY(bool gameScreenIsSplash MEMBER gameScreenIsSplash)
     Q_PROPERTY(QString qmlOnStart MEMBER qmlOnStart)
     Q_PROPERTY(bool release MEMBER release)
+    Q_PROPERTY(bool noname MEMBER noname)
 
 
  public:
@@ -109,6 +110,8 @@ private:
     QString qmlOnStart = "qrc:/qml/mainRelease.qml";
     bool release = false;
     QString videoEXT = "mp4";
+
+    bool noname = false;
 };
 Q_DECLARE_METATYPE(MainConfig)
 

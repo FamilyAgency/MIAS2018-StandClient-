@@ -353,7 +353,7 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     else if(response.type == ResponseType::CheckComplexity)
     {
         qDebug()<<"===== CheckComplexity Request =====";
-        QJsonObject dataJson = responeJson["complexity"].toObject();
+        QJsonObject dataJson = responeJson["data"].toObject();
         createComplexityData(dataJson);
     }
 }
@@ -470,9 +470,12 @@ void ServerRemoteComponent::createDealersData(const QJsonArray& jsonArray)
     emit dealersDataUpdated(allDealers);
 }
 
-void ServerRemoteComponent::createComplexityData(const QJsonObject& jsonObject)
+void ServerRemoteComponent::createComplexityData(const QJsonObject& obj)
 {
     ComplexityConfig complexityConfig;
+
+    QJsonObject jsonObject = obj["complexity"].toObject();
+  //  qDebug()<<jsonObject;
     if(jsonObject["instruction"].isUndefined())
     {
         qDebug()<<"complexity load failed";
