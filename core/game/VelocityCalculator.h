@@ -27,7 +27,7 @@ public:
 
     float getThreshold() const
     {
-       return humanValueThresholdMin / humanValueThresholdMax;
+       return humanValueThresholdMax;
     }
 
 public:

@@ -20,9 +20,9 @@ Item
         visible: true;
 
         arcPercent: 0.7;
-        innerRadius: 55;
+        innerRadius: 65;
         outerRadius: 75;
-        innerLineWidth: 10;
+        innerLineWidth: 7;
         outerLineWidth: 6;
 
         canvasWidth: canvasSize;
@@ -65,12 +65,7 @@ Item
     function update()
     {
         // canvasCirc.requestPaint();
-    }
-
-    function setMindWaveLimit(limit)
-    {
-        // canvasCirc.percentLimit = limit;
-    }
+    }  
 
     function setCarPosition(currentPoint)
     {
@@ -81,6 +76,9 @@ Item
 
     function setMindwaveLimitPercent(percent)
     {
+        var _percent = percent / 100.0;
+        mindwaveAttention.attentionThreshold = _percent;
+
         // canvasCirc.percentLimit = percent;
     }
 }

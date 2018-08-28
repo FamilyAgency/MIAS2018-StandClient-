@@ -47,13 +47,16 @@ float VelocityCalculator::calculate(int humanValue)
 {  
     float velocity = 0.0;
 
-    if(humanValue > humanValueThresholdMin)
+    humanValue = MathTools::clamp<float>(humanValue, 0, 100);
+
+    if(humanValue >= humanValueThresholdMax)
     {
-        velocity = MathTools::map<float>(humanValue, humanValueThresholdMin,  humanValueThresholdMax, minVelocity,  maxVelocity);
+
+        velocity = MathTools::map<float>(humanValue, humanValueThresholdMax, 100, minVelocity,  maxVelocity);
     }
     else if (backMove)
     {
-        velocity = MathTools::map<float>(humanValue, 0, humanValueThresholdMin,  minBackVelocity, maxBackVelocity);
+        velocity = MathTools::map<float>(humanValue, 0, humanValueThresholdMax,  minBackVelocity, maxBackVelocity);
     }
 
     return velocity;

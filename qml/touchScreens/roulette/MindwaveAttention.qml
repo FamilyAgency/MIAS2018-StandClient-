@@ -38,7 +38,7 @@ Item
 
     property bool starting: false;
 
-    property real attentionThreshold: 0.4;
+    property real attentionThreshold: 0.9;
 
     property bool notifyOnce: false;
 
@@ -69,23 +69,27 @@ Item
 
         onAttentionChanged:
         {
-            if(!starting)
+           if(!starting)
             {
                 return;
             }
 
-            var timeDumper = 3000;
+            var timeDumper = 1000;
             nextAttentionValue = mind.attention / 100.0;
 
-            var animTo = tools.mapRangeClamp(nextAttentionValue, percentInnerThreshold, 1.0,  0.0, 1.0);
+           //nextAttentionValue = 0.1
+           //console.log(nextAttentionValue, percentInnerThreshold)
+
+
+            var animTo = nextAttentionValue;//tools.mapRangeClamp(nextAttentionValue, percentInnerThreshold, 1.0,  0.0, 1.0);
             maxAttentionAnim.to = animTo;
             maxAttentionAnim.duration = Math.max(Math.abs(animTo - percentInner) * timeDumper, 500);
             maxAttentionAnim.start();
 
-            animTo = tools.mapRangeClamp(nextAttentionValue, 0.0, percentOuterThreshold,  0.0, 1.0);
-            minAttentionAnim.to = animTo;
-            minAttentionAnim.duration = Math.max(Math.abs(animTo - percentOuter) * timeDumper, 500);
-            minAttentionAnim.start();
+//            animTo = tools.mapRangeClamp(nextAttentionValue, 0.0, percentOuterThreshold,  0.0, 1.0);
+//            minAttentionAnim.to = animTo;
+//            minAttentionAnim.duration = Math.max(Math.abs(animTo - percentOuter) * timeDumper, 500);
+//            minAttentionAnim.start();
         }
     }
 
@@ -104,7 +108,7 @@ Item
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
             drawCircle(ctx, innerRadius, innerLineWidth, colorInner, percentInner);
-            drawCircle(ctx, outerRadius, outerLineWidth, colorOuter, percentOuter);
+           // drawCircle(ctx, outerRadius, outerLineWidth, colorOuter, percentOuter);
         }
 
         PropertyAnimation
@@ -179,9 +183,9 @@ Item
         maxAttentionAnim.duration = 500;
         maxAttentionAnim.start();
 
-        minAttentionAnim.to = 0;
-        minAttentionAnim.duration = 500;
-        minAttentionAnim.start();
+       // minAttentionAnim.to = 0;
+      //  minAttentionAnim.duration = 500;
+      //  minAttentionAnim.start();
     }
 
     function drawCircle(ctx, radius, lineWidth, color, percent)
@@ -196,8 +200,18 @@ Item
         ctx.stroke();
         ctx.closePath();
 
-        ctx.strokeStyle = color;
-        ctx.beginPath();
+        if(percent > attentionThreshold)
+        {
+            ctx.strokeStyle = colorInner;
+        }
+        else
+        {
+            ctx.strokeStyle = colorOuter;
+        }
+
+
+        ctx.beginPath();        
+
         ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI * percent * arcPercent);
         ctx.stroke();
         ctx.closePath();
