@@ -81,8 +81,8 @@ Item
 
             if(AppState.Intro === appController.getAppState())
             {
-                checkRFID();
-                show2IfOneBad();
+                //checkRFID();
+               // show2IfOneBad();
             }
         }
     }
@@ -133,7 +133,6 @@ Item
             break;
         }
 
-
         var appState = appController.getAppState();
         if(AppState.SuperGameResult !== appState && AppState.TestDrive !== appState)
         {
@@ -151,9 +150,9 @@ Item
         switch(appState)
         {
         case AppState.Intro:
-            checkRFID();
+           // checkRFID();
             checkMind();
-            show2IfOneBad();
+           // show2IfOneBad();
             break;
 
         case AppState.Instruction:

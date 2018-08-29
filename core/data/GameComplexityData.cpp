@@ -38,6 +38,10 @@ void GameComplexityData::checkComplexity()
 void GameComplexityData::onNewGameComplexity(const ComplexityConfig& value)
 {
     qDebug()<<"log complexity config  "<<value.instruction;
+    if(value.instruction <= 1)
+    {
+        return;
+    }
 
 
     gameComplexities = value.gameComplexities;

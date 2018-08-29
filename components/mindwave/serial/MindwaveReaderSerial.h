@@ -19,9 +19,6 @@ private:
     SerialThread* serialThread = nullptr;
     QThread* serialWorkerThread = nullptr;
 
-    void writeSerialData(const QByteArray &data);
-    void writeCommand();
-
 protected slots:
     void onDataRecieve(const QByteArray& dataReady);
     void onConnectionError();

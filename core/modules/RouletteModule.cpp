@@ -275,6 +275,7 @@ void RouletteModule::start()
     qDebug()<<"======================= RouletteModule START =======================";
 
     mindwaveAttentionThreshold = gameComplexityData->roulette;
+    emit mindwaveAttentionThresholdUpdate(mindwaveAttentionThreshold);
 
     connectComponents();
     initParams();

@@ -241,6 +241,8 @@ signals:
 
     void mindwaveCtrlOpacityChanged();
 
+    void mindwaveAttentionThresholdUpdate(int attention);
+
 private slots:
     void onMindwaveUpdate();
     void onUserStartedGame();

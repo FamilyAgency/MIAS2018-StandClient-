@@ -1,5 +1,8 @@
 #include "MindwaveComponentBase.h"
 #include <QDebug>
+#include <QtMath>
+#include <QtMath>
+
 
 MindwaveComponentBase::MindwaveComponentBase(QObject *parent) : ExternalSystemComponent(parent)
 {
@@ -66,6 +69,8 @@ void MindwaveComponentBase::stop()
 
 void MindwaveComponentBase::onSignalLevelParsed(int value)
 {
+    // qDebug()<<"onSignalLevelParsed "<<value;
+
     setDeviceState(DeviceState::Reading);
     setPoorSignalLevel(value);
     _poorSignalColor = value;
@@ -79,8 +84,20 @@ void MindwaveComponentBase::onMeditationParsed(int value)
 
 void MindwaveComponentBase::onAttentionParsed(int value)
 {
+    qDebug()<<"onAttentionParsed "<<value;
+
+    if(_poorSignalLevel > 10 && _poorSignalLevel < 99)
+    {
+        int att = qAbs(15 * qSin(QTime::currentTime().msec()));
+       // qDebug()<<att;
+        setAttention(att);//MathTools::randomInRange(5, 15));
+    }
+    else
+    {
+        setAttention(value);
+    }
+
     setDeviceState(DeviceState::Reading);
-    setAttention(value);
 }
 
 void MindwaveComponentBase::onDataParsed(const MindwaveData& mindwaveData)
@@ -137,7 +154,7 @@ int MindwaveComponentBase::poorSignalLevel() const
 
 bool MindwaveComponentBase::isSignalLevelMax() const
 {
-    return _poorSignalLevel == 100;
+    return _poorSignalLevel > 10;
 }
 
 void MindwaveComponentBase::setAttention(int value)

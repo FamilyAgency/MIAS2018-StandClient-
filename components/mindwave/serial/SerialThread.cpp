@@ -67,34 +67,11 @@ void SerialThread::setReconnectionMills(int value)
 
 void SerialThread::startReading()
 {
-//    const auto infos = QSerialPortInfo::availablePorts();
-//       for (const QSerialPortInfo &info : infos)
-//       {
-//           QString s = QObject::tr("Port: ") + info.portName() + "\n"
-//                       + QObject::tr("Location: ") + info.systemLocation() + "\n"
-//                       + QObject::tr("Description: ") + info.description() + "\n"
-//                       + QObject::tr("Manufacturer: ") + info.manufacturer() + "\n"
-//                       + QObject::tr("Serial number: ") + info.serialNumber() + "\n"
-//                       + QObject::tr("Vendor Identifier: ") + (info.hasVendorIdentifier() ? QString::number(info.vendorIdentifier(), 16) : QString()) + "\n"
-//                       + QObject::tr("Product Identifier: ") + (info.hasProductIdentifier() ? QString::number(info.productIdentifier(), 16) : QString()) + "\n"
-//                       + QObject::tr("Busy: ") + (info.isBusy() ? QObject::tr("Yes") : QObject::tr("No")) + "\n";
-
-//           qDebug()<<s;
-
-//       }
-
-
-
-
-
-
-
-
     qDebug()<<"connect serial to "<<portName;
     serialPort->setPortName(portName);
     auto serialPortBaudRate = QSerialPort::Baud9600;
     serialPort->setBaudRate(serialPortBaudRate);
-    //serialPort->setFlowControl(QSerialPort::HardwareControl);
+    //serialPort->setFlowControl(QSerialPort::HardwareControl);   
 
     if (!serialPort->open(QIODevice::ReadWrite))
     {
@@ -105,6 +82,8 @@ void SerialThread::startReading()
     else
     {
         emit connectionSuccess();
+       // writeCommand();
+       // serialPort->setBaudRate(QSerialPort::Baud57600);
         qDebug()<<"serialPort opened";
     }
 
@@ -116,7 +95,6 @@ void SerialThread::onReadyRead()
     noDataTimer->stop();
     noDataTimer->start(noDataTimeoutMills);
     QByteArray bytes = serialPort->readAll();
-   // qDebug()<<"serialPort onReadyRead"<<serialPort->readAll();
 
     emit dataRecieve(bytes);
 }
@@ -151,4 +129,61 @@ void SerialThread::onReconnectHandle()
     reconnectTimer->stop();
     startReading();
 }
+
+void SerialThread::writeCommand()
+{
+    QByteArray mindWaveControlInfo;
+    mindWaveControlInfo.append(0x02);//command byte
+    writeSerialData(mindWaveControlInfo);
+}
+
+void SerialThread::writeSerialData(const QByteArray &data)
+{
+    if (data.count() > 169)
+    {
+        qDebug() << "Payload too large. Max payload size is 169 Bytes";
+        return;
+    }
+
+    // create ThinkGearPacket
+    QByteArray writeData;
+    writeData.append(0xAA);              // SYNC BYTE
+    writeData.append(0xAA);              // SYNC BYTE
+    writeData.append(data.size()&0xFF);  // PAYLOAD LENGTH
+    writeData.append(data);              // PAYLOAD
+
+    // calculate CHKSUM
+    char chksum = 0;
+    for (const auto &x : data)
+    {
+        chksum += x;
+    }
+    chksum &= 0xFF;
+    chksum = (~chksum) & 0xFF;
+
+    writeData.append(chksum);  // CHKSUM
+
+    uint64_t bytesWritten = serialPort->write(writeData);
+    qDebug() << "MindWaveMobile Data Sent...";
+
+    if (bytesWritten == -1)
+    {
+        qDebug() << "Failed to write the data to port";
+        return;
+    }
+    else if (bytesWritten != writeData.size())
+    {
+        qDebug() << "Failed to write all the data to port";
+        return;
+    }
+    else if (!serialPort->waitForBytesWritten(5000))
+    {
+        qDebug() << "Operation timed out or an error occurred for port";
+        return;
+    }
+
+    qDebug() << "Data Write Sucessfull";
+    return;
+}
+
 

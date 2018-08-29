@@ -147,6 +147,11 @@ Item
         {
             choosen.source = standData.getStandImage(path);
         }
+
+        onMindwaveAttentionThresholdUpdate:
+        {
+            mindwaveAttention.attentionThreshold = attention/100.;
+        }
     }
 
     function show()

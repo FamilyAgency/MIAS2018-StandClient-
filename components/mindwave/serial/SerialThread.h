@@ -30,6 +30,9 @@ private:
     QString portName;
     void tryReconnect();
 
+    void writeSerialData(const QByteArray &data);
+    void writeCommand();
+
 private slots:
     virtual void onReadyRead();
     void onReadError(QSerialPort::SerialPortError serialPortError);
