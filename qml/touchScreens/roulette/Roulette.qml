@@ -16,6 +16,8 @@ Item
 
     property int canvasSize: 950;
 
+    property string bgColor:"#7b7cfe";
+
     FontManager
     {
         id: font;
@@ -79,7 +81,7 @@ Item
         implicitHeight: 1200;
         implicitWidth: 1200;
 
-        color: "#7b7cfe";
+        color: bgColor
         radius: 600;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
@@ -95,13 +97,19 @@ Item
         implicitWidth: 950;
         radius: 475;
 
-        color:  "#7b7cfe";
+       // color:bgColor;
 
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
         scale: rouletteModule.scale;
         opacity: rouletteModule.circleOpacity;
+
+        gradient: Gradient
+        {
+            GradientStop { position: 1.0; color: "#0178a4" }
+            GradientStop { position: 0.0; color: "#0b82c0" }
+        }
     }
 
     Image

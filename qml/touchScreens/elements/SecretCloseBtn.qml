@@ -21,8 +21,7 @@ Item
         height: 100;
         anchors.top: parent.top;
         anchors.topMargin: 0;
-        anchors.right: parent.right;
-        anchors.rightMargin: 0;
+        anchors.horizontalCenter: parent.horizontalCenter;
         onClicked:
         {
             if(currentClick++ == 0)

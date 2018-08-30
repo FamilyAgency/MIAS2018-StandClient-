@@ -42,20 +42,20 @@ Item
         font.letterSpacing: 14;
     }
 
-    Text
-    {
-        opacity: instructionModule.opacity2;
-        id: journeyText;
-        text: journeyTitleDefault;
-        font.family: font.hyundaiSansHeadRegular;
-        font.pixelSize: 54 * consts.designScale;
-        color: "#ffffff";
-        anchors.horizontalCenter: parent.horizontalCenter;
-        anchors.verticalCenter:  parent.verticalCenter;
-        horizontalAlignment: Text.AlignHCenter;
-        verticalAlignment: Text.AlignVCenter;
-       // font.letterSpacing: 14;
-    }
+//    Text
+//    {
+//        opacity: instructionModule.opacity2;
+//        id: journeyText;
+//        text: journeyTitleDefault;
+//        font.family: font.hyundaiSansHeadRegular;
+//        font.pixelSize: 54 * consts.designScale;
+//        color: "#ffffff";
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        anchors.verticalCenter:  parent.verticalCenter;
+//        horizontalAlignment: Text.AlignHCenter;
+//        verticalAlignment: Text.AlignVCenter;
+//       // font.letterSpacing: 14;
+//    }
 
     function start()
     {

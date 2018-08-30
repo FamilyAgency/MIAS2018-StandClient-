@@ -78,10 +78,10 @@ Item
         text: superGameTitle1;
         y : 600;
         anchors.bottom: superTime.top;
-        anchors.bottomMargin: offsetY;
+        anchors.bottomMargin: -20;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 65;
+        font.pixelSize: 60;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -95,7 +95,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         anchors.verticalCenterOffset: 50;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 270;
+        font.pixelSize: 230;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -106,10 +106,10 @@ Item
         id: title2;
         text: superGameTitle2;
         anchors.top: superTime.bottom;
-        anchors.topMargin: -30;
+        anchors.topMargin: -10;
         anchors.horizontalCenter: parent.horizontalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 48;
+        font.pixelSize: 40;
         color: "#00b4e2";
         textFormat: Text.StyledText;
         horizontalAlignment :Text.AlignHCenter;
@@ -119,7 +119,7 @@ Item
     {
         id: stars;
         property int currentImage: 0;
-        y: 170
+        y: 190
         anchors.horizontalCenter: parent.horizontalCenter;
         source: configController.getFileInAppDir("content/misc/Stars/" + currentImage + ".png");
         NumberAnimation on currentImage

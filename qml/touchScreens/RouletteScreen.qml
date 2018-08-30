@@ -15,7 +15,7 @@ Item
     id:core;
     anchors.fill: parent;
 
-    property string rollTextDefault: "КРУТИТЕ<br/>РУЛЕТКУ";
+    property string rollTextDefault: "СТАРТ";
     property real btnMarginBottom: 100;
 
 

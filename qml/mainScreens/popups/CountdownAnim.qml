@@ -10,8 +10,8 @@ Text
     signal animationCompelete();
 
     text: countText[0];
-    font.family: font.hyundaiSansHeadMedium;
-    font.pixelSize: 300 * consts.designScale;
+    font.family: font.rfg79;
+    font.pixelSize: 500;
     color: "white";
     verticalAlignment: Text.AlignVCenter;
     horizontalAlignment: Text.AlignHCenter;
@@ -51,14 +51,19 @@ Text
 
         ParallelAnimation
         {
-            NumberAnimation { target: counter; property: "scale";   from: 0; to: 1; duration: 500 }
-            NumberAnimation { target: counter; property: "opacity"; from: 0; to: 1; duration: 500 }
+            NumberAnimation { target: counter; property: "scale";   from: 0; to: 1; duration: 300 }
+            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 1; duration: 300 }
         }
 
         ParallelAnimation
         {
-            NumberAnimation { target: counter; property: "scale";   from: 1; to: 2; duration: 500 }
-            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 0; duration: 500 }
+            NumberAnimation { target: counter; property: "scale";   from: 1; to: 1.5; duration: 200 }
+        }
+
+        ParallelAnimation
+        {
+            NumberAnimation { target: counter; property: "scale";   from: 1.5; to: 2; duration: 400 }
+            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 0; duration: 400 }
         }
     }
 

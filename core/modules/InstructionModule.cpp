@@ -157,10 +157,10 @@ void InstructionModule::onAnimDelayTimerComplete()
     textAnimated = TextAnimated::Text1;
     opacity1Animator->setStartValue(0);
     opacity1Animator->setEndValue(1);
-    opacity1Animator->setDuration(500);
+    opacity1Animator->setDuration(1000);
     opacity1Animator->start();
 
-    showTextTimer->start(1200);
+    showTextTimer->start(3200);
 }
 
 void InstructionModule::onShownTextComplete()

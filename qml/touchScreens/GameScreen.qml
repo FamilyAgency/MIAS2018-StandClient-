@@ -39,6 +39,31 @@ Item
         verticalAlignment: Text.AlignVCenter;
         opacity: 0;
 
+        Item
+        {
+            id: animationItem
+            anchors.fill: parent;
+            Image
+            {
+                property int currentImage: 1
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: -300;
+                id: image
+                x: 0
+                y: 0
+                source: configController.getFileInAppDir("content/misc/arrow/" + currentImage + ".png");
+                NumberAnimation on currentImage
+                {
+                    from: 4
+                    to: 35
+                    duration: 1000
+                    running: true;
+                    loops: Animation.Infinite;
+                }
+            }
+        }
+
         OpacityAnimator on opacity
         {
             id: opacityAnim;
@@ -59,6 +84,8 @@ Item
             easing.type: "OutCubic";
         }
     }
+
+
 
     AdvantageDescription
     {

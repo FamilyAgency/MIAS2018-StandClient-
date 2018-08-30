@@ -145,7 +145,7 @@ Item
         target: superGameModule;
         onUpdateCanvas:
         {
-            car.visible = true;
+           // car.visible = true;
 
             road.isRunning = superGameModule.isRunning()
             road.isPreTaskState = superGameModule.isPreTaskState()
@@ -155,7 +155,7 @@ Item
             road.uncompletedPath =  superGameModule.getGameUncompletedPath();
             road.visible = true;
             road.isSuperGame = true;
-            road.draw();
+           // road.draw();
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
             mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
 
@@ -163,8 +163,10 @@ Item
             road.setSuperGamePercent(1 - completedLength/superGameLength);
         }
 
-        onCountDownComplete:
+
+        onSuperGameStarted:
         {
+            console.log("supergame started-------------------------")
             road.visible = true;
 
             var circles = superGameModule.getGameUncompletedPath();
@@ -185,7 +187,14 @@ Item
 
             mindIndicator.showIndicator();
             mindIndicator.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
+
+            car.visible = true;
+            car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
+            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
+
         }
+
+       // onCountDownComplete:
 
         onSuperGameFailed:
         {

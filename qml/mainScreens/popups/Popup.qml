@@ -17,7 +17,6 @@ Item
     property var greenColor:"#ffffff";
     property var blueColor:"#00aedc";
 
-
     FontManager
     {
         id: font;
@@ -30,21 +29,30 @@ Item
 
     DropShadow
     {
-        anchors.fill: bg;
-       // horizontalOffset: 10;
-       // verticalOffset: 10;
+        visible:popupBg.visible;
+        anchors.fill: popupBg;
         radius: 100.0;
         samples: 50;
         color: "#80000000";
-        source: bg;
-       // opacity: 10.6;
+        source: popupBg;
+        spread: 0;
+    }
+
+    DropShadow
+    {
+        anchors.fill: popupGameCompleteBg;
+        radius: 100.0;
+        samples: 50;
+        color: "#00b4e2";
+        source: popupGameCompleteBg;
         spread: 0
+        visible:popupGameCompleteBg.visible;
     }
 
     Rectangle
     {
         visible: true;
-        id: bg;
+        id: popupBg;
         color: blueColor;
         border.width: 0;
         implicitWidth: 900;
@@ -62,6 +70,27 @@ Item
         }
     }
 
+    Rectangle
+    {
+        visible: false;
+        id: popupGameCompleteBg;
+        color: blueColor;
+        border.width: 0;
+        implicitWidth: 900;
+        implicitHeight: 900;
+        radius: 450;
+        smooth: true;
+        antialiasing: true;
+        anchors.verticalCenter: parent.verticalCenter;
+        anchors.horizontalCenter: parent.horizontalCenter;
+
+        gradient: Gradient
+        {
+            GradientStop { position: 1.0; color: "#011025" }
+            GradientStop { position: 0.0; color: "#041936" }
+        }
+    }
+
     Item
     {
         visible: false;
@@ -71,23 +100,14 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         anchors.horizontalCenter: parent.horizontalCenter;
 
-//        CountdownAnim
-//        {
-//            id:countdown;
-//        }
-
-
-        Text
+        CountdownAnim
         {
-            id: countdownText;
-            anchors.horizontalCenter: parent.horizontalCenter;
-            anchors.verticalCenter: parent.verticalCenter;
-            font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 300 * consts.designScale;
-            color: "#ffffff";
-            textFormat: Text.StyledText;
-            horizontalAlignment :Text.AlignHCenter;
-            text: "3";
+            id:countdown;
+
+            onAnimationCompelete:
+            {
+                visible = false;
+            }
         }
     }
 
@@ -154,7 +174,7 @@ Item
             color: greenColor;
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
-            text: "УЗНАЙ О ПРЕИМУЩЕСТВЕ<br/>НА ЭКРАНЕ";
+            text: "УЗНАЙТЕ О ПРЕИМУЩЕСТВЕ<br/>НА ЭКРАНЕ";
         }
 
         Image
@@ -185,12 +205,9 @@ Item
             visible: true;
             smooth: true;
             antialiasing: true;
-           // anchors.verticalCenter: parent.verticalCenter;
-            //anchors.verticalCenterOffset: -260;
             anchors.bottom: parent.verticalCenter;
             anchors.bottomMargin:100;
             anchors.horizontalCenter: parent.horizontalCenter;
-            //source: configController.getFileInAppDir("content/tasks/1.png");
         }
 
         Text
@@ -232,11 +249,6 @@ Item
         {
             countDownUpdate(time);
         }
-
-        onCountDownComplete:
-        {
-            visible = false;
-        }
     }
 
     Connections
@@ -276,6 +288,8 @@ Item
 
     function openGameComplete(description, imageWinName)
     {
+        popupGameCompleteBg.visible = true;
+        popupBg.visible = false;
         preTask.visible = false;
         postTask.visible = false;
         allTask.visible = true;
@@ -291,6 +305,9 @@ Item
 
     function openStageComplete(description)
     {
+        popupBg.visible = true;
+        popupGameCompleteBg.visible = false;
+
         descrText.text = description;
 
         preTask.visible = false;
@@ -304,6 +321,9 @@ Item
     function openCountDown()
     {
        // countdown.show();
+
+        popupGameCompleteBg.visible = false;
+
         preTask.visible = true;
         postTask.visible = false;
         allTask.visible = false;
@@ -311,19 +331,22 @@ Item
         scaleAnimator.start();
         visible = true;
 
+        popupBg.visible = false;
+        countdown.show();
+
       //  countdowAnim.currentImage = 0;
       //  countdowAnim.setRunning(true);
     }
 
     function countDownUpdate(time)
     {
-        countdownText.font.pixelSize = 350 * consts.designScale;
-        countdownText.text = time.toFixed(0);
+//        countdownText.font.pixelSize = 350 * consts.designScale;
+//        countdownText.text = time.toFixed(0);
 
-        if( countdownText.text == "0")
-        {
-            countdownText.font.pixelSize = 120 * consts.designScale;
-            countdownText.text = "ПОЕХАЛИ";
-        }
+//        if( countdownText.text == "0")
+//        {
+//            countdownText.font.pixelSize = 120 * consts.designScale;
+//            countdownText.text = "ПОЕХАЛИ";
+//        }
     }
 }

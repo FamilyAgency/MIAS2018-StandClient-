@@ -9,7 +9,8 @@ Item
 {
     anchors.fill: parent;
 
-    property string mainTitleDefault: "Выберите маршрут";
+    property string mainTitleDefault: "ВЫБЕРИТЕ МАРШРУТ";
+    property string descrTitleDefault: "Вас ждут три остановки, на которых<br/>вы узнаете об уникальных<br/> преимуществах нового SANTA FE.";
     property string mainTitle2: "Концентрируйтесь<br/>на Hyundai SANTA FE.<br/><br/>Автомобиль начнет движение<br/>и появится на карте.";
 
 
@@ -18,21 +19,35 @@ Item
         id: font;
     }
 
-    Text
+    TitleBlock
     {
-        id: mainText;
-        font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60;
-        color: "#ffffff";
-        anchors.top: parent.top;
-        anchors.topMargin: 168;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        text: mainTitleDefault;
-        horizontalAlignment: Text.AlignHCenter;
-        verticalAlignment: Text.AlignVCenter;
-        textFormat: Text.StyledText;
+        id: title;
         opacity:  rouletteModule.mainTitleOpacity
     }
+
+    Component.onCompleted:
+    {
+        title.setTexts(mainTitleDefault, descrTitleDefault);
+        title.setDescrFontSize(40);
+        title.offsetY = 40;
+    }
+
+
+//    Text
+//    {
+//        id: mainText;
+//        font.family: font.hyundaiSansHeadMedium;
+//        font.pixelSize: 60;
+//        color: "#ffffff";
+//        anchors.top: parent.top;
+//        anchors.topMargin: 168;
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        text: mainTitleDefault;
+//        horizontalAlignment: Text.AlignHCenter;
+//        verticalAlignment: Text.AlignVCenter;
+//        textFormat: Text.StyledText;
+//        opacity:  rouletteModule.mainTitleOpacity
+//    }
 
     Text
     {

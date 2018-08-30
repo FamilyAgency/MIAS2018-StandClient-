@@ -89,8 +89,7 @@ void SuperGameModule::onCountDownUpdate(float countDown)
 void SuperGameModule::onCountDownComplete()
 {
     startTime = QDateTime::currentMSecsSinceEpoch();   
-    superGameTimer->start(superGameTimerMills);
-    gameTask->init();
+    superGameTimer->start(superGameTimerMills);   
     gameTask->start();
     setTaskRunning(true);
 
@@ -115,12 +114,13 @@ void SuperGameModule::onTaskCompleteEvent()
     superGameWinTime = gameTask->getCompletionTime();
 
     serverComponent->finishGameRequest(currentUser->baseUserData().id);
-    //emit taskComleteEvent(completionTime);
 }
 
 void SuperGameModule::startGame()
 {
     superGameWinTime = 0;
+    gameTask->init();
+
     gameCountDown->init();
     gameCountDown->run();
     emit superGameStarted();
@@ -151,7 +151,6 @@ void SuperGameModule::onUserFinishedGame()
     currentUser->superGameCompleted(superGameWinTime);
     emit superGameSuccess(superGameWinTime);
 }
-
 
 float SuperGameModule::getSuperGameTime() const
 {

@@ -19,21 +19,6 @@ Window
     x: standData.mainConfig.gameScreen.x;
     y: standData.mainConfig.gameScreen.y;
 
-   // color: "#000000"
-
-
-
-//    AdvantageDescription
-//    {
-//        id:a;
-//    }
-
-//    Component.onCompleted:
-//    {
-//        a.setTexts(""," Данные о скорости движения, <br/>  подсказки умных систем безопасности<br/>и навигации проецируются прямо<br/>на лобовое стекло.<br/>Так что вся информация – прямо<br/>перед глазами водителя. ")
-//        a.show();
-//    }
-
     Connections
     {
         target:appController;

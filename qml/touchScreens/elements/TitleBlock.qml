@@ -55,6 +55,10 @@ Item
         target: titleBlock;
     }
 
+    function setDescrFontSize(size)
+    {
+        text2.font.pixelSize = size;
+    }
 
     function setTexts(_text1, _text2)
     {
@@ -76,5 +80,4 @@ Item
         opacityAnim.to = 0;
         opacityAnim.start();
     }
-
 }
