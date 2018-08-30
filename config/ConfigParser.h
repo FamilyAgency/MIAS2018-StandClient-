@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include "Config.h"
+#include <QSettings>
 
 class ConfigParser : public QObject
 {
@@ -22,6 +23,7 @@ public slots:
 
 private:
     ConfigPtr config;
+
     bool wasParsingError = false;
     void parseMainConfig(QSharedPointer<MainConfig> mainConfig, const QJsonObject& jsonObj);
     void parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj);
@@ -35,6 +37,8 @@ private:
     void parseAdvantagesConfig(QSharedPointer<AdvantagesConfig> advantagesConfig, const QJsonArray& jsonArray);
     void parseComplexityConfig(QSharedPointer<ComplexityConfig> complexityConfig, const QJsonObject& jsonArray);
 
+
+    QSettings* settings;
 };
 
 #endif // CONFIGPARSER_H

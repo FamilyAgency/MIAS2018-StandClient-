@@ -4,7 +4,7 @@ Item
 {
     function randomPhone()
     {
-        return '8' + (Math.floor((Math.random() * (9999999999 - 1111111111)) + 1111111111));
+        return '+7' + (Math.floor((Math.random() * (9999999999 - 1111111111)) + 1111111111));
     }
 
     function mapRange(value, low1, high1, low2, high2)

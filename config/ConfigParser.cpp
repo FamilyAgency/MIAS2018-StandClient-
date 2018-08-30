@@ -5,10 +5,22 @@
 #include <QJsonDocument.h>
 #include <QJsonObject.h>
 #include <QJsonArray.h>
-#include <QDebug.h>
+#include <QDebug>
+#include <QSettings>
+#include <QCoreApplication>
+#include <QDir>
 
 ConfigParser::ConfigParser()
 {
+    QDir dir = QDir(QCoreApplication::applicationDirPath());
+    dir.cdUp();
+
+    QString iniPath = dir.path() + "/Settings.ini";
+    settings = new QSettings(iniPath, QSettings::IniFormat);
+
+    qDebug()<<"iniPath"<<iniPath;
+
+
     config.reset(new Config());
 }
 
@@ -57,67 +69,108 @@ void ConfigParser::parse(const QString& configData)
 void ConfigParser::parseMainConfig(QSharedPointer<MainConfig> mainConfig, const QJsonObject& jsonObj)
 {
     mainConfig->version = jsonObj["version"].toInt();
-    mainConfig->configUpdateUrl = jsonObj["configUpdateUrl"].toString();
-    mainConfig->needRemoteUpdate = jsonObj["needRemoteUpdate"].toBool();
-    mainConfig->appId = jsonObj["appId"].toInt();
-    mainConfig->workingDirectory = jsonObj["workingDirectory"].toString();
-    mainConfig->folderSeparator = jsonObj["folderSeparator"].toString();
-    mainConfig->appName = jsonObj["appName"].toString();
-    mainConfig->release = jsonObj["release"].toBool();
-    mainConfig->videoEXT = jsonObj["videoEXT"].toString();
-    mainConfig->noname = jsonObj["noname"].toBool();
 
-    QJsonObject touchScreenData = jsonObj["screens"].toObject()["touch"].toObject();
-    mainConfig->touchScreen.setX(touchScreenData["x"].toInt());
-    mainConfig->touchScreen.setY(touchScreenData["y"].toInt());
-    mainConfig->touchScreen.setWidth(touchScreenData["width"].toInt());
-    mainConfig->touchScreen.setHeight(touchScreenData["height"].toInt());
+    settings->beginGroup("Screens.Game");
+    mainConfig->gameScreen.setX(settings->value("x").toInt());
+    mainConfig->gameScreen.setY(settings->value("y").toInt());
+    mainConfig->gameScreen.setWidth(settings->value("width").toInt());
+    mainConfig->gameScreen.setHeight(settings->value("height").toInt());
+    mainConfig->gameScreenIsSplash = settings->value("splashScreen").toBool();
+    settings->endGroup();
 
-    mainConfig->touchScreenIsSplash = touchScreenData["splashScreen"].toBool();
+    settings->beginGroup("Screens.Touch");
+    mainConfig->touchScreen.setX(settings->value("x").toInt());
+    mainConfig->touchScreen.setY(settings->value("y").toInt());
+    mainConfig->touchScreen.setWidth(settings->value("width").toInt());
+    mainConfig->touchScreen.setHeight(settings->value("height").toInt());
+    mainConfig->touchScreenIsSplash = settings->value("splashScreen").toBool();
+    settings->endGroup();
 
+    settings->beginGroup("Main");
+    mainConfig->qmlOnStart  = settings->value("qmlOnStart").toString();
+    mainConfig->noname = settings->value("noname").toBool();
+    mainConfig->appName = settings->value("appName").toString();
+    mainConfig->release = settings->value("release").toBool();
+    mainConfig->videoEXT = settings->value("videoEXT").toString();
+    mainConfig->configUpdateUrl = settings->value("configUpdateUrl").toString();
+    mainConfig->needRemoteUpdate = settings->value("needRemoteUpdate").toBool();
+    mainConfig->appId = settings->value("appId").toInt();
+    mainConfig->workingDirectory = settings->value("workingDirectory").toString();
+    mainConfig->folderSeparator = settings->value("folderSeparator").toString();
+    settings->endGroup();
 
-    QJsonObject gameScreenData = jsonObj["screens"].toObject()["game"].toObject();
-    mainConfig->gameScreen.setX(gameScreenData["x"].toInt());
-    mainConfig->gameScreen.setY(gameScreenData["y"].toInt());
-    mainConfig->gameScreen.setWidth(gameScreenData["width"].toInt());
-    mainConfig->gameScreen.setHeight(gameScreenData["height"].toInt());
-
-    mainConfig->gameScreenIsSplash = gameScreenData["splashScreen"].toBool();
-    mainConfig->qmlOnStart = jsonObj["qmlOnStart"].toString();
+    qDebug()<<" mainConfig->noname  "<< mainConfig->noname;
 }
 
 void ConfigParser::parseRFIDConfig(QSharedPointer<RFIDConfig> rfidConfig, const QJsonObject& jsonObj)
-{
-    rfidConfig->serialPort = jsonObj["serialPort"].toString();
-    rfidConfig->baudRate = jsonObj["baudRate"].toInt();
-    rfidConfig->autoConnect = jsonObj["autoConnect"].toBool();
-    rfidConfig->portKeyWord = jsonObj["portKeyWord"].toString();
-    rfidConfig->useKeyword = jsonObj["useKeyword"].toBool();
-    rfidConfig->type = jsonObj["type"].toString();
+{  
+    settings->beginGroup("RFID");
+    rfidConfig->autoConnect = settings->value("autoConnect").toBool();
+    rfidConfig->type = settings->value("type").toString();
+    settings->endGroup();
+
+    settings->beginGroup("RFID.Serial");
+    rfidConfig->baudRate = settings->value("baudRate").toInt();
+    rfidConfig->serialPort = settings->value("serialPort").toString();
+    rfidConfig->portKeyWord = settings->value("portKeyWord").toString();
+    rfidConfig->useKeyword = settings->value("useKeyword").toBool();
+    settings->endGroup();
+
+    settings->beginGroup("RFID.Winscard");
+    rfidConfig->beepEnabled = settings->value("beepEnabled").toBool();
+    if(rfidConfig->type == "winscard")
+    {
+        rfidConfig->type = settings->value("name").toString();
+    }
+    settings->endGroup();
+    qDebug()<<"rfidConfig->type "<<rfidConfig->type;
+    qDebug()<<"rfidConfig->beepEnabled "<<rfidConfig->beepEnabled;
+
+
+    settings->beginGroup("RFID.StandAPI");
     rfidConfig->writeValidation = jsonObj["validation"].toString();
-    rfidConfig->beepEnabled = jsonObj["beepEnabled"].toBool();
+    settings->endGroup();
 }
 
 void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveConfig, const QJsonObject& jsonObj)
 {
-    mindwaveConfig->ip = jsonObj["ip"].toString();
-    mindwaveConfig->port = jsonObj["port"].toInt();
-    mindwaveConfig->autoConnect = jsonObj["autoConnect"].toBool();
-    mindwaveConfig->delimeter = jsonObj["delimeter"].toString();
-    mindwaveConfig->initialCommand = jsonObj["initialCommand"].toString();
-    mindwaveConfig->authCommand = jsonObj["authCommand"].toString();
-    mindwaveConfig->type = jsonObj["type"].toString();
-    mindwaveConfig->timeoutMills = jsonObj["timeout"].toInt();
-    mindwaveConfig->com = jsonObj["com"].toString();
+    settings->beginGroup("Mindwave");
+    mindwaveConfig->type = settings->value("type").toString();
+    mindwaveConfig->timeoutMills = settings->value("timeout").toInt();
+    mindwaveConfig->autoConnect = settings->value("autoConnect").toBool();
+    settings->endGroup();
+
+    settings->beginGroup("Mindwave.Serial");
+    mindwaveConfig->com = settings->value("com").toString();
+    settings->endGroup();
+
+    settings->beginGroup("Mindwave.TCP");
+    mindwaveConfig->ip = settings->value("ip").toString();
+    mindwaveConfig->port = settings->value("port").toInt();
+    mindwaveConfig->delimeter = settings->value("delimeter").toString();
+    mindwaveConfig->authCommand = settings->value("authCommand").toString();
+    mindwaveConfig->initialCommand = settings->value("initialCommand").toString();
+    settings->endGroup();
 }
 
 void ConfigParser::parseServerConfig(QSharedPointer<ServerConfig> serverConfig, const QJsonObject& jsonObj)
-{   
-    serverConfig->url = jsonObj["url"].toString();
-    serverConfig->requestTimemoutInterval = jsonObj["requestTimemoutInterval"].toInt();
-    serverConfig->requestTryCount = jsonObj["requestCount"].toInt();
-    serverConfig->serverAPI.testUser = jsonObj["api"].toObject()["testUser"].toString();
-    serverConfig->serverAPI.pinNeed = jsonObj["api"].toObject()["pinNeed"].toBool();
+{
+    settings->beginGroup("Server");
+    serverConfig->url = settings->value("url").toString();
+    serverConfig->requestTimemoutInterval = settings->value("requestTimemoutInterval").toInt();
+    serverConfig->requestTryCount = settings->value("requestCount").toInt();
+    settings->endGroup();
+
+    settings->beginGroup("Server.API");
+    serverConfig->serverAPI.testUser  = settings->value("testUser").toString();
+    serverConfig->serverAPI.pinNeed = settings->value("pinNeed").toBool();
+    settings->endGroup();
+
+    qDebug()<<"serverConfig->url "<<serverConfig->url;
+    qDebug()<<"serverConfig->requestTimemoutInterval "<<serverConfig->requestTimemoutInterval;
+    qDebug()<<"serverConfig->requestTryCount "<<serverConfig->requestTryCount;
+    qDebug()<<"serverConfig->serverAPI.testUser "<<serverConfig->serverAPI.testUser;
+    qDebug()<<"serverConfig->serverAPI.pinNeed "<<serverConfig->serverAPI.pinNeed;
 }
 
 void ConfigParser::parseSlackConfig(QSharedPointer<SlackFullConfig> slackConfig, const QJsonArray& jsonArray)
@@ -137,14 +190,24 @@ void ConfigParser::parseSlackConfig(QSharedPointer<SlackFullConfig> slackConfig,
 
 void ConfigParser::parseMonitoringConfig(QSharedPointer<MonitoringConfig> monitoringConfig, const QJsonObject& jsonObj)
 {
-    monitoringConfig->memoryCheckMills = jsonObj["memoryCheckMills"].toInt();
-    monitoringConfig->enabled = jsonObj["enabled"].toBool();
+    settings->beginGroup("Monitoring");
+    monitoringConfig->memoryCheckMills = settings->value("memoryCheckMills").toInt();
+    monitoringConfig->enabled  = settings->value("enabled").toBool();
+    settings->endGroup();
+
+    qDebug()<<"monitoringConfig->memoryCheckMills "<<monitoringConfig->memoryCheckMills;
+    qDebug()<<"monitoringConfig->enabled "<< monitoringConfig->enabled;
 }
 
 void ConfigParser::parseLoggerConfig(QSharedPointer<LoggerConfig> loggerConfig, const QJsonObject& jsonObj)
-{
-    loggerConfig->localEnabled = jsonObj["local"].toObject()["enabled"].toBool();
-    loggerConfig->localPath = jsonObj["local"].toObject()["path"].toString();
+{    
+    settings->beginGroup("Logger.Local");
+    loggerConfig->localPath = settings->value("path").toString();
+    loggerConfig->localEnabled  = settings->value("enabled").toBool();
+    settings->endGroup();
+
+    qDebug()<<"loggerConfig->localPath "<<loggerConfig->localPath;
+    qDebug()<<"loggerConfig->localEnabled "<<loggerConfig->localEnabled;
 }
 
 void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standGamesConfig, const QJsonArray& jsonArray)
@@ -163,7 +226,7 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
             {
                 auto gameObj = game.toObject();
                 StandOneGameConfig oneGameconfig;
-               // oneGameconfig.category = gameObj["category"].toString();// todo check
+                // oneGameconfig.category = gameObj["category"].toString();// todo check
                 oneGameconfig.description = gameObj["description"].toString();
                 oneGameconfig.descriptionWin = gameObj["descriptionwin"].toString();
                 oneGameconfig.imageWinName = gameObj["imagewinpath"].toString();
@@ -234,7 +297,6 @@ void ConfigParser::parseStandGamesConfig(QSharedPointer<StandGamesConfig> standG
     }
 }
 
-
 void ConfigParser::parseStandAnimConfig(QSharedPointer<StandAnimConfig> standAnimConfig, const QJsonArray& jsonArray)
 {
 
@@ -301,13 +363,3 @@ void ConfigParser::parseComplexityConfig(QSharedPointer<ComplexityConfig> comple
         complexityConfig->gameComplexities.push_back(complConfig);
     }
 }
-
-
-
-
-
-
-
-
-
-

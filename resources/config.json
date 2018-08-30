@@ -1,8 +1,4 @@
 {
-    "appId": 2,
-    "appName": "Main stand",
-    "configUpdateUrl": "http://familyagency.ru/lab/synapse/digitalframes/config.json",
-    "folderSeparator": "\\",
     "advantages":
       [
       {
@@ -54,28 +50,6 @@
           "videoPath": "7"
       }
   ],
-    "logger": {
-        "local": {
-            "enabled": true,
-            "path": "logs"
-        }
-    },
-    "mindwave": {
-        "authCommand": "{\"appName\":\"BrainwaveShooters\",\"appKey\":\"0054141b4b4c567c558d3a76cb8d715cbde03096\"}\\r",
-        "autoConnect": true,
-        "delimeter": "\r",
-        "initialCommand": "{\"enableRawOutput\": true, \"format\": \"Json\"}\\r",
-        "ip": "127.0.0.1",
-        "port": 13854,
-        "timeout": 4000,
-        "type": "serial",
-        "com": "COM4",
-        "type_example": [
-            "serial",
-            "tcp",
-            "simulation"
-        ]
-    },
     "complexity":
     {
         "instruction": 10,
@@ -119,56 +93,6 @@
                 "velocityBackMax": -0.2
             }
         ]
-    },
-    "monitoring": {
-        "enabled": false,
-        "memoryCheckMills": 600000
-    },
-    "needRemoteUpdate": false,
-    "qmlOnStart": "qrc:/qml/mainRelease.qml",
-    "release": false,
-    "rfid": {
-        "autoConnect": false,
-        "baudRate": 115200,
-        "portKeyWord": "FTDI",
-        "serialPort": "COM8",
-        "type": "ACS ACR122 0",
-        "type_example": [
-            "arduino",
-            "ACS ACR122 0"
-        ],
-        "useKeyword": false,
-        "validation": "idOnly",
-        "validation_example": [
-            "none",
-            "idOnly",
-            "allData"
-        ]
-    },
-    "screens": {
-        "game": {
-            "height": 1920,
-            "splashScreen": true,
-            "width": 1080,
-            "x": 0,
-            "y": 0
-        },
-        "touch": {
-            "height": 1920,
-            "splashScreen": true,
-            "width": 1080,
-            "x": 0,
-            "y": 1920
-        }
-    },
-    "server": {
-        "api": {
-            "pinNeed": true,
-            "testUser": "0"
-        },
-        "requestCount": 3,
-        "requestTimemoutInterval": 5000,
-        "url": "http://mias2018.familyagency.ru/api/v1/ADABF4D5AE73D5FD479E8E76A34E1"
     },
     "slack": [
         {
@@ -245,8 +169,6 @@
         }
     ],
     "version": 152,
-    "videoEXT": "mov",
-    "workingDirectory": "c:\\projects\\Qt\\MIAS2018\\AutoUpdater\\process",
       "animations":
         [
         {
