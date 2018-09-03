@@ -77,6 +77,7 @@ void SuperGameModule::stop()
 {
     qDebug()<<"======================= SuperGameModule STOP =======================";
     disconnectComponents();
+    gameTask->stop();
     superGameTimer->stop();
     gameCountDown->stop();
 }

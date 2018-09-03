@@ -112,6 +112,9 @@ Item
         interval: 6000;
         onTriggered:
         {
+            opacityAnim.stop();
+            scaleAnim.stop();
+
             opacityAnim.from = 1;
             opacityAnim.to = 0;
             opacityAnim.start();
@@ -150,6 +153,9 @@ Item
     {
        // backBtn.opacity = 0;
        // backBtn.visible = false;
+
+        opacityAnim.stop();
+        scaleAnim.stop();
 
         opacityAnim.from = 0;
         opacityAnim.to = 1;

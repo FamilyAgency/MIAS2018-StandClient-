@@ -192,6 +192,10 @@ Item
         canvasCirc.requestPaint();
         opacity = 0;
         scale = 0.3;
+
+        opacityAnim.stop();
+        scaleAnim.stop();
+
         opacityAnim.from = 0;
         opacityAnim.to = 1;
         opacityAnim.start();
@@ -200,6 +204,9 @@ Item
 
     function hide()
     {
+        opacityAnim.stop();
+        scaleAnim.stop();
+
         opacityAnim.from = 1;
         opacityAnim.to = 0;
         opacityAnim.start();
