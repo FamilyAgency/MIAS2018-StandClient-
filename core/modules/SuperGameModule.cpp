@@ -82,7 +82,6 @@ void SuperGameModule::stop()
     gameTask->stop();
     superGameTimer->stop();
     gameCountDown->stop();
-    gameTask->stop();
 }
 
 void SuperGameModule::onCountDownUpdate(float countDown)
