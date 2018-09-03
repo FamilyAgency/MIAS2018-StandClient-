@@ -8,10 +8,6 @@ Item
     id: gameView;
     anchors.fill: parent;
 
-    property var superGameLength: 0;
-    property var superGameLastPoint: 0;
-
-
     Image
     {
         id:map
@@ -58,7 +54,7 @@ Item
     {
         id: pretaskPopup;
         visible: false;
-    }  
+    }
 
     Component.onCompleted:
     {
@@ -72,10 +68,9 @@ Item
 
         onAllStagesComleteEvent:
         {
-            hideFlag();
+            flag.hide();
             car.moveFromCanvas();
             mindIndicator.moveFromCanvas();
-            mindIndicator.hideIndicator();
         }
     }
 
@@ -101,19 +96,8 @@ Item
 
         onUpdateCanvas:
         {
-            road.isRunning = gameTaskManager.isRunning()
-            road.isPreTaskState = gameTaskManager.isPreTaskState()
-            road.completedPath = gameTaskManager.getCompletedPath()
-            road.currentPoint = gameTaskManager.getCurPoint();
-            road.startPoint = gameTaskManager.getStartPoint();
-            road.uncompletedPath =  gameTaskManager.getGameUncompletedPath();
-            // road.circles = gameTaskManager.getTargetPoints();
-            road.isSuperGame = false;
-            road.hideSuperTrack();
-            road.visible = true;
+            updateGameTask(gameTaskManager);
             road.draw();
-            car.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVectorRotation());
-            mindIndicator.moveCar(gameTaskManager.getCurPoint(), gameTaskManager.getForwardVector(), gameTaskManager.getForwardVectorRotation());
         }
 
         onPreTaskStartEvent:
@@ -124,21 +108,23 @@ Item
 
         onGameStarted:
         {
-            road.setStartPath(gameTaskManager.getStartPoint1(), gameTaskManager.getStartPoint2());
-            road.init();
-            road.visible = true;
-            //  road.circles = gameTaskManager.getTargetPoints();
             var circles = gameTaskManager.getTargetPoints();
             var lastPoint = circles[circles.length - 1];
-            road.circles = circles;
-            setFlagPosition(lastPoint.x, lastPoint.y);
-            showFlag();
+
+            road.isSuperGame = false;
+            road.hideSuperTrack();
+            road.visible = true;
+            road.setStartPath(gameTaskManager.getStartPoint1(), gameTaskManager.getStartPoint2());
+            road.init();
             road.show();
+            road.circles = circles;
+
+            flag.setFlagPosition(lastPoint.x, lastPoint.y);
+            flag.show();
         }
 
         onTaskComleteEvent:
         {
-            console.log("========task complete=========");
             road.taskComplete();
         }
     }
@@ -148,52 +134,33 @@ Item
         target: superGameModule;
         onUpdateCanvas:
         {
-           // car.visible = true;
-
-            road.isRunning = superGameModule.isRunning()
-            road.isPreTaskState = superGameModule.isPreTaskState()
-            road.completedPath = superGameModule.getCompletedPath()
-            road.currentPoint = superGameModule.getCurPoint();
-            road.startPoint = superGameModule.getStartPoint();
-            road.uncompletedPath =  superGameModule.getGameUncompletedPath();
-            road.visible = true;
-            road.isSuperGame = true;
-           // road.draw();
-            car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
-            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
-
-            var completedLength = vecLength(road.currentPoint, superGameLastPoint);
-            road.setSuperGamePercent(1 - completedLength/superGameLength);
+           updateGameTask(superGameModule);
+           road.updateSuperGamePercent();
         }
-
 
         onSuperGameStarted:
         {
-            console.log("supergame started-------------------------")
-            road.visible = true;
-
             var circles = superGameModule.getGameUncompletedPath();
             var lastPoint = circles[circles.length - 1];
-            setFlagPosition(lastPoint.x, lastPoint.y);
-            showFlag();
+            flag.setFlagPosition(lastPoint.x, lastPoint.y);
+            flag.show();
 
             var startPoint = superGameModule.getStartPoint();
             road.setSuperTrackPosition(startPoint);
             road.setSuperTrackRotation(superGameModule.getForwardVectorRotation());
             road.calcSuperTrackLength(startPoint, lastPoint);
+            road.superGameLastPoint = lastPoint;
+            road.visible = true;
+            road.isSuperGame = true;
             road.show();
-
             road.showSuperTrack();
-
-            superGameLength = vecLength(startPoint, lastPoint);
-            superGameLastPoint = lastPoint;
 
             mindIndicator.showIndicator();
             mindIndicator.setMindwaveLimitPercent(superGameModule.getMindwaveLimit());
+            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
 
             car.visible = true;
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
-            mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
         }
 
         onSuperGameFailed:
@@ -203,15 +170,21 @@ Item
 
         onSuperGameSuccess:
         {
-             gameStop();
+            gameStop();
         }
     }
 
-    function vecLength(point1, point2)
+    function updateGameTask(provicer)
     {
-        var x = point2.x - point1.x;
-        var y = point2.y - point1.y;
-        return Math.sqrt( x*x + y*y );
+        road.isRunning = provicer.isRunning()
+        road.isPreTaskState = provicer.isPreTaskState()
+        road.completedPath = provicer.getCompletedPath()
+        road.currentPoint = provicer.getCurPoint();
+        road.startPoint = provicer.getStartPoint();
+        road.uncompletedPath =  provicer.getGameUncompletedPath();
+
+        car.moveCar(provicer.getCurPoint(), provicer.getForwardVectorRotation());
+        mindIndicator.moveCar(provicer.getCurPoint(), provicer.getForwardVector(), provicer.getForwardVectorRotation());
     }
 
     function gameStop()
@@ -219,10 +192,12 @@ Item
         console.log("=================== game stop ===================")
 
         car.visible = false;
+        car.moveFromCanvas();
+
         road.visible = false;
         pretaskPopup.visible = false;
-        hideFlag();
-        car.moveFromCanvas();
+        flag.hide();
+
         mindIndicator.moveFromCanvas();
     }
 
@@ -232,20 +207,5 @@ Item
         car.visible = true;
         road.visible = true;
         pretaskPopup.visible = true;
-    }
-
-    function setFlagPosition(x, y)
-    {
-        flag.setFlagPosition(x, y);
-    }
-
-    function showFlag()
-    {
-        flag.showFlag();
-    }
-
-    function hideFlag()
-    {
-        flag.hideFlag();
     }
 }

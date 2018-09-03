@@ -6,6 +6,13 @@ Item
 {
     anchors.fill: parent;
 
+    property real arrowSize: 26.0;
+    property int lineWidth: 10;
+    property string activeLineColor: "#f3095d";
+    property string nonActiveLineColor: "#20346e";
+    property string blueArrow: "qrc:/resources/superarrow.png";
+    property string redArrow: "qrc:/resources/superarrow1.png";
+
     property var isRunning;
     property var isPreTaskState;
     property var completedPath;
@@ -14,21 +21,12 @@ Item
     property var startPoint;
     property var circles;
     property bool isSuperGame: false;
-
-    property real arrowSize: 26.0;
     property int pointsCompleted: 0;
-
-    property string activeLineColor: "#f3095d";
-    property string nonActiveLineColor: "#20346e";
-
-    property string blueArrow: "qrc:/resources/superarrow.png";
-    property string redArrow: "qrc:/resources/superarrow1.png";
-
     property int animatedItemIndex: 0;
     property var startPoint1;
     property var startPoint2;
-
-    property int lineWidth: 10;
+    property var superGameLastPoint;
+    property int superGameLength: 0;
 
     Consts
     {
@@ -191,10 +189,15 @@ Item
         {
             repeater.itemAt(i).source = redArrow;
         }
+
+        superGameLength = vecLength(startPosition, endPosition);
     }
 
-    function setSuperGamePercent(percent)
+    function updateSuperGamePercent()
     {
+        var completedLength = vecLength(currentPoint, superGameLastPoint);
+        var percent = 1 - completedLength/superGameLength;
+
         var countToShow = Math.floor(repeater.model * percent);
         for(var i = 0; i < countToShow; i++)
         {
@@ -323,5 +326,12 @@ Item
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
+    }
+
+    function vecLength(point1, point2)
+    {
+        var x = point2.x - point1.x;
+        var y = point2.y - point1.y;
+        return Math.sqrt( x*x + y*y );
     }
 }

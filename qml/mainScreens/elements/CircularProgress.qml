@@ -58,13 +58,8 @@ Item
     function moveFromCanvas()
     {
         setCarPosition({x: 0, y: 3000});
-        update();
-    }
-
-    function update()
-    {
-
-    }  
+        hideIndicator();
+    }    
 
     function setCarPosition(currentPoint)
     {

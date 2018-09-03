@@ -29,12 +29,12 @@ Item
         }
     }
 
-    function showFlag()
+    function show()
     {
         visible = true;
     }
 
-    function hideFlag()
+    function hide()
     {
         visible = false;
     }
