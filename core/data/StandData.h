@@ -31,7 +31,7 @@ public:
 private:   
     QQmlContext* qmlContext;
     MainConfig _mainConfig;
-    QString _buildNumber = "1.2v";
+    QString _buildNumber = "1.4v";
 
     QString getStandPath() const;
 
