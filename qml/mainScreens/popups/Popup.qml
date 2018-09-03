@@ -10,21 +10,20 @@ import "../../components"
 Item
 {
     id: core;
-    anchors.fill: parent;
-    visible: false;
 
     property int currentStageId: 0;
-    property var greenColor:"#ffffff";
-    property var blueColor:"#00aedc";
+    property string greenColor: "#ffffff";
+    property string blueColor: "#00aedc";
+
+    property string textStop: "ОСТАНОВКА";
+    property string textAdvantage: "УЗНАЙТЕ О ПРЕИМУЩЕСТВЕ<br/>НА ЭКРАНЕ";
+
+    anchors.fill: parent;
+    visible: false;
 
     FontManager
     {
         id: font;
-    }
-
-    Consts
-    {
-        id:consts;
     }
 
     DropShadow
@@ -133,7 +132,7 @@ Item
             color: greenColor;
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
-            text: "ОСТАНОВКА";
+            text: textStop;
         }
 
         Text
@@ -147,7 +146,6 @@ Item
             color: "#ffffff";
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
-            text: "";
             lineHeight: 0.9;
         }
 
@@ -170,11 +168,11 @@ Item
             anchors.top:  polosa.bottom;
             anchors.topMargin: 40;
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 35 * consts.designScale;
+            font.pixelSize: 35;
             color: greenColor;
             textFormat: Text.StyledText;
             horizontalAlignment :Text.AlignHCenter;
-            text: "УЗНАЙТЕ О ПРЕИМУЩЕСТВЕ<br/>НА ЭКРАНЕ";
+            text: textAdvantage;
         }
 
         Image
@@ -221,7 +219,6 @@ Item
             color: "#ffffff";
             textFormat: Text.StyledText;
             horizontalAlignment: Text.AlignHCenter;
-            text: "Ура! Ты проехал<br/>по маршруту<br/>до Третьяковской<br/>галереи";
             lineHeight: 0.9;
         }
     }
@@ -298,8 +295,6 @@ Item
         visible = true;
 
         winDescrText.text = description;
-        console.log("allStagesComleteEventMap ", description, imageWinName);
-
         placeIcon.source = standData.getStandImage(imageWinName);
     }
 
@@ -320,8 +315,6 @@ Item
 
     function openCountDown()
     {
-       // countdown.show();
-
         popupGameCompleteBg.visible = false;
 
         preTask.visible = true;
@@ -333,20 +326,10 @@ Item
 
         popupBg.visible = false;
         countdown.show();
-
-      //  countdowAnim.currentImage = 0;
-      //  countdowAnim.setRunning(true);
     }
 
     function countDownUpdate(time)
     {
-//        countdownText.font.pixelSize = 350 * consts.designScale;
-//        countdownText.text = time.toFixed(0);
 
-//        if( countdownText.text == "0")
-//        {
-//            countdownText.font.pixelSize = 120 * consts.designScale;
-//            countdownText.text = "ПОЕХАЛИ";
-//        }
     }
 }

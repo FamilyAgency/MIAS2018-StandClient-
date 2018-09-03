@@ -40,7 +40,6 @@ Item
     {
         visible: true;
         id: bg;
-        //color: blueColor;
         border.width: 0;
         implicitWidth: 900;
         implicitHeight: 900;
@@ -100,23 +99,24 @@ Item
         horizontalAlignment :Text.AlignHCenter;
     }
 
-    Image
+
+    AnimationPlayer
     {
         id: stars;
-        property int currentImage: 0;
-        y: 190
-        anchors.horizontalCenter: parent.horizontalCenter;
-        source: configController.getFileInAppDir("content/misc/Stars/" + currentImage + ".png");
-        NumberAnimation on currentImage
+        currentImage: 0;
+        startFrame: 0;
+        endFrame: 150;
+
+
+        Component.onCompleted:
         {
-            from: 0;
-            to: 150;
-            duration: 151 * 1000. / 30;
-            running: true;
-            loops: Animation.Infinite;
+            stars.setSource("content/misc/Stars/", ".png");
+            stars.setFPS(30);
+            stars.setRunning(false);
+            stars.setLocation((1080 - 740) * 0.5, 190);
+            stars.init();
         }
     }
-
 
     OpacityAnimator on opacity
     {
@@ -142,19 +142,13 @@ Item
             superTime.text = tools.formatSeconds(Math.floor(time/1000.0));
             superGameSuccess = true;
         }
-    }
-
-    Component.onCompleted:
-    {
-        //show();
-    }
+    }   
 
     function show()
     {
          if(superGameSuccess)
         {
             visible = true;
-            // confAnim.setRunning(true);
             opacity = 0;
             opacityAnim.start();
         }
@@ -163,6 +157,5 @@ Item
     function hide()
     {
         visible = false;
-        // confAnim.setRunning(false);
     }
 }

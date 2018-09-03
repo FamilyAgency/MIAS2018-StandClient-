@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "../../tools"
+
 Item
 {
     id: animationItem
@@ -20,9 +21,7 @@ Item
         NumberAnimation on currentImage
         {
             id: anim;
-            from: 1;
-            to: 35
-            duration: 2000
+            from: 1;          
             running: false;
             loops: Animation.Infinite;
         }

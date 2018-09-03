@@ -78,7 +78,7 @@ Window
             mainGameScreen.gameStart()
             break;
 
-            // case AppState.GameResult:
+     // case AppState.GameResult:
         case AppState.SuperGame:
             mainGameScreen.gameStop();
             break;
@@ -93,5 +93,4 @@ Window
             break;
         }
     }
-
 }

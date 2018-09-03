@@ -4,7 +4,6 @@ import QtMultimedia 5.8
 
 import "game"
 import "../tools"
-import "../components"
 
 Item
 {
@@ -39,9 +38,9 @@ Item
         AnimationPlayer
         {
             id: animationItem;
-            currentImage: 1;
+            currentImage: 0;
             endFrame: 35;
-            startFrame: 4;
+            startFrame: 0;
 
             Component.onCompleted:
             {

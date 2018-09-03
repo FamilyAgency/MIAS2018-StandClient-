@@ -15,21 +15,17 @@ Item
         source: "qrc:/resources/finish.png";
     }
 
-    Image
+    AnimationPlayer
     {
         id: flag;
-       // visible: false;
-        property int currentImage: 1
-        x: 0
-        y: 0
-        source: configController.getFileInAppDir("content/misc/flag/" + currentImage + ".png");
-        NumberAnimation on currentImage
+        currentImage: 1;
+        endFrame: 72;
+        startFrame: 1;
+        Component.onCompleted:
         {
-            from: 1;
-            to: 72;
-            duration: 71 * 1000. / consts.animFPS;
-            running: true;
-            loops: Animation.Infinite;
+            flag.setSource("content/misc/flag/", ".png");
+            flag.setFPS(30);
+            flag.init();
         }
     }
 
@@ -45,10 +41,8 @@ Item
 
     function setFlagPosition(x, y)
     {
-        flag.x = x - 10;
-        flag.y = y - 66;
+        flag.setLocation(x - 10, y - 66);
         donate.x = x - 16;
         donate.y = y - 16;
     }
-
 }

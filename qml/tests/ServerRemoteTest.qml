@@ -12,10 +12,7 @@ Item
 {
     id: serverTest;
 
-    Consts
-    {
-        id:consts;
-    }
+    property string infoTextColor: "#009999";
 
     Text
     {
@@ -55,7 +52,7 @@ Item
             text: "Server Remote Tests";
             font.family: "Helvetica";
             font.pixelSize: 17;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout
@@ -185,7 +182,7 @@ Item
             text: "Registration Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         Button
@@ -314,7 +311,7 @@ Item
             text: "Game Pass Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout
@@ -366,7 +363,7 @@ Item
             text: "Prize Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout

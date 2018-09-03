@@ -15,8 +15,6 @@
         <file>qml/mainScreens/GameScreen.qml</file>
         <file>qml/controlScreens/GameSession.qml</file>
         <file>qml/mainScreens/elements/CircularProgress.qml</file>
-        <file>qml/mainScreens/elements/FinishBullet.qml</file>
-        <file>qml/mainScreens/elements/StartBullet.qml</file>
         <file>qml/controlScreens/StandData.qml</file>
         <file>qml/controlScreens/AppState.qml</file>
         <file>qml/controlScreens/Logger.qml</file>
@@ -93,12 +91,12 @@
         <file>resources/Star_blue.png</file>
         <file>resources/Star_white.png</file>
         <file>resources/Glow_Car.png</file>
-        <file>qml/components/AnimationPlayer.qml</file>
         <file>qml/touchScreens/roulette/MindwaveAttention.qml</file>
         <file>qml/mainScreens/popups/CountdownAnim.qml</file>
         <file>resources/arrow-small.png</file>
         <file>qml/touchScreens/elements/SecretCloseBtn.qml</file>
         <file>resources/Settings.ini</file>
         <file>qml/touchScreens/elements/BuildData.qml</file>
+        <file>qml/tools/AnimationPlayer.qml</file>
     </qresource>
 </RCC>

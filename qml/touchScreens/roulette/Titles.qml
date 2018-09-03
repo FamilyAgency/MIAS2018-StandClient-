@@ -2,7 +2,6 @@ import QtQuick 2.2
 
 import "../../tools"
 import "../elements"
-import "../../components"
 
 import Qt3D.Extras 2.0
 
@@ -83,9 +82,9 @@ Item
     AnimationPlayer
     {
         id: animationItem;
-        currentImage: 1;
+        currentImage: 0;
         endFrame: 35;
-        startFrame: 4;
+        startFrame: 0;
         opacity: rouletteModule.helpTextOpacity;
 
         Component.onCompleted:
@@ -93,7 +92,7 @@ Item
             animationItem.setSource("content/misc/arrow/", ".png");
             animationItem.setFPS(30);
             animationItem.setRunning(false);
-            animationItem.setLocation((1080 - 200) * 0.5, 0)
+            animationItem.setLocation((1080 - 200) * 0.5, -50);
             animationItem.init();
         }
     }

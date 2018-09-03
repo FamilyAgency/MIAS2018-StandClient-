@@ -8,6 +8,10 @@ Item
     id: gameView;
     anchors.fill: parent;
 
+    property var superGameLength: 0;
+    property var superGameLastPoint: 0;
+
+
     Image
     {
         id:map
@@ -65,6 +69,7 @@ Item
     Connections
     {
         target: gameModule;
+
         onAllStagesComleteEvent:
         {
             hideFlag();
@@ -80,7 +85,6 @@ Item
 
         onShowSmallCar:
         {
-            console.log("show small car !!!!!!!!!!!!");
             mindIndicator.hideIndicator();
             car.visible = true;
         }
@@ -88,7 +92,6 @@ Item
         onUpdateCanvas:
         {
             car.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
-           // mindIndicator.moveCar(rouletteModule.getCurPoint(), rouletteModule.getForwardVectorRotation());
         }
     }
 
@@ -191,10 +194,7 @@ Item
             car.visible = true;
             car.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVectorRotation());
             mindIndicator.moveCar(superGameModule.getCurPoint(), superGameModule.getForwardVector(), superGameModule.getForwardVectorRotation());
-
         }
-
-       // onCountDownComplete:
 
         onSuperGameFailed:
         {
@@ -206,9 +206,6 @@ Item
              gameStop();
         }
     }
-
-    property var superGameLength: 0;
-    property var superGameLastPoint: 0;
 
     function vecLength(point1, point2)
     {
@@ -234,7 +231,6 @@ Item
         console.log("=================== game start ===================")
         car.visible = true;
         road.visible = true;
-
         pretaskPopup.visible = true;
     }
 
