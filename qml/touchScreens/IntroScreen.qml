@@ -6,6 +6,7 @@ import QtQuick.Controls.Styles 1.2
 import com.app 1.0
 import "intro"
 import "../tools"
+import "elements"
 
 Item
 {
@@ -99,6 +100,11 @@ Item
                 break;
             }
         }
+    }
+
+    BuildData
+    {
+        id:buildData;
     }
 
     Connections

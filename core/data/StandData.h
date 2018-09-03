@@ -9,13 +9,13 @@ class StandData : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(MainConfig mainConfig READ mainConfig WRITE setMainConfig NOTIFY mainConfigChanged)
+    Q_PROPERTY(QString buildNumber READ buildNumber WRITE setBuildNumber NOTIFY buildNumberChanged)
 
 public:
     Q_INVOKABLE QVariantList getScreensInfo() const;
     Q_INVOKABLE QString getStandImage(const QString& path) const;
     Q_INVOKABLE QString getStandMap() const;
     Q_INVOKABLE QString getStandMapOver() const;
-
 
     explicit StandData(QObject *parent = nullptr);
     void setQmlContext(QQmlContext* value);
@@ -25,14 +25,19 @@ public:
     void setMainConfig(MainConfig config);
     MainConfig mainConfig() const;
 
+    void setBuildNumber(const QString& value);
+    QString buildNumber() const;
+
 private:   
     QQmlContext* qmlContext;
     MainConfig _mainConfig;
+    QString _buildNumber = "1.2v";
 
     QString getStandPath() const;
 
 signals:
     void mainConfigChanged();
+    void buildNumberChanged();
 
 };
 

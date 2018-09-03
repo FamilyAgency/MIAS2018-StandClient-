@@ -99,5 +99,6 @@
         <file>resources/arrow-small.png</file>
         <file>qml/touchScreens/elements/SecretCloseBtn.qml</file>
         <file>resources/Settings.ini</file>
+        <file>qml/touchScreens/elements/BuildData.qml</file>
     </qresource>
 </RCC>
