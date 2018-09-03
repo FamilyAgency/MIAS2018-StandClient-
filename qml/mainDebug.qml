@@ -4,6 +4,7 @@ import "tests/touchScreens"
 import "touchScreens"
 import "mainScreens"
 import "controlScreens"
+
 import com.app 1.0
 
 ApplicationWindow
@@ -15,12 +16,8 @@ ApplicationWindow
     height: standData.mainConfig.touchScreen.height;
     visible: true;
     flags: standData.mainConfig.touchScreenIsSplash ? Qt.SplashScreen : Qt.Window;
-   // color: "#101010";
     color: "#000000";
-
     id: core;
-
-
 
     TouchWindow
     {

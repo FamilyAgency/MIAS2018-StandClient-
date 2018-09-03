@@ -12,10 +12,7 @@ Item
 {
     id: serverTest;
 
-    Consts
-    {
-        id:consts;
-    }
+    property string infoTextColor: "#009999";
 
     Text
     {
@@ -55,7 +52,7 @@ Item
             text: "Server Remote Tests";
             font.family: "Helvetica";
             font.pixelSize: 17;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout
@@ -185,7 +182,7 @@ Item
             text: "Registration Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         Button
@@ -314,7 +311,7 @@ Item
             text: "Game Pass Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout
@@ -366,7 +363,7 @@ Item
             text: "Prize Tests";
             font.family: "Helvetica";
             font.pixelSize: 14;
-            color: consts.infoTextColor;
+            color: infoTextColor;
         }
 
         RowLayout
@@ -409,6 +406,46 @@ Item
                 {
                      appController.setAppStateTest(AppState.Game);
                 }
+            }
+        }
+
+        Text
+        {
+            text: "Meta Data Tests";
+            font.family: "Helvetica";
+            font.pixelSize: 14;
+            color: infoTextColor;
+        }
+
+        RowLayout
+        {
+            spacing: 10;
+
+            Button
+            {
+                text:"Send Meta";
+
+                onClicked:
+                {
+                    server.userMetaDataRequest(metaUserId.value, metaText.text);
+                }
+            }
+
+            SpinBox
+            {
+                id: metaUserId;
+                value: 2650;
+                editable: true;
+                from :0;
+                to: 5000;
+            }
+
+            TextField
+            {
+                id: metaText;
+                implicitWidth: 160;
+                text: "123,34,45,57,678,8";
+                selectByMouse: true;
             }
         }
     }

@@ -5,13 +5,13 @@ import "../../touchScreens/roulette"
 
 Item
 {
-    visible:false;
-
     property int canvasSize: 240;
+
+    visible: false;
 
     Consts
     {
-        id:consts;
+        id: consts;
     }
 
     MindwaveAttention
@@ -29,7 +29,6 @@ Item
         canvasHeight: canvasSize;
         canvasHalfWidth: canvasSize * 0.5;
         canvasHalfHeight: canvasSize * 0.5;
-
     }
 
     function hideIndicator()
@@ -59,13 +58,8 @@ Item
     function moveFromCanvas()
     {
         setCarPosition({x: 0, y: 3000});
-        update();
-    }
-
-    function update()
-    {
-        // canvasCirc.requestPaint();
-    }  
+        hideIndicator();
+    }    
 
     function setCarPosition(currentPoint)
     {
@@ -77,9 +71,6 @@ Item
     function setMindwaveLimitPercent(percent)
     {
         var _percent = percent / 100.0;
-        console.log("set percent!!!!!!!!!!!! ", _percent)
         mindwaveAttention.attentionThreshold = _percent;
-
-        // canvasCirc.percentLimit = percent;
     }
 }

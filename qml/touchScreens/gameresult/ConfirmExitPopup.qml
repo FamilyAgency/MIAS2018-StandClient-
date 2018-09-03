@@ -7,16 +7,16 @@ Item
 {
     id: popup;
 
-    visible:false;
-    anchors.fill: parent;
-    anchors.centerIn: parent;
-
     property string mainTitleDefault: "УВЕРЕН,<br/>ЧТО НЕ ХОЧЕШЬ<br/>СЫГРАТЬ В СУПЕР-ИГРУ<br/>И ПОЛУЧИТЬ<br/>АВТОМОБИЛЬ SANTA FE";
     property string buttonTakeColaText: "ЗАБРАТЬ<br/>НАПИТОК";
     property string buttonSuperGameText: "ИГРАТЬ<br/>В СУПЕРИГРУ";
 
     signal reject();
     signal confirm();
+
+    visible:false;
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     Rectangle
     {

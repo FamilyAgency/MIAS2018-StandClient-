@@ -8,17 +8,13 @@ import "../tools"
 Item
 {
     id: gameScreen;
-    anchors.fill: parent;
 
     property string mainTitleDefault: "Думайте о новом<br/>Hyundai SANTA FE.<br/><br/>Чем выше концентрация —<br/>тем выше скорость.";
 
     signal animComplete();
     signal animStart();
 
-    Consts
-    {
-        id: consts;
-    }
+    anchors.fill: parent;
 
     FontManager
     {
@@ -32,35 +28,27 @@ Item
         anchors.centerIn: parent;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize:  60 * consts.designScale;
+        font.pixelSize:  60;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;
         verticalAlignment: Text.AlignVCenter;
         opacity: 0;
 
-        Item
+        AnimationPlayer
         {
-            id: animationItem
-            anchors.fill: parent;
-            Image
+            id: animationItem;
+            currentImage: 0;
+            endFrame: 35;
+            startFrame: 0;
+
+            Component.onCompleted:
             {
-                property int currentImage: 1
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: -300;
-                id: image
-                x: 0
-                y: 0
-                source: configController.getFileInAppDir("content/misc/arrow/" + currentImage + ".png");
-                NumberAnimation on currentImage
-                {
-                    from: 4
-                    to: 35
-                    duration: 1000
-                    running: true;
-                    loops: Animation.Infinite;
-                }
+                animationItem.setSource("content/misc/arrow/", ".png");
+                animationItem.setFPS(30);
+                animationItem.setRunning(false);
+                animationItem.setLocation((1080 - 200) * 0.5, (1920 - 200) * 0.5 - 300);
+                animationItem.init();
             }
         }
 
@@ -84,8 +72,6 @@ Item
             easing.type: "OutCubic";
         }
     }
-
-
 
     AdvantageDescription
     {

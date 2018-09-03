@@ -54,6 +54,7 @@ void GameTask::setPath(const QVector<QPointF>& value)
 
 void GameTask::init()
 {
+    metaData = "";
     taskComplete = false;
     currentPointIndex = 0;
     completedPathList.clear();
@@ -65,6 +66,7 @@ void GameTask::start()
 {
     startTime = QDateTime::currentMSecsSinceEpoch();
     timer->start(taskTimerMills);
+    connect(mindWave.data(), SIGNAL(attentionChanged()), this, SLOT(onAttentionChanged()));
 }
 
 void GameTask::addCompletedPoint(const QPointF& point)
@@ -90,6 +92,18 @@ void GameTask::setPoints()
 void GameTask::setMindWaveClient(QSharedPointer<MindwaveComponentBase> value)
 {
     mindWave = value;
+}
+
+void GameTask::onAttentionChanged()
+{
+    if(isRecording && mindWave->isSignalLevelMax())
+    {
+        addMetaData(mindWave->attention());
+    }
+    else
+    {
+        qDebug()<<"not recording";
+    }
 }
 
 void GameTask::onUpdate()
@@ -149,6 +163,24 @@ void GameTask::update(int humanValue)
     }
 }
 
+void GameTask::setRecording(bool value)
+{
+    isRecording = value;
+}
+
+void GameTask::addMetaData(int humanValue)
+{
+    if(metaData.size() < 10000)
+    {
+        metaData += QString::number(humanValue) + ",";
+    }
+}
+
+QString GameTask::getMetaData() const
+{
+    return metaData;
+}
+
 float GameTask::getMindwaveLimit() const
 {
     return velocityCalculator.getThreshold();
@@ -168,6 +200,7 @@ void GameTask::stop()
 {
     timer->stop();
     completedPathList.clear();
+    disconnect(mindWave.data(), SIGNAL(attentionChanged()), this, SLOT(onAttentionChanged()));
 }
 
 int GameTask::getCompletionTime() const
@@ -199,6 +232,6 @@ float GameTask::getForwardVectorRotation() const
 
 QVector2D GameTask::getForwardVector() const
 {
-     return QVector2D(endPoint - startPoint).normalized();
+    return QVector2D(endPoint - startPoint).normalized();
 }
 

@@ -49,6 +49,8 @@ public:
     void setQmlContext(QQmlContext* value);
     void setUser(QSharedPointer<UserData> value);
 
+    void setRecording(bool value);
+
 private:
     TaskState currentTaskState;
     QSharedPointer<MindwaveComponentBase> mindWave = nullptr;
@@ -65,6 +67,8 @@ private:
     QSharedPointer<UserData> currentUser;
 
     QVariantList gameCompletedPath, gameUncompletedPath, targetPoints;
+
+    bool isRecording = false;
 
 signals:
     void updateCanvas();   

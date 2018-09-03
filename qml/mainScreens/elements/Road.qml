@@ -1,11 +1,17 @@
 import QtQuick 2.2
 import QtQuick.Controls.Styles 1.4
 import "../../tools"
-import "../../components"
 
 Item
 {
     anchors.fill: parent;
+
+    property real arrowSize: 26.0;
+    property int lineWidth: 10;
+    property string activeLineColor: "#f3095d";
+    property string nonActiveLineColor: "#20346e";
+    property string blueArrow: "qrc:/resources/superarrow.png";
+    property string redArrow: "qrc:/resources/superarrow1.png";
 
     property var isRunning;
     property var isPreTaskState;
@@ -15,22 +21,17 @@ Item
     property var startPoint;
     property var circles;
     property bool isSuperGame: false;
-
-    property real arrowSize: 26.0;
     property int pointsCompleted: 0;
-
-    property string activeLineColor: "#f3095d";
-    property string nonActiveLineColor: "#20346e";
-
-    property string blueArrow: "qrc:/resources/superarrow.png";
-    property string redArrow: "qrc:/resources/superarrow1.png";
-
+    property int animatedItemIndex: 0;
+    property var startPoint1;
+    property var startPoint2;
+    property var superGameLastPoint;
+    property int superGameLength: 0;
 
     Consts
     {
         id:consts;
     }
-
 
     AnimationPlayer
     {
@@ -49,12 +50,16 @@ Item
     Canvas
     {
         id: canvas;
-        anchors.fill: parent;
-        antialiasing: true;
-        smooth: true;
 
         property string greycircle: "qrc:/resources/Star_blue.png";
         property string redcircle: "qrc:/resources/Star_white.png";
+
+        property string lineCap: "square";
+        property string lineJoin: "round";
+
+        anchors.fill: parent;
+        antialiasing: true;
+        smooth: true;
 
         Component.onCompleted:
         {
@@ -71,18 +76,16 @@ Item
             {
                 if(isSuperGame)
                 {
-                   // drawSuperGameGuidePaths(ctx);
-                   // animateSuperTrack();
                     return;
                 }
 
                 drawGuidePaths(ctx);
                 var list = completedPath;
 
-                ctx.lineWidth = consts.lineWidth;
+                ctx.lineWidth = lineWidth;
                 ctx.strokeStyle = nonActiveLineColor;
-                ctx.lineCap = consts.lineCap;
-                ctx.lineJoin = consts.lineJoin;
+                ctx.lineCap = lineCap;
+                ctx.lineJoin = lineJoin;
 
                 ctx.beginPath();
                 ctx.moveTo(startPoint1.x, startPoint1.y);
@@ -151,10 +154,6 @@ Item
         easing.type: "InOutCubic";
     }
 
-    property int animatedItemIndex: 0;
-    property var startPoint1;
-    property var startPoint2;
-
     function setStartPath(point1, point2)
     {
         startPoint1 = point1;
@@ -190,10 +189,17 @@ Item
         {
             repeater.itemAt(i).source = redArrow;
         }
+
+        superGameLength = vecLength(startPosition, endPosition);
     }
 
-    function setSuperGamePercent(percent)
+    function updateSuperGamePercent()
     {
+        var completedLength = vecLength(currentPoint, superGameLastPoint);
+        var percent = 1 - completedLength/superGameLength;
+
+        percent = ( percent > 100 ? 100 : (percent < 0 ? 0 : percent));
+
         var countToShow = Math.floor(repeater.model * percent);
         for(var i = 0; i < countToShow; i++)
         {
@@ -263,7 +269,7 @@ Item
         ctx.beginPath();
         ctx.moveTo(list[0].x, list[0].y);
         ctx.strokeStyle =  "#ff0000";
-        ctx.lineWidth = consts.lineWidth;
+        ctx.lineWidth = lineWidth;
 
         for(var i = 1; i < list.length; i++)
         {
@@ -281,7 +287,7 @@ Item
         ctx.beginPath();
         ctx.moveTo(currentPoint.x, currentPoint.y);
         ctx.strokeStyle =  activeLineColor;
-        ctx.lineWidth = consts.lineWidth;
+        ctx.lineWidth = lineWidth;
 
         for(var i = 0; i < list.length; i++)
         {
@@ -309,12 +315,6 @@ Item
         pulsAnim.setLocation(circles[pointsCompleted].x - 82, circles[pointsCompleted].y - 82);
     }
 
-    //    function setFlagPosition(x, y)
-    //    {
-    //        flag.x = x - 20;// - flag.width;
-    //        flag.y = y - 64;// - flag.height;
-    //    }
-
     function drawFlag(ctx)
     {
         var ellipseSize = 35;
@@ -328,5 +328,12 @@ Item
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
+    }
+
+    function vecLength(point1, point2)
+    {
+        var x = point2.x - point1.x;
+        var y = point2.y - point1.y;
+        return Math.sqrt( x*x + y*y );
     }
 }

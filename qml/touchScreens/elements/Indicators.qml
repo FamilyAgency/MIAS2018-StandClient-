@@ -77,13 +77,7 @@ Item
 
         onCardReaderEnabled:
         {
-            rfidIndicator.color = enabled ? goodColor : badColor;
-
-            if(AppState.Intro === appController.getAppState())
-            {
-                //checkRFID();
-               // show2IfOneBad();
-            }
+            rfidIndicator.color = enabled ? goodColor : badColor;       
         }
     }
 
@@ -150,9 +144,7 @@ Item
         switch(appState)
         {
         case AppState.Intro:
-           // checkRFID();
             checkMind();
-           // show2IfOneBad();
             break;
 
         case AppState.Instruction:

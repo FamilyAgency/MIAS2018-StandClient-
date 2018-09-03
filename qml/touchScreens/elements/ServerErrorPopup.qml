@@ -10,16 +10,11 @@ Item
 {
     id: error;
 
-    property real btnMarginBottom: 305;//* consts.designScale;
+    property real btnMarginBottom: 305;
     property string errorTitle:  "Ой!<br/>Что-то пошло не так.<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.";
     property string btnTtile: "ПОНЯТНО";
 
     anchors.fill: parent;
-
-    Consts
-    {
-        id: consts;
-    }
 
     FontManager
     {
@@ -60,9 +55,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350;
+        btnHeight: 350;
+        btnRadius: 175;
 
         onClicked:
         {
@@ -103,29 +98,6 @@ Item
             showError();
         }
     }
-
-//    Connections
-//    {
-//        target:rfid;
-
-//        onCardReaderError:
-//        {
-//            switch(error)
-//            {
-
-//            case CardReaderError.NoCardReader:
-//            case CardReaderError.CantStartTransaction:
-//            case CardReaderError.CantEndTransaction:
-//            case CardReaderError.LoadKeyError:
-//            case CardReaderError.AuthError:
-//            case CardReaderError.ReadError:
-//            case CardReaderError.UnknownError:
-//            case CardReaderError.DataFormatError:
-//                showError();
-//                break;
-//            }
-//        }
-//    }
 
     function showError()
     {

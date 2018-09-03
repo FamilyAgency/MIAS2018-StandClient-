@@ -10,7 +10,6 @@ import "gameresult"
 Item
 {
     id: gameResultScreen;
-    anchors.fill: parent;
 
     signal animComplete();
     signal animStart();
@@ -25,6 +24,8 @@ Item
 
     signal startSuperGame();
     signal getColaCan();
+
+    anchors.fill: parent;
 
     FontManager
     {
@@ -95,7 +96,7 @@ Item
         onReject:
         {
             confirmExitPopup.hide();
-             gameResultModule.superGameRejectedButtonClick();
+            gameResultModule.superGameRejectedButtonClick();
         }
 
         onConfirm:
@@ -112,6 +113,9 @@ Item
         interval: 6000;
         onTriggered:
         {
+            opacityAnim.stop();
+            scaleAnim.stop();
+
             opacityAnim.from = 1;
             opacityAnim.to = 0;
             opacityAnim.start();
@@ -148,8 +152,8 @@ Item
 
     function start()
     {
-       // backBtn.opacity = 0;
-       // backBtn.visible = false;
+        opacityAnim.stop();
+        scaleAnim.stop();
 
         opacityAnim.from = 0;
         opacityAnim.to = 1;

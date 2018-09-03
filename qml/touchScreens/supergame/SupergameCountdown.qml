@@ -20,19 +20,9 @@ Item
         id: tools;
     }
 
-    Consts
-    {
-        id: consts;
-    }
-
     Canvas
     {
         id: canvasCirc;
-        width: 1080;
-        height: 1920;
-        smooth: true;
-        antialiasing: true;
-        rotation: -90;
 
         property int centerWidth: 1080 * 0.5
         property int centerHeight: 1920 * 0.5
@@ -40,20 +30,29 @@ Item
 
         property real percentLimit: 0.0;
         property real percent: 0.5;
+        property var redColor: Qt.rgba(0., 164./255., 227.0 / 255., 1);
+        property string lineCap: "round";
+        property string lineJoin: "round";
+
+        width: 1080;
+        height: 1920;
+        smooth: true;
+        antialiasing: true;
+        rotation: -90;
 
         onPercentChanged: requestPaint();
 
         onPaint:
         {
-            var colorAttention= Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
+            var colorAttention = Qt.rgba(255.0 / 255., 255./255., 255.0 / 255., 0.2);
             var colorBg = Qt.rgba(10./255., 171./255., 212.0 / 255., 1.0);
 
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, 1080, 1920);
 
-            ctx.strokeStyle = consts.redColor;
-            ctx.lineCap = consts.lineCap;
-            ctx.lineJoin = consts.lineJoin;
+            ctx.strokeStyle = redColor;
+            ctx.lineCap = lineCap;
+            ctx.lineJoin = lineJoin;
 
             ctx.lineWidth = 1;
 
@@ -72,8 +71,7 @@ Item
             ctx.beginPath();
             ctx.arc(canvasCirc.centerWidth,
                     canvasCirc.centerHeight,
-                    canvasCirc.radius, 0, 2 * Math.PI * percent );//
-            //  2 * Math.PI * percent, 0);
+                    canvasCirc.radius, 0, 2 * Math.PI * percent );
             ctx.stroke();
             ctx.closePath();
         }
@@ -84,16 +82,14 @@ Item
             target: canvasCirc;
             property: "percent";
             from:1;
-           // to: 0;
             duration: 2000
         }
 
         FastBlur
         {
-            anchors.fill: canvasCirc
-            source: canvasCirc
-            radius: 50
-            //transparentBorder:true;
+            anchors.fill: canvasCirc;
+            source: canvasCirc;
+            radius: 50;
         }
     }
 
@@ -106,8 +102,8 @@ Item
         anchors.verticalCenterOffset: -160;
         smooth: true;
         source: "qrc:/resources/time_round.png"
-        width: 81 * consts.designScale;
-        height: 81 * consts.designScale;
+        width: 81;
+        height: 81;
     }
 
     Text
@@ -116,7 +112,7 @@ Item
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 160 * consts.designScale;
+        font.pixelSize: 160;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;
@@ -129,7 +125,7 @@ Item
             anchors.top: minutesText.bottom;
             anchors.topMargin: -10;
             font.family: font.hyundaiSansHeadMedium;
-            font.pixelSize: 30 * consts.designScale;
+            font.pixelSize: 30;
             text: "ОСТАЛОСЬ";
             color: "#0aabd4";
             textFormat: Text.StyledText;
@@ -160,38 +156,25 @@ Item
     Connections
     {
         target: superGameModule;
+
         onUpdateSuperGameTime:
         {
             var seconds = (mills / 1000.).toFixed(0);
             minutesText.text = tools.formatSeconds(seconds);
-
-           // roundAnim.duration = 100;
-           // roundAnim.to =
-           // console.log(1000 *seconds/superGameModule.getSuperGameTime())
-            //roundAnim.start();
             canvasCirc.percent = 1000 * seconds/superGameModule.getSuperGameTime();
-        }
-
-        onSuperGameFailed:
-        {
-            //console.log("SuperGameFailed");
-        }
-
-        onSuperGameSuccess:
-        {
-          //  console.log("onSuperGameSuccess");
-        }
+        }     
     }
 
     function show()
-    {
-        // roundAnim.duration = superGameModule.getSuperGameTime();
-        // roundAnim.start();
-
+    {     
         canvasCirc.percent  = 1;
         canvasCirc.requestPaint();
         opacity = 0;
         scale = 0.3;
+
+        opacityAnim.stop();
+        scaleAnim.stop();
+
         opacityAnim.from = 0;
         opacityAnim.to = 1;
         opacityAnim.start();
@@ -200,6 +183,9 @@ Item
 
     function hide()
     {
+        opacityAnim.stop();
+        scaleAnim.stop();
+
         opacityAnim.from = 1;
         opacityAnim.to = 0;
         opacityAnim.start();

@@ -67,7 +67,7 @@ void SerialThread::setReconnectionMills(int value)
 
 void SerialThread::startReading()
 {
-    qDebug()<<"connect serial to "<<portName;
+   // qDebug()<<"connect serial to "<<portName;
     serialPort->setPortName(portName);
     auto serialPortBaudRate = QSerialPort::Baud9600;
     serialPort->setBaudRate(serialPortBaudRate);
@@ -77,14 +77,14 @@ void SerialThread::startReading()
     {
         emit connectionError();
         tryReconnect();
-        qDebug()<<"serialPort opening error";
+      //  qDebug()<<"serialPort opening error";
     }
     else
     {
         emit connectionSuccess();
        // writeCommand();
        // serialPort->setBaudRate(QSerialPort::Baud57600);
-        qDebug()<<"serialPort opened";
+       // qDebug()<<"serialPort opened";
     }
 
     noDataTimer->start(noDataTimeoutMills);
@@ -106,7 +106,6 @@ void SerialThread::onReadError(QSerialPort::SerialPortError serialPortError)
 
 void SerialThread::onNoDataTimerHandle()
 {
-    qDebug()<<"timeout ";
     emit noDataTimeout();
     noDataTimer->stop();
     tryReconnect();
@@ -114,7 +113,6 @@ void SerialThread::onNoDataTimerHandle()
 
 void SerialThread::tryReconnect()
 {
-    qDebug()<<"tryReconnect ";
     if(serialPort->isOpen())
     {
         serialPort->close();

@@ -35,7 +35,7 @@ void ServerRemoteComponent::commonRequest(ResponseType type, const QNetworkReque
 
     response.clear();
     response.type = type;
-    setServerStatus(ServerStatus::Busy);  
+    setServerStatus(ServerStatus::Busy);
 
     switch(httpMethod)
     {
@@ -229,10 +229,19 @@ void ServerRemoteComponent::testDriveRequest(int userId, int dealerId)
 void ServerRemoteComponent::checkComplexity()
 {
     QNetworkRequest request(serverConfig().url + "/complexity/");
-   // QString url = "http://familyagency.ru/lab/mias2018/complexity.json";
-   // QNetworkRequest request(url);
+    commonRequest(ResponseType::CheckComplexityRequest, request, HTTPMethod::GET);
+}
 
-    commonRequest(ResponseType::CheckComplexity, request, HTTPMethod::GET);
+void ServerRemoteComponent::userMetaDataRequest(int userId, const QString& metadata)
+{
+    QNetworkRequest request(serverConfig().url + "/users/" + QString::number(userId) + "/meta");
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QUrlQuery query;
+    query.addQueryItem("meta", metadata);
+
+    auto data = query.toString(QUrl::FullyEncoded).toUtf8();
+    commonRequest(ResponseType::UserMetaDataRequest, request, HTTPMethod::POST, data);
 }
 
 //======================== PARSING ========================//
@@ -252,8 +261,10 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
 
     if(response.status != "success" || response.code != 200)
     {
-        if(response.type == ResponseType::CheckComplexity)
+        if(response.type == ResponseType::CheckComplexityRequest ||
+           response.type == ResponseType::UserMetaDataRequest)
         {
+            qDebug() << " response.type: " <<  response.type;
             return;
         }
 
@@ -347,10 +358,10 @@ void ServerRemoteComponent::parse(const ServerResponse& response)
     }
     else if(response.type == ResponseType::TestDriveRequest)
     {
-         emit testDriveRequestSuccess();
+        emit testDriveRequestSuccess();
     }
 
-    else if(response.type == ResponseType::CheckComplexity)
+    else if(response.type == ResponseType::CheckComplexityRequest)
     {
         qDebug()<<"===== CheckComplexity Request =====";
         QJsonObject dataJson = responeJson["data"].toObject();
@@ -381,7 +392,6 @@ void ServerRemoteComponent::handleRequestError(const ServerResponse& response)
 
     serverRequestError(response.type);
 }
-
 
 void ServerRemoteComponent::createBaseUserData(const QJsonObject& object)
 {
@@ -475,7 +485,7 @@ void ServerRemoteComponent::createComplexityData(const QJsonObject& obj)
     ComplexityConfig complexityConfig;
 
     QJsonObject jsonObject = obj["complexity"].toObject();
-  //  qDebug()<<jsonObject;
+    //  qDebug()<<jsonObject;
     if(jsonObject["instruction"].isUndefined())
     {
         qDebug()<<"complexity load failed";
@@ -504,7 +514,7 @@ void ServerRemoteComponent::createComplexityData(const QJsonObject& obj)
         complexityConfig.gameComplexities.push_back(complConfig);
     }
 
-     qDebug()<<"complexity load true";
+    qDebug()<<"complexity load true";
 
     emit newGameComplexity(complexityConfig);
 }

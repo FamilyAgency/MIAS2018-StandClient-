@@ -13,14 +13,14 @@ import "../tools"
 Item
 {
     id:core;
-    anchors.fill: parent;
 
     property string rollTextDefault: "СТАРТ";
     property real btnMarginBottom: 100;
 
-
     signal animComplete();
     signal animStart();
+
+    anchors.fill: parent;
 
     Roulette
     {
@@ -98,15 +98,13 @@ Item
         repeat: false;
         onTriggered:
         {
-             delayTimer.stop();
+            delayTimer.stop();
             core.animComplete();
         }
     }
 
     Component.onCompleted:
     {
-        //sprite.source =  "qrc:/resources/arrow_pack.png";
-        // sprite.start();
         brb.setTitle(rollTextDefault);
     }
 
@@ -116,12 +114,12 @@ Item
 
         onEndCarMasking:
         {
-             maskHolder.maskEnable = false;
+            maskHolder.maskEnable = false;
         }
 
         onStartCarMasking:
         {
-             maskHolder.maskEnable = true;
+            maskHolder.maskEnable = true;
         }
     }
 
@@ -131,7 +129,7 @@ Item
         core.animComplete();
         brb.visible = true;
         brb.show();
-        roulette.show();     
+        roulette.show();
         visible = true;
         delayTimer.start();
         core.animStart();

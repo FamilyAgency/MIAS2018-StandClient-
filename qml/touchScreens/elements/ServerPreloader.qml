@@ -9,27 +9,6 @@ Item
 
     anchors.fill: parent;
 
-    Component.onCompleted:
-    {
-        visible = false;
-    }
-
-    Connections
-    {
-        target:server;
-
-        onServerStatusChanged:
-        {
-            lastStatus = status;
-
-            if(status == ServerStatus.Busy)
-            {
-                preloderTimer.start();
-                visible = true;
-            }
-        }
-    }
-
     Rectangle
     {
         anchors.fill: parent;
@@ -68,6 +47,27 @@ Item
                 visible = false;
             }
             else
+            {
+                preloderTimer.start();
+                visible = true;
+            }
+        }
+    }
+
+    Component.onCompleted:
+    {
+        visible = false;
+    }
+
+    Connections
+    {
+        target:server;
+
+        onServerStatusChanged:
+        {
+            lastStatus = status;
+
+            if(status == ServerStatus.Busy)
             {
                 preloderTimer.start();
                 visible = true;

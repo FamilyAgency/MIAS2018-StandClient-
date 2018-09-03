@@ -8,8 +8,6 @@ import "../tools"
 Item
 {
     id:instruction;
-    anchors.fill: parent;
-    anchors.centerIn: parent;
 
     property string mainTitleDefault: "УСТРОЙСТВО<br/>АКТИВИРОВАНО";
     property string journeyTitleDefault: "Осталось выбрать<br/>маршрут в городе.<br/><br/>Вас ждут три остановки,<br/> на которых вы узнаете<br/> об уникальных преимуществах<br/> нового SANTA FE.";
@@ -17,10 +15,8 @@ Item
     signal animComplete();
     signal animStart();
 
-    Consts
-    {
-        id:consts;
-    }
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     FontManager
     {
@@ -33,7 +29,7 @@ Item
         id: mainText;
         text: mainTitleDefault;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 40 * consts.designScale;
+        font.pixelSize: 40;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter:  parent.verticalCenter;
@@ -41,21 +37,6 @@ Item
         verticalAlignment: Text.AlignVCenter;
         font.letterSpacing: 14;
     }
-
-//    Text
-//    {
-//        opacity: instructionModule.opacity2;
-//        id: journeyText;
-//        text: journeyTitleDefault;
-//        font.family: font.hyundaiSansHeadRegular;
-//        font.pixelSize: 54 * consts.designScale;
-//        color: "#ffffff";
-//        anchors.horizontalCenter: parent.horizontalCenter;
-//        anchors.verticalCenter:  parent.verticalCenter;
-//        horizontalAlignment: Text.AlignHCenter;
-//        verticalAlignment: Text.AlignVCenter;
-//       // font.letterSpacing: 14;
-//    }
 
     function start()
     {

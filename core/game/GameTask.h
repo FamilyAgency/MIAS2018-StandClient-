@@ -38,6 +38,10 @@ public:
     float getMindwaveLimit() const;
     void setMindWaveClient(QSharedPointer<MindwaveComponentBase> value);
 
+    QString getMetaData() const;
+
+    void setRecording(bool value);
+
 private:
     const int taskTimerMills = 10;
 
@@ -61,8 +65,14 @@ private:
 
     int startTime;
 
+    bool isRecording = false;
+
+    QString metaData = "";
+    void addMetaData(int humanValue);
+
 private slots:
      void onUpdate();
+     void onAttentionChanged();
 
 signals:
     void updateEvent();

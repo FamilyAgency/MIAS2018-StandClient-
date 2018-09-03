@@ -8,15 +8,14 @@ import "../../tools"
 import "../elements"
 
 Item
-{
-    anchors.fill: parent;
+{ 
     property int circleSize: 300;
     property int offset: 70;
     property int vertOffset: 0;
-
     property int canvasSize: 950;
-
     property string bgColor:"#7b7cfe";
+
+    anchors.fill: parent;
 
     FontManager
     {
@@ -97,8 +96,6 @@ Item
         implicitWidth: 950;
         radius: 475;
 
-       // color:bgColor;
-
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.top: parent.top;
         anchors.topMargin: rouletteModule.circleY;
@@ -126,7 +123,7 @@ Item
     }
 
     MindwaveAttention
-    {       
+    {
         id: mindwaveAttention;
         visible: false;
         opacity: rouletteModule.mindwaveCtrlOpacity;

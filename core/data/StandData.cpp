@@ -77,3 +77,14 @@ QVariantList StandData::getScreensInfo() const
 
     return infoList;
 }
+
+void StandData::setBuildNumber(const QString& value)
+{
+    _buildNumber = value;
+    emit buildNumberChanged();
+}
+
+QString StandData::buildNumber() const
+{
+    return _buildNumber;
+}

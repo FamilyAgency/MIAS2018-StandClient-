@@ -8,28 +8,22 @@ import "../../tools"
 import "../../components"
 
 Item
-{
-    anchors.fill: parent;
-
+{ 
     property string mainTitleDefault: "SANTA FE.<br/>Управляй<br/>силой мысли!";
     property string addTitleDefault: "ПОЖАЛУЙСТА,<br/>ПРИЛОЖИТЕ БРАСЛЕТ<br/>К КРУГУ";
 
+    anchors.fill: parent;
 
     FontManager
     {
         id: font;
     }
 
-    Consts
-    {
-        id: consts;
-    }
-
     Text
     {
         id: mainText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 120;// * consts.designScale;
+        font.pixelSize: 120;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.verticalCenter: parent.verticalCenter;
@@ -44,7 +38,7 @@ Item
     {
         id: addText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 40;// * consts.designScale;
+        font.pixelSize: 40;
         font.letterSpacing: 14;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -56,36 +50,6 @@ Item
         textFormat: Text.StyledText;
 
     }
-
-//    AnimationPlayer
-//    {
-//        id: redRoundAnim;
-//        currentImage: 1;
-//        endFrame: 29;
-//        startFrame: 1;
-//        Component.onCompleted:
-//        {
-//            redRoundAnim.setSource("content/misc/redRound/", ".png");
-//            redRoundAnim.setFPS(30);
-//            //redRoundAnim.setLocation(490, 1265);
-//            redRoundAnim.init();
-//        }
-//    }
-
-//    AnimationPlayer
-//    {
-//        id: palkaAnim;
-//        currentImage: 1;
-//        endFrame: 48;
-//        startFrame: 1;
-//        Component.onCompleted:
-//        {
-//            palkaAnim.setSource("content/misc/palka/", ".png");
-//            palkaAnim.setFPS(30);
-//            palkaAnim.setLocation(490, 1265);
-//            palkaAnim.init();
-//        }
-//    }
 
     OpacityAnimator on opacity
     {
@@ -115,5 +79,4 @@ Item
         opacityAnim.duration = 2000;
         opacityAnim.start();
     }
-
 }

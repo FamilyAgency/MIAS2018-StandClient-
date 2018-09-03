@@ -9,24 +9,21 @@ import "../elements"
 Item
 {
     id: core;
-    anchors.fill: parent;
-    opacity: 0;
 
     property string addTitleHelloText: "Вы готовы отправиться<br/>в интересное путешествие<br/>на новом Hyundai SANTA FE?<br/><br/>Управлять автомобилем<br/>вы будете при помощи<br/>силы мысли!";
     property string buttonText: "НАЧАТЬ";
+    property string errorButtonText: "ПОНЯТНО";
 
-    property real btnMarginBottom: 305 * consts.designScale;
-    property real nameMarginTop: 294 * consts.designScale;
-    property real titleMarginTop: 640 * consts.designScale;
+    property real btnMarginBottom: 305;
+    property real nameMarginTop: 294;
+    property real titleMarginTop: 640;
 
     signal inAnimComplete();
     signal outAnimComplete();
     signal animStart();
 
-    Consts
-    {
-        id: consts;
-    }
+    anchors.fill: parent;
+    opacity: 0;
 
     FontManager
     {
@@ -37,7 +34,7 @@ Item
     {
         id: mainText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize:  90 * consts.designScale;
+        font.pixelSize:  90;
         color: "#ffffff";
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.topMargin:  nameMarginTop;
@@ -83,9 +80,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible:false;
         anchors.fill: parent;
-        btnWidth: 410 * consts.designScale;
-        btnHeight: 410 * consts.designScale;
-        btnRadius: 205 * consts.designScale;
+        btnWidth: 410;
+        btnHeight: 410;
+        btnRadius: 205;
 
         onClicked:
         {
@@ -110,7 +107,7 @@ Item
                 mainText.text = "Привет!";
             }
 
-             brb.visible = true;
+            brb.visible = true;
             brb.show();
         }
     }
@@ -151,7 +148,7 @@ Item
         opacityAnim.stop();
         mainText.visible = false;
         addText.text = errorMsg;
-        brb.setTitle("ПОНЯТНО");
+        brb.setTitle(errorButtonText);
 
         opacity = 0;
         delayTimer.restart();

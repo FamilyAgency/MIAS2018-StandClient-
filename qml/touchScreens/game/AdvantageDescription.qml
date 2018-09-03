@@ -10,7 +10,6 @@ import "../elements"
 Item
 {
     id: advatage;
-    anchors.fill: parent;
 
     property string mainTitleDefault: "НАЗВАНИЕ<br/>ПРЕИМУЩЕСТВА";
     property int circleSize: 150;
@@ -20,6 +19,9 @@ Item
     property int btnShowDelay: 10000;
 
     signal advantageReaded;
+
+    anchors.fill: parent;
+
 
     FontManager
     {
@@ -118,14 +120,12 @@ Item
     {
         advatage.mainTitleDefault = title;
         promtText2.text = description;
-        //fullAdvantageDescr.setTexts(title, description);
     }
 
     function setVideo(videoPath)
     {
         video.source = configController.getVideoFileInAppDir(videoPath);
         console.log(videoPath, configController.getVideoFileInAppDir(videoPath));
-        // console.log("video path ", configController.getVideoFileInAppDir(videoPath));
         video.play();
     }
 

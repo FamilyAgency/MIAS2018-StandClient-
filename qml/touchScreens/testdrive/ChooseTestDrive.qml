@@ -9,8 +9,7 @@ import "../../tools"
 Item
 {
     property var allDealersData;
-    property real btnMarginBottom: 100 * consts.designScale;
-
+    property real btnMarginBottom: 100;
 
     property string signInText: "Запись на тест-драйв<br/> нового Hyundai SANTA FE.";
     property string signInDescText: "";
@@ -252,11 +251,6 @@ Item
         id: font;
     }
 
-    Consts
-    {
-        id: consts;
-    }
-
     BigRedButton
     {
         id: startBtn;
@@ -264,9 +258,9 @@ Item
         anchors.bottomMargin: btnMarginBottom;
         visible: false;
         anchors.fill: parent;
-        btnWidth: 350 * consts.designScale;
-        btnHeight: 350 * consts.designScale;
-        btnRadius: 175 * consts.designScale;
+        btnWidth: 350;
+        btnHeight: 350;
+        btnRadius: 175;
 
         onClicked:
         {

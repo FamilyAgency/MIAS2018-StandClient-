@@ -106,6 +106,7 @@ Item
     {
         opacityAnim.stop();
         timeText.text = tools.formatSeconds1(superGameModule.getSuperGameTime() / 1000.0);
+        opacityAnim.stop();
         opacity = 0;
         opacityAnim.from = 0;
         opacityAnim.to = 1;

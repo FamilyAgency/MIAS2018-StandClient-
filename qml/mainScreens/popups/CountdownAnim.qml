@@ -29,11 +29,6 @@ Text
 
         property int currentLoop: 0;
 
-        onStarted:
-        {
-            //currentLoop = 0;
-        }
-
         onStopped:
         {
             currentLoop++;
@@ -51,19 +46,19 @@ Text
 
         ParallelAnimation
         {
-            NumberAnimation { target: counter; property: "scale";   from: 0; to: 1; duration: 300 }
-            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 1; duration: 300 }
+            NumberAnimation { target: counter; property: "scale";   from: 0; to: 1; duration: 300; }
+            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 1; duration: 300; }
         }
 
         ParallelAnimation
         {
-            NumberAnimation { target: counter; property: "scale";   from: 1; to: 1.5; duration: 200 }
+            NumberAnimation { target: counter; property: "scale";   from: 1; to: 1.5; duration: 200; }
         }
 
         ParallelAnimation
         {
-            NumberAnimation { target: counter; property: "scale";   from: 1.5; to: 2; duration: 400 }
-            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 0; duration: 400 }
+            NumberAnimation { target: counter; property: "scale";   from: 1.5; to: 2; duration: 400; }
+            NumberAnimation { target: counter; property: "opacity"; from: 1; to: 0; duration: 400; }
         }
     }
 

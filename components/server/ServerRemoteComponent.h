@@ -41,8 +41,9 @@ public:
 
     Q_INVOKABLE virtual void getDealersRequest() override;
     Q_INVOKABLE virtual void testDriveRequest(int userId, int dealerId) override;
+    Q_INVOKABLE virtual void userMetaDataRequest(int userId, const QString& metadata) override;
 
-    virtual void checkComplexity( )override;
+    virtual void checkComplexity() override;
 
     virtual void start() override;
     virtual void stop() override;

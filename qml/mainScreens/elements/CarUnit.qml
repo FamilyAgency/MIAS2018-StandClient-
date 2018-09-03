@@ -8,42 +8,39 @@ Item
 
     Consts
     {
-        id:consts;
+        id: consts;
     }
 
     Image
     {
         id: shadow;
-        source: consts.carShadowUrl;
-        smooth:true;
+        source: "qrc:/resources/Glow_Car.png";
+        smooth: true;
         antialiasing: true;
         transform: Translate { x: -shadow.width * 0.5; y: -shadow.height * 0.5 }
     }
 
     Image
     {
-        id:car
-        width: consts.carWidth;
-        height: consts.carHeight;
-        source: consts.carUrl;
-        smooth:true;
-        antialiasing :true;
-        transform: Translate { x: -car.width* 0.5; y: -car.height * 0.5}
+        id: car;
+        width: 64;
+        height: 124;
+        source: "qrc:/resources/car2.png";
+        smooth: true;
+        antialiasing: true;
+        transform: Translate { x: -car.width * 0.5; y: -car.height * 0.5; }
     }   
 
     function moveCar(currentPoint, forwardVector)
     {
-       var canvasY = 0;
-
         var curPoint = currentPoint;
 
         car.x = curPoint.x;
-        car.y = canvasY + curPoint.y;
+        car.y = curPoint.y;
         shadow.x = car.x;
         shadow.y = car.y;
 
-        car.visible = true;
-        car.scale = consts.artScaleFactor;
+        car.visible = true;       
         shadow.scale = car.scale;
 
         var rotation = forwardVector;
