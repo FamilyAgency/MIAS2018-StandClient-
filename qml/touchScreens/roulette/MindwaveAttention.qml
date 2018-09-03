@@ -10,8 +10,6 @@ Item
     id: indicator;
     anchors.fill: parent;
 
-    property double nextAttentionValue: 0.0;
-
     property string lineCap: "square";
     property string lineJoin: "round";
 
@@ -63,43 +61,6 @@ Item
         id: tools;
     }
 
-    function freezAll()
-    {
-        //starting = false;
-    }
-
-    Connections
-    {
-        target: mind;
-
-        onAttentionChanged:
-        {
-            if(!starting)
-            {
-                return;
-            }
-
-            var timeDumper = 100;
-            nextAttentionValue = mind.attention / 100.0;
-
-            //nextAttentionValue = 0.1
-            //console.log(nextAttentionValue, percentInnerThreshold)
-
-
-            var animTo = nextAttentionValue;//tools.mapRangeClamp(nextAttentionValue, percentInnerThreshold, 1.0,  0.0, 1.0);
-          //  maxAttentionAnim.to = animTo;
-          //  maxAttentionAnim.duration = Math.max(Math.abs(animTo - percentInner) * timeDumper, 500);
-           // maxAttentionAnim.start();
-
-            percentInner = nextAttentionValue;
-
-            //            animTo = tools.mapRangeClamp(nextAttentionValue, 0.0, percentOuterThreshold,  0.0, 1.0);
-            //            minAttentionAnim.to = animTo;
-            //            minAttentionAnim.duration = Math.max(Math.abs(animTo - percentOuter) * timeDumper, 500);
-            //            minAttentionAnim.start();
-        }
-    }
-
     Canvas
     {
         id: canvasCirc;
@@ -107,25 +68,12 @@ Item
         height: canvasHeight;
         antialiasing: true;
         smooth: true;
-        //  renderStrategy: Canvas.Cooperative
-        //  renderTarget: Canvas.FramebufferObject
 
         onPaint:
         {
             var ctx = getContext("2d");
             ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            drawCircle(ctx, innerRadius, innerLineWidth, colorInner, percentInner);
-            // drawCircle(ctx, outerRadius, outerLineWidth, colorOuter, percentOuter);
-        }
-
-        PropertyAnimation
-        {
-            id: minAttentionAnim;
-            target: indicator;
-            property: "percentOuter";
-            to: 100;
-            duration: 50
-            easing.type: "InOutCubic";
+            drawCircle(ctx, innerRadius, innerLineWidth, percentInner);
         }
 
         PropertyAnimation
@@ -148,6 +96,19 @@ Item
         onTriggered:
         {
             canvasCirc.requestPaint();
+        }
+    }
+
+    Connections
+    {
+        target: mind;
+
+        onAttentionChanged:
+        {
+            if(starting)
+            {
+                percentInner = mind.attention / 100.0;
+            }
         }
     }
 
@@ -189,13 +150,9 @@ Item
         maxAttentionAnim.to = 0;
         maxAttentionAnim.duration = 500;
         maxAttentionAnim.start();
-
-        // minAttentionAnim.to = 0;
-        //  minAttentionAnim.duration = 500;
-        //  minAttentionAnim.start();
     }
 
-    function drawCircle(ctx, radius, lineWidth, color, percent)
+    function drawCircle(ctx, radius, lineWidth, percent)
     {
         ctx.lineCap = lineCap;
         ctx.lineJoin = lineJoin;
@@ -207,18 +164,9 @@ Item
         ctx.stroke();
         ctx.closePath();
 
-        if(percent > attentionThreshold)
-        {
-            ctx.strokeStyle = colorInner;
-        }
-        else
-        {
-            ctx.strokeStyle = colorOuter;
-        }
-
+        ctx.strokeStyle = percent > attentionThreshold ? colorInner : colorOuter;
 
         ctx.beginPath();
-
         ctx.arc(canvasHalfWidth, canvasHalfHeight, radius, 0, 2 * Math.PI * percent * arcPercent);
         ctx.stroke();
         ctx.closePath();

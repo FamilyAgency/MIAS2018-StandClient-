@@ -99,29 +99,6 @@ Item
         }
     }
 
-//    Connections
-//    {
-//        target:rfid;
-
-//        onCardReaderError:
-//        {
-//            switch(error)
-//            {
-
-//            case CardReaderError.NoCardReader:
-//            case CardReaderError.CantStartTransaction:
-//            case CardReaderError.CantEndTransaction:
-//            case CardReaderError.LoadKeyError:
-//            case CardReaderError.AuthError:
-//            case CardReaderError.ReadError:
-//            case CardReaderError.UnknownError:
-//            case CardReaderError.DataFormatError:
-//                showError();
-//                break;
-//            }
-//        }
-//    }
-
     function showError()
     {
         opacity = 0;

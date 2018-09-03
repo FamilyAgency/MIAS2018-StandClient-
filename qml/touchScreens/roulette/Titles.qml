@@ -2,17 +2,17 @@ import QtQuick 2.2
 
 import "../../tools"
 import "../elements"
+import "../../components"
 
 import Qt3D.Extras 2.0
 
 Item
-{
-    anchors.fill: parent;
-
+{  
     property string mainTitleDefault: "ВЫБЕРИТЕ МАРШРУТ";
     property string descrTitleDefault: "Вас ждут три остановки, на которых<br/>вы узнаете об уникальных<br/> преимуществах нового SANTA FE.";
     property string mainTitle2: "Концентрируйтесь<br/>на Hyundai SANTA FE.<br/><br/>Автомобиль начнет движение<br/>и появится на карте.";
 
+    anchors.fill: parent;
 
     FontManager
     {
@@ -31,23 +31,6 @@ Item
         title.setDescrFontSize(40);
         title.offsetY = 40;
     }
-
-
-//    Text
-//    {
-//        id: mainText;
-//        font.family: font.hyundaiSansHeadMedium;
-//        font.pixelSize: 60;
-//        color: "#ffffff";
-//        anchors.top: parent.top;
-//        anchors.topMargin: 168;
-//        anchors.horizontalCenter: parent.horizontalCenter;
-//        text: mainTitleDefault;
-//        horizontalAlignment: Text.AlignHCenter;
-//        verticalAlignment: Text.AlignVCenter;
-//        textFormat: Text.StyledText;
-//        opacity:  rouletteModule.mainTitleOpacity
-//    }
 
     Text
     {
@@ -97,27 +80,21 @@ Item
         opacity: rouletteModule.helpTextOpacity;
     }
 
-    Item
+    AnimationPlayer
     {
-        id: animationItem
-        anchors.fill: parent;
+        id: animationItem;
+        currentImage: 1;
+        endFrame: 35;
+        startFrame: 4;
         opacity: rouletteModule.helpTextOpacity;
-        Image
+
+        Component.onCompleted:
         {
-            property int currentImage: 1
-            anchors.horizontalCenter: parent.horizontalCenter
-            id: image
-            x: 0
-            y: 0
-            source: configController.getFileInAppDir("content/misc/arrow/" + currentImage + ".png");
-            NumberAnimation on currentImage
-            {
-                from: 4
-                to: 35
-                duration: 1000
-                running: true;
-                loops: Animation.Infinite;
-            }
+            animationItem.setSource("content/misc/arrow/", ".png");
+            animationItem.setFPS(30);
+            animationItem.setRunning(false);
+            animationItem.setLocation((1080 - 200) * 0.5, 0)
+            animationItem.init();
         }
     }
 

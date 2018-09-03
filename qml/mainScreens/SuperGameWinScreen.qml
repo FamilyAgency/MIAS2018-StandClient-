@@ -57,21 +57,6 @@ Item
         }
     }
 
-    //    AnimationPlayer
-    //    {
-    //        id: confAnim;
-    //        currentImage: 1;
-    //        endFrame: 191;
-    //        startFrame: 1;
-    //        Component.onCompleted:
-    //        {
-    //            confAnim.setSource("content/misc/confeti/", ".png");
-    //            confAnim.setFPS(30);
-    //            confAnim.setRunning(false);
-    //            confAnim.init();
-    //        }
-    //    }
-
     Text
     {
         id: title;

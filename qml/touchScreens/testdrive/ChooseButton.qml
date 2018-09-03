@@ -24,7 +24,7 @@ Button
 		text: parent.text;
 		font.family: font.hyundaiSansHeadLight;
 		font.pixelSize: 30;
-		color: "#fff";
+        color: "#ffffff";
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 		elide: Text.ElideRight
@@ -36,8 +36,7 @@ Button
 		implicitWidth: 500;
 		implicitHeight: 150;
 		radius: 100;
-		color: "#000";
-		//border.color: btnColor;
+        color: "#000000";
 	}
 
 	layer.enabled: true;

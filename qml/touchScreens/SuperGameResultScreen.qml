@@ -8,11 +8,12 @@ import "supergame"
 Item
 {
     id: result;
-    anchors.fill: parent;
-    anchors.centerIn: parent;
 
     signal animComplete();
     signal animStart();
+
+    anchors.fill: parent;
+    anchors.centerIn: parent;  
 
     SuperGameSuccessScreen
     {
@@ -77,8 +78,6 @@ Item
     function stop()
     {
         visible = false;
-        //superGameFailScreen.visible = false;
-        //superGameSuccessScreen.visible = false;
         outTimer.stop();
     }
 

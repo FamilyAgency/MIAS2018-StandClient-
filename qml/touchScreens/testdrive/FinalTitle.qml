@@ -17,11 +17,6 @@ Item
         id: font;
     }
 
-    Consts
-    {
-        id: consts;
-    }
-
     Text
     {
         id: okFiled;
@@ -29,7 +24,7 @@ Item
         anchors.verticalCenter: parent.verticalCenter;
         text: okText;
         font.family: font.hyundaiSansHeadMedium;
-        font.pixelSize: 60 * consts.designScale;
+        font.pixelSize: 60;
         color: "#ffffff";
         textFormat: Text.StyledText;
         horizontalAlignment: Text.AlignHCenter;
@@ -102,5 +97,4 @@ Item
         okFiled.opacity = 0;
         outTimer.stop();
     }
-
 }

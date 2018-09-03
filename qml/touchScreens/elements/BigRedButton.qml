@@ -8,13 +8,14 @@ import "../../tools"
 Item
 {
     id: bigRedButton;
-    anchors.fill: parent;
-
-    signal clicked;
 
     property alias btnWidth: bg.implicitWidth;
     property alias btnHeight: bg.implicitHeight;
     property alias btnRadius: bg.radius;
+
+    signal clicked;
+
+    anchors.fill: parent;
 
     FontManager
     {
@@ -43,22 +44,22 @@ Item
                 {
                     GradientStop
                     {
-                        position: 0.0
+                        position: 0.0;
                         SequentialAnimation on color
                         {
-                            loops: Animation.Infinite
-                            ColorAnimation { from: "#0b9abf"; to: "#66d5fc"; duration: 3500 }
-                            ColorAnimation { from: "#66d5fc"; to: "#0b9abf"; duration: 2500 }
+                            loops: Animation.Infinite;
+                            ColorAnimation { from: "#0b9abf"; to: "#66d5fc"; duration: 3500; }
+                            ColorAnimation { from: "#66d5fc"; to: "#0b9abf"; duration: 2500; }
                         }
                     }
                     GradientStop
                     {
-                        position: 1.0
+                        position: 1.0;
                         SequentialAnimation on color
                         {
-                            loops: Animation.Infinite
-                            ColorAnimation { from: "#0aabd4"; to: "#006c92"; duration: 2500 }
-                            ColorAnimation { from: "#006c92"; to: "#0aabd4"; duration: 3500 }
+                            loops: Animation.Infinite;
+                            ColorAnimation { from: "#0aabd4"; to: "#006c92"; duration: 2500; }
+                            ColorAnimation { from: "#006c92"; to: "#0aabd4"; duration: 3500; }
                         }
                     }
                 }
@@ -124,13 +125,6 @@ Item
         }
     }
 
-    //    function setWidth(width)
-    //    {
-    //        bg.implicitHeight = width * consts.designScale;
-    //        bg.implicitWidth = width * consts.designScale;
-    //        bg.radius = (width / 2) * consts.designScale;
-    //    }
-
     function setEnabled(value)
     {
         startBtn.enabled = value;
@@ -144,13 +138,10 @@ Item
     function show()
     {
         visible = true;
-       // console.log(" show--------------");
         startBtn.enabled = true;//test
-
 
         startBtn.scale = 0;
         scaleAnimator.stop();
-
 
         scaleAnimator.from = 0;
         scaleAnimator.to = 1;
@@ -164,7 +155,6 @@ Item
 
     function hide()
     {
-       // visible = false;
         scaleAnimator.stop();
 
         startBtn.enabled = false;

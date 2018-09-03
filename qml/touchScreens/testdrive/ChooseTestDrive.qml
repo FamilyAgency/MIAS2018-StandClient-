@@ -11,7 +11,6 @@ Item
     property var allDealersData;
     property real btnMarginBottom: 100 * consts.designScale;
 
-
     property string signInText: "Запись на тест-драйв<br/> нового Hyundai SANTA FE.";
     property string signInDescText: "";
     property string citiesBtnText: "Выберите город";

@@ -3,7 +3,6 @@ import QtQuick.Controls 2.2
 
 import "../../tools"
 
-
 ListView
 {
 	id: listView;
@@ -22,6 +21,7 @@ ListView
 	delegate: listItem;
 	header: headerItem;
 	footer: footerItem;
+
 	section
 	{
 		property: "modelData";
@@ -103,7 +103,7 @@ ListView
 			   anchors.right: parent.right;
 			   anchors.bottom: parent.bottom;
 			   height: 1;
-			   color: "#fff";
+               color: "#ffffff";
 			   opacity: 0.1;
 		   }
 		   MouseArea
@@ -120,6 +120,7 @@ ListView
 	Component
 	{
 		id: footerItem;
+
 		Item
 		{
 			height: 500;
@@ -130,5 +131,4 @@ ListView
 	{
 		id: font;
 	}
-
 }

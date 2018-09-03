@@ -9,10 +9,11 @@ import "../../tools"
 Item
 {
     id: core;
-    anchors.fill: parent;
 
     property alias btnAnchors: backBtn.anchors;
     signal clicked;
+
+    anchors.fill: parent;
 
     FontManager
     {

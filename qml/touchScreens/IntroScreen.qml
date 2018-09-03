@@ -10,9 +10,7 @@ import "elements"
 
 Item
 {
-    id:intro;
-    anchors.fill: parent;
-    anchors.centerIn: parent;
+    id:intro;  
 
     property string errorText1:"Похоже, что вас<br/>не существует!<br/><br/> Обратитесь за помощью <br/>к промо-персоналу.";
     property string errorText2:"Получите ваш<br/> прохладительный напиток<br/>у ближайшей стойки<br/>регистрации.";
@@ -22,6 +20,9 @@ Item
 
     signal animComplete();
     signal animStart();
+
+    anchors.fill: parent;
+    anchors.centerIn: parent;
 
     Tools
     {
@@ -63,6 +64,11 @@ Item
         }
     }
 
+    BuildData
+    {
+        id:buildData;
+    }
+
     Connections
     {
         target:introModule;
@@ -100,12 +106,7 @@ Item
                 break;
             }
         }
-    }
-
-    BuildData
-    {
-        id:buildData;
-    }
+    } 
 
     Connections
     {
@@ -140,8 +141,6 @@ Item
     {
         introTitiles.hide();
         wasError = true;
-        console.log("errorMsg::: ", errorMsg);
-
         helloBlock.startErrorState(errorMsg);
     }
 }

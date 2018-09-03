@@ -5,12 +5,13 @@ import QtQuick.Controls 1.4
 Item
 {
     id: backbtn;
-    anchors.fill:  parent;
-    opacity: 0.0;
 
     property int maxClicks: 5;
     property int mills: 2000;
     property int currentClick: 0;
+
+    anchors.fill:  parent;
+    opacity: 0.0;
 
     Button
     {

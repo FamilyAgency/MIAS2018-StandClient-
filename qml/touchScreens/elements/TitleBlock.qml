@@ -8,9 +8,10 @@ import "../../tools"
 Item
 {
     id: titleBlock;
-    anchors.fill: parent;
 
     property int offsetY: 80;
+
+    anchors.fill: parent;
 
     FontManager
     {
