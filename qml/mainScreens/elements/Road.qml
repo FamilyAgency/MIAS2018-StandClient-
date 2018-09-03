@@ -198,6 +198,8 @@ Item
         var completedLength = vecLength(currentPoint, superGameLastPoint);
         var percent = 1 - completedLength/superGameLength;
 
+        percent = ( percent > 100 ? 100 : (percent < 0 ? 0 : percent));
+
         var countToShow = Math.floor(repeater.model * percent);
         for(var i = 0; i < countToShow; i++)
         {

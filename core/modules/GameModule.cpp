@@ -47,6 +47,8 @@ void GameModule::setAdvantagesData(QSharedPointer<AdvantagesData> value)
 
 void GameModule::setConfig(ConfigPtr config)
 {
+    bool isRecording = config->mindwaveConfig->record;
+    gameTaskManager->setRecording(isRecording);
     BaseModule::setConfig(config);
 }
 

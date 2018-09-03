@@ -42,6 +42,7 @@ void SuperGameModule::setUser(QSharedPointer<UserData> value)
 
 void SuperGameModule::setConfig(ConfigPtr config)
 {
+    isRecording = config->mindwaveConfig->record;
     BaseModule::setConfig(config);
 }
 
@@ -64,6 +65,7 @@ void SuperGameModule::start()
     setTaskRunning(false);
 
     auto superGameData = currentUser->getSuperGameData();
+    gameTask->setRecording(isRecording);
     gameTask->setData(superGameData.getPath(), superGameData.getDifficult());
 
     superGameTime =  superGameData.getMaxTime();
@@ -113,7 +115,6 @@ void SuperGameModule::onTaskCompleteEvent()
     gameTask->stop();
     superGameTimer->stop();
     superGameWinTime = gameTask->getCompletionTime();
-
     serverComponent->finishGameRequest(currentUser->baseUserData().id);
 }
 
@@ -140,6 +141,7 @@ void SuperGameModule::onUpdate()
     }
     else
     {
+        sendMetaData();
         gameTask->stop();
         superGameTimer->stop();
         emit updateSuperGameTime(0.0f);
@@ -149,8 +151,20 @@ void SuperGameModule::onUpdate()
 
 void SuperGameModule::onUserFinishedGame()
 {
+    sendMetaData();
+
     currentUser->superGameCompleted(superGameWinTime);
     emit superGameSuccess(superGameWinTime);
+}
+
+void SuperGameModule::sendMetaData()
+{
+    if(isRecording)
+    {
+        currentUser->addMetaData(gameTask->getMetaData());
+        currentUser->prepareMetaData();
+        serverComponent->userMetaDataRequest(currentUser->baseUserData().id, currentUser->getMetaData());
+    }
 }
 
 float SuperGameModule::getSuperGameTime() const

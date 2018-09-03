@@ -151,6 +151,8 @@ void UserData::setGameComplexity(QSharedPointer<GameComplexityData> value)
 void UserData::setGameCategory(int id)
 {
     qDebug()<<"setGameCategory  "<< id;
+    metaData = "";
+
     StandOneGameConfig choosenGame = _gameConfig.games[id];
     _gameUserData.setupConfigGameData(choosenGame, gameComplexityData->gameComplexities);
     _gameUserData.setCurrentStageId(1);
@@ -221,6 +223,32 @@ void UserData::clearData()
 
 }
 
+void UserData::addMetaData(const QString& data)
+{
+    if(metaData.size() + data.size() < 10000)
+    {
+        metaData += data;
+        qDebug()<<"user meta data capacity:  "<<metaData.capacity();
+        qDebug()<<"user meta data:  "<<metaData;
+        qDebug()<<"user meta size:  "<<metaData.size();
+    }
+}
+
+void UserData::prepareMetaData()
+{
+    if(metaData.size() > 2)
+    {
+        metaData.chop(1);
+        qDebug()<<"send meta data:  "<<metaData;
+        qDebug()<<"user meta size:  "<<metaData.size();
+    }
+}
+
+QString UserData::getMetaData() const
+{
+    return metaData;
+}
+
 //======================================================//
 //======================================================//
 //======================================================//
@@ -258,7 +286,6 @@ void BaseUserData::clear()
     confirmed = 0;
     test = 0;
 }
-
 
 GameUserData::GameUserData()
 {

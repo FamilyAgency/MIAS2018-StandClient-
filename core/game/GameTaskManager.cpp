@@ -57,6 +57,12 @@ void GameTaskManager::startStage()
     setTaskState(TaskState::PreGame);
 }
 
+void GameTaskManager::setRecording(bool value)
+{
+    isRecording = value;
+    gameTask->setRecording(value);
+}
+
 void GameTaskManager::stop()
 {
     setTaskState(TaskState::None);
@@ -124,6 +130,13 @@ void GameTaskManager::onTaskCompleteEvent()
     gameTask->stop();
     targetPoints.pop_front();
     auto completionTime = gameTask->getCompletionTime();
+
+    if(isRecording)
+    {
+        auto userMetaData = gameTask->getMetaData();
+        currentUser->addMetaData(userMetaData);
+    }
+
     emit taskComleteEvent(completionTime);
 }
 

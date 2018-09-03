@@ -29,7 +29,6 @@ public:
     Q_INVOKABLE QVariantList getGameUncompletedPath() const;
     Q_INVOKABLE float getMindwaveLimit() const;
 
-
     Q_INVOKABLE QVariantList getCompletedPath() const;
 
     Q_INVOKABLE bool isRunning() const;
@@ -43,7 +42,6 @@ public:
     void setUser(QSharedPointer<UserData> value);
     void setServerComponent(QSharedPointer<ServerComponent> value);
 
-
     Q_INVOKABLE void superGamePassedTest();
     Q_INVOKABLE void superGameFailedTest();
 
@@ -54,17 +52,19 @@ private:
     int superGameWinTime = 0;
     float percent = 0.0f;
     bool _taskRunning;
+    bool isRecording = false;
     void setTaskRunning(bool value);
-
     QTimer* superGameTimer = nullptr;
+    QSharedPointer<GameTask> gameTask = nullptr;
     QSharedPointer<UserData> currentUser;
     QSharedPointer<ServerComponent> serverComponent;
     QSharedPointer<GameCountDown> gameCountDown = nullptr;
-
-    QSharedPointer<GameTask> gameTask = nullptr;
     QVariantList gameCompletedPath, gameUncompletedPath;
+
     void connectComponents();
     void disconnectComponents();
+
+    void sendMetaData();
 
 signals:
     void updateSuperGameTime(int mills);
@@ -77,7 +77,6 @@ signals:
     void updateCanvas();
     void taskComleteEvent(float time);
 
-
 private slots:
     void onUpdate();
     void onUserFinishedGame();
@@ -89,7 +88,6 @@ private slots:
     void onTaskCompleteEvent();
 
     void onNewCompletedPoint(const QPointF& point);
-
 };
 
 #endif // SUPERGAMEMODULE_H

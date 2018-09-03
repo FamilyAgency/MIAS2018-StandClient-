@@ -201,6 +201,11 @@ public:
 
     void setGameComplexity(QSharedPointer<GameComplexityData> value);
 
+    void addMetaData(const QString& data);
+
+    QString getMetaData() const;
+
+    void prepareMetaData();
 
 private:
     BaseUserData _baseUserData;
@@ -209,6 +214,8 @@ private:
 
     StandGamesConfig _gameConfig;
     QSharedPointer<GameComplexityData> gameComplexityData;
+
+    QString metaData = "";
 
     QQmlContext* qmlContext;
 

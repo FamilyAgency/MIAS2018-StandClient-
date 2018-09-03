@@ -138,7 +138,10 @@ void ConfigParser::parseMindwaveConfig(QSharedPointer<MindwaveConfig> mindwaveCo
     mindwaveConfig->type = settings->value("type").toString();
     mindwaveConfig->timeoutMills = settings->value("timeout").toInt();
     mindwaveConfig->autoConnect = settings->value("autoConnect").toBool();
+    mindwaveConfig->record = settings->value("record").toBool();
     settings->endGroup();
+
+    qDebug()<<" mindwaveConfig->record "<< mindwaveConfig->record;
 
     settings->beginGroup("Mindwave.Serial");
     mindwaveConfig->com = settings->value("com").toString();

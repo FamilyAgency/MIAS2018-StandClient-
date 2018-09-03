@@ -47,22 +47,24 @@ public:
         SearchUserByIdRequest,
         ConfigRequest,
         UpdatesRequest,
-        HealthLogRequest,
+        HealthLogRequest,//5
         AllUsersRequest,
         CreateUserRequest,
         SearchUserRequest,
         DeleteAllTestUsersRequest,
-        VerifyUserRequest,
+        VerifyUserRequest,//10
         ConfirmUserRequest,
         ConfirmPrizeRequest,
 
         StartGameRequest,
         UpdateGameRequest,
-        FinishGameRequest,
+        FinishGameRequest,//15
         GetDealersRequest,
-        TestDriveRequest,
+        TestDriveRequest,//17
 
-        CheckComplexity
+        CheckComplexityRequest,
+        UserMetaDataRequest
+
     };
     Q_ENUM(ResponseType)
 
@@ -103,10 +105,11 @@ public:
     virtual void getDealersRequest() = 0;
     virtual void testDriveRequest(int userId, int dealerId) = 0;
 
-    virtual void checkComplexity() = 0;
+    virtual void checkComplexity() = 0;    
+    virtual void userMetaDataRequest(int userId, const QString& metadata) = 0;
 
     ServerConfig serverConfig() const;
-    void setServerConfig(const ServerConfig& );
+    void setServerConfig(const ServerConfig&);
 
 protected:
     ServerResponse response;

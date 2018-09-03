@@ -48,6 +48,7 @@ public:
     QString type = "serial";
     int timeoutMills = 2000;
     QString com = "COM6";
+    bool record = false;
 
 };
 Q_DECLARE_METATYPE(MindwaveConfig)
