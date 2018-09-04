@@ -17,7 +17,7 @@ Item
         font.family: "Helvetica";
         font.pixelSize: 20;
         color: "#888888";
-        visible: buildShow1.pressed && buildShow2.pressed;
+        visible: buildShow1.pressed;// && buildShow2.pressed;
     }
 
     Button
